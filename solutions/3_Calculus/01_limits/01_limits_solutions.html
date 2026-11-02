@@ -428,7 +428,7 @@
 <h3>Quick verification</h3>
 <p>Using the Binomial Theorem for $a_n = \left(1+\dfrac{1}{n}\right)^n$:</p>
 <div class="math-block">$$a_n = 1 + \binom{n}{1}\frac{1}{n} + \binom{n}{2}\frac{1}{n^2} + \binom{n}{3}\frac{1}{n^3} + \dots = 1 + 1 + \frac{1}{2!}\left(1-\frac{1}{n}\right) + \frac{1}{3!}\left(1-\frac{1}{n}\right)\left(1-\frac{2}{n}\right) + \dots$$</div>
-<p>As $n\to\infty$, each factor $\left(1-\dfrac{k}{n}\right)\to 1$ and increased $n$ adds more positive terms, converging to $1+1+\dfrac{1}{2!}+\dfrac{1}{3!}+\dots \approx 1+1+0.5+0.1667+0.0417+0.0083 = 2.7167\dots = e$. ✓</p>
+<p>As $n\to\infty$, each factor $\left(1-\dfrac{k}{n}\right)\to 1$ and increased $n$ adds more positive terms, converging to $1+1+\dfrac{1}{2!}+\dfrac{1}{3!}+\dots = e \approx 2.71828$ (already the first six terms sum to $1+1+0.5+0.1667+0.0417+0.0083 = 2.7167$). ✓</p>
 <h3>A concrete example</h3>
 <p>In compound interest, if $\$1$ is invested at $100\%$ annual interest compounded $n$ times per year:</p>
 <ul><li>Annually ($n=1$): you end the year with $\left(1+1\right)^1 = \$2.00$.</li><li>Monthly ($n=12$): you end the year with $\left(1+\frac{1}{12}\right)^{12} \approx \$2.61$.</li><li>Daily ($n=365$): you end the year with $\left(1+\frac{1}{365}\right)^{365} \approx \$2.7146$.</li><li>Continuously ($n\to\infty$): you end the year with $\$e \approx \$2.7183$.</li></ul>
@@ -463,7 +463,7 @@
 <p>As $x\to\infty$, the degree-$1$ over degree-$2$ remainder fraction goes to $0$ (by Exercise 2), leaving $\dfrac{3}{5} = 0.6$. ✓</p>
 <h3>A concrete example</h3>
 <p>Because $x$ is a real variable, we can evaluate $f(x)$ at non-integer points as well as negative points:</p>
-<ul><li>At $x=50.5$: $f(50.5)=\dfrac{3(50.5)^2-50.5+1}{5(50.5)^2+4(50.5)-2}=\dfrac{7600.25}{12951.25}\approx 0.5868$.</li><li>At $x=1000$: $f(1000)=\dfrac{2\,999\,001}{5\,003\,998}\approx 0.59932$.</li><li>At $x=-1000$: $f(-1000)=\dfrac{3\,001\,001}{4\,995\,998}\approx 0.60068$.</li></ul>
+<ul><li>At $x=50.5$: $f(50.5)=\dfrac{3(50.5)^2-50.5+1}{5(50.5)^2+4(50.5)-2}=\dfrac{7601.25}{12951.25}\approx 0.5869$.</li><li>At $x=1000$: $f(1000)=\dfrac{2\,999\,001}{5\,003\,998}\approx 0.59932$.</li><li>At $x=-1000$: $f(-1000)=\dfrac{3\,001\,001}{4\,995\,998}\approx 0.60068$.</li></ul>
 <p>In both directions, the graph approaches the horizontal asymptote $y=0.6$.</p>
 <h3>How I would explain this in class</h3>
 <blockquote><p>Algebraically, solving this limit is the exact same move as Exercise 1: divide top and bottom by $x^2$, watch $\dfrac{1}{x}$ and $\dfrac{1}{x^2}$ go to $0$, and get the leading-coefficient ratio $\dfrac{3}{5}$. What changes conceptually is that $x$ varies continuously over all real numbers instead of jumping across integers $n$, so the result $\dfrac{3}{5}$ represents a horizontal asymptote $y=\dfrac{3}{5}$ of a continuous curve.</p></blockquote>
@@ -697,7 +697,7 @@
 <p>By continuity of the exponential function, $\lim_{x\to0}(1+3x)^{1/x} = e^3$. ✓</p>
 <h3>A concrete example</h3>
 <p>Let us compare $(1+3x)^{1/x}$ for small $x$ around $0$ with $e^3\approx 20.0855$:</p>
-<ul><li>For $x=0.01$: $(1+0.03)^{100} = (1.03)^{100} \approx 19.2186$.</li><li>For $x=0.001$: $(1+0.003)^{1000} = (1.003)^{1000} \approx 19.9955$.</li><li>For $x=-0.001$: $(1-0.003)^{-1000} = (0.997)^{-1000} \approx 20.1764$.</li></ul>
+<ul><li>For $x=0.01$: $(1+0.03)^{100} = (1.03)^{100} \approx 19.2186$.</li><li>For $x=0.001$: $(1+0.003)^{1000} = (1.003)^{1000} \approx 19.9955$.</li><li>For $x=-0.001$: $(1-0.003)^{-1000} = (0.997)^{-1000} \approx 20.1763$.</li></ul>
 <p>Both from the left and from the right, the values squeeze toward $e^3\approx 20.0855$.</p>
 <h3>How I would explain this in class</h3>
 <blockquote><p>As $x\to0$, $(1+3x)^{1/x}$ has the form $1^\infty$, which is the signature of the number $e$. To use the fundamental limit $\lim_{u\to0}(1+u)^{1/u}=e$, the exponent needs to be the reciprocal of $3x$, namely $\dfrac{1}{3x}$. So I rewrite the exponent $\dfrac{1}{x}$ as $\dfrac{1}{3x}\cdot 3$: then $\left[(1+3x)^{1/(3x)}\right]^3$ has an inside that goes to $e$, and the outer power $3$ gives $e^3$.</p></blockquote>
@@ -797,7 +797,7 @@
 <h3>1. Chosen sequence: numerical table and sketch</h3>
 <p>We choose the sequence from Exercise 1:</p>
 <div class="math-block">$$a_n = \frac{4n^2-3n+1}{2n^2+5n-7},\qquad \text{with analytical limit } \lim_{n\to\infty}a_n = 2.$$</div>
-<table><thead><tr><th>$n$</th><th>Numerator $4n^2-3n+1$</th><th>Denominator $2n^2+5n-7$</th><th>Value $a_n$ (rounded)</th><th>Distance $2-a_n$</th></tr></thead><tbody><tr><td>$2$</td><td>$11$</td><td>$11$</td><td>$1.00000$</td><td>$1.00000$</td></tr><tr><td>$5$</td><td>$86$</td><td>$68$</td><td>$1.26471$</td><td>$0.73529$</td></tr><tr><td>$10$</td><td>$371$</td><td>$243$</td><td>$1.52675$</td><td>$0.47325$</td></tr><tr><td>$50$</td><td>$9\,851$</td><td>$5\,243$</td><td>$1.87889$</td><td>$0.12111$</td></tr><tr><td>$100$</td><td>$39\,701$</td><td>$20\,493$</td><td>$1.93729$</td><td>$0.06271$</td></tr><tr><td>$1000$</td><td>$3\,997\,001$</td><td>$2\,004\,993$</td><td>$1.99352$</td><td>$0.00648$</td></tr></tbody></table>
+<table><thead><tr><th>$n$</th><th>Numerator $4n^2-3n+1$</th><th>Denominator $2n^2+5n-7$</th><th>Value $a_n$ (rounded)</th><th>Distance $2-a_n$</th></tr></thead><tbody><tr><td>$2$</td><td>$11$</td><td>$11$</td><td>$1.00000$</td><td>$1.00000$</td></tr><tr><td>$5$</td><td>$86$</td><td>$68$</td><td>$1.26471$</td><td>$0.73529$</td></tr><tr><td>$10$</td><td>$371$</td><td>$243$</td><td>$1.52675$</td><td>$0.47325$</td></tr><tr><td>$50$</td><td>$9\,851$</td><td>$5\,243$</td><td>$1.87889$</td><td>$0.12111$</td></tr><tr><td>$100$</td><td>$39\,701$</td><td>$20\,493$</td><td>$1.93730$</td><td>$0.06270$</td></tr><tr><td>$1000$</td><td>$3\,997\,001$</td><td>$2\,004\,993$</td><td>$1.99352$</td><td>$0.00648$</td></tr></tbody></table>
 <p>Sketch of the discrete points $(n, a_n)$ approaching the horizontal level $y=2$:</p>
 <pre><code>  a_n ^
   2.0 + - - - - - - - - - - - - - - - - - - - - - (limit L = 2)

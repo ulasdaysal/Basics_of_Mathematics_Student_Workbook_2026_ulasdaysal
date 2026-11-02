@@ -92,5 +92,5 @@ Suppose laying cable on land costs $c=100\text{ PLN/m}$ and underwater costs $2c
 
 ## Related workbook topics
 
+- [Exercise 9: Minimizing the Material Used for a Can](problem_09_solution.md)
 - [Exercise 12: Complete Model and Computer Verification](problem_12_solution.md)
-- [Exercise 13: Minimum Distance from a Point to a Parabola](problem_13_solution.md)

@@ -67,11 +67,11 @@ Suppose we test whether the specific vector $\mathbf{x} = (2, 0, 0)^T$ is a solu
 
 $$A\begin{pmatrix} 2 \\ 0 \\ 0 \end{pmatrix} = \begin{pmatrix} 2(2) - 1(0) + 1(0) \\ 1(2) + 3(0) - 2(0) \\ 3(2) + 1(0) + 1(0) \end{pmatrix} = \begin{pmatrix} 4 \\ 2 \\ 6 \end{pmatrix} \neq \begin{pmatrix} 4 \\ 1 \\ 7 \end{pmatrix}.$$
 
-Notice how the first component matches ($4=4$), meaning $(2,0,0)$ lies on the plane of the first equation, but it fails the second and third equations. On the other hand, testing the actual solution $\mathbf{x} = (2, 0, 0)^T$ vs. $\mathbf{x} = \left(\frac{36}{13}, -\frac{1}{13}, -\frac{19}{13}\right)^T$ (or checking $(1, 1, 3)^T$) gives
+Notice how the first component matches ($4=4$), meaning $(2,0,0)$ lies on the plane of the first equation, but it fails the second and third equations. Similarly, testing $\mathbf{x} = (1, 1, 3)^T$ gives
 
 $$A\begin{pmatrix} 1 \\ 1 \\ 3 \end{pmatrix} = \begin{pmatrix} 2 - 1 + 3 \\ 1 + 3 - 6 \\ 3 + 1 + 3 \end{pmatrix} = \begin{pmatrix} 4 \\ -2 \\ 7 \end{pmatrix},$$
 
-which satisfies the first and third equations simultaneously.
+which satisfies the first and third equations simultaneously, whereas the actual solution $\mathbf{x} = \left(\frac{5}{3}, \frac{2}{3}, \frac{4}{3}\right)^T$ is the unique vector for which $A\mathbf{x} = (4, 1, 7)^T$ matches all three components of $b$.
 
 ## How I would explain this in class
 

@@ -224,7 +224,7 @@
   <div class="layout">
     <aside class="sidebar">
       <div class="brand">Basics of Mathematics</div>
-      <div class="brand-sub">Complete Workbook (180 Solutions)</div>
+      <div class="brand-sub">Complete Workbook (177 Solutions)</div>
       <div class="toc-group-title">1. Algebra</div>
 <ul class="toc-list"><li><a href="#sec-1_01_matrices_and_operations_" style="font-weight:600;color:var(--text);">01. Matrices and Operations</a></li></ul>
 <ul class="toc-list"><li><a href="#sec-1_02_determinants_" style="font-weight:600;color:var(--text);">02. Determinants</a></li></ul>
@@ -244,7 +244,7 @@
     <main class="content">
       <header class="page-header">
         <h1>Basics of Mathematics — Complete Solutions Workbook</h1>
-        <p>Winter 2026 · Algebra, Geometry &amp; Calculus · 180 Detailed Step-by-Step Solutions</p>
+        <p>Winter 2026 · Algebra, Geometry &amp; Calculus · 177 Detailed Step-by-Step Solutions</p>
       </header>
       <div class="section-banner" id="sec-1_01_matrices_and_operations_"><h2>1. Algebra — 01. Matrices and Operations</h2><p>15 Exercises with Step-by-Step Solutions &amp; Verifications</p></div>
 <section class="exercise-card" id="1_01_matrices_and_operations_exercise-1">
@@ -1745,7 +1745,7 @@
 <p>When we multiply a vector $(x,y,z)^T$ by this matrix, each coordinate is scaled independently: $(d_1x, d_2y, d_3z)^T$.</p>
 <ul><li>To undo this scaling, we simply divide each coordinate by $d_i$, which requires <strong>every diagonal entry to be non-zero</strong> ($d_1\neq0$, $d_2\neq0$, $d_3\neq0$).</li><li>If even a single diagonal entry is $0$, that coordinate is wiped out ($0\cdot y=0$) and can never be recovered.</li></ul>
 <h3>1. Decide which matrix is invertible</h3>
-<ul><li>Look at $D=\operatorname{diag}(2,-3,5)$: all three diagonal entries ($2$, $-3$, and $5$) are non-zero, and $\det D = 2\cdot(-3)\cdot5 = -30\neq0$. Therefore, <strong>$D$ is invertible</strong>.</li><li>Look at $E=\operatorname{diag}(2,0,5)$: the middle diagonal entry is $0$ (in Fact, Row 2 and Column 2 are all zeros), and $\det E = 2\cdot0\cdot5 = 0$. Therefore, <strong>$E$ is not invertible</strong>.</li></ul>
+<ul><li>Look at $D=\operatorname{diag}(2,-3,5)$: all three diagonal entries ($2$, $-3$, and $5$) are non-zero, and $\det D = 2\cdot(-3)\cdot5 = -30\neq0$. Therefore, <strong>$D$ is invertible</strong>.</li><li>Look at $E=\operatorname{diag}(2,0,5)$: the middle diagonal entry is $0$ (in fact, Row 2 and Column 2 are all zeros), and $\det E = 2\cdot0\cdot5 = 0$. Therefore, <strong>$E$ is not invertible</strong>.</li></ul>
 <h3>2. Write down $D^{-1}$ directly</h3>
 <p>To invert an invertible diagonal matrix, replace each diagonal entry with its reciprocal:</p>
 <div class="math-block">$$D^{-1}=\begin{pmatrix}\frac{1}{2}&amp;0&amp;0\\0&amp;-\frac{1}{3}&amp;0\\0&amp;0&amp;\frac{1}{5}\end{pmatrix}.$$</div>
@@ -2020,9 +2020,9 @@
 <h3>A concrete example</h3>
 <p>Suppose we test whether the specific vector $\mathbf{x} = (2, 0, 0)^T$ is a solution. In the matrix form, we compute one matrix-vector product:</p>
 <div class="math-block">$$A\begin{pmatrix} 2 \\ 0 \\ 0 \end{pmatrix} = \begin{pmatrix} 2(2) - 1(0) + 1(0) \\ 1(2) + 3(0) - 2(0) \\ 3(2) + 1(0) + 1(0) \end{pmatrix} = \begin{pmatrix} 4 \\ 2 \\ 6 \end{pmatrix} \neq \begin{pmatrix} 4 \\ 1 \\ 7 \end{pmatrix}.$$</div>
-<p>Notice how the first component matches ($4=4$), meaning $(2,0,0)$ lies on the plane of the first equation, but it fails the second and third equations. On the other hand, testing the actual solution $\mathbf{x} = (2, 0, 0)^T$ vs. $\mathbf{x} = \left(\frac{36}{13}, -\frac{1}{13}, -\frac{19}{13}\right)^T$ (or checking $(1, 1, 3)^T$) gives</p>
+<p>Notice how the first component matches ($4=4$), meaning $(2,0,0)$ lies on the plane of the first equation, but it fails the second and third equations. Similarly, testing $\mathbf{x} = (1, 1, 3)^T$ gives</p>
 <div class="math-block">$$A\begin{pmatrix} 1 \\ 1 \\ 3 \end{pmatrix} = \begin{pmatrix} 2 - 1 + 3 \\ 1 + 3 - 6 \\ 3 + 1 + 3 \end{pmatrix} = \begin{pmatrix} 4 \\ -2 \\ 7 \end{pmatrix},$$</div>
-<p>which satisfies the first and third equations simultaneously.</p>
+<p>which satisfies the first and third equations simultaneously, whereas the actual solution $\mathbf{x} = \left(\frac{5}{3}, \frac{2}{3}, \frac{4}{3}\right)^T$ is the unique vector for which $A\mathbf{x} = (4, 1, 7)^T$ matches all three components of $b$.</p>
 <h3>How I would explain this in class</h3>
 <blockquote><p>Think of $Ax=b$ as separating the "wiring" of the system from the "variables." The matrix $A$ holds just the numbers in front of $x, y, z$—keep the columns strictly aligned by variable and the rows strictly aligned by equation. When you multiply a row of $A$ by the column $(x,y,z)^T$, you reconstruct the left-hand side of that equation, and setting the result equal to $b$ locks in the right-hand sides.</p></blockquote>
 <h3>Related workbook topics</h3>
@@ -4219,7 +4219,7 @@ a - b = 1.
 <p>This gives two symmetric points on the parabola:</p>
 <div class="math-block">$$A = (3,6)\qquad\text{and}\qquad B = (3,-6).$$</div>
 <h3>3. Additional reference points and coordinate table</h3>
-<p>To make an accurate sketch, we can also check $x=0$ and $x=\frac{4}{3}$ (or $x=1$):</p>
+<p>To make an accurate sketch, we can also check $x=0$ and $x=\frac{3}{4} = 0.75$:</p>
 <table><thead><tr><th>$x$</th><th>$y^2=12x$</th><th>$y=\pm\sqrt{12x}$</th><th>Points $(x,y)$</th></tr></thead><tbody><tr><td>$0$</td><td>$0$</td><td>$0$</td><td>$(0,0)$ (vertex)</td></tr><tr><td>$\frac{3}{4}$</td><td>$9$</td><td>$\pm 3$</td><td>$(\frac{3}{4},3),\;(\frac{3}{4},-3)$</td></tr><tr><td>$3$</td><td>$36$</td><td>$\pm 6$</td><td>$(3,6),\;(3,-6)$</td></tr></tbody></table>
 <h3>4. Sketch of the parabola</h3>
 <pre><code>        y
@@ -4679,12 +4679,12 @@ a - b = 1.
 <p>Now find the cross-sections of $x^2+y^2 = 4$ in $\mathbb{R}^3$:</p>
 <ul><li><strong>Horizontal cross-sections $z=c$:</strong> $x^2+y^2 = 4$. For <strong>every</strong> real value $c\in\mathbb{R}$, this is the exact same <strong>circle</strong> of radius $r = \sqrt{4} = 2$ centered at $(0,0,c)$.</li><li><strong>Vertical cross-section $x=0$ (in the $yz$-plane):</strong> $0 + y^2 = 4 \iff y = \pm 2$ (with $z$ arbitrary). This is a <strong>pair of parallel vertical lines</strong> $(0,2,z)$ and $(0,-2,z)$.</li><li><strong>Vertical cross-section $y=0$ (in the $xz$-plane):</strong> $x^2 + 0 = 4 \iff x = \pm 2$ (with $z$ arbitrary). This is a <strong>pair of parallel vertical lines</strong> $(2,0,z)$ and $(-2,0,z)$.</li></ul>
 <pre><code>          z
-      | .-f-. |    z = c: circle of constant radius 2
+      | .-+-. |    z = c: circle of constant radius 2
       | &#x27;---&#x27; |
       |   |   |    x=0: parallel lines y = +-2
   ----+---+---+---- x, y
       |   |   |    y=0: parallel lines x = +-2
-      | .-f-. |
+      | .-+-. |
       | &#x27;---&#x27; |</code></pre>
 <h3>3. Why the radius depends on $z$ in the first case but is constant in the second</h3>
 <p>In any horizontal plane $z=c$, the left-hand side $x^2+y^2$ represents $r^2$, the square of the horizontal radius:</p>
@@ -4947,7 +4947,7 @@ a - b = 1.
 <h3>Quick verification</h3>
 <p>Using the Binomial Theorem for $a_n = \left(1+\dfrac{1}{n}\right)^n$:</p>
 <div class="math-block">$$a_n = 1 + \binom{n}{1}\frac{1}{n} + \binom{n}{2}\frac{1}{n^2} + \binom{n}{3}\frac{1}{n^3} + \dots = 1 + 1 + \frac{1}{2!}\left(1-\frac{1}{n}\right) + \frac{1}{3!}\left(1-\frac{1}{n}\right)\left(1-\frac{2}{n}\right) + \dots$$</div>
-<p>As $n\to\infty$, each factor $\left(1-\dfrac{k}{n}\right)\to 1$ and increased $n$ adds more positive terms, converging to $1+1+\dfrac{1}{2!}+\dfrac{1}{3!}+\dots \approx 1+1+0.5+0.1667+0.0417+0.0083 = 2.7167\dots = e$. ✓</p>
+<p>As $n\to\infty$, each factor $\left(1-\dfrac{k}{n}\right)\to 1$ and increased $n$ adds more positive terms, converging to $1+1+\dfrac{1}{2!}+\dfrac{1}{3!}+\dots = e \approx 2.71828$ (already the first six terms sum to $1+1+0.5+0.1667+0.0417+0.0083 = 2.7167$). ✓</p>
 <h3>A concrete example</h3>
 <p>In compound interest, if $\$1$ is invested at $100\%$ annual interest compounded $n$ times per year:</p>
 <ul><li>Annually ($n=1$): you end the year with $\left(1+1\right)^1 = \$2.00$.</li><li>Monthly ($n=12$): you end the year with $\left(1+\frac{1}{12}\right)^{12} \approx \$2.61$.</li><li>Daily ($n=365$): you end the year with $\left(1+\frac{1}{365}\right)^{365} \approx \$2.7146$.</li><li>Continuously ($n\to\infty$): you end the year with $\$e \approx \$2.7183$.</li></ul>
@@ -4982,7 +4982,7 @@ a - b = 1.
 <p>As $x\to\infty$, the degree-$1$ over degree-$2$ remainder fraction goes to $0$ (by Exercise 2), leaving $\dfrac{3}{5} = 0.6$. ✓</p>
 <h3>A concrete example</h3>
 <p>Because $x$ is a real variable, we can evaluate $f(x)$ at non-integer points as well as negative points:</p>
-<ul><li>At $x=50.5$: $f(50.5)=\dfrac{3(50.5)^2-50.5+1}{5(50.5)^2+4(50.5)-2}=\dfrac{7600.25}{12951.25}\approx 0.5868$.</li><li>At $x=1000$: $f(1000)=\dfrac{2\,999\,001}{5\,003\,998}\approx 0.59932$.</li><li>At $x=-1000$: $f(-1000)=\dfrac{3\,001\,001}{4\,995\,998}\approx 0.60068$.</li></ul>
+<ul><li>At $x=50.5$: $f(50.5)=\dfrac{3(50.5)^2-50.5+1}{5(50.5)^2+4(50.5)-2}=\dfrac{7601.25}{12951.25}\approx 0.5869$.</li><li>At $x=1000$: $f(1000)=\dfrac{2\,999\,001}{5\,003\,998}\approx 0.59932$.</li><li>At $x=-1000$: $f(-1000)=\dfrac{3\,001\,001}{4\,995\,998}\approx 0.60068$.</li></ul>
 <p>In both directions, the graph approaches the horizontal asymptote $y=0.6$.</p>
 <h3>How I would explain this in class</h3>
 <blockquote><p>Algebraically, solving this limit is the exact same move as Exercise 1: divide top and bottom by $x^2$, watch $\dfrac{1}{x}$ and $\dfrac{1}{x^2}$ go to $0$, and get the leading-coefficient ratio $\dfrac{3}{5}$. What changes conceptually is that $x$ varies continuously over all real numbers instead of jumping across integers $n$, so the result $\dfrac{3}{5}$ represents a horizontal asymptote $y=\dfrac{3}{5}$ of a continuous curve.</p></blockquote>
@@ -5216,7 +5216,7 @@ a - b = 1.
 <p>By continuity of the exponential function, $\lim_{x\to0}(1+3x)^{1/x} = e^3$. ✓</p>
 <h3>A concrete example</h3>
 <p>Let us compare $(1+3x)^{1/x}$ for small $x$ around $0$ with $e^3\approx 20.0855$:</p>
-<ul><li>For $x=0.01$: $(1+0.03)^{100} = (1.03)^{100} \approx 19.2186$.</li><li>For $x=0.001$: $(1+0.003)^{1000} = (1.003)^{1000} \approx 19.9955$.</li><li>For $x=-0.001$: $(1-0.003)^{-1000} = (0.997)^{-1000} \approx 20.1764$.</li></ul>
+<ul><li>For $x=0.01$: $(1+0.03)^{100} = (1.03)^{100} \approx 19.2186$.</li><li>For $x=0.001$: $(1+0.003)^{1000} = (1.003)^{1000} \approx 19.9955$.</li><li>For $x=-0.001$: $(1-0.003)^{-1000} = (0.997)^{-1000} \approx 20.1763$.</li></ul>
 <p>Both from the left and from the right, the values squeeze toward $e^3\approx 20.0855$.</p>
 <h3>How I would explain this in class</h3>
 <blockquote><p>As $x\to0$, $(1+3x)^{1/x}$ has the form $1^\infty$, which is the signature of the number $e$. To use the fundamental limit $\lim_{u\to0}(1+u)^{1/u}=e$, the exponent needs to be the reciprocal of $3x$, namely $\dfrac{1}{3x}$. So I rewrite the exponent $\dfrac{1}{x}$ as $\dfrac{1}{3x}\cdot 3$: then $\left[(1+3x)^{1/(3x)}\right]^3$ has an inside that goes to $e$, and the outer power $3$ gives $e^3$.</p></blockquote>
@@ -5316,7 +5316,7 @@ a - b = 1.
 <h3>1. Chosen sequence: numerical table and sketch</h3>
 <p>We choose the sequence from Exercise 1:</p>
 <div class="math-block">$$a_n = \frac{4n^2-3n+1}{2n^2+5n-7},\qquad \text{with analytical limit } \lim_{n\to\infty}a_n = 2.$$</div>
-<table><thead><tr><th>$n$</th><th>Numerator $4n^2-3n+1$</th><th>Denominator $2n^2+5n-7$</th><th>Value $a_n$ (rounded)</th><th>Distance $2-a_n$</th></tr></thead><tbody><tr><td>$2$</td><td>$11$</td><td>$11$</td><td>$1.00000$</td><td>$1.00000$</td></tr><tr><td>$5$</td><td>$86$</td><td>$68$</td><td>$1.26471$</td><td>$0.73529$</td></tr><tr><td>$10$</td><td>$371$</td><td>$243$</td><td>$1.52675$</td><td>$0.47325$</td></tr><tr><td>$50$</td><td>$9\,851$</td><td>$5\,243$</td><td>$1.87889$</td><td>$0.12111$</td></tr><tr><td>$100$</td><td>$39\,701$</td><td>$20\,493$</td><td>$1.93729$</td><td>$0.06271$</td></tr><tr><td>$1000$</td><td>$3\,997\,001$</td><td>$2\,004\,993$</td><td>$1.99352$</td><td>$0.00648$</td></tr></tbody></table>
+<table><thead><tr><th>$n$</th><th>Numerator $4n^2-3n+1$</th><th>Denominator $2n^2+5n-7$</th><th>Value $a_n$ (rounded)</th><th>Distance $2-a_n$</th></tr></thead><tbody><tr><td>$2$</td><td>$11$</td><td>$11$</td><td>$1.00000$</td><td>$1.00000$</td></tr><tr><td>$5$</td><td>$86$</td><td>$68$</td><td>$1.26471$</td><td>$0.73529$</td></tr><tr><td>$10$</td><td>$371$</td><td>$243$</td><td>$1.52675$</td><td>$0.47325$</td></tr><tr><td>$50$</td><td>$9\,851$</td><td>$5\,243$</td><td>$1.87889$</td><td>$0.12111$</td></tr><tr><td>$100$</td><td>$39\,701$</td><td>$20\,493$</td><td>$1.93730$</td><td>$0.06270$</td></tr><tr><td>$1000$</td><td>$3\,997\,001$</td><td>$2\,004\,993$</td><td>$1.99352$</td><td>$0.00648$</td></tr></tbody></table>
 <p>Sketch of the discrete points $(n, a_n)$ approaching the horizontal level $y=2$:</p>
 <pre><code>  a_n ^
   2.0 + - - - - - - - - - - - - - - - - - - - - - (limit L = 2)
@@ -5388,7 +5388,7 @@ a - b = 1.
 <div class="math-block">$$f(x)=-4+7x-2x^3+3x^5 \approx -4+7x\quad\text{for }x\text{ close to }0.$$</div>
 <p>The linear approximation at $x=0$ is $L_0(x)=-4+7x$, whose slope is $7=f'(0)$. ✓</p>
 <p>Similarly, using a small step $h=0.001$ at $x=1$:</p>
-<div class="math-block">$$\frac{f(1.001)-f(1)}{0.001}=\frac{4.016024027003-4}{0.001}\approx 16.024 \approx 16 = f'(1).\quad\checkmark$$</div>
+<div class="math-block">$$\frac{f(1.001)-f(1)}{0.001}=\frac{4.016024028015003-4}{0.001}\approx 16.024 \approx 16 = f'(1).\quad\checkmark$$</div>
 <h3>A concrete example</h3>
 <p>At $x=0$, the point on the curve is $(0,f(0))=(0,-4)$ and the tangent line has equation</p>
 <div class="math-block">$$y = -4 + 7x.$$</div>
@@ -5436,7 +5436,7 @@ a - b = 1.
 <p>Note that if the term $-\dfrac{3}{x^2}$ had not been present, $2\sqrt{x}+x^{3/2}$ would have had domain $[0,\infty)$, while its derivative $\dfrac{1}{\sqrt{x}}+\dfrac{3}{2}\sqrt{x}$ would have lost the endpoint $x=0$ because $\sqrt{x}$ has a vertical tangent at $x=0^+$. Here, $x=0$ was already excluded from $D_f$ by the $-\dfrac{3}{x^2}$ term, so the two domains match: $D_{f'}=D_f=(0,\infty)$.</p>
 <h3>Quick verification</h3>
 <p>Let us evaluate both formulas at $x=1$ and check with a small increment:</p>
-<ul><li>Using our formula: $f'(1) = 1 + 6 + \dfrac{3}{2} = 8.5$.</li><li>At $x=1$, $f(1) = 2(1) - 3(1) + 1 = 0$.</li><li>At $x=1.0001$, $f(1.0001) = 2\sqrt{1.0001} - \dfrac{3}{(1.0001)^2} + (1.0001)^{3/2} \approx 0.000849825$.</li><li>Difference quotient: $\dfrac{f(1.0001)-f(1)}{0.0001} \approx 8.498 \approx 8.5 = f'(1)$. ✓</li></ul>
+<ul><li>Using our formula: $f'(1) = 1 + 6 + \dfrac{3}{2} = 8.5$.</li><li>At $x=1$, $f(1) = 2(1) - 3(1) + 1 = 0$.</li><li>At $x=1.0001$, $f(1.0001) = 2\sqrt{1.0001} - \dfrac{3}{(1.0001)^2} + (1.0001)^{3/2} \approx 0.000849911$.</li><li>Difference quotient: $\dfrac{f(1.0001)-f(1)}{0.0001} \approx 8.499 \approx 8.5 = f'(1)$. ✓</li></ul>
 <h3>A concrete example</h3>
 <p>At $x=4\in(0,\infty)$:</p>
 <div class="math-block">$$f(4)=2\sqrt{4}-\frac{3}{4^2}+4^{3/2}=4-\frac{3}{16}+8=11.8125,$$</div>
@@ -5652,7 +5652,7 @@ a - b = 1.
 <p>Let us verify using two independent observations:</p>
 <ol><li><strong>Even symmetry</strong>: $f(-x)=\sin((-x)^2+1)=\sin(x^2+1)=f(x)$. Because $f$ is an even differentiable function, its graph is symmetric across the $y$-axis, so its slope at $x=0$ must be $f'(0)=0$. ✓</li><li><strong>Numerical difference quotient at $x=1$</strong>:</li></ol>
 <ul><li>Formula value: $f'(1)=2(1)\cos(1^2+1)=2\cos(2)\approx 2(-0.416147)=-0.832294$.</li><li>Difference quotient with $h=0.0001$:</li></ul>
-<div class="math-block">$$\frac{\sin(1.0001^2+1)-\sin(2)}{0.0001}=\frac{\sin(2.00020001)-\sin(2)}{0.0001}\approx -0.83242 \approx f'(1).\quad\checkmark$$</div>
+<div class="math-block">$$\frac{\sin(1.0001^2+1)-\sin(2)}{0.0001}=\frac{\sin(2.00020001)-\sin(2)}{0.0001}\approx -0.83252 \approx f'(1).\quad\checkmark$$</div>
 <h3>A concrete example</h3>
 <p>Compare $x=-0.5$, $x=0$, and $x=0.5$ (note that for $x\in[-0.5,0.5]$, the angle $x^2+1\in[1,1.25]$ radians lies in the first quadrant $(0,\frac{\pi}{2})$, so $\cos(x^2+1)&gt;0$):</p>
 <ul><li>At $x=-0.5$: $f'(-0.5)=-1\cdot\cos(1.25)\approx -0.3153&lt;0$ (decreasing),</li><li>At $x=0$: $f'(0)=0$ (horizontal tangent at the local minimum $y=\sin 1\approx 0.8415$),</li><li>At $x=0.5$: $f'(0.5)=1\cdot\cos(1.25)\approx +0.3153&gt;0$ (increasing).</li></ul>
@@ -7143,7 +7143,7 @@ dv &amp;= e^x\,dx &amp; \implies \quad v &amp;= e^x.
 <ul><li><a href="#3_04_integrals_exercise-1">Exercise 1: Antiderivative and Verification</a></li><li><a href="#3_04_integrals_exercise-5">Exercise 5: The Same Substitution in a Different Context</a></li></ul>
 </section>
 
-<div class="section-banner" id="sec-3_05_applications_"><h2>3. Calculus — 05. Applications of Differential and Integral Calculus</h2><p>15 Exercises with Step-by-Step Solutions &amp; Verifications</p></div>
+<div class="section-banner" id="sec-3_05_applications_"><h2>3. Calculus — 05. Applications of Differential and Integral Calculus</h2><p>12 Exercises with Step-by-Step Solutions &amp; Verifications</p></div>
 <section class="exercise-card" id="3_05_applications_exercise-1">
 <h2 class="exercise-title">Exercise 1. Motion — from Position to Velocity</h2>
 <h3>The question</h3>
@@ -7184,7 +7184,7 @@ dv &amp;= e^x\,dx &amp; \implies \quad v &amp;= e^x.
 <h3>How I would explain this in class</h3>
 <blockquote><p>To study motion from a position formula $s(t)$, we differentiate once to get velocity $v(t)=3t^2-12t+9=3(t-1)(t-3)$ and a second time to get acceleration $a(t)=6t-12$. Setting $v(t)=0$ shows the object stops at $t=1$ and $t=3$. Because $v(t)$ is a parabola opening upward, the velocity is positive on $[0,1)$ and $(3,\infty)$, meaning forward motion, and negative on $(1,3)$, meaning the object backs up between $t=1$ and $t=3$.</p></blockquote>
 <h3>Related workbook topics</h3>
-<ul><li><a href="#3_05_applications_exercise-5">Exercise 5: Distance from Velocity</a></li><li><a href="#3_05_applications_exercise-14">Exercise 14: Work Done by a Variable Force</a></li></ul>
+<ul><li><a href="#3_05_applications_exercise-5">Exercise 5: Distance from Velocity</a></li><li><a href="#3_05_applications_exercise-8">Exercise 8: Number of Requests Handled by a Server</a></li></ul>
 </section>
 
 <section class="exercise-card" id="3_05_applications_exercise-2">
@@ -7258,21 +7258,21 @@ dv &amp;= e^x\,dx &amp; \implies \quad v &amp;= e^x.
 <div class="math-block">$$x_{1,2}=\frac{70\pm 10\sqrt{13}}{6}=\frac{35\pm 5\sqrt{13}}{3}.$$</div>
 <h3>4. Selecting and justifying the maximum in the domain</h3>
 <p>Since $\sqrt{13}\approx 3.6056$, the two critical points are approximately</p>
-<div class="math-block">$$x_1=\frac{35-5\sqrt{13}}{3}\approx 5.65\text{ cm},\qquad x_2=\frac{35+5\sqrt{13}}{3}\approx 17.69\text{ cm}.$$</div>
-<p>Because $x_2\approx 17.69\notin(0,15)$, the only critical point inside our physical domain $D=(0,15)$ is</p>
-<div class="math-block">$$x^*=\frac{35-5\sqrt{13}}{3}\approx 5.65\text{ cm}.$$</div>
-<p>Since $V'(x)=4(3x^2-70x+300)$ is an upward-opening parabola with roots $x_1\approx 5.65$ and $x_2\approx 17.69$:</p>
+<div class="math-block">$$x_1=\frac{35-5\sqrt{13}}{3}\approx 5.66\text{ cm},\qquad x_2=\frac{35+5\sqrt{13}}{3}\approx 17.68\text{ cm}.$$</div>
+<p>Because $x_2\approx 17.68\notin(0,15)$, the only critical point inside our physical domain $D=(0,15)$ is</p>
+<div class="math-block">$$x^*=\frac{35-5\sqrt{13}}{3}\approx 5.66\text{ cm}.$$</div>
+<p>Since $V'(x)=4(3x^2-70x+300)$ is an upward-opening parabola with roots $x_1\approx 5.66$ and $x_2\approx 17.68$:</p>
 <ul><li>For $x\in(0,x^*)$, $V'(x)&gt;0$, so $V(x)$ is strictly increasing.</li><li>For $x\in(x^*,15)$, $V'(x)&lt;0$, so $V(x)$ is strictly decreasing.</li></ul>
-<p>Therefore, $x^*=\dfrac{35-5\sqrt{13}}{3}\approx 5.65\text{ cm}$ gives the global maximum volume on $(0,15)$.</p>
+<p>Therefore, $x^*=\dfrac{35-5\sqrt{13}}{3}\approx 5.66\text{ cm}$ gives the global maximum volume on $(0,15)$.</p>
 <h3>Quick verification</h3>
-<p>Let us evaluate the second derivative and check volume values around $x^*\approx 5.65\text{ cm}$:</p>
+<p>Let us evaluate the second derivative and check volume values around $x^*\approx 5.66\text{ cm}$:</p>
 <ul><li>Second derivative test: $V''(x)=24x-280$. At $x^*=\frac{35-5\sqrt{13}}{3}$, we have $V''(x^*)=8(35-5\sqrt{13})-280=-40\sqrt{13}&lt;0$, confirming a local maximum. ✓</li><li>Boundary behavior: $\lim_{x\to 0^+}V(x)=0$ and $\lim_{x\to 15^-}V(x)=0$, while $V(x^*)&gt;0$. ✓</li></ul>
 <h3>A concrete example</h3>
-<p>Let us compare the volume at $x^*\approx 5.65\text{ cm}$ with nearby integer cuts:</p>
-<ul><li>For $x=5\text{ cm}$: base is $20\text{ cm}\times 30\text{ cm}$, so $V(5)=5\cdot 20\cdot 30=3000\text{ cm}^3$.</li><li>For $x=6\text{ cm}$: base is $18\text{ cm}\times 28\text{ cm}$, so $V(6)=6\cdot 18\cdot 28=3024\text{ cm}^3$.</li><li>For $x^*\approx 5.65\text{ cm}$: base is $18.70\text{ cm}\times 28.70\text{ cm}$, giving the maximum volume $V(x^*)\approx 3032.3\text{ cm}^3$.</li></ul>
-<p>Both shallow cuts ($x=5$) and deeper cuts ($x=6$) produce smaller volumes than the optimal cut $x^*\approx 5.65\text{ cm}$.</p>
+<p>Let us compare the volume at $x^*\approx 5.66\text{ cm}$ with nearby integer cuts:</p>
+<ul><li>For $x=5\text{ cm}$: base is $20\text{ cm}\times 30\text{ cm}$, so $V(5)=5\cdot 20\cdot 30=3000\text{ cm}^3$.</li><li>For $x=6\text{ cm}$: base is $18\text{ cm}\times 28\text{ cm}$, so $V(6)=6\cdot 18\cdot 28=3024\text{ cm}^3$.</li><li>For $x^*\approx 5.66\text{ cm}$: base is $18.69\text{ cm}\times 28.69\text{ cm}$, giving the maximum volume $V(x^*)\approx 3032.3\text{ cm}^3$.</li></ul>
+<p>Both shallow cuts ($x=5$) and deeper cuts ($x=6$) produce smaller volumes than the optimal cut $x^*\approx 5.66\text{ cm}$.</p>
 <h3>How I would explain this in class</h3>
-<blockquote><p>Cutting squares of side $x$ from the four corners reduces the cardboard's sides from $30$ and $40$ to $30-2x$ and $40-2x$, while folding up the flaps gives height $x$. For all three dimensions to be positive, $x$ must lie in $(0,15)$. Expanding $V(x)=x(30-2x)(40-2x)=4x^3-140x^2+1200x$ and solving $V'(x)=0$ gives two roots, $(35\pm 5\sqrt{13})/3$. Only $x=(35-5\sqrt{13})/3\approx 5.65\text{ cm}$ fits in $(0,15)$, and because $V'(x)$ changes sign from $+$ to $-$ there, it maximizes the volume.</p></blockquote>
+<blockquote><p>Cutting squares of side $x$ from the four corners reduces the cardboard's sides from $30$ and $40$ to $30-2x$ and $40-2x$, while folding up the flaps gives height $x$. For all three dimensions to be positive, $x$ must lie in $(0,15)$. Expanding $V(x)=x(30-2x)(40-2x)=4x^3-140x^2+1200x$ and solving $V'(x)=0$ gives two roots, $(35\pm 5\sqrt{13})/3$. Only $x=(35-5\sqrt{13})/3\approx 5.66\text{ cm}$ fits in $(0,15)$, and because $V'(x)$ changes sign from $+$ to $-$ there, it maximizes the volume.</p></blockquote>
 <h3>Related workbook topics</h3>
 <ul><li><a href="#3_05_applications_exercise-2">Exercise 2: Maximum Area of a Rectangle</a></li><li><a href="#3_05_applications_exercise-9">Exercise 9: Minimizing the Material Used for a Can</a></li></ul>
 </section>
@@ -7420,7 +7420,7 @@ dv &amp;= e^x\,dx &amp; \implies \quad v &amp;= e^x.
 <div class="math-block">$$k T_{\text{double}} = \ln 2 \implies T_{\text{double}} = \frac{\ln 2}{k}.$$</div>
 <h3>3. Why the doubling time does not depend on $N_0$</h3>
 <p>There are two complementary ways to understand why $N_0$ cancels out:</p>
-<ul><li><strong>Algebraic scaling:</strong> $N_0$ is a multiplicative scale factor in $N(t)=N_0 e^{kt}$. Asking when $N(t)$ reaches $2N_0$ is asking when the growth factor $N(t)/N_0 = e^{kt}$ reaches $2$, which depends only on $k$.</li><li><strong>Proportionality of growth:</strong> Because $N'(t)=kN(t)$, each individual (or unit of population) reproduces at the same average rate $k$ independently of how many other individuals exist. A population that is $10$ times larger has $10$ times as much absolute growth $N'(t)$ to achieve before doubling,-and it also has $10$ times as many individuals contributing to that growth, so the two factors of $10$ cancel completely.</li></ul>
+<ul><li><strong>Algebraic scaling:</strong> $N_0$ is a multiplicative scale factor in $N(t)=N_0 e^{kt}$. Asking when $N(t)$ reaches $2N_0$ is asking when the growth factor $N(t)/N_0 = e^{kt}$ reaches $2$, which depends only on $k$.</li><li><strong>Proportionality of growth:</strong> Because $N'(t)=kN(t)$, each individual (or unit of population) reproduces at the same average rate $k$ independently of how many other individuals exist. A population that is $10$ times larger has $10$ times as much absolute growth $N'(t)$ to achieve before doubling, and it also has $10$ times as many individuals contributing to that growth, so the two factors of $10$ cancel completely.</li></ul>
 <h3>4. Extending to any interval $[t_0, t_0 + T_{\text{double}}]$</h3>
 <p>Not only does the initial value $N_0$ not matter, the starting time $t_0$ does not matter either:</p>
 <div class="math-block">$$N(t_0 + T_{\text{double}}) = N_0 e^{k(t_0 + \frac{\ln 2}{k})} = N_0 e^{kt_0} e^{\ln 2} = 2 N(t_0).$$</div>
@@ -7565,7 +7565,7 @@ dv &amp;= e^x\,dx &amp; \implies \quad v &amp;= e^x.
 <h3>How I would explain this in class</h3>
 <blockquote><p>Let $x\in[0,500]$ be how far downstream from the opposite point $O$ the cable comes ashore. By Pythagoras, the underwater section has length $\sqrt{x^2+100^2}$ at unit cost $2c$, and the remaining land section has length $500-x$ at unit cost $c$, giving $C(x)=c\bigl(2\sqrt{x^2+10\,000}+500-x\bigr)$. Setting $C'(x)=c\bigl(\frac{2x}{\sqrt{x^2+10\,000}}-1\bigr)=0$ gives $2x=\sqrt{x^2+10\,000}$, so $3x^2=10\,000$ and $x=\frac{100\sqrt{3}}{3}\approx 57.74\text{ m}$. Because $C'(x)$ goes from negative to positive there, exiting the water $57.74\text{ m}$ downstream (at a $30^\circ$ angle) minimizes the cost.</p></blockquote>
 <h3>Related workbook topics</h3>
-<ul><li><a href="#3_05_applications_exercise-12">Exercise 12: Complete Model and Computer Verification</a></li><li><a href="#3_05_applications_exercise-13">Exercise 13: Minimum Distance from a Point to a Parabola</a></li></ul>
+<ul><li><a href="#3_05_applications_exercise-9">Exercise 9: Minimizing the Material Used for a Can</a></li><li><a href="#3_05_applications_exercise-12">Exercise 12: Complete Model and Computer Verification</a></li></ul>
 </section>
 
 <section class="exercise-card" id="3_05_applications_exercise-11">
@@ -7657,144 +7657,6 @@ dv &amp;= e^x\,dx &amp; \implies \quad v &amp;= e^x.
 <blockquote><p>If the two walls perpendicular to the existing wall have length $x$ and the parallel wall has length $y$, the budget equation is $2(300x)+500y=600x+500y=30\,000$, which gives $y=60-1.2x$ on the domain $x\in(0,50)$. Substituting this into the area $A=xy$ produces the parabola $A(x)=60x-1.2x^2$. Setting $A'(x)=60-2.4x=0$ gives $x=25\text{ m}$, $y=30\text{ m}$, and a maximum area of $750\text{ m}^2$, where exactly half the budget ($15\,000\text{ PLN}$) is spent on each direction.</p></blockquote>
 <h3>Related workbook topics</h3>
 <ul><li><a href="#3_05_applications_exercise-2">Exercise 2: Maximum Area of a Rectangle</a></li><li><a href="#3_05_applications_exercise-10">Exercise 10: A Cable Through Water and Land</a></li></ul>
-</section>
-
-<section class="exercise-card" id="3_05_applications_exercise-13">
-<h2 class="exercise-title">Exercise 13. Minimum Distance from a Point to a Parabola</h2>
-<h3>The question</h3>
-<p>Find the point on the parabola</p>
-<div class="math-block">$$y=x^2$$</div>
-<p>that is closest to the fixed point $P=(0,3)$, and compute the minimum distance between $P$ and the parabola. Interpret the geometric relationship between the shortest segment and the tangent line at the optimal point.</p>
-<h3>Before calculating: what idea do we need?</h3>
-<p>Any point on the parabola $y=x^2$ can be written in terms of a single parameter as $Q=(x,x^2)$ for $x\in\mathbb{R}$. By the Euclidean distance formula, the distance between $P=(0,3)$ and $Q=(x,x^2)$ is</p>
-<div class="math-block">$$d(x) = \sqrt{(x-0)^2 + (x^2-3)^2}.$$</div>
-<p>Because the square root function $\sqrt{u}$ is strictly increasing for $u\ge 0$, the distance $d(x)$ reaches its minimum at the exact same $x$-values where the <strong>squared distance</strong> $f(x)=[d(x)]^2$ reaches its minimum. Optimizing $f(x)$ avoids differentiating square roots!</p>
-<h3>1. Building the squared-distance objective function</h3>
-<p>For an arbitrary point $Q=(x,x^2)$ on the parabola ($x\in\mathbb{R}$), the squared distance to $P=(0,3)$ is</p>
-<div class="math-block">$$f(x) = [d(x)]^2 = x^2 + (x^2-3)^2.$$</div>
-<p>Expanding the expression into a polynomial in $x$:</p>
-<div class="math-block">$$f(x) = x^2 + (x^4 - 6x^2 + 9) = x^4 - 5x^2 + 9,\qquad x\in\mathbb{R}.$$</div>
-<h3>2. Finding the critical points</h3>
-<p>Differentiating $f(x)=x^4-5x^2+9$ with respect to $x$ gives:</p>
-<div class="math-block">$$f'(x) = 4x^3 - 10x = 2x(2x^2 - 5).$$</div>
-<p>Setting $f'(x)=0$ yields three critical points:</p>
-<div class="math-block">$$x_0 = 0,\qquad x_1 = -\sqrt{\frac{5}{2}} = -\frac{\sqrt{10}}{2} \approx -1.581,\qquad x_2 = \sqrt{\frac{5}{2}} = \frac{\sqrt{10}}{2} \approx 1.581.$$</div>
-<h3>3. Classifying the critical points and finding the minimum distance</h3>
-<p>Let us compute the second derivative $f''(x) = 12x^2 - 10$:</p>
-<ul><li>At $x_0=0$: $f''(0) = -10 &lt; 0$, so $x=0$ (the vertex $(0,0)$ of the parabola) is a <strong>local maximum</strong> of the distance among nearby points on the curve, with $f(0)=9$ and $d(0)=3$.</li><li>At $x_{1,2}=\pm\sqrt{\frac{5}{2}}$: $f''\bigl(\pm\sqrt{\frac{5}{2}}\bigr) = 12\left(\frac{5}{2}\right)-10 = 20 &gt; 0$, so both symmetric points give the <strong>global minimum</strong>.</li></ul>
-<p>At $x=\pm\sqrt{\frac{5}{2}}$, the $y$-coordinate on the parabola is $y=x^2=\frac{5}{2}=2.5$. Thus, there are two symmetric closest points on the parabola:</p>
-<div class="math-block">$$Q_1 = \left(-\frac{\sqrt{10}}{2},\, \frac{5}{2}\right) \quad\text{and}\quad Q_2 = \left(\frac{\sqrt{10}}{2},\, \frac{5}{2}\right).$$</div>
-<p>Evaluating the minimum squared distance:</p>
-<div class="math-block">$$f\left(\pm\sqrt{\frac{5}{2}}\right) = \frac{5}{2} + \left(\frac{5}{2}-3\right)^2 = \frac{5}{2} + \frac{1}{4} = \frac{11}{4},$$</div>
-<p>so the minimum distance is</p>
-<div class="math-block">$$d_{\min} = \sqrt{\frac{11}{4}} = \frac{\sqrt{11}}{2} \approx 1.658.$$</div>
-<h3>4. Geometric interpretation (orthogonality to the tangent line)</h3>
-<p>At the closest point $Q_2=\bigl(\sqrt{\frac{5}{2}}, \frac{5}{2}\bigr)$, the slope of the tangent line to $y=x^2$ is</p>
-<div class="math-block">$$m_{\text{tan}} = y'\left(\sqrt{\frac{5}{2}}\right) = 2\sqrt{\frac{5}{2}} = \sqrt{10}.$$</div>
-<p>Meanwhile, the slope of the line segment $PQ_2$ connecting $P=(0,3)$ to $Q_2=\bigl(\sqrt{\frac{5}{2}}, \frac{5}{2}\bigr)$ is</p>
-<div class="math-block">$$m_{PQ_2} = \frac{\frac{5}{2}-3}{\sqrt{\frac{5}{2}}-0} = \frac{-\frac{1}{2}}{\sqrt{\frac{5}{2}}} = -\frac{1}{\sqrt{10}}.$$</div>
-<p>Multiplying the two slopes gives $m_{\text{tan}}\cdot m_{PQ_2} = \sqrt{10}\cdot\bigl(-\frac{1}{\sqrt{10}}\bigr) = -1$. Geometrically, <strong>the shortest segment from an external point to a smooth curve is always perpendicular (normal) to the tangent line at the foot of the segment</strong>.</p>
-<h3>Quick verification</h3>
-<p>We can verify the result by completing the square in $u=x^2\ge 0$:</p>
-<div class="math-block">$$f(x) = u^2 - 5u + 9 = \left(u - \frac{5}{2}\right)^2 + 9 - \frac{25}{4} = \left(x^2 - \frac{5}{2}\right)^2 + \frac{11}{4}.$$</div>
-<p>Since $\bigl(x^2-\frac{5}{2}\bigr)^2\ge 0$, the minimum value of $f(x)$ is undeniably $\frac{11}{4}$, achieved precisely when $x^2=\frac{5}{2}$. ✓</p>
-<h3>A concrete example</h3>
-<p>Compare the distances from $P=(0,3)$ to several points on $y=x^2$:</p>
-<ul><li>To the vertex $(0,0)$: $d(0)=\sqrt{0+9}=3.000$.</li><li>To $(1,1)$: $d(1)=\sqrt{1^2+(1-3)^2}=\sqrt{5}\approx 2.236$.</li><li>To the optimal point $\bigl(\sqrt{2.5}, 2.5\bigr)\approx(1.581, 2.5)$: $d_{\min}=\frac{\sqrt{11}}{2}\approx 1.658$.</li><li>To $(2,4)$: $d(2)=\sqrt{2^2+(4-3)^2}=\sqrt{5}\approx 2.236$.</li></ul>
-<p>Notice that $(0,0)$ is actually farther from $(0,3)$ than the side walls of the parabola near $y=2.5$!</p>
-<h3>How I would explain this in class</h3>
-<blockquote><p>Instead of minimizing the square root $d(x)=\sqrt{x^2+(x^2-3)^2}$, we minimize the squared distance $f(x)=x^2+(x^2-3)^2=x^4-5x^2+9$. Differentiating gives $f'(x)=4x^3-10x=2x(2x^2-5)=0$, with critical points $x=0$ (a local maximum at the vertex) and $x=\pm\sqrt{5/2}$ (global minima). This gives the two symmetric closest points $\bigl(\pm\frac{\sqrt{10}}{2}, \frac{5}{2}\bigr)$ at distance $\frac{\sqrt{11}}{2}\approx 1.658$, where the segment from $(0,3)$ meets the parabola at a right angle.</p></blockquote>
-<h3>Related workbook topics</h3>
-<ul><li><a href="#3_05_applications_exercise-2">Exercise 2: Maximum Area of a Rectangle</a></li><li><a href="#3_05_applications_exercise-10">Exercise 10: A Cable Through Water and Land</a></li></ul>
-</section>
-
-<section class="exercise-card" id="3_05_applications_exercise-14">
-<h2 class="exercise-title">Exercise 14. Work Done by a Variable Force</h2>
-<h3>The question</h3>
-<p>A nonlinear mechanical spring exerts a restoring force that requires an external force</p>
-<div class="math-block">$$F(x) = 40x + 6x^2\quad [\text{N}]$$</div>
-<p>to hold it stretched a distance $x\ [\text{m}]$ beyond its natural length ($x=0$).</p>
-<ol><li>Set up and evaluate the definite integral for the work $W$ done in stretching the spring from its natural length $x=0$ to $x=2\text{ m}$.</li><li>Compute the additional work required to stretch it from $x=2\text{ m}$ to $x=3\text{ m}$.</li><li>Find the average force exerted on $[0,2]$ and verify that $(\text{average force})\times(\text{displacement}) = W$.</li></ol>
-<h3>Before calculating: what idea do we need?</h3>
-<p>When a force $F$ is constant along a straight displacement $\Delta x$, the mechanical work done is simply $W = F\cdot\Delta x$. However, when stretching a spring, the force $F(x)$ grows stronger as $x$ increases. Over an infinitesimal displacement $dx$ at position $x$, the force is practically constant at $F(x)$, so the elemental work is</p>
-<div class="math-block">$$dW = F(x)\,dx.$$</div>
-<p>Integrating $F(x)$ from $x=a$ to $x=b$ accumulates all these tiny work increments into the total work:</p>
-<div class="math-block">$$W = \int_a^b F(x)\,dx.$$</div>
-<h3>1. Work done in stretching the spring from $x=0$ to $x=2\text{ m}$</h3>
-<p>Integrating the force function $F(x)=40x+6x^2$ over $[0,2]$ gives:</p>
-<div class="math-block">$$W_{0\to 2} = \int_0^2 (40x + 6x^2)\,dx.$$</div>
-<p>Finding the antiderivative and applying the Fundamental Theorem of Calculus:</p>
-<div class="math-block">$$W_{0\to 2} = \left[20x^2 + 2x^3\right]_0^2 = \bigl(20(2)^2 + 2(2)^3\bigr) - 0 = 80 + 16 = 96\text{ J (joules)}.$$</div>
-<h3>2. Additional work required from $x=2\text{ m}$ to $x=3\text{ m}$</h3>
-<p>To stretch the spring by just $1\text{ m}$ more—from $x=2\text{ m}$ to $x=3\text{ m}$—we integrate over $[2,3]$:</p>
-<div class="math-block">$$W_{2\to 3} = \int_2^3 (40x + 6x^2)\,dx = \left[20x^2 + 2x^3\right]_2^3.$$</div>
-<p>Evaluating at $x=3$ and subtracting the value at $x=2$:</p>
-<div class="math-block">$$W_{2\to 3} = \bigl(20(3)^2 + 2(3)^3\bigr) - 96 = (180 + 54) - 96 = 234 - 96 = 138\text{ J}.$$</div>
-<p>Notice the physical insight: stretching the spring by $1\text{ m}$ from $x=2$ to $x=3$ requires $138\text{ J}$, which is significantly more than the $96\text{ J}$ needed to stretch it by the entire first $2\text{ m}$ from $x=0$ to $x=2$, because the spring is already under heavy tension at $x=2\text{ m}$.</p>
-<h3>3. Average force on $[0,2]$ and connection to work</h3>
-<p>By the average value formula for a function on $[0,2]$:</p>
-<div class="math-block">$$F_{\text{avg}} = \frac{1}{2-0}\int_0^2 F(x)\,dx = \frac{96\text{ J}}{2\text{ m}} = 48\text{ N}.$$</div>
-<p>Multiplying this constant equivalent force by the total displacement $\Delta x = 2\text{ m}$ recovers the exact work done:</p>
-<div class="math-block">$$F_{\text{avg}}\cdot\Delta x = (48\text{ N})\cdot(2\text{ m}) = 96\text{ J} = W_{0\to 2}.$$</div>
-<h3>4. Physical decomposition into Hookean and nonlinear hardening terms</h3>
-<p>The force $F(x)=40x+6x^2$ is the sum of:</p>
-<ul><li>A standard linear (Hooke's law) spring term $F_1(x)=kx=40x$, which contributes $\frac{1}{2}k(2)^2 = 80\text{ J}$ on $[0,2]$,</li><li>A cubic stiffening term $F_2(x)=6x^2$, which contributes $\int_0^2 6x^2\,dx = 16\text{ J}$ on $[0,2]$.</li></ul>
-<h3>Quick verification</h3>
-<p>Let us verify the additivity of work over $[0,3]$ and bound $W_{0\to 2}$:</p>
-<ul><li><strong>Interval additivity:</strong> Total work from $0$ to $3$ is $\int_0^3 (40x+6x^2)\,dx = [20x^2+2x^3]_0^3 = 180+54 = 234\text{ J}$, which equals $W_{0\to 2}+W_{2\to 3} = 96 + 138 = 234\text{ J}$. ✓</li><li><strong>Trapezoidal overestimate check on $[0,2]$:</strong> Since $F''(x)=12&gt;0$, $F(x)$ is convex on $[0,2]$, so the integral $96\text{ J}$ must be slightly less than the trapezoid area $\frac{F(0)+F(2)}{2}\cdot 2 = \frac{0+104}{2}\cdot 2 = 104\text{ J}$. Indeed, $96 &lt; 104$. ✓</li></ul>
-<h3>A concrete example</h3>
-<p>In an automotive suspension coil, progressive springs are designed with a rising stiffness like $F(x)=40x+6x^2$:</p>
-<ul><li>During normal driving over small bumps ($x\in[0,1]\text{ m}$), the work absorbed is $\int_0^1 (40x+6x^2)\,dx = 20+2 = 22\text{ J}$ (a soft, comfortable ride).</li><li>During a severe pothole impact ($x\in[2,3]\text{ m}$), that final meter of compression absorbs $138\text{ J}$—more than six times the energy of the first meter—preventing the suspension from bottoming out.</li></ul>
-<h3>How I would explain this in class</h3>
-<blockquote><p>Because the force $F(x)=40x+6x^2$ changes with position $x$, we cannot just multiply force by distance; instead we integrate $dW=F(x)\,dx$. From $x=0$ to $x=2$, the work is $\int_0^2 (40x+6x^2)\,dx = [20x^2+2x^3]_0^2 = 80+16 = 96\text{ J}$. From $x=2$ to $x=3$, the work is $[20x^2+2x^3]_2^3 = 234-96 = 138\text{ J}$. Dividing the $96\text{ J}$ work on $[0,2]$ by the $2\text{ m}$ displacement gives the average force $F_{\text{avg}}=48\text{ N}$.</p></blockquote>
-<h3>Related workbook topics</h3>
-<ul><li><a href="#3_05_applications_exercise-5">Exercise 5: Distance from Velocity</a></li><li><a href="#3_05_applications_exercise-8">Exercise 8: Number of Requests Handled by a Server</a></li></ul>
-</section>
-
-<section class="exercise-card" id="3_05_applications_exercise-15">
-<h2 class="exercise-title">Exercise 15. Marginal Cost, Total Cost, and Average Cost Optimization</h2>
-<h3>The question</h3>
-<p>A manufacturing plant has fixed overhead costs of $C(0)=900\text{ PLN}$, and its marginal cost of producing at level $q&gt;0$ units is modeled by</p>
-<div class="math-block">$$C'(q) = 2q + 10\quad [\text{PLN/unit}].$$</div>
-<ol><li>Use integration to find the total cost function $C(q)$.</li><li>Write the average cost per unit $A(q)=\dfrac{C(q)}{q}$ for $q&gt;0$.</li><li>Find the production level $q^*$ that minimizes the average cost per unit, and verify that at the minimum average cost, marginal cost equals average cost: $C'(q^*)=A(q^*)$.</li></ol>
-<h3>Before calculating: what idea do we need?</h3>
-<p>This synthesis problem combines <strong>both</strong> branches of calculus:</p>
-<ol><li><strong>Integration (from marginal to total):</strong> Marginal cost $C'(q)$ is the derivative of total cost $C(q)$. Integrating $C'(q)$ from $0$ to $q$ accumulates the variable production cost, and adding the fixed cost $C(0)$ gives the total cost $C(q)$.</li><li><strong>Differentiation (minimizing average cost):</strong> Dividing $C(q)$ by $q$ gives the average unit cost $A(q)=\frac{C(q)}{q}$. When $q$ is very small, the fixed cost $900\text{ PLN}$ is spread over too few units; when $q$ is very large, the rising marginal cost $2q+10$ drives up unit costs. Differentiating $A(q)$ finds the sweet spot $q^*$.</li></ol>
-<h3>1. Finding the total cost function $C(q)$ via integration</h3>
-<p>By the Fundamental Theorem of Calculus, total cost equals fixed cost plus the definite integral of marginal cost from $0$ to $q$:</p>
-<div class="math-block">$$C(q) = C(0) + \int_0^q C'(u)\,du = 900 + \int_0^q (2u+10)\,du.$$</div>
-<p>Evaluating the integral:</p>
-<div class="math-block">$$C(q) = 900 + \left[u^2 + 10u\right]_0^q = q^2 + 10q + 900\quad [\text{PLN}].$$</div>
-<h3>2. Constructing the average cost function $A(q)$</h3>
-<p>For any production level $q\in(0,\infty)$, the average cost per unit is</p>
-<div class="math-block">$$A(q) = \frac{C(q)}{q} = \frac{q^2 + 10q + 900}{q} = q + 10 + \frac{900}{q}\quad [\text{PLN/unit}].$$</div>
-<p>Notice the three economic components of $A(q)$:</p>
-<ul><li>$\frac{900}{q}$ is the <strong>average fixed cost</strong> (which decreases as $q$ grows),</li><li>$q+10$ is the <strong>average variable cost</strong> (which increases linearly as $q$ grows).</li></ul>
-<h3>3. Finding the production level $q^*$ that minimizes average cost</h3>
-<p>We differentiate $A(q) = q + 10 + 900q^{-1}$ on $(0,\infty)$:</p>
-<div class="math-block">$$A'(q) = 1 - \frac{900}{q^2} = \frac{q^2 - 900}{q^2}.$$</div>
-<p>Setting $A'(q)=0$ for $q&gt;0$:</p>
-<div class="math-block">$$q^2 - 900 = 0 \implies q^* = 30\text{ units}.$$</div>
-<p>To verify that $q^*=30$ is the global minimum on $(0,\infty)$:</p>
-<ul><li><strong>First derivative sign:</strong> $A'(q)&lt;0$ on $(0,30)$ and $A'(q)&gt;0$ on $(30,\infty)$.</li><li><strong>Second derivative test:</strong> $A''(q) = \frac{1800}{q^3} &gt; 0$ for all $q&gt;0$.</li></ul>
-<p>At $q^*=30\text{ units}$, the minimum average cost per unit is</p>
-<div class="math-block">$$A(30) = 30 + 10 + \frac{900}{30} = 30 + 10 + 30 = 70\text{ PLN/unit}.$$</div>
-<h3>4. Verifying the economic law $C'(q^*) = A(q^*)$</h3>
-<p>Let us evaluate the marginal cost $C'(q)=2q+10$ at $q^*=30$:</p>
-<div class="math-block">$$C'(30) = 2(30) + 10 = 70\text{ PLN/unit} = A(30).$$</div>
-<p>Why does marginal cost always equal average cost at the minimum of $A(q)$? Differentiating $A(q)=\frac{C(q)}{q}$ by the quotient rule for any smooth cost function gives</p>
-<div class="math-block">$$A'(q) = \frac{C'(q)\cdot q - C(q)\cdot 1}{q^2} = \frac{1}{q}\left(C'(q) - \frac{C(q)}{q}\right) = \frac{C'(q) - A(q)}{q}.$$</div>
-<p>Therefore, $A'(q^*)=0 \iff C'(q^*)=A(q^*)$: as long as producing one more unit costs less than the current average ($C'(q)&lt;A(q)$), it pulls the average down; once an extra unit costs more than the current average ($C'(q)&gt;A(q)$), it pulls the average up!</p>
-<h3>Quick verification</h3>
-<p>Let us verify the derivative of $C(q)$ and check values of $A(q)$ near $q^*=30$:</p>
-<ul><li>Differentiating $C(q)=q^2+10q+900$ gives $C'(q)=2q+10$, and $C(0)=900$. ✓</li><li>At $q=15$: $A(15) = 15 + 10 + \frac{900}{15} = 25 + 60 = 85\text{ PLN/unit} &gt; 70$. ✓</li><li>At $q=30$: $A(30) = 30 + 10 + \frac{900}{30} = 40 + 30 = 70\text{ PLN/unit}$ (Minimum). ✓</li><li>At $q=45$: $A(45) = 45 + 10 + \frac{900}{45} = 55 + 20 = 75\text{ PLN/unit} &gt; 70$. ✓</li></ul>
-<h3>A concrete example</h3>
-<p>Compare how the $31\text{st}$ unit affects average cost:</p>
-<ul><li>At $q=30$, total cost is $C(30)=30^2+300+900=2100\text{ PLN}$, so average cost is $2100/30 = 70\text{ PLN/unit}$.</li><li>Producing one more unit ($q=31$) has marginal cost approximately $C'(30)=70\text{ PLN}$ (exact additional cost $C(31)-C(30)=2171-2100=71\text{ PLN}$), raising the new average slightly to $2171/31\approx 70.03\text{ PLN/unit}$.</li></ul>
-<h3>How I would explain this in class</h3>
-<blockquote><p>First we integrate the marginal cost $C'(q)=2q+10$ and add the fixed cost $C(0)=900$ to get the total cost $C(q)=q^2+10q+900$. Dividing by $q$ gives the average cost per unit $A(q)=q+10+\frac{900}{q}$ for $q&gt;0$. Setting $A'(q)=1-\frac{900}{q^2}=0$ gives $q^*=30$ units and a minimum average cost of $A(30)=70\text{ PLN/unit}$, which matches the marginal cost $C'(30)=2(30)+10=70\text{ PLN/unit}$ because the average stops falling right when the next unit costs as much as the current average.</p></blockquote>
-<h3>Related workbook topics</h3>
-<ul><li><a href="#3_05_applications_exercise-8">Exercise 8: Number of Requests Handled by a Server</a></li><li><a href="#3_05_applications_exercise-9">Exercise 9: Minimizing the Material Used for a Can</a></li></ul>
 </section>
     </main>
   </div>

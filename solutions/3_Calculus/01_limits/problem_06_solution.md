@@ -49,7 +49,7 @@ As $x\to\infty$, the degree-$1$ over degree-$2$ remainder fraction goes to $0$ (
 
 Because $x$ is a real variable, we can evaluate $f(x)$ at non-integer points as well as negative points:
 
-- At $x=50.5$: $f(50.5)=\dfrac{3(50.5)^2-50.5+1}{5(50.5)^2+4(50.5)-2}=\dfrac{7600.25}{12951.25}\approx 0.5868$.
+- At $x=50.5$: $f(50.5)=\dfrac{3(50.5)^2-50.5+1}{5(50.5)^2+4(50.5)-2}=\dfrac{7601.25}{12951.25}\approx 0.5869$.
 - At $x=1000$: $f(1000)=\dfrac{2\,999\,001}{5\,003\,998}\approx 0.59932$.
 - At $x=-1000$: $f(-1000)=\dfrac{3\,001\,001}{4\,995\,998}\approx 0.60068$.
 

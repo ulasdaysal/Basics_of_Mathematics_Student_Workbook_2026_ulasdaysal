@@ -650,7 +650,7 @@
 <p>When we multiply a vector $(x,y,z)^T$ by this matrix, each coordinate is scaled independently: $(d_1x, d_2y, d_3z)^T$.</p>
 <ul><li>To undo this scaling, we simply divide each coordinate by $d_i$, which requires <strong>every diagonal entry to be non-zero</strong> ($d_1\neq0$, $d_2\neq0$, $d_3\neq0$).</li><li>If even a single diagonal entry is $0$, that coordinate is wiped out ($0\cdot y=0$) and can never be recovered.</li></ul>
 <h3>1. Decide which matrix is invertible</h3>
-<ul><li>Look at $D=\operatorname{diag}(2,-3,5)$: all three diagonal entries ($2$, $-3$, and $5$) are non-zero, and $\det D = 2\cdot(-3)\cdot5 = -30\neq0$. Therefore, <strong>$D$ is invertible</strong>.</li><li>Look at $E=\operatorname{diag}(2,0,5)$: the middle diagonal entry is $0$ (in Fact, Row 2 and Column 2 are all zeros), and $\det E = 2\cdot0\cdot5 = 0$. Therefore, <strong>$E$ is not invertible</strong>.</li></ul>
+<ul><li>Look at $D=\operatorname{diag}(2,-3,5)$: all three diagonal entries ($2$, $-3$, and $5$) are non-zero, and $\det D = 2\cdot(-3)\cdot5 = -30\neq0$. Therefore, <strong>$D$ is invertible</strong>.</li><li>Look at $E=\operatorname{diag}(2,0,5)$: the middle diagonal entry is $0$ (in fact, Row 2 and Column 2 are all zeros), and $\det E = 2\cdot0\cdot5 = 0$. Therefore, <strong>$E$ is not invertible</strong>.</li></ul>
 <h3>2. Write down $D^{-1}$ directly</h3>
 <p>To invert an invertible diagonal matrix, replace each diagonal entry with its reciprocal:</p>
 <div class="math-block">$$D^{-1}=\begin{pmatrix}\frac{1}{2}&amp;0&amp;0\\0&amp;-\frac{1}{3}&amp;0\\0&amp;0&amp;\frac{1}{5}\end{pmatrix}.$$</div>

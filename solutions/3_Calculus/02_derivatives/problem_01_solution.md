@@ -66,7 +66,7 @@ The linear approximation at $x=0$ is $L_0(x)=-4+7x$, whose slope is $7=f'(0)$. â
 
 Similarly, using a small step $h=0.001$ at $x=1$:
 
-$$\frac{f(1.001)-f(1)}{0.001}=\frac{4.016024027003-4}{0.001}\approx 16.024 \approx 16 = f'(1).\quad\checkmark$$
+$$\frac{f(1.001)-f(1)}{0.001}=\frac{4.016024028015003-4}{0.001}\approx 16.024 \approx 16 = f'(1).\quad\checkmark$$
 
 ## A concrete example
 

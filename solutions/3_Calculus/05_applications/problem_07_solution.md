@@ -41,7 +41,7 @@ $$k T_{\text{double}} = \ln 2 \implies T_{\text{double}} = \frac{\ln 2}{k}.$$
 There are two complementary ways to understand why $N_0$ cancels out:
 
 - **Algebraic scaling:** $N_0$ is a multiplicative scale factor in $N(t)=N_0 e^{kt}$. Asking when $N(t)$ reaches $2N_0$ is asking when the growth factor $N(t)/N_0 = e^{kt}$ reaches $2$, which depends only on $k$.
-- **Proportionality of growth:** Because $N'(t)=kN(t)$, each individual (or unit of population) reproduces at the same average rate $k$ independently of how many other individuals exist. A population that is $10$ times larger has $10$ times as much absolute growth $N'(t)$ to achieve before doubling,-and it also has $10$ times as many individuals contributing to that growth, so the two factors of $10$ cancel completely.
+- **Proportionality of growth:** Because $N'(t)=kN(t)$, each individual (or unit of population) reproduces at the same average rate $k$ independently of how many other individuals exist. A population that is $10$ times larger has $10$ times as much absolute growth $N'(t)$ to achieve before doubling, and it also has $10$ times as many individuals contributing to that growth, so the two factors of $10$ cancel completely.
 
 ## 4. Extending to any interval $[t_0, t_0 + T_{\text{double}}]$
 

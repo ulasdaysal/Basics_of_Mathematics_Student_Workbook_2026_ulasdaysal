@@ -56,38 +56,38 @@ $$x_{1,2}=\frac{70\pm 10\sqrt{13}}{6}=\frac{35\pm 5\sqrt{13}}{3}.$$
 
 Since $\sqrt{13}\approx 3.6056$, the two critical points are approximately
 
-$$x_1=\frac{35-5\sqrt{13}}{3}\approx 5.65\text{ cm},\qquad x_2=\frac{35+5\sqrt{13}}{3}\approx 17.69\text{ cm}.$$
+$$x_1=\frac{35-5\sqrt{13}}{3}\approx 5.66\text{ cm},\qquad x_2=\frac{35+5\sqrt{13}}{3}\approx 17.68\text{ cm}.$$
 
-Because $x_2\approx 17.69\notin(0,15)$, the only critical point inside our physical domain $D=(0,15)$ is
+Because $x_2\approx 17.68\notin(0,15)$, the only critical point inside our physical domain $D=(0,15)$ is
 
-$$x^*=\frac{35-5\sqrt{13}}{3}\approx 5.65\text{ cm}.$$
+$$x^*=\frac{35-5\sqrt{13}}{3}\approx 5.66\text{ cm}.$$
 
-Since $V'(x)=4(3x^2-70x+300)$ is an upward-opening parabola with roots $x_1\approx 5.65$ and $x_2\approx 17.69$:
+Since $V'(x)=4(3x^2-70x+300)$ is an upward-opening parabola with roots $x_1\approx 5.66$ and $x_2\approx 17.68$:
 - For $x\in(0,x^*)$, $V'(x)>0$, so $V(x)$ is strictly increasing.
 - For $x\in(x^*,15)$, $V'(x)<0$, so $V(x)$ is strictly decreasing.
 
-Therefore, $x^*=\dfrac{35-5\sqrt{13}}{3}\approx 5.65\text{ cm}$ gives the global maximum volume on $(0,15)$.
+Therefore, $x^*=\dfrac{35-5\sqrt{13}}{3}\approx 5.66\text{ cm}$ gives the global maximum volume on $(0,15)$.
 
 ## Quick verification
 
-Let us evaluate the second derivative and check volume values around $x^*\approx 5.65\text{ cm}$:
+Let us evaluate the second derivative and check volume values around $x^*\approx 5.66\text{ cm}$:
 
 - Second derivative test: $V''(x)=24x-280$. At $x^*=\frac{35-5\sqrt{13}}{3}$, we have $V''(x^*)=8(35-5\sqrt{13})-280=-40\sqrt{13}<0$, confirming a local maximum. ✓
 - Boundary behavior: $\lim_{x\to 0^+}V(x)=0$ and $\lim_{x\to 15^-}V(x)=0$, while $V(x^*)>0$. ✓
 
 ## A concrete example
 
-Let us compare the volume at $x^*\approx 5.65\text{ cm}$ with nearby integer cuts:
+Let us compare the volume at $x^*\approx 5.66\text{ cm}$ with nearby integer cuts:
 
 - For $x=5\text{ cm}$: base is $20\text{ cm}\times 30\text{ cm}$, so $V(5)=5\cdot 20\cdot 30=3000\text{ cm}^3$.
 - For $x=6\text{ cm}$: base is $18\text{ cm}\times 28\text{ cm}$, so $V(6)=6\cdot 18\cdot 28=3024\text{ cm}^3$.
-- For $x^*\approx 5.65\text{ cm}$: base is $18.70\text{ cm}\times 28.70\text{ cm}$, giving the maximum volume $V(x^*)\approx 3032.3\text{ cm}^3$.
+- For $x^*\approx 5.66\text{ cm}$: base is $18.69\text{ cm}\times 28.69\text{ cm}$, giving the maximum volume $V(x^*)\approx 3032.3\text{ cm}^3$.
 
-Both shallow cuts ($x=5$) and deeper cuts ($x=6$) produce smaller volumes than the optimal cut $x^*\approx 5.65\text{ cm}$.
+Both shallow cuts ($x=5$) and deeper cuts ($x=6$) produce smaller volumes than the optimal cut $x^*\approx 5.66\text{ cm}$.
 
 ## How I would explain this in class
 
-> Cutting squares of side $x$ from the four corners reduces the cardboard's sides from $30$ and $40$ to $30-2x$ and $40-2x$, while folding up the flaps gives height $x$. For all three dimensions to be positive, $x$ must lie in $(0,15)$. Expanding $V(x)=x(30-2x)(40-2x)=4x^3-140x^2+1200x$ and solving $V'(x)=0$ gives two roots, $(35\pm 5\sqrt{13})/3$. Only $x=(35-5\sqrt{13})/3\approx 5.65\text{ cm}$ fits in $(0,15)$, and because $V'(x)$ changes sign from $+$ to $-$ there, it maximizes the volume.
+> Cutting squares of side $x$ from the four corners reduces the cardboard's sides from $30$ and $40$ to $30-2x$ and $40-2x$, while folding up the flaps gives height $x$. For all three dimensions to be positive, $x$ must lie in $(0,15)$. Expanding $V(x)=x(30-2x)(40-2x)=4x^3-140x^2+1200x$ and solving $V'(x)=0$ gives two roots, $(35\pm 5\sqrt{13})/3$. Only $x=(35-5\sqrt{13})/3\approx 5.66\text{ cm}$ fits in $(0,15)$, and because $V'(x)$ changes sign from $+$ to $-$ there, it maximizes the volume.
 
 ## Related workbook topics
 

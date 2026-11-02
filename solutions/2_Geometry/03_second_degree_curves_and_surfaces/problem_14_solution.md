@@ -51,12 +51,12 @@ Now find the cross-sections of $x^2+y^2 = 4$ in $\mathbb{R}^3$:
 
 ```text
           z
-      | .-f-. |    z = c: circle of constant radius 2
+      | .-+-. |    z = c: circle of constant radius 2
       | '---' |
       |   |   |    x=0: parallel lines y = +-2
   ----+---+---+---- x, y
       |   |   |    y=0: parallel lines x = +-2
-      | .-f-. |
+      | .-+-. |
       | '---' |
 ```
 

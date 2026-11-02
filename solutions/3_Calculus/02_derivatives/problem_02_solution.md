@@ -77,8 +77,8 @@ Let us evaluate both formulas at $x=1$ and check with a small increment:
 
 - Using our formula: $f'(1) = 1 + 6 + \dfrac{3}{2} = 8.5$.
 - At $x=1$, $f(1) = 2(1) - 3(1) + 1 = 0$.
-- At $x=1.0001$, $f(1.0001) = 2\sqrt{1.0001} - \dfrac{3}{(1.0001)^2} + (1.0001)^{3/2} \approx 0.000849825$.
-- Difference quotient: $\dfrac{f(1.0001)-f(1)}{0.0001} \approx 8.498 \approx 8.5 = f'(1)$. ✓
+- At $x=1.0001$, $f(1.0001) = 2\sqrt{1.0001} - \dfrac{3}{(1.0001)^2} + (1.0001)^{3/2} \approx 0.000849911$.
+- Difference quotient: $\dfrac{f(1.0001)-f(1)}{0.0001} \approx 8.499 \approx 8.5 = f'(1)$. ✓
 
 ## A concrete example
 

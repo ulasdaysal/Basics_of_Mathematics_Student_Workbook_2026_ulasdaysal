@@ -39,7 +39,7 @@ $$A = (3,6)\qquad\text{and}\qquad B = (3,-6).$$
 
 ## 3. Additional reference points and coordinate table
 
-To make an accurate sketch, we can also check $x=0$ and $x=\frac{4}{3}$ (or $x=1$):
+To make an accurate sketch, we can also check $x=0$ and $x=\frac{3}{4} = 0.75$:
 
 | $x$ | $y^2=12x$ | $y=\pm\sqrt{12x}$ | Points $(x,y)$ |
 | :---: | :---: | :---: | :---: |

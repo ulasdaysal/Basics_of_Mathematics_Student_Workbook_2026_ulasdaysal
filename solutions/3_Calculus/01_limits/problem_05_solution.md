@@ -58,7 +58,7 @@ Using the Binomial Theorem for $a_n = \left(1+\dfrac{1}{n}\right)^n$:
 
 $$a_n = 1 + \binom{n}{1}\frac{1}{n} + \binom{n}{2}\frac{1}{n^2} + \binom{n}{3}\frac{1}{n^3} + \dots = 1 + 1 + \frac{1}{2!}\left(1-\frac{1}{n}\right) + \frac{1}{3!}\left(1-\frac{1}{n}\right)\left(1-\frac{2}{n}\right) + \dots$$
 
-As $n\to\infty$, each factor $\left(1-\dfrac{k}{n}\right)\to 1$ and increased $n$ adds more positive terms, converging to $1+1+\dfrac{1}{2!}+\dfrac{1}{3!}+\dots \approx 1+1+0.5+0.1667+0.0417+0.0083 = 2.7167\dots = e$. ✓
+As $n\to\infty$, each factor $\left(1-\dfrac{k}{n}\right)\to 1$ and increased $n$ adds more positive terms, converging to $1+1+\dfrac{1}{2!}+\dfrac{1}{3!}+\dots = e \approx 2.71828$ (already the first six terms sum to $1+1+0.5+0.1667+0.0417+0.0083 = 2.7167$). ✓
 
 ## A concrete example
 

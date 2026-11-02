@@ -21,7 +21,7 @@ When we multiply a vector $(x,y,z)^T$ by this matrix, each coordinate is scaled 
 ## 1. Decide which matrix is invertible
 
 - Look at $D=\operatorname{diag}(2,-3,5)$: all three diagonal entries ($2$, $-3$, and $5$) are non-zero, and $\det D = 2\cdot(-3)\cdot5 = -30\neq0$. Therefore, **$D$ is invertible**.
-- Look at $E=\operatorname{diag}(2,0,5)$: the middle diagonal entry is $0$ (in Fact, Row 2 and Column 2 are all zeros), and $\det E = 2\cdot0\cdot5 = 0$. Therefore, **$E$ is not invertible**.
+- Look at $E=\operatorname{diag}(2,0,5)$: the middle diagonal entry is $0$ (in fact, Row 2 and Column 2 are all zeros), and $\det E = 2\cdot0\cdot5 = 0$. Therefore, **$E$ is not invertible**.
 
 ## 2. Write down $D^{-1}$ directly
 

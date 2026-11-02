@@ -62,7 +62,7 @@ Let us compare $(1+3x)^{1/x}$ for small $x$ around $0$ with $e^3\approx 20.0855$
 
 - For $x=0.01$: $(1+0.03)^{100} = (1.03)^{100} \approx 19.2186$.
 - For $x=0.001$: $(1+0.003)^{1000} = (1.003)^{1000} \approx 19.9955$.
-- For $x=-0.001$: $(1-0.003)^{-1000} = (0.997)^{-1000} \approx 20.1764$.
+- For $x=-0.001$: $(1-0.003)^{-1000} = (0.997)^{-1000} \approx 20.1763$.
 
 Both from the left and from the right, the values squeeze toward $e^3\approx 20.0855$.
 

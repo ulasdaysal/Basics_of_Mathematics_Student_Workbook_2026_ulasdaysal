@@ -52,7 +52,7 @@ Let us verify using two independent observations:
    - Formula value: $f'(1)=2(1)\cos(1^2+1)=2\cos(2)\approx 2(-0.416147)=-0.832294$.
    - Difference quotient with $h=0.0001$:
 
-$$\frac{\sin(1.0001^2+1)-\sin(2)}{0.0001}=\frac{\sin(2.00020001)-\sin(2)}{0.0001}\approx -0.83242 \approx f'(1).\quad\checkmark$$
+$$\frac{\sin(1.0001^2+1)-\sin(2)}{0.0001}=\frac{\sin(2.00020001)-\sin(2)}{0.0001}\approx -0.83252 \approx f'(1).\quad\checkmark$$
 
 ## A concrete example
 
