@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>02. Determinants — Complete Solutions</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false}
+      ],
+      throwOnError: false
+    });"></script>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --muted: #475569;
+      --accent: #2563eb;
+      --accent-soft: #eff6ff;
+      --quote-bg: #f1f5f9;
+      --quote-border: #3b82f6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 310px 1fr;
+      min-height: 100vh;
+    }
+    aside.sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 1.5rem 1.25rem;
+    }
+    .brand {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    .brand-sub {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .toc-group-title {
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin: 1rem 0 0.35rem 0.5rem;
+    }
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .toc-list li { margin-bottom: 0.2rem; }
+    .toc-list a {
+      display: block;
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.86rem;
+      transition: background 0.15s, color 0.15s;
+    }
+    .toc-list a:hover {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+    main.content {
+      max-width: 940px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    header.page-header {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    }
+    header.page-header h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.85rem;
+      color: var(--text);
+    }
+    header.page-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+    .section-banner {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: #ffffff;
+      border-radius: 12px;
+      padding: 1.5rem 2rem;
+      margin: 2.5rem 0 1.5rem;
+      scroll-margin-top: 1.5rem;
+    }
+    .section-banner h2 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    .section-banner p {
+      margin: 0.25rem 0 0;
+      opacity: 0.9;
+      font-size: 0.92rem;
+    }
+    section.exercise-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem 2.25rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+      scroll-margin-top: 1.5rem;
+    }
+    section.exercise-card h2.exercise-title {
+      margin-top: 0;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--accent-soft);
+      color: var(--accent);
+      font-size: 1.4rem;
+    }
+    section.exercise-card h3 {
+      margin-top: 1.5rem;
+      margin-bottom: 0.55rem;
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+    section.exercise-card h4 {
+      margin-top: 1.15rem;
+      margin-bottom: 0.45rem;
+      font-size: 1rem;
+      color: var(--muted);
+    }
+    p { margin: 0.65rem 0; }
+    ul, ol { margin: 0.65rem 0; padding-left: 1.5rem; }
+    li { margin-bottom: 0.35rem; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.85rem;
+      text-align: left;
+    }
+    th { background: var(--bg); font-weight: 600; }
+    blockquote {
+      margin: 1rem 0;
+      padding: 0.9rem 1.2rem;
+      background: var(--quote-bg);
+      border-left: 4px solid var(--quote-border);
+      border-radius: 0 8px 8px 0;
+      color: var(--text);
+    }
+    blockquote p { margin: 0; }
+    pre {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 1rem 1.25rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+    code {
+      font-family: Consolas, Monaco, "Courier New", monospace;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .katex-display {
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 0.25rem 0;
+    }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      aside.sidebar {
+        position: static;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      main.content { padding: 1.5rem 1rem 3rem; }
+      section.exercise-card { padding: 1.5rem; }
+    }
+    @media print {
+      aside.sidebar { display: none; }
+      .layout { display: block; }
+      body { background: #fff; }
+      section.exercise-card { box-shadow: none; break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">1. Algebra</div>
+      <div class="brand-sub">02. Determinants (Exercises 1–15)</div>
+      <ul class="toc-list">
+<li><a href="#exercise-1">1. Determinant of a 2×2 Matrix</a></li>
+<li><a href="#exercise-2">2. Determinant of a 3×3 Matrix</a></li>
+<li><a href="#exercise-3">3. Swapping Two Rows</a></li>
+<li><a href="#exercise-4">4. Triangular Matrix</a></li>
+<li><a href="#exercise-5">5. Row Operations</a></li>
+<li><a href="#exercise-6">6. Parameter and Invertibility</a></li>
+<li><a href="#exercise-7">7. Using Properties Instead of Recomputing</a></li>
+<li><a href="#exercise-8">8. Determinant of a Product</a></li>
+<li><a href="#exercise-9">9. Area and the Determinant</a></li>
+<li><a href="#exercise-10">10. Detecting Dependence</a></li>
+<li><a href="#exercise-11">11. Shortening the Calculation with Row Operations</a></li>
+<li><a href="#exercise-12">12. A Parameter Revealed by a Row Operation</a></li>
+<li><a href="#exercise-13">13. Determinant by Elimination</a></li>
+<li><a href="#exercise-14">14. A System of Equations and the Determinant</a></li>
+<li><a href="#exercise-15">15. Combining Determinant Properties</a></li>
+</ul>
+    </aside>
+    <main class="content">
+      <header class="page-header">
+        <h1>02. Determinants — Complete Solutions</h1>
+        <p>Basics of Mathematics Student Workbook (2026) · 1. Algebra · All 15 Exercises with Detailed Explanations</p>
+      </header>
+      <section class="exercise-card" id="exercise-1">
+<h2 class="exercise-title">Exercise 1. Determinant of a 2×2 Matrix</h2>
+<h3>The question</h3>
+<p>Compute</p>
+<div class="math-block">$$\det\begin{pmatrix}3&amp;-2\\5&amp;4\end{pmatrix},\qquad \det\begin{pmatrix}1&amp;7\\2&amp;14\end{pmatrix}.$$</div>
+<p>Which matrix is invertible? Justify the answer.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>For a $2\times2$ matrix</p>
+<div class="math-block">$$\det\begin{pmatrix}a&amp;b\\c&amp;d\end{pmatrix}=ad-bc.$$</div>
+<p>The determinant tells us whether the matrix loses information:</p>
+<ul><li>$\det\neq0$: the matrix is <strong>invertible</strong>,</li><li>$\det=0$: the matrix is <strong>singular</strong>. Its rows (and columns) are dependent, and it cannot be undone.</li></ul>
+<p>The reason is the inverse formula $\dfrac{1}{ad-bc}\begin{pmatrix}d&amp;-b\\-c&amp;a\end{pmatrix}$. It requires dividing by the determinant.</p>
+<h3>1. First matrix</h3>
+<div class="math-block">$$\det\begin{pmatrix}3&amp;-2\\5&amp;4\end{pmatrix}=3\cdot4-(-2)\cdot5=12+10=22.$$</div>
+<h3>2. Second matrix</h3>
+<div class="math-block">$$\det\begin{pmatrix}1&amp;7\\2&amp;14\end{pmatrix}=1\cdot14-7\cdot2=14-14=0.$$</div>
+<h3>3. Which one is invertible?</h3>
+<ul><li>The first matrix has $\det=22\neq0$, so it <strong>is invertible</strong>.</li><li>The second matrix has $\det=0$, so it <strong>is not invertible</strong>.</li></ul>
+<h3>4. Why the second one fails</h3>
+<p>The second row is twice the first row:</p>
+<div class="math-block">$$(2,14)=2\cdot(1,7).$$</div>
+<p>The two rows carry the same information. Geometrically, the matrix squashes the whole plane onto a single line (every image is a multiple of $(1,2)^T$). Many different points land on the same point, so the map cannot be reversed.</p>
+<h3>5. Quick verification</h3>
+<p>For the first matrix, the inverse formula gives</p>
+<div class="math-block">$$A^{-1}=\frac{1}{22}\begin{pmatrix}4&amp;2\\-5&amp;3\end{pmatrix}.$$</div>
+<p>Check:</p>
+<div class="math-block">$$\begin{pmatrix}3&amp;-2\\5&amp;4\end{pmatrix}\begin{pmatrix}4&amp;2\\-5&amp;3\end{pmatrix}=\begin{pmatrix}12+10&amp;6-6\\20-20&amp;10+12\end{pmatrix}=\begin{pmatrix}22&amp;0\\0&amp;22\end{pmatrix}=22I.$$</div>
+<p>After dividing by $22$ we get $I$. ✓</p>
+<h3>6. A concrete example</h3>
+<p>For the second matrix, two different vectors give the same result:</p>
+<div class="math-block">$$\begin{pmatrix}1&amp;7\\2&amp;14\end{pmatrix}\begin{pmatrix}7\\0\end{pmatrix}=\begin{pmatrix}7\\14\end{pmatrix}=\begin{pmatrix}1&amp;7\\2&amp;14\end{pmatrix}\begin{pmatrix}0\\1\end{pmatrix}.$$</div>
+<p>From the output $(7,14)^T$ we cannot tell which input we started with. That is exactly what "not invertible" means.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>For a $2\times2$ matrix the determinant is $ad-bc$. The first one is $12+10=22$, which is not zero, so it is invertible. The second one is $14-14=0$, because its second row is twice the first. Its rows are dependent, the plane is squashed onto a line, and the matrix cannot be inverted.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-6">Exercise 6: Parameter and invertibility</a></li><li><a href="#exercise-10">Exercise 10: Detecting dependence</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-2">
+<h2 class="exercise-title">Exercise 2. Determinant of a 3×3 Matrix</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$A=\begin{pmatrix}1&amp;2&amp;-1\\0&amp;3&amp;4\\2&amp;1&amp;5\end{pmatrix}$$</div>
+<p>compute $\det A$ using Sarrus' rule, then perform one simple check using a determinant property.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p><strong>Sarrus' rule</strong> works only for $3\times3$ matrices. Copy the first two columns to the right of the matrix:</p>
+<div class="math-block">$$\begin{array}{ccc|cc}a&amp;b&amp;c&amp;a&amp;b\\d&amp;e&amp;f&amp;d&amp;e\\g&amp;h&amp;i&amp;g&amp;h\end{array}$$</div>
+<p>Then</p>
+<div class="math-block">$$\det A=\underbrace{aei+bfg+cdh}_{\text{down-right diagonals}}-\underbrace{(ceg+afh+bdi)}_{\text{down-left diagonals}}.$$</div>
+<p>For the check we use a <strong>different</strong> property: adding a multiple of one row to another does <strong>not</strong> change the determinant. This lets us create zeros and recompute quickly.</p>
+<h3>1. Sarrus' rule</h3>
+<div class="math-block">$$\begin{array}{ccc|cc}1&amp;2&amp;-1&amp;1&amp;2\\0&amp;3&amp;4&amp;0&amp;3\\2&amp;1&amp;5&amp;2&amp;1\end{array}$$</div>
+<p>Down-right diagonals:</p>
+<div class="math-block">$$1\cdot3\cdot5+2\cdot4\cdot2+(-1)\cdot0\cdot1=15+16+0=31.$$</div>
+<p>Down-left diagonals:</p>
+<div class="math-block">$$(-1)\cdot3\cdot2+1\cdot4\cdot1+2\cdot0\cdot5=-6+4+0=-2.$$</div>
+<p>Therefore</p>
+<div class="math-block">$$\det A=31-(-2)=33.$$</div>
+<h3>2. Check using a row operation</h3>
+<p>Apply $R_3\leftarrow R_3-2R_1$, which does not change the determinant:</p>
+<div class="math-block">$$R_3-2R_1=(2,1,5)-(2,4,-2)=(0,-3,7),\qquad A'=\begin{pmatrix}1&amp;2&amp;-1\\0&amp;3&amp;4\\0&amp;-3&amp;7\end{pmatrix}.$$</div>
+<p>Now the first column is $(1,0,0)^T$, so expanding along it leaves one $2\times2$ determinant:</p>
+<div class="math-block">$$\det A'=1\cdot\det\begin{pmatrix}3&amp;4\\-3&amp;7\end{pmatrix}=21-(-12)=33.\ ✓$$</div>
+<h3>3. Meaning</h3>
+<p>$\det A=33\neq0$, so $A$ is invertible. Geometrically, $A$ maps the unit cube to a parallelepiped of volume $33$.</p>
+<h3>4. Common mistake</h3>
+<p>The minus sign in front of the second group of diagonals is often forgotten, or the $-1$ entry loses its sign. Here, forgetting the outer minus would give $31+(-2)=29$ instead of $33$. The independent check catches this kind of error.</p>
+<h3>5. A concrete example</h3>
+<p>Sarrus' rule does <strong>not</strong> extend to $4\times4$ matrices. For larger matrices we use row operations (as in the check above) or cofactor expansion.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>I write the first two columns again to the right, add the three down-right diagonal products ($31$) and subtract the three down-left ones ($-2$), so $\det A=33$. To check, I subtract twice row 1 from row 3. That doesn't change the determinant and creates a zero, and the reduced $2\times2$ determinant is again $33$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-3">Exercise 3: Swapping two rows</a></li><li><a href="#exercise-5">Exercise 5: Row operations</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-3">
+<h2 class="exercise-title">Exercise 3. Swapping Two Rows</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$A=\begin{pmatrix}1&amp;2&amp;0\\0&amp;3&amp;1\\2&amp;1&amp;1\end{pmatrix}$$</div>
+<p>compute $\det A$. Form $B$ by swapping the first and second rows of $A$, predict $\det B$ using a determinant property, and verify the prediction by calculation.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Two tools:</p>
+<ol><li><strong>Cofactor expansion along the first row:</strong> $$\det A=a_{11}M_{11}-a_{12}M_{12}+a_{13}M_{13},$$ where $M_{1j}$ is the $2\times2$ determinant left after deleting row 1 and column $j$. The signs alternate $+,-,+$.</li><li><strong>Row swap property:</strong> swapping two rows <strong>changes the sign</strong> of the determinant but not its absolute value. Geometrically, a swap flips the orientation (like a mirror) but keeps the volume.</li></ol>
+<h3>1. Compute $\det A$</h3>
+<div class="math-block">$$\det A=1\cdot\det\begin{pmatrix}3&amp;1\\1&amp;1\end{pmatrix}-2\cdot\det\begin{pmatrix}0&amp;1\\2&amp;1\end{pmatrix}+0\cdot(\dots)$$</div>
+<div class="math-block">$$=1\cdot(3-1)-2\cdot(0-2)+0=2+4=6.$$</div>
+<h3>2. Form $B$ and predict</h3>
+<div class="math-block">$$B=\begin{pmatrix}0&amp;3&amp;1\\1&amp;2&amp;0\\2&amp;1&amp;1\end{pmatrix}.$$</div>
+<p>$B$ is obtained from $A$ by one row swap, so the prediction is</p>
+<div class="math-block">$$\det B=-\det A=-6.$$</div>
+<h3>3. Verify by calculation</h3>
+<div class="math-block">$$\det B=0\cdot\det\begin{pmatrix}2&amp;0\\1&amp;1\end{pmatrix}-3\cdot\det\begin{pmatrix}1&amp;0\\2&amp;1\end{pmatrix}+1\cdot\det\begin{pmatrix}1&amp;2\\2&amp;1\end{pmatrix}$$</div>
+<div class="math-block">$$=0-3\cdot(1-0)+1\cdot(1-4)=-3-3=-6.\ ✓$$</div>
+<p>The prediction is confirmed.</p>
+<h3>4. Why a swap changes the sign</h3>
+<p>In every term of the determinant, each row contributes exactly one factor. Swapping two rows reorders the factors in every term in a way that reverses each term's sign. Geometrically, the volume spanned by the rows stays the same, but the orientation flips.</p>
+<p>Consequence: if two rows are <strong>equal</strong>, swapping them changes nothing, but must change the sign. So $\det=-\det$, which forces $\det=0$.</p>
+<h3>5. Quick verification</h3>
+<p>Check $\det A$ with Sarrus' rule:</p>
+<div class="math-block">$$(1\cdot3\cdot1+2\cdot1\cdot2+0)-(0+1\cdot1\cdot1+2\cdot0\cdot1)=(3+4)-1=6.\ ✓$$</div>
+<h3>6. A concrete example</h3>
+<p>Swapping twice returns $A$, and the sign flips twice: $(-1)^2\cdot6=6$. In general, $k$ swaps multiply the determinant by $(-1)^k$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Expanding along the first row gives $\det A=2+4=6$. Swapping two rows only flips the sign, so I predict $\det B=-6$. Computing $\det B$ directly gives $-3-3=-6$, as predicted. A swap keeps the volume but reverses the orientation.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-2">Exercise 2: Determinant of a 3×3 matrix</a></li><li><a href="#exercise-5">Exercise 5: Row operations</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-4">
+<h2 class="exercise-title">Exercise 4. Triangular Matrix</h2>
+<h3>The question</h3>
+<p>Without expanding the determinant, compute</p>
+<div class="math-block">$$\det\begin{pmatrix}2&amp;4&amp;1\\0&amp;-3&amp;5\\0&amp;0&amp;7\end{pmatrix}.$$</div>
+<p>State the rule for an arbitrary triangular matrix and explain it using this example.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>A matrix is <strong>upper triangular</strong> if all entries below the main diagonal are zero (lower triangular: all above are zero).</p>
+<p><strong>Rule:</strong> the determinant of a triangular matrix is the <strong>product of its diagonal entries</strong>:</p>
+<div class="math-block">$$\det\begin{pmatrix}a_{11}&amp;*&amp;*\\0&amp;a_{22}&amp;*\\0&amp;0&amp;a_{33}\end{pmatrix}=a_{11}a_{22}a_{33}.$$</div>
+<p>This is the reason why elimination is used to compute determinants: it turns any matrix into a triangular one.</p>
+<h3>1. Apply the rule</h3>
+<div class="math-block">$$\det\begin{pmatrix}2&amp;4&amp;1\\0&amp;-3&amp;5\\0&amp;0&amp;7\end{pmatrix}=2\cdot(-3)\cdot7=-42.$$</div>
+<h3>2. Why the rule works (explained on this example)</h3>
+<p>Expand along the <strong>first column</strong>. It has only one non-zero entry, the $2$:</p>
+<div class="math-block">$$\det=2\cdot\det\begin{pmatrix}-3&amp;5\\0&amp;7\end{pmatrix}.$$</div>
+<p>The smaller matrix is again triangular. Expanding along its first column:</p>
+<div class="math-block">$$\det\begin{pmatrix}-3&amp;5\\0&amp;7\end{pmatrix}=-3\cdot7-5\cdot0=-21.$$</div>
+<p>So $\det=2\cdot(-21)=-42$. At each step only the diagonal entry survives, because everything below it is zero. The entries above the diagonal ($4,1,5$) never matter.</p>
+<p>Another view: in every term of the determinant we must take exactly one entry from each row and each column. The only choice that avoids every zero below the diagonal is the diagonal itself.</p>
+<h3>3. Meaning</h3>
+<ul><li>The matrix is invertible exactly when <strong>no diagonal entry is zero</strong>. Here all three are non-zero, so it is invertible.</li><li>The negative sign means the transformation reverses orientation (because of the $-3$). The volume scaling factor is $|{-42}|=42$.</li></ul>
+<h3>4. Quick verification</h3>
+<p>Sarrus' rule: down-right diagonals $2\cdot(-3)\cdot7+4\cdot5\cdot0+1\cdot0\cdot0=-42$. Down-left diagonals: $1\cdot(-3)\cdot0+2\cdot5\cdot0+4\cdot0\cdot7=0$. So $\det=-42-0=-42$. ✓</p>
+<h3>5. A concrete example</h3>
+<p>If we change the $7$ to $0$:</p>
+<div class="math-block">$$\det\begin{pmatrix}2&amp;4&amp;1\\0&amp;-3&amp;5\\0&amp;0&amp;0\end{pmatrix}=2\cdot(-3)\cdot0=0.$$</div>
+<p>This makes sense, because the last row is the zero row, so the matrix is singular.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>For a triangular matrix I just multiply the diagonal: $2\cdot(-3)\cdot7=-42$. The reason is that expanding along the first column, only the diagonal entry has a non-zero value, and the smaller matrix is triangular again. The entries above the diagonal never matter. So a triangular matrix is invertible exactly when there is no zero on the diagonal.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-5">Exercise 5: Row operations</a></li><li><a href="#exercise-13">Exercise 13: Determinant by elimination</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-5">
+<h2 class="exercise-title">Exercise 5. Row Operations</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$A=\begin{pmatrix}1&amp;2&amp;3\\2&amp;1&amp;0\\-1&amp;4&amp;2\end{pmatrix}$$</div>
+<p>find $\det A$ by simplifying the matrix with row operations. At each step, state whether and how the determinant changes.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>How each elementary row operation affects the determinant:</p>
+<table><thead><tr><th>Operation</th><th>Effect on $\det$</th></tr></thead><tbody><tr><td>$R_i\leftarrow R_i+cR_j$ (add a multiple of another row)</td><td><strong>no change</strong></td></tr><tr><td>$R_i\leftrightarrow R_j$ (swap)</td><td>multiply by $-1$</td></tr><tr><td>$R_i\leftarrow cR_i$ (scale a row)</td><td>multiply by $c$</td></tr></tbody></table>
+<p>Plan: use only "add a multiple" operations to reach a triangular matrix (no change at all), then multiply the diagonal (Exercise 4).</p>
+<h3>1. Clear the first column</h3>
+<p>$R_2\leftarrow R_2-2R_1$: $(2,1,0)-(2,4,6)=(0,-3,-6)$. <strong>No change</strong> to $\det$.</p>
+<p>$R_3\leftarrow R_3+R_1$: $(-1,4,2)+(1,2,3)=(0,6,5)$. <strong>No change</strong> to $\det$.</p>
+<div class="math-block">$$A_1=\begin{pmatrix}1&amp;2&amp;3\\0&amp;-3&amp;-6\\0&amp;6&amp;5\end{pmatrix},\qquad \det A_1=\det A.$$</div>
+<h3>2. Clear the second column</h3>
+<p>$R_3\leftarrow R_3+2R_2$: $(0,6,5)+(0,-6,-12)=(0,0,-7)$. <strong>No change</strong> to $\det$.</p>
+<div class="math-block">$$A_2=\begin{pmatrix}1&amp;2&amp;3\\0&amp;-3&amp;-6\\0&amp;0&amp;-7\end{pmatrix},\qquad \det A_2=\det A.$$</div>
+<h3>3. Read off the determinant</h3>
+<p>$A_2$ is upper triangular, so</p>
+<div class="math-block">$$\det A=\det A_2=1\cdot(-3)\cdot(-7)=21.$$</div>
+<h3>4. Summary of the steps</h3>
+<table><thead><tr><th>Step</th><th>Operation</th><th>Factor</th><th>Running $\det$ relation</th></tr></thead><tbody><tr><td>1</td><td>$R_2\leftarrow R_2-2R_1$</td><td>$1$</td><td>$\det A_{\text{new}}=\det A$</td></tr><tr><td>2</td><td>$R_3\leftarrow R_3+R_1$</td><td>$1$</td><td>$\det A_1=\det A$</td></tr><tr><td>3</td><td>$R_3\leftarrow R_3+2R_2$</td><td>$1$</td><td>$\det A_2=\det A$</td></tr></tbody></table>
+<p>No swaps and no scalings were needed, so no correction factor appears.</p>
+<h3>5. Why "add a multiple" does not change the determinant</h3>
+<p>The determinant is linear in each row, so</p>
+<div class="math-block">$$\det(\dots,R_i+cR_j,\dots)=\det(\dots,R_i,\dots)+c\,\det(\dots,R_j,\dots).$$</div>
+<p>The last determinant has two equal rows ($R_j$ appears twice), so it is $0$. Geometrically, this is a shear, which slides the shape without changing its volume.</p>
+<h3>6. Quick verification</h3>
+<p>Cofactor expansion along the first row of the original matrix:</p>
+<div class="math-block">$$\det A=1(1\cdot2-0\cdot4)-2(2\cdot2-0\cdot(-1))+3(2\cdot4-1\cdot(-1))=2-8+27=21.\ ✓$$</div>
+<h3>7. A concrete example</h3>
+<p>If at step 3 we had instead scaled $R_2$ by $-\tfrac13$ to get a pivot $1$, the determinant would have been multiplied by $-\tfrac13$, and we would need to multiply back by $-3$ at the end. Avoiding scaling keeps the bookkeeping simple.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>I use only operations of the type "add a multiple of one row to another", because they don't change the determinant. After three such steps the matrix is upper triangular with diagonal $1,-3,-7$, so $\det A=21$. A direct cofactor expansion gives the same value, $2-8+27=21$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-4">Exercise 4: Triangular matrix</a></li><li><a href="#exercise-13">Exercise 13: Determinant by elimination</a></li><li><a href="#exercise-8">Matrices, Exercise 8: Row operations</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-6">
+<h2 class="exercise-title">Exercise 6. Parameter and Invertibility</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$A(t)=\begin{pmatrix}t&amp;1\\2&amp;t\end{pmatrix}$$</div>
+<p>find all values of $t$ for which the matrix is not invertible, and explain how the answer is related to the determinant being zero.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>A square matrix is invertible <strong>if and only if</strong> its determinant is non-zero. So instead of trying to invert $A(t)$ for every $t$, we compute $\det A(t)$ as a function of $t$ and find where it is zero.</p>
+<h3>1. Compute the determinant</h3>
+<div class="math-block">$$\det A(t)=t\cdot t-1\cdot2=t^2-2.$$</div>
+<h3>2. Find the forbidden values</h3>
+<div class="math-block">$$t^2-2=0\iff t^2=2\iff t=\pm\sqrt2.$$</div>
+<p>So $A(t)$ is <strong>not invertible</strong> exactly for</p>
+<div class="math-block">$$t=\sqrt2\quad\text{or}\quad t=-\sqrt2,$$</div>
+<p>and it is invertible for all $t\in\mathbb{R}\setminus\{-\sqrt2,\sqrt2\}$.</p>
+<h3>3. The inverse for allowed values</h3>
+<div class="math-block">$$A(t)^{-1}=\frac{1}{t^2-2}\begin{pmatrix}t&amp;-1\\-2&amp;t\end{pmatrix}.$$</div>
+<p>The factor $\frac{1}{t^2-2}$ shows directly why $t=\pm\sqrt2$ is excluded: we would divide by zero.</p>
+<h3>4. Why the excluded values fail</h3>
+<p>Take $t=\sqrt2$:</p>
+<div class="math-block">$$A(\sqrt2)=\begin{pmatrix}\sqrt2&amp;1\\2&amp;\sqrt2\end{pmatrix},\qquad (2,\sqrt2)=\sqrt2\cdot(\sqrt2,1).$$</div>
+<p>The second row is a multiple of the first, so the rows are dependent. For $t=-\sqrt2$: $(2,-\sqrt2)=-\sqrt2\cdot(-\sqrt2,1)$, again dependent. In both cases the plane is squashed onto a line, and the map cannot be undone.</p>
+<h3>5. Quick verification</h3>
+<div class="math-block">$$\begin{pmatrix}t&amp;1\\2&amp;t\end{pmatrix}\begin{pmatrix}t&amp;-1\\-2&amp;t\end{pmatrix}=\begin{pmatrix}t^2-2&amp;-t+t\\2t-2t&amp;-2+t^2\end{pmatrix}=(t^2-2)I.$$</div>
+<p>After dividing by $t^2-2$ we get $I$, which confirms the inverse formula. ✓</p>
+<h3>6. A concrete example</h3>
+<p>For $t=2$: $\det=2$, and</p>
+<div class="math-block">$$A(2)=\begin{pmatrix}2&amp;1\\2&amp;2\end{pmatrix},\qquad A(2)^{-1}=\frac12\begin{pmatrix}2&amp;-1\\-2&amp;2\end{pmatrix}=\begin{pmatrix}1&amp;-\tfrac12\\-1&amp;1\end{pmatrix}.$$</div>
+<h3>How I would explain this in class</h3>
+<blockquote><p>The matrix is invertible exactly when the determinant isn't zero. Here $\det A(t)=t^2-2$, which is zero for $t=\pm\sqrt2$. At those values the rows are multiples of each other, so the matrix is singular. For every other $t$ the inverse is $\frac{1}{t^2-2}\begin{pmatrix}t&amp;-1\\-2&amp;t\end{pmatrix}$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: Determinant of a 2×2 matrix</a></li><li><a href="#exercise-12">Exercise 12: A parameter revealed by a row operation</a></li><li><a href="#exercise-14">Exercise 14: A system of equations and the determinant</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-7">
+<h2 class="exercise-title">Exercise 7. Using Properties Instead of Recomputing</h2>
+<h3>The question</h3>
+<p>For a $3\times3$ matrix with $\det A=-4$, compute</p>
+<div class="math-block">$$\det(2A),\qquad \det(A^T),\qquad \det(A^2),\qquad \det(-A),$$</div>
+<p>justifying each answer with the appropriate property.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>We don't know the entries of $A$, so we <strong>cannot</strong> compute anything directly. We must use properties instead:</p>
+<table><thead><tr><th>Property</th><th>Formula ($n\times n$)</th></tr></thead><tbody><tr><td>Scaling</td><td>$\det(cA)=c^n\det A$</td></tr><tr><td>Transpose</td><td>$\det(A^T)=\det A$</td></tr><tr><td>Product</td><td>$\det(AB)=\det A\cdot\det B$</td></tr></tbody></table>
+<p>The scaling rule is the one most often done wrong: $cA$ multiplies <strong>every row</strong> by $c$, and each row contributes one factor $c$. With $n$ rows we get $c^n$, not $c$.</p>
+<h3>1. $\det(2A)$</h3>
+<p>$A$ is $3\times3$, so all three rows are multiplied by $2$:</p>
+<div class="math-block">$$\det(2A)=2^3\det A=8\cdot(-4)=-32.$$</div>
+<h3>2. $\det(A^T)$</h3>
+<p>Transposing does not change the determinant (rows and columns play symmetric roles):</p>
+<div class="math-block">$$\det(A^T)=\det A=-4.$$</div>
+<h3>3. $\det(A^2)$</h3>
+<p>By the product rule:</p>
+<div class="math-block">$$\det(A^2)=\det(A\cdot A)=\det A\cdot\det A=(-4)^2=16.$$</div>
+<h3>4. $\det(-A)$</h3>
+<p>$-A=(-1)A$, so by the scaling rule with $n=3$:</p>
+<div class="math-block">$$\det(-A)=(-1)^3\det A=-1\cdot(-4)=4.$$</div>
+<h3>5. Summary and meaning</h3>
+<table><thead><tr><th>Expression</th><th>Property</th><th>Value</th></tr></thead><tbody><tr><td>$\det(2A)$</td><td>$c^n\det A$</td><td>$-32$</td></tr><tr><td>$\det(A^T)$</td><td>transpose invariance</td><td>$-4$</td></tr><tr><td>$\det(A^2)$</td><td>product rule</td><td>$16$</td></tr><tr><td>$\det(-A)$</td><td>$(-1)^n\det A$</td><td>$4$</td></tr></tbody></table>
+<p>Geometric reading: $A$ scales volume by $4$ and flips orientation. $2A$ also doubles every length, which multiplies volume by $2^3=8$. $A^2$ flips orientation twice, so the sign becomes positive. $-A$ is a point reflection, which in 3D flips orientation, so the sign changes again.</p>
+<h3>6. Quick verification with a concrete matrix</h3>
+<p>Take $A=\operatorname{diag}(-4,1,1)$, so $\det A=-4$. Then</p>
+<ul><li>$2A=\operatorname{diag}(-8,2,2)$, $\det=-32$. ✓</li><li>$A^T=A$, $\det=-4$. ✓</li><li>$A^2=\operatorname{diag}(16,1,1)$, $\det=16$. ✓</li><li>$-A=\operatorname{diag}(4,-1,-1)$, $\det=4$. ✓</li></ul>
+<h3>7. A concrete example of the common mistake</h3>
+<p>Writing $\det(2A)=2\det A=-8$ would be wrong. For a $3\times3$ matrix, scaling by $2$ doubles length, width and height, so volume grows by $8$, not $2$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>I can't compute $A$, so I use properties. Multiplying a $3\times3$ matrix by $2$ multiplies each of the three rows by $2$, so $\det(2A)=8\cdot(-4)=-32$. Transposing doesn't change the determinant, so $\det A^T=-4$. The product rule gives $\det A^2=16$, and $\det(-A)=(-1)^3(-4)=4$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-8">Exercise 8: Determinant of a product</a></li><li><a href="#exercise-15">Exercise 15: Combining determinant properties</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-8">
+<h2 class="exercise-title">Exercise 8. Determinant of a Product</h2>
+<h3>The question</h3>
+<p>Let $A,B$ be square matrices with $\det A=3$ and $\det B=-5$. Compute $\det(AB)$, $\det(BA)$ and, if it exists, $\det(A^{-1}B)$. Explain why the first two are equal even though usually $AB\neq BA$.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<ol><li><strong>Product rule:</strong> $\det(AB)=\det A\cdot\det B$.</li><li><strong>Inverse rule:</strong> since $AA^{-1}=I$ and $\det I=1$, $$\det A\cdot\det(A^{-1})=1\quad\Longrightarrow\quad\det(A^{-1})=\frac{1}{\det A}.$$ $A^{-1}$ exists only if $\det A\neq0$.</li></ol>
+<p>The key insight: matrices do not commute, but <strong>determinants are numbers</strong>, and numbers do commute.</p>
+<h3>1. $\det(AB)$</h3>
+<div class="math-block">$$\det(AB)=\det A\cdot\det B=3\cdot(-5)=-15.$$</div>
+<h3>2. $\det(BA)$</h3>
+<div class="math-block">$$\det(BA)=\det B\cdot\det A=(-5)\cdot3=-15.$$</div>
+<h3>3. $\det(A^{-1}B)$</h3>
+<p>$\det A=3\neq0$, so $A^{-1}$ exists and $\det(A^{-1})=\tfrac13$. Then</p>
+<div class="math-block">$$\det(A^{-1}B)=\det(A^{-1})\cdot\det B=\frac13\cdot(-5)=-\frac53.$$</div>
+<h3>4. Why $\det(AB)=\det(BA)$ although $AB\neq BA$</h3>
+<p>The matrices $AB$ and $BA$ are generally different, but the product rule turns both determinants into a product of the <strong>same two numbers</strong>, $3$ and $-5$, and multiplication of numbers is commutative.</p>
+<p>Geometrically, $\det$ is the volume scaling factor. $AB$ scales volume first by $\det B$, then by $\det A$. $BA$ does it in the opposite order. The shapes may end up different, but the total volume factor is the same: $|3|\cdot|{-5}|=15$, and both flip orientation once.</p>
+<h3>5. Quick verification with concrete matrices</h3>
+<p>Take</p>
+<div class="math-block">$$A=\begin{pmatrix}1&amp;1\\0&amp;3\end{pmatrix}\ (\det 3),\qquad B=\begin{pmatrix}1&amp;0\\2&amp;-5\end{pmatrix}\ (\det -5).$$</div>
+<div class="math-block">$$AB=\begin{pmatrix}3&amp;-5\\6&amp;-15\end{pmatrix},\quad BA=\begin{pmatrix}1&amp;1\\2&amp;-13\end{pmatrix}.$$</div>
+<p>$AB\neq BA$, but $\det(AB)=-45+30=-15$ and $\det(BA)=-13-2=-15$. ✓</p>
+<p>Also $A^{-1}=\tfrac13\begin{pmatrix}3&amp;-1\\0&amp;1\end{pmatrix}$, so $A^{-1}B=\tfrac13\begin{pmatrix}1&amp;5\\2&amp;-5\end{pmatrix}$ and $\det=\tfrac19(-5-10)=-\tfrac{15}{9}=-\tfrac53$. ✓</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>The determinant of a product is the product of determinants, so $\det(AB)=3\cdot(-5)=-15$ and $\det(BA)=-15$ too. The matrices $AB$ and $BA$ can be different, but their determinants are products of the same two numbers, and numbers commute. Since $\det A\neq0$, $A^{-1}$ exists with determinant $\frac13$, so $\det(A^{-1}B)=-\frac53$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-7">Exercise 7: Using properties instead of recomputing</a></li><li><a href="#exercise-15">Exercise 15: Combining determinant properties</a></li><li><a href="#exercise-4">Matrices, Exercise 4: Noncommutativity</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-9">
+<h2 class="exercise-title">Exercise 9. Area and the Determinant</h2>
+<h3>The question</h3>
+<p>The vectors</p>
+<div class="math-block">$$u=\begin{pmatrix}3\\1\end{pmatrix},\qquad v=\begin{pmatrix}1\\4\end{pmatrix}$$</div>
+<p>span a parallelogram. Compute its area using a determinant. Then reverse the order of the vectors and explain what changes in the determinant and what does not change in the area.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Put the vectors as <strong>columns</strong> of a matrix. Then</p>
+<div class="math-block">$$\text{area of parallelogram}=\left|\det\begin{pmatrix}u&amp;v\end{pmatrix}\right|.$$</div>
+<p>The <strong>sign</strong> of the determinant carries extra information, which is the orientation:</p>
+<ul><li>$\det&gt;0$: going from $u$ to $v$ is a counterclockwise turn,</li><li>$\det&lt;0$: it is a clockwise turn.</li></ul>
+<p>Area is always non-negative, which is why we take the absolute value.</p>
+<h3>1. Compute the determinant</h3>
+<div class="math-block">$$\det\begin{pmatrix}3&amp;1\\1&amp;4\end{pmatrix}=3\cdot4-1\cdot1=11.$$</div>
+<h3>2. The area</h3>
+<div class="math-block">$$\text{Area}=|11|=11.$$</div>
+<p>The determinant is positive, so $v$ lies counterclockwise from $u$.</p>
+<h3>3. Reverse the order</h3>
+<div class="math-block">$$\det\begin{pmatrix}v&amp;u\end{pmatrix}=\det\begin{pmatrix}1&amp;3\\4&amp;1\end{pmatrix}=1\cdot1-3\cdot4=-11.$$</div>
+<table><thead><tr><th></th><th>$\det$</th><th>Area</th></tr></thead><tbody><tr><td>$(u,v)$</td><td>$11$</td><td>$11$</td></tr><tr><td>$(v,u)$</td><td>$-11$</td><td>$11$</td></tr></tbody></table>
+<ul><li><strong>Changes:</strong> the sign of the determinant. Swapping two columns multiplies the determinant by $-1$ (Exercise 3), because the orientation is reversed: from $v$ to $u$ is a clockwise turn.</li><li><strong>Does not change:</strong> the area. It is the same parallelogram, so $|\det|$ stays $11$.</li></ul>
+<h3>4. Why the determinant gives the area</h3>
+<p>The matrix $\begin{pmatrix}u&amp;v\end{pmatrix}$ sends $e_1\mapsto u$ and $e_2\mapsto v$, so it maps the unit square (area $1$) onto our parallelogram. The determinant is the factor by which the matrix scales areas, so the parallelogram has area $|\det|\cdot1$.</p>
+<h3>5. Quick verification (geometric)</h3>
+<p>Put the parallelogram in the rectangle $[0,4]\times[0,5]$ (vertices $0$, $u=(3,1)$, $v=(1,4)$, $u+v=(4,5)$). The rectangle has area $20$. Outside the parallelogram are two triangles with legs $3,1$ (area $1.5$ each), two triangles with legs $1,4$ (area $2$ each), and two $1\times1$ corner squares (area $1$ each):</p>
+<div class="math-block">$$20-2(1.5)-2(2)-2(1)=20-3-4-2=11.\ ✓$$</div>
+<h3>6. A concrete example</h3>
+<p>If $v$ were parallel to $u$, e.g. $v=(6,2)$, then $\det=3\cdot2-6\cdot1=0$. The parallelogram collapses into a segment with area $0$, which matches the fact that dependent vectors give $\det=0$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>I put $u$ and $v$ as columns, and the determinant is $3\cdot4-1\cdot1=11$, so the area is $11$. If I swap the vectors, the determinant becomes $-11$, because the orientation flips from counterclockwise to clockwise. The parallelogram is the same, so the area, the absolute value, stays $11$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-3">Exercise 3: Swapping two rows</a></li><li><a href="#exercise-10">Exercise 10: Detecting dependence</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-10">
+<h2 class="exercise-title">Exercise 10. Detecting Dependence</h2>
+<h3>The question</h3>
+<p>Without a full determinant calculation, explain why</p>
+<div class="math-block">$$\det\begin{pmatrix}1&amp;2&amp;3\\2&amp;4&amp;6\\0&amp;1&amp;5\end{pmatrix}=0.$$</div>
+<p>Identify a specific dependence between the rows and connect it with noninvertibility.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>The determinant is zero <strong>exactly when</strong> the rows are linearly dependent, i.e. one row can be built from the others. Before computing, it is worth scanning the rows for a simple relation, such as one row being a multiple of another.</p>
+<p>Tool: adding a multiple of one row to another does <strong>not</strong> change the determinant (Exercise 5).</p>
+<h3>1. Spot the dependence</h3>
+<p>Compare the first two rows:</p>
+<div class="math-block">$$R_2=(2,4,6)=2\cdot(1,2,3)=2R_1.$$</div>
+<p>So the rows satisfy the dependence</p>
+<div class="math-block">$$2R_1-R_2+0\cdot R_3=0.$$</div>
+<h3>2. Why this forces $\det=0$</h3>
+<p>Apply $R_2\leftarrow R_2-2R_1$, which does not change the determinant:</p>
+<div class="math-block">$$\begin{pmatrix}1&amp;2&amp;3\\0&amp;0&amp;0\\0&amp;1&amp;5\end{pmatrix}.$$</div>
+<p>A matrix with a <strong>zero row</strong> has determinant $0$: every term of the determinant contains one entry from that row, so every term is zero. Hence</p>
+<div class="math-block">$$\det\begin{pmatrix}1&amp;2&amp;3\\2&amp;4&amp;6\\0&amp;1&amp;5\end{pmatrix}=0.$$</div>
+<h3>3. Connection with noninvertibility</h3>
+<ul><li><strong>Geometrically:</strong> the three rows lie in one plane (only two independent directions), so the "box" they span is flat and has volume $0$.</li><li><strong>Algebraically:</strong> the matrix squashes $\mathbb{R}^3$ into a plane, so some non-zero vector is sent to $0$. Different inputs give the same output, so the map cannot be reversed.</li></ul>
+<p>We can find such a vector $x$ with $Ax=0$ from rows 1 and 3 (row 2 gives the same equation as row 1):</p>
+<div class="math-block">$$x+2y+3z=0,\quad y+5z=0\ \Longrightarrow\ y=-5z,\ x=7z.$$</div>
+<p>Taking $z=1$: $x=(7,-5,1)^T$.</p>
+<h3>4. Quick verification</h3>
+<ul><li>$Ax$: row 1: $7-10+3=0$; row 2: $14-20+6=0$; row 3: $0-5+5=0$. So $Ax=0$ with $x\neq0$. ✓</li><li>Sarrus' rule: $(1\cdot4\cdot5+2\cdot6\cdot0+3\cdot2\cdot1)-(3\cdot4\cdot0+1\cdot6\cdot1+2\cdot2\cdot5)=(20+0+6)-(0+6+20)=0$. ✓</li></ul>
+<h3>5. A concrete example</h3>
+<p>Because $A\begin{pmatrix}7\\-5\\1\end{pmatrix}=0$, the system $Ax=b$ can never have a <strong>unique</strong> solution. If $x_0$ is a solution, then so is $x_0+t(7,-5,1)^T$ for every $t$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>I notice that the second row is exactly twice the first one. Subtracting $2R_1$ from $R_2$ doesn't change the determinant but creates a zero row, so the determinant is $0$. The rows are dependent, the matrix flattens space into a plane, and for example $(7,-5,1)$ is sent to zero. So the matrix cannot be inverted.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: Determinant of a 2×2 matrix</a></li><li><a href="#exercise-12">Exercise 12: A parameter revealed by a row operation</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-11">
+<h2 class="exercise-title">Exercise 11. Shortening the Calculation with Row Operations</h2>
+<h3>The question</h3>
+<p>Compute</p>
+<div class="math-block">$$\det\begin{pmatrix}1&amp;2&amp;3\\1&amp;3&amp;4\\1&amp;4&amp;6\end{pmatrix}$$</div>
+<p>by first performing row operations that create as many zeros as possible. State which operations do not change the determinant.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p><strong>Plan before calculating.</strong> All three rows start with $1$, so subtracting $R_1$ from the other rows immediately gives zeros in the first column.</p>
+<p>Effects of row operations:</p>
+<ul><li>$R_i\leftarrow R_i+cR_j$ ($i\neq j$): determinant <strong>unchanged</strong>,</li><li>swapping two rows: sign changes,</li><li>scaling a row by $c$: determinant is multiplied by $c$.</li></ul>
+<p>We will use only the first type, so the determinant never changes.</p>
+<h3>1. Clear the first column</h3>
+<p>$R_2\leftarrow R_2-R_1$: $(1,3,4)-(1,2,3)=(0,1,1)$. Unchanged.</p>
+<p>$R_3\leftarrow R_3-R_1$: $(1,4,6)-(1,2,3)=(0,2,3)$. Unchanged.</p>
+<div class="math-block">$$\begin{pmatrix}1&amp;2&amp;3\\0&amp;1&amp;1\\0&amp;2&amp;3\end{pmatrix}.$$</div>
+<h3>2. Clear below the second pivot</h3>
+<p>$R_3\leftarrow R_3-2R_2$: $(0,2,3)-(0,2,2)=(0,0,1)$. Unchanged.</p>
+<div class="math-block">$$\begin{pmatrix}1&amp;2&amp;3\\0&amp;1&amp;1\\0&amp;0&amp;1\end{pmatrix}.$$</div>
+<h3>3. Read off the determinant</h3>
+<p>The matrix is upper triangular:</p>
+<div class="math-block">$$\det=1\cdot1\cdot1=1.$$</div>
+<h3>4. Which operations did not change the determinant?</h3>
+<p>All three: $R_2-R_1$, $R_3-R_1$, $R_3-2R_2$ are all of the type "add a multiple of another row". No swaps or scalings were used, so the original determinant is exactly $1$.</p>
+<h3>5. Why planning helps</h3>
+<p>Without row operations, Sarrus' rule needs six triple products. Here, three subtractions with small numbers turn the problem into multiplying three $1$'s. The less arithmetic we do, the fewer chances for mistakes.</p>
+<h3>6. Quick verification</h3>
+<p>Cofactor expansion along the first row of the original matrix:</p>
+<div class="math-block">$$1(3\cdot6-4\cdot4)-2(1\cdot6-4\cdot1)+3(1\cdot4-3\cdot1)=1\cdot2-2\cdot2+3\cdot1=2-4+3=1.\ ✓$$</div>
+<h3>7. A concrete example</h3>
+<p>$\det=1$ means the matrix preserves volume and orientation. Its inverse also has determinant $1$, and since all entries are integers, the inverse matrix $\frac{1}{\det}\operatorname{adj}(A)$ also has only integer entries.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>All rows start with $1$, so I subtract the first row from the others. Then I subtract twice the new second row from the third. These operations don't change the determinant, and I end with a triangular matrix with ones on the diagonal. So the determinant is $1$. A direct expansion confirms it: $2-4+3=1$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-5">Exercise 5: Row operations</a></li><li><a href="#exercise-13">Exercise 13: Determinant by elimination</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-12">
+<h2 class="exercise-title">Exercise 12. A Parameter Revealed by a Row Operation</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$A(t)=\begin{pmatrix}1&amp;2&amp;3\\2&amp;4&amp;t\\0&amp;1&amp;1\end{pmatrix}$$</div>
+<p>find the values of $t$ for which the matrix is not invertible. First perform $R_2\leftarrow R_2-2R_1$ and use the resulting structure. At the end, explain what happens to the rows for the value found.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<ul><li>The matrix is not invertible exactly when $\det A(t)=0$.</li><li>$R_2\leftarrow R_2-2R_1$ does <strong>not</strong> change the determinant, so we may compute the determinant of the simplified matrix instead.</li><li>The first two entries of $R_2$ are exactly twice those of $R_1$. The row operation will therefore create zeros and isolate the parameter $t$ in a single entry.</li></ul>
+<h3>1. The row operation</h3>
+<div class="math-block">$$R_2-2R_1=(2,4,t)-(2,4,6)=(0,0,t-6).$$</div>
+<div class="math-block">$$A'(t)=\begin{pmatrix}1&amp;2&amp;3\\0&amp;0&amp;t-6\\0&amp;1&amp;1\end{pmatrix},\qquad \det A'(t)=\det A(t).$$</div>
+<h3>2. Use the structure</h3>
+<p>Row 2 now has only one possibly non-zero entry. Expanding along row 2, only position $(2,3)$ contributes, with sign $(-1)^{2+3}=-1$:</p>
+<div class="math-block">$$\det A(t)=-(t-6)\cdot\det\begin{pmatrix}1&amp;2\\0&amp;1\end{pmatrix}=-(t-6)\cdot1=6-t.$$</div>
+<h3>3. Find the forbidden value</h3>
+<div class="math-block">$$6-t=0\iff t=6.$$</div>
+<p>So $A(t)$ is <strong>not invertible only for $t=6$</strong>, and invertible for all $t\neq6$.</p>
+<h3>4. What happens to the rows at $t=6$</h3>
+<p>For $t=6$ the second row is</p>
+<div class="math-block">$$R_2=(2,4,6)=2\cdot(1,2,3)=2R_1.$$</div>
+<p>The second row is just a multiple of the first, so it adds no new information. After the row operation it becomes the zero row. The rows are dependent, the matrix flattens $\mathbb{R}^3$ into a plane, and it cannot be inverted.</p>
+<h3>5. Quick verification</h3>
+<p>Direct cofactor expansion along the first row of $A(t)$:</p>
+<div class="math-block">$$\det A(t)=1(4\cdot1-t\cdot1)-2(2\cdot1-t\cdot0)+3(2\cdot1-4\cdot0)=(4-t)-4+6=6-t.\ ✓$$</div>
+<h3>6. A concrete example</h3>
+<ul><li>$t=7$: $\det=-1\neq0$, invertible.</li><li>$t=6$: $A(6)\begin{pmatrix}1\\1\\-1\end{pmatrix}=\begin{pmatrix}1+2-3\\2+4-6\\0+1-1\end{pmatrix}=\begin{pmatrix}0\\0\\0\end{pmatrix}$. A non-zero vector is sent to zero, confirming that $A(6)$ is singular.</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>I subtract twice the first row from the second. This doesn't change the determinant, and the second row becomes $(0,0,t-6)$. Expanding along that row gives $\det=6-t$, so the matrix is singular only for $t=6$. At $t=6$ the second row is exactly twice the first, so the rows are dependent.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-6">Exercise 6: Parameter and invertibility</a></li><li><a href="#exercise-10">Exercise 10: Detecting dependence</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-13">
+<h2 class="exercise-title">Exercise 13. Determinant by Elimination</h2>
+<h3>The question</h3>
+<p>Compute the determinant of</p>
+<div class="math-block">$$A=\begin{pmatrix}1&amp;2&amp;3\\2&amp;5&amp;7\\1&amp;0&amp;2\end{pmatrix}$$</div>
+<p>using elimination, and record the effect of every row operation on the value of the determinant.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p><strong>Elimination</strong> turns the matrix into upper triangular form, whose determinant is the product of the diagonal (Exercise 4). We must keep track of how each step changes the determinant:</p>
+<table><thead><tr><th>Operation</th><th>Factor applied to $\det$</th></tr></thead><tbody><tr><td>$R_i\leftarrow R_i+cR_j$</td><td>$1$ (no change)</td></tr><tr><td>$R_i\leftrightarrow R_j$</td><td>$-1$</td></tr><tr><td>$R_i\leftarrow cR_i$</td><td>$c$</td></tr></tbody></table>
+<p>Then $\det A=\dfrac{\det(\text{triangular})}{\text{product of all factors}}$.</p>
+<h3>1. Eliminate the first column</h3>
+<p>The pivot is $a_{11}=1$.</p>
+<table><thead><tr><th>Step</th><th>Operation</th><th>New row</th><th>Factor</th></tr></thead><tbody><tr><td>1</td><td>$R_2\leftarrow R_2-2R_1$</td><td>$(2,5,7)-(2,4,6)=(0,1,1)$</td><td>$1$</td></tr><tr><td>2</td><td>$R_3\leftarrow R_3-R_1$</td><td>$(1,0,2)-(1,2,3)=(0,-2,-1)$</td><td>$1$</td></tr></tbody></table>
+<div class="math-block">$$\begin{pmatrix}1&amp;2&amp;3\\0&amp;1&amp;1\\0&amp;-2&amp;-1\end{pmatrix}.$$</div>
+<h3>2. Eliminate the second column</h3>
+<p>The pivot is now $1$ in position $(2,2)$.</p>
+<table><thead><tr><th>Step</th><th>Operation</th><th>New row</th><th>Factor</th></tr></thead><tbody><tr><td>3</td><td>$R_3\leftarrow R_3+2R_2$</td><td>$(0,-2,-1)+(0,2,2)=(0,0,1)$</td><td>$1$</td></tr></tbody></table>
+<div class="math-block">$$U=\begin{pmatrix}1&amp;2&amp;3\\0&amp;1&amp;1\\0&amp;0&amp;1\end{pmatrix}.$$</div>
+<h3>3. Result</h3>
+<p>All factors were $1$, so</p>
+<div class="math-block">$$\det A=\det U=1\cdot1\cdot1=1.$$</div>
+<h3>4. Meaning</h3>
+<ul><li>$\det A=1\neq0$: $A$ is invertible.</li><li>The pivots $1,1,1$ are all non-zero, which is the elimination version of the same statement: a matrix is invertible exactly when elimination produces a full set of non-zero pivots.</li><li>Elimination is the practical method for large matrices. It needs roughly $n^3/3$ operations, while cofactor expansion grows like $n!$.</li></ul>
+<h3>5. Quick verification</h3>
+<p>Cofactor expansion along the first row:</p>
+<div class="math-block">$$\det A=1(5\cdot2-7\cdot0)-2(2\cdot2-7\cdot1)+3(2\cdot0-5\cdot1)=10-2(-3)+3(-5)=10+6-15=1.\ ✓$$</div>
+<h3>6. A concrete example</h3>
+<p>Suppose in step 3 we had swapped $R_2$ and $R_3$ first. Then the factor would be $-1$, the triangular matrix would have a different diagonal, and we would have to divide by $-1$ at the end. The final answer must still be $1$. The bookkeeping protects us from sign errors.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>I use the pivot $1$ to clear the first column by subtracting $2R_1$ and $R_1$. Then I use the new pivot $1$ to clear below it by adding $2R_2$. All three operations are "add a multiple of a row", so the determinant never changes. The final triangular matrix has diagonal $1,1,1$, so $\det A=1$, which a cofactor expansion confirms.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-4">Exercise 4: Triangular matrix</a></li><li><a href="#exercise-5">Exercise 5: Row operations</a></li><li><a href="#exercise-11">Exercise 11: Shortening the calculation</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-14">
+<h2 class="exercise-title">Exercise 14. A System of Equations and the Determinant</h2>
+<h3>The question</h3>
+<p>Consider $Ax=b$ with</p>
+<div class="math-block">$$A=\begin{pmatrix}1&amp;2\\k&amp;4\end{pmatrix}.$$</div>
+<p>For which $k$ does the system have exactly one solution for every $b$? For the remaining value, give a right-hand side $b$ with infinitely many solutions and one with no solution.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>For a square system $Ax=b$:</p>
+<ul><li>if $\det A\neq0$, $A$ is invertible and $x=A^{-1}b$ is the <strong>unique</strong> solution for <strong>every</strong> $b$;</li><li>if $\det A=0$, the rows are dependent. Then, depending on $b$, there are either <strong>infinitely many</strong> solutions (the equations agree) or <strong>none</strong> (the equations contradict each other).</li></ul>
+<h3>1. Compute the determinant</h3>
+<div class="math-block">$$\det A=1\cdot4-2\cdot k=4-2k.$$</div>
+<h3>2. Unique solution for every $b$</h3>
+<div class="math-block">$$4-2k\neq0\iff k\neq2.$$</div>
+<p>So for every $k\neq2$ the system has exactly one solution for every $b$, namely</p>
+<div class="math-block">$$x=A^{-1}b=\frac{1}{4-2k}\begin{pmatrix}4&amp;-2\\-k&amp;1\end{pmatrix}b.$$</div>
+<h3>3. The exceptional value $k=2$</h3>
+<div class="math-block">$$A=\begin{pmatrix}1&amp;2\\2&amp;4\end{pmatrix},\qquad R_2=2R_1.$$</div>
+<p>The system is</p>
+<div class="math-block">$$\begin{cases}x_1+2x_2=b_1\\2x_1+4x_2=b_2\end{cases}$$</div>
+<p>The left side of the second equation is exactly twice the left side of the first. So everything depends on whether $b_2=2b_1$.</p>
+<p><strong>Infinitely many solutions:</strong> take $b=\begin{pmatrix}1\\2\end{pmatrix}$ (so $b_2=2b_1$). The second equation is just the first one multiplied by $2$, so only $x_1+2x_2=1$ remains:</p>
+<div class="math-block">$$x=\begin{pmatrix}1-2s\\s\end{pmatrix},\qquad s\in\mathbb{R}.$$</div>
+<p>Geometrically: both equations describe the <strong>same line</strong>.</p>
+<p><strong>No solution:</strong> take $b=\begin{pmatrix}1\\0\end{pmatrix}$. Then</p>
+<div class="math-block">$$x_1+2x_2=1\quad\text{and}\quad 2x_1+4x_2=0\ \Rightarrow\ x_1+2x_2=0.$$</div>
+<p>The same expression cannot equal both $1$ and $0$. Geometrically: two <strong>parallel lines</strong> that never meet.</p>
+<h3>4. Quick verification</h3>
+<ul><li>Infinitely many: $s=0$ gives $(1,0)$: $1+0=1$, $2+0=2$ ✓. $s=1$ gives $(-1,1)$: $-1+2=1$, $-2+4=2$ ✓.</li><li>No solution: $R_2-2R_1$ on the augmented matrix $\left(\begin{array}{cc|c}1&amp;2&amp;1\\2&amp;4&amp;0\end{array}\right)$ gives $(0,0\mid-2)$, i.e. $0=-2$. Contradiction ✓.</li></ul>
+<h3>5. A concrete example of the unique case</h3>
+<p>For $k=1$, $b=\begin{pmatrix}3\\6\end{pmatrix}$: $\det=2$, and</p>
+<div class="math-block">$$x=\frac12\begin{pmatrix}4&amp;-2\\-1&amp;1\end{pmatrix}\begin{pmatrix}3\\6\end{pmatrix}=\frac12\begin{pmatrix}0\\3\end{pmatrix}=\begin{pmatrix}0\\1.5\end{pmatrix}.$$</div>
+<p>Check: $0+2\cdot1.5=3$ ✓, $0+4\cdot1.5=6$ ✓.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>The determinant is $4-2k$. If $k\neq2$ it's non-zero, so $A$ is invertible and every $b$ gives exactly one solution. If $k=2$ the second row is twice the first. If $b$ also satisfies $b_2=2b_1$, like $(1,2)$, the two equations are the same line and there are infinitely many solutions. If not, like $(1,0)$, they are parallel lines and there is no solution.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-6">Exercise 6: Parameter and invertibility</a></li><li><a href="#exercise-10">Exercise 10: Detecting dependence</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-15">
+<h2 class="exercise-title">Exercise 15. Combining Determinant Properties</h2>
+<h3>The question</h3>
+<p>Let $A$ and $B$ be invertible $2\times2$ matrices with</p>
+<div class="math-block">$$\det A=-2,\qquad \det B=3.$$</div>
+<p>Without finding the entries, compute</p>
+<div class="math-block">$$\det\left(B^{-1}A^TB\right).$$</div>
+<p>State the properties used in order and explain why the factors involving $B$ cancel.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>We need three properties:</p>
+<ol><li><strong>Product rule:</strong> $\det(XYZ)=\det X\cdot\det Y\cdot\det Z$.</li><li><strong>Inverse rule:</strong> $\det(B^{-1})=\dfrac{1}{\det B}$, because $\det B\cdot\det B^{-1}=\det I=1$.</li><li><strong>Transpose rule:</strong> $\det(A^T)=\det A$.</li></ol>
+<p>The idea: the product rule turns a product of <strong>matrices</strong> (which don't commute) into a product of <strong>numbers</strong> (which do).</p>
+<h3>1. Product rule</h3>
+<div class="math-block">$$\det\left(B^{-1}A^TB\right)=\det(B^{-1})\cdot\det(A^T)\cdot\det B.$$</div>
+<h3>2. Inverse rule</h3>
+<div class="math-block">$$\det(B^{-1})=\frac{1}{\det B}=\frac13.$$</div>
+<h3>3. Transpose rule</h3>
+<div class="math-block">$$\det(A^T)=\det A=-2.$$</div>
+<h3>4. Combine</h3>
+<div class="math-block">$$\det\left(B^{-1}A^TB\right)=\frac13\cdot(-2)\cdot3=-2.$$</div>
+<h3>5. Why the factors with $B$ cancel</h3>
+<p>As matrices, $B^{-1}$ and $B$ are <strong>not</strong> next to each other, and $A^T$ sits between them. So we cannot just cancel $B^{-1}B=I$ in the matrix product, because in general $B^{-1}A^TB\neq A^T$.</p>
+<p>But after taking determinants we have the numbers $\frac{1}{\det B}$ and $\det B$. Numbers commute, so they can be moved together:</p>
+<div class="math-block">$$\frac{1}{\det B}\cdot\det B\cdot\det A^T=1\cdot\det A^T.$$</div>
+<p>So the answer does not depend on $B$ at all: for any invertible $B$,</p>
+<div class="math-block">$$\det(B^{-1}MB)=\det M.$$</div>
+<p><strong>Meaning:</strong> $B^{-1}MB$ is the same transformation as $M$, only described in a different coordinate system (a change of basis). The volume scaling factor is a property of the transformation itself, not of the coordinates, so it is unchanged.</p>
+<h3>6. Quick verification with concrete matrices</h3>
+<p>Take $A=\begin{pmatrix}1&amp;0\\0&amp;-2\end{pmatrix}$ ($\det -2$) and $B=\begin{pmatrix}1&amp;1\\0&amp;3\end{pmatrix}$ ($\det 3$). Then $A^T=A$, $B^{-1}=\frac13\begin{pmatrix}3&amp;-1\\0&amp;1\end{pmatrix}$, and</p>
+<div class="math-block">$$A^TB=\begin{pmatrix}1&amp;1\\0&amp;-6\end{pmatrix},\qquad B^{-1}A^TB=\frac13\begin{pmatrix}3&amp;-1\\0&amp;1\end{pmatrix}\begin{pmatrix}1&amp;1\\0&amp;-6\end{pmatrix}=\frac13\begin{pmatrix}3&amp;9\\0&amp;-6\end{pmatrix}=\begin{pmatrix}1&amp;3\\0&amp;-2\end{pmatrix}.$$</div>
+<p>This matrix differs from $A^T$, but its determinant is $1\cdot(-2)=-2$. ✓</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>I use the product rule to split the determinant into three numbers: $\det B^{-1}$, $\det A^T$ and $\det B$. The inverse rule gives $\frac13$, and the transpose rule gives $-2$. As matrices, $B^{-1}$ and $B$ can't cancel because $A^T$ is between them, but as numbers they can, so the answer is $\frac13\cdot(-2)\cdot3=-2$. A change of basis doesn't change the determinant.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-7">Exercise 7: Using properties instead of recomputing</a></li><li><a href="#exercise-8">Exercise 8: Determinant of a product</a></li></ul>
+</section>
+    </main>
+  </div>
+</body>
+</html>

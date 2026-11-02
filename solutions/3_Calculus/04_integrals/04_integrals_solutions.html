@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>04. Integrals — Complete Solutions</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false}
+      ],
+      throwOnError: false
+    });"></script>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --muted: #475569;
+      --accent: #2563eb;
+      --accent-soft: #eff6ff;
+      --quote-bg: #f1f5f9;
+      --quote-border: #3b82f6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 310px 1fr;
+      min-height: 100vh;
+    }
+    aside.sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 1.5rem 1.25rem;
+    }
+    .brand {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    .brand-sub {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .toc-group-title {
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin: 1rem 0 0.35rem 0.5rem;
+    }
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .toc-list li { margin-bottom: 0.2rem; }
+    .toc-list a {
+      display: block;
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.86rem;
+      transition: background 0.15s, color 0.15s;
+    }
+    .toc-list a:hover {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+    main.content {
+      max-width: 940px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    header.page-header {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    }
+    header.page-header h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.85rem;
+      color: var(--text);
+    }
+    header.page-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+    .section-banner {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: #ffffff;
+      border-radius: 12px;
+      padding: 1.5rem 2rem;
+      margin: 2.5rem 0 1.5rem;
+      scroll-margin-top: 1.5rem;
+    }
+    .section-banner h2 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    .section-banner p {
+      margin: 0.25rem 0 0;
+      opacity: 0.9;
+      font-size: 0.92rem;
+    }
+    section.exercise-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem 2.25rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+      scroll-margin-top: 1.5rem;
+    }
+    section.exercise-card h2.exercise-title {
+      margin-top: 0;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--accent-soft);
+      color: var(--accent);
+      font-size: 1.4rem;
+    }
+    section.exercise-card h3 {
+      margin-top: 1.5rem;
+      margin-bottom: 0.55rem;
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+    section.exercise-card h4 {
+      margin-top: 1.15rem;
+      margin-bottom: 0.45rem;
+      font-size: 1rem;
+      color: var(--muted);
+    }
+    p { margin: 0.65rem 0; }
+    ul, ol { margin: 0.65rem 0; padding-left: 1.5rem; }
+    li { margin-bottom: 0.35rem; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.85rem;
+      text-align: left;
+    }
+    th { background: var(--bg); font-weight: 600; }
+    blockquote {
+      margin: 1rem 0;
+      padding: 0.9rem 1.2rem;
+      background: var(--quote-bg);
+      border-left: 4px solid var(--quote-border);
+      border-radius: 0 8px 8px 0;
+      color: var(--text);
+    }
+    blockquote p { margin: 0; }
+    pre {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 1rem 1.25rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+    code {
+      font-family: Consolas, Monaco, "Courier New", monospace;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .katex-display {
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 0.25rem 0;
+    }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      aside.sidebar {
+        position: static;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      main.content { padding: 1.5rem 1rem 3rem; }
+      section.exercise-card { padding: 1.5rem; }
+    }
+    @media print {
+      aside.sidebar { display: none; }
+      .layout { display: block; }
+      body { background: #fff; }
+      section.exercise-card { box-shadow: none; break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">3. Calculus</div>
+      <div class="brand-sub">04. Integrals (Exercises 1–15)</div>
+      <ul class="toc-list">
+<li><a href="#exercise-1">1. Antiderivative and Verification</a></li>
+<li><a href="#exercise-2">2. Powers, Roots, and the Domain</a></li>
+<li><a href="#exercise-3">3. Recognizing Basic Antiderivatives</a></li>
+<li><a href="#exercise-4">4. Substitution as Reversing the Chain Rule</a></li>
+<li><a href="#exercise-5">5. The Same Substitution in a Different Context</a></li>
+<li><a href="#exercise-6">6. When Does a Logarithm Appear from an Integral?</a></li>
+<li><a href="#exercise-7">7. Integration by Parts as Reversing the Product Rule</a></li>
+<li><a href="#exercise-8">8. Choosing the Factors in Integration by Parts</a></li>
+<li><a href="#exercise-9">9. Definite Integral and Geometric Area</a></li>
+<li><a href="#exercise-10">10. Definite Integral and Checking the Result</a></li>
+<li><a href="#exercise-11">11. Choose the Method First</a></li>
+<li><a href="#exercise-12">12. Symmetry, Sign, and Absolute Value</a></li>
+<li><a href="#exercise-13">13. An Integral Depending on the Upper Limit</a></li>
+<li><a href="#exercise-14">14. A Piecewise-Defined Function</a></li>
+<li><a href="#exercise-15">15. Recovering a Function from Its Derivative and a Condition</a></li>
+</ul>
+    </aside>
+    <main class="content">
+      <header class="page-header">
+        <h1>04. Integrals — Complete Solutions</h1>
+        <p>Basics of Mathematics Student Workbook (2026) · 3. Calculus · All 15 Exercises with Detailed Explanations</p>
+      </header>
+      <section class="exercise-card" id="exercise-1">
+<h2 class="exercise-title">Exercise 1. Antiderivative and Verification</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$f(x)=3x^2-4x+5$$</div>
+<p>find one antiderivative $F(x)$. Write the entire family of antiderivatives, verify the result by differentiation, and explain the meaning of the constant $C$.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Integration is the <strong>inverse operation to differentiation</strong>. Looking for an antiderivative $F(x)$ of $f(x)$ means asking: <em>"Which function has derivative $f(x)$?"</em></p>
+<p>For power terms $x^n$ (with $n\neq -1$), differentiating brings the exponent down and reduces it by $1$:</p>
+<div class="math-block">$$\frac{d}{dx}\left(x^{n+1}\right)=(n+1)x^n.$$</div>
+<p>Reversing this process gives the <strong>power rule for antiderivatives</strong>: raise the exponent by $1$ and divide by the new exponent:</p>
+<div class="math-block">$$\int x^n\,dx=\frac{x^{n+1}}{n+1}+C.$$</div>
+<p>Because the derivative of any constant $C$ is zero, adding a constant does not change the derivative. Therefore, a function does not have just one antiderivative, but an entire vertical family of them.</p>
+<h3>1. Finding one antiderivative $F(x)$</h3>
+<p>We integrate $f(x)=3x^2-4x+5$ term by term by reversing the power rule:</p>
+<ul><li>For $3x^2$: raise the power from $2$ to $3$ and divide by $3$: $$3\cdot\frac{x^3}{3}=x^3.$$</li><li>For $-4x$: raise the power from $1$ to $2$ and divide by $2$: $$-4\cdot\frac{x^2}{2}=-2x^2.$$</li><li>For $5$: a constant $5=5x^0$ comes from differentiating a linear term: $$5x.$$</li></ul>
+<p>Choosing the simplest case (with constant $0$), one particular antiderivative is:</p>
+<div class="math-block">$$F_0(x)=x^3-2x^2+5x.$$</div>
+<h3>2. Writing the entire family of antiderivatives</h3>
+<p>Since any two antiderivatives of the same function on an interval differ only by a constant, the complete family of antiderivatives (the indefinite integral) is:</p>
+<div class="math-block">$$\int (3x^2-4x+5)\,dx = x^3-2x^2+5x+C,\qquad C\in\mathbb{R}.$$</div>
+<h3>3. Meaning of the constant $C$</h3>
+<ul><li><strong>Analytically:</strong> Differentiation measures the rate of change, so any constant term $C$ disappears when we differentiate ($\frac{d}{dx}(C)=0$). When we reverse differentiation, we cannot know which constant was originally present without extra information (such as an initial condition).</li><li><strong>Geometrically:</strong> Changing $C$ shifts the graph of $F_0(x)=x^3-2x^2+5x$ <strong>vertically up or down</strong>. At every given $x$, all curves in the family $F(x)=x^3-2x^2+5x+C$ have the exact same slope $f(x)=3x^2-4x+5$.</li></ul>
+<h3>Quick verification</h3>
+<p>We differentiate the entire family $F(x)=x^3-2x^2+5x+C$ with respect to $x$:</p>
+<div class="math-block">$$F'(x)=\frac{d}{dx}\left(x^3-2x^2+5x+C\right)=3x^2-2(2x)+5+0=3x^2-4x+5=f(x).$$</div>
+<p>The derivative matches the original integrand for every real value of $C$. ✓</p>
+<h3>A concrete example</h3>
+<p>Consider two specific members of the family:</p>
+<div class="math-block">$$F_1(x)=x^3-2x^2+5x+1\qquad\text{and}\qquad F_2(x)=x^3-2x^2+5x-4.$$</div>
+<p>At $x=2$:</p>
+<ul><li>Their values are different: $F_1(2)=8-8+10+1=11$, whereas $F_2(2)=8-8+10-4=6$ (shifted vertically by $5$ units).</li><li>Their slopes at $x=2$ are identical: $$F_1'(2)=F_2'(2)=f(2)=3(2)^2-4(2)+5=12-8+5=9.$$</li></ul>
+<p>If we additionally require the curve to pass through $(2,11)$, only $C=1$ works.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>To find an antiderivative of $3x^2-4x+5$, I reverse the power rule term by term: $3x^2$ comes from $x^3$, $-4x$ comes from $-2x^2$, and $5$ comes from $5x$. That gives one antiderivative $x^3-2x^2+5x$. Because the derivative of any constant is zero, adding $+C$ gives the whole family $x^3-2x^2+5x+C$. Geometrically, $+C$ shifts the graph up or down without changing its slope at any $x$. Differentiating brings us right back to $3x^2-4x+5$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-2">Exercise 2: Powers, Roots, and the Domain</a></li><li><a href="#exercise-15">Exercise 15: Recovering a Function from Its Derivative and a Condition</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-2">
+<h2 class="exercise-title">Exercise 2. Powers, Roots, and the Domain</h2>
+<h3>The question</h3>
+<p>Compute</p>
+<div class="math-block">$$\int\left(2\sqrt{x}+\frac{3}{x^2}-x^{1/3}\right)\,dx.$$</div>
+<p>First rewrite the terms as powers, determine the domain of the original expression, and verify the result by differentiation.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Roots and fractions with $x$ in the denominator do not need separate integration rules—they are simply <strong>powers with fractional or negative exponents</strong>:</p>
+<div class="math-block">$$\sqrt{x}=x^{1/2},\qquad \frac{1}{x^n}=x^{-n}.$$</div>
+<p>Once every term is written in the standard power form $x^n$ (with $n\neq -1$), we apply the power rule:</p>
+<div class="math-block">$$\int x^n\,dx=\frac{x^{n+1}}{n+1}+C.$$</div>
+<p>Before integrating, however, we must check <strong>where the integrand is defined</strong>, because the antiderivative is only valid on intervals where the original function exists.</p>
+<h3>1. Determining the domain of the integrand</h3>
+<p>Let $f(x)=2\sqrt{x}+\dfrac{3}{x^2}-x^{1/3}$. We check each term:</p>
+<ul><li>$2\sqrt{x}$ requires $x\ge 0$ (in the real numbers, square roots of negative numbers are undefined).</li><li>$\dfrac{3}{x^2}$ requires $x\neq 0$ (division by zero is undefined).</li><li>$x^{1/3}=\sqrt[3]{x}$ is defined for all $x\in\mathbb{R}$.</li></ul>
+<p>Combining $x\ge 0$ and $x\neq 0$, the domain of the integrand is the open half-line:</p>
+<div class="math-block">$$D_f=(0,\infty)\quad\text{(that is, }x&gt;0\text{)}.$$</div>
+<h3>2. Rewriting the integrand as powers of $x$</h3>
+<p>For $x&gt;0$, we rewrite each term in the form $a\cdot x^n$:</p>
+<div class="math-block">$$2\sqrt{x}=2x^{1/2},\qquad \frac{3}{x^2}=3x^{-2},\qquad -x^{1/3}=-x^{1/3}.$$</div>
+<p>So the integral becomes:</p>
+<div class="math-block">$$\int\left(2x^{1/2}+3x^{-2}-x^{1/3}\right)\,dx.$$</div>
+<h3>3. Integrating term by term</h3>
+<p>We apply $\int x^n\,dx=\dfrac{x^{n+1}}{n+1}$ to each term:</p>
+<ol><li><strong>First term ($n=\tfrac{1}{2}$):</strong> the new exponent is $\tfrac{1}{2}+1=\tfrac{3}{2}$, and dividing by $\tfrac{3}{2}$ means multiplying by $\tfrac{2}{3}$: $$2\cdot\frac{x^{3/2}}{3/2}=2\cdot\frac{2}{3}x^{3/2}=\frac{4}{3}x^{3/2}.$$</li><li><strong>Second term ($n=-2$):</strong> the new exponent is $-2+1=-1$: $$3\cdot\frac{x^{-1}}{-1}=-3x^{-1}=-\frac{3}{x}.$$</li><li><strong>Third term ($n=\tfrac{1}{3}$):</strong> the new exponent is $\tfrac{1}{3}+1=\tfrac{4}{3}$, and dividing by $\tfrac{4}{3}$ means multiplying by $\tfrac{3}{4}$: $$-\frac{x^{4/3}}{4/3}=-\frac{3}{4}x^{4/3}.$$</li></ol>
+<h3>4. Writing the final result</h3>
+<p>Combining all terms and converting back to radical/fraction notation (for $x&gt;0$):</p>
+<div class="math-block">$$\int\left(2\sqrt{x}+\frac{3}{x^2}-x^{1/3}\right)\,dx=\frac{4}{3}x^{3/2}-\frac{3}{x}-\frac{3}{4}x^{4/3}+C=\frac{4}{3}x\sqrt{x}-\frac{3}{x}-\frac{3}{4}x\sqrt[3]{x}+C.$$</div>
+<h3>Quick verification</h3>
+<p>Differentiate $F(x)=\dfrac{4}{3}x^{3/2}-3x^{-1}-\dfrac{3}{4}x^{4/3}+C$ using the power rule on $(0,\infty)$:</p>
+<div class="math-block">$$F'(x)=\frac{4}{3}\cdot\frac{3}{2}x^{3/2-1}-3(-1)x^{-1-1}-\frac{3}{4}\cdot\frac{4}{3}x^{4/3-1}+0=2x^{1/2}+3x^{-2}-x^{1/3}=2\sqrt{x}+\frac{3}{x^2}-x^{1/3}.$$</div>
+<p>Every term matches the original integrand. ✓</p>
+<h3>A concrete example</h3>
+<p>A very common mistake when integrating $\dfrac{3}{x^2}=3x^{-2}$ is to add $1$ in the wrong direction and write $-3$ instead of $-1$ as the new exponent. Checking at $x=1$ shows how our derivative test catches this immediately:</p>
+<ul><li>For our term $-3x^{-1}$, the derivative is $(-3)(-1)x^{-2}=3x^{-2}$, which at $x=1$ equals $3$.</li><li>Evaluating the rate of change of $F(x)$ at $x=1$ gives $F'(1)=2(1)+3(1)-1=4$, matching $f(1)=2\sqrt{1}+\frac{3}{1^2}-1^{1/3}=4$.</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Whenever I see roots or powers in the denominator, my first step is to rewrite them with fractional and negative exponents: $2x^{1/2}+3x^{-2}-x^{1/3}$. I also note that $\sqrt{x}$ needs $x\ge 0$ and $3/x^2$ forbids $x=0$, so the domain is $x&gt;0$. Then I just add $1$ to each exponent and divide by the new exponent: $x^{1/2}$ goes to $\frac{2}{3}x^{3/2}$, $x^{-2}$ goes to $-x^{-1}$ (careful: $-2+1=-1$, not $-3$!), and $x^{1/3}$ goes to $\frac{3}{4}x^{4/3}$. Differentiating the power form confirms the answer immediately.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: Antiderivative and Verification</a></li><li><a href="#exercise-3">Exercise 3: Recognizing Basic Antiderivatives</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-3">
+<h2 class="exercise-title">Exercise 3. Recognizing Basic Antiderivatives</h2>
+<h3>The question</h3>
+<p>Compute</p>
+<div class="math-block">$$\int\left(2e^x+3\cos x-4\sin x\right)\,dx.$$</div>
+<p>Match each term with a known derivative and verify the entire result with one differentiation.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>By <strong>linearity of the integral</strong>, we can integrate a sum or difference term by term and pull constant multipliers in front:</p>
+<div class="math-block">$$\int \bigl(a\,f(x)+b\,g(x)\bigr)\,dx = a\int f(x)\,dx + b\int g(x)\,dx.$$</div>
+<p>For elementary transcendental functions, integration relies on recognizing basic derivative formulas in reverse:</p>
+<ul><li>$\dfrac{d}{dx}(e^x)=e^x \implies \int e^x\,dx=e^x+C$,</li><li>$\dfrac{d}{dx}(\sin x)=\cos x \implies \int \cos x\,dx=\sin x+C$,</li><li>$\dfrac{d}{dx}(\cos x)=-\sin x \implies \int (-\sin x)\,dx=\cos x+C$ (or $\int \sin x\,dx=-\cos x+C$).</li></ul>
+<p>Paying close attention to the plus and minus signs on sine and cosine is the key step.</p>
+<h3>1. Matching each term with a known derivative</h3>
+<p>We look at each piece of the integrand $2e^x+3\cos x-4\sin x$:</p>
+<ol><li><strong>Exponential term $2e^x$:</strong> Since $\dfrac{d}{dx}(e^x)=e^x$, multiplying by $2$ gives $\dfrac{d}{dx}(2e^x)=2e^x$.</li><li><strong>Cosine term $3\cos x$:</strong> Since $\dfrac{d}{dx}(\sin x)=\cos x$, multiplying by $3$ gives $\dfrac{d}{dx}(3\sin x)=3\cos x$.</li><li><strong>Sine term $-4\sin x$:</strong> Notice that $\dfrac{d}{dx}(\cos x)=-\sin x$ already contains the minus sign! Multiplying by $+4$ gives: $$\frac{d}{dx}(4\cos x)=4(-\sin x)=-4\sin x.$$</li></ol>
+<h3>2. Combining the terms into the indefinite integral</h3>
+<p>Adding the antiderivatives of the three pieces and including the constant of integration $C$:</p>
+<div class="math-block">$$\int\left(2e^x+3\cos x-4\sin x\right)\,dx = 2e^x+3\sin x+4\cos x+C.$$</div>
+<h3>3. Why the sign on $4\cos x$ is positive</h3>
+<p>Students often confuse the signs when integrating $\sin x$ and $\cos x$. Here we can think of $-4\sin x$ in two equivalent ways:</p>
+<ul><li>Either factor out $-4$: $-4\int\sin x\,dx = -4(-\cos x)=+4\cos x$,</li><li>Or group the minus sign with $\sin x$: $+4\int(-\sin x)\,dx = +4\cos x$ because $-\sin x$ is directly the derivative of $\cos x$.</li></ul>
+<p>Both perspectives show why the result has $+4\cos x$.</p>
+<h3>Quick verification</h3>
+<p>We differentiate the entire family $F(x)=2e^x+3\sin x+4\cos x+C$ in one step:</p>
+<div class="math-block">$$F'(x)=\frac{d}{dx}\left(2e^x+3\sin x+4\cos x+C\right)=2e^x+3\cos x+4(-\sin x)+0=2e^x+3\cos x-4\sin x.$$</div>
+<p>This matches the original integrand, including every sign. ✓</p>
+<h3>A concrete example</h3>
+<p>Let us check the rate of change at $x=0$:</p>
+<ul><li>The integrand at $x=0$ gives the target slope: $$f(0)=2e^0+3\cos 0-4\sin 0=2(1)+3(1)-4(0)=5.$$</li><li>Near $x=0$, our antiderivative (with $C=0$) behaves like: $$F_0(x)=2e^x+3\sin x+4\cos x,\qquad F_0(0)=2(1)+3(0)+4(1)=6,$$ and its derivative at $x=0$ is $F_0'(0)=2e^0+3\cos 0-4\sin 0=5$. If we had mistakenly written $-4\cos x$, the derivative at $x=\pi/2$ would be $+4$ instead of $-4$.</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Instead of memorizing a separate list of integral sign rules, I match each term directly to a derivative I already know. The derivative of $e^x$ is $e^x$, so $2e^x$ integrates to $2e^x$. The derivative of $\sin x$ is $+\cos x$, so $3\cos x$ integrates to $3\sin x$. And since the derivative of $\cos x$ is $-\sin x$, the term $-4\sin x$ already has the minus sign built in, so it integrates to $+4\cos x$. A quick differentiation at the end guarantees I didn't flip a sign.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: Antiderivative and Verification</a></li><li><a href="#exercise-11">Exercise 11: Choose the Method First</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-4">
+<h2 class="exercise-title">Exercise 4. Substitution as Reversing the Chain Rule</h2>
+<h3>The question</h3>
+<p>Compute</p>
+<div class="math-block">$$\int 2x(x^2+1)^4\,dx.$$</div>
+<p>Before calculating, identify a candidate for the new variable $u$ and show that its derivative appears in the integral. Finally, verify the result by differentiation.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>When we differentiate a composite function $G(g(x))$, the <strong>chain rule</strong> multiplies the outer derivative by the inner derivative:</p>
+<div class="math-block">$$\frac{d}{dx}\Bigl[G(g(x))\Bigr]=G'(g(x))\cdot g'(x).$$</div>
+<p>Integration by <strong>substitution</strong> is simply the chain rule read backwards:</p>
+<div class="math-block">$$\int g'(x)\,f(g(x))\,dx = \int f(u)\,du,\qquad \text{where }u=g(x)\text{ and }du=g'(x)\,dx.$$</div>
+<p>Instead of expanding $(x^2+1)^4$ into a long polynomial, we look for an <strong>inner function</strong> $u=g(x)$ whose derivative $g'(x)$ is sitting right outside as a factor multiplying $dx$.</p>
+<h3>1. Identifying the inner function $u$ and its derivative</h3>
+<p>In the integrand $2x(x^2+1)^4$:</p>
+<ul><li>The expression inside the fourth power is $u=x^2+1$.</li><li>Its derivative is $\dfrac{du}{dx}=2x$, so in differential form: $$du=2x\,dx.$$</li></ul>
+<p>Notice that the remaining factors in the integral, $2x\,dx$, match $du$ <strong>exactly</strong>.</p>
+<h3>2. Rewriting the integral in terms of $u$</h3>
+<p>Substituting $x^2+1=u$ and $2x\,dx=du$ transforms the integral into a simple power rule in $u$:</p>
+<div class="math-block">$$\int \underbrace{(x^2+1)^4}_{u^4}\underbrace{2x\,dx}_{du}=\int u^4\,du.$$</div>
+<h3>3. Integrating with respect to $u$ and substituting back</h3>
+<p>Applying the power rule to $u^4$:</p>
+<div class="math-block">$$\int u^4\,du = \frac{u^5}{5}+C.$$</div>
+<p>Finally, we replace $u$ with the original expression $x^2+1$:</p>
+<div class="math-block">$$\int 2x(x^2+1)^4\,dx = \frac{(x^2+1)^5}{5}+C.$$</div>
+<h3>Quick verification</h3>
+<p>We differentiate $F(x)=\dfrac{1}{5}(x^2+1)^5+C$ using the chain rule:</p>
+<div class="math-block">$$F'(x)=\frac{1}{5}\cdot 5(x^2+1)^4\cdot\frac{d}{dx}(x^2+1)+0=(x^2+1)^4\cdot 2x=2x(x^2+1)^4.$$</div>
+<p>The chain rule produces the outer power $(x^2+1)^4$ and the inner derivative $2x$, recovering the exact integrand. ✓</p>
+<h3>A concrete example</h3>
+<p>We could also have computed this integral by expanding $(x^2+1)^4=x^8+4x^6+6x^4+4x^2+1$, multiplying by $2x$, and integrating term by term:</p>
+<div class="math-block">$$\int\left(2x^9+8x^7+12x^5+8x^3+2x\right)\,dx = \frac{1}{5}x^{10}+x^8+2x^6+2x^4+x^2+\tilde{C}.$$</div>
+<p>Notice that expanding our substitution answer gives:</p>
+<div class="math-block">$$\frac{(x^2+1)^5}{5}=\frac{x^{10}+5x^8+10x^6+10x^4+5x^2+1}{5}=\frac{1}{5}x^{10}+x^8+2x^6+2x^4+x^2+\frac{1}{5},$$</div>
+<p>which is the exact same family of antiderivatives (with $\tilde{C}=C+\tfrac{1}{5}$), obtained in two lines instead of a five-term binomial expansion!</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>When I look at $\int 2x(x^2+1)^4\,dx$, I see an inside function $x^2+1$ raised to the $4$th power, and right next to it is $2x$, which is the exact derivative of $x^2+1$. That tells me this product came from the chain rule. Setting $u=x^2+1$ gives $du=2x\,dx$, turning the whole integral into $\int u^4\,du = \frac{u^5}{5}+C$. Plugging $u=x^2+1$ back in gives $\frac{(x^2+1)^5}{5}+C$, and differentiating by the chain rule immediately confirms it.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-5">Exercise 5: The Same Substitution in a Different Context</a></li><li><a href="#exercise-6">Exercise 6: When Does a Logarithm Appear from an Integral?</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-5">
+<h2 class="exercise-title">Exercise 5. The Same Substitution in a Different Context</h2>
+<h3>The question</h3>
+<p>Compute</p>
+<div class="math-block">$$\int xe^{x^2}\,dx.$$</div>
+<p>First compare the structure with Problem 4 and explain what is common despite the different appearance of the function.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Substitution is recognized by <strong>structural pattern</strong>, not by whether the outer function is a power, an exponential, or a trigonometric function. Whenever an integral has the form</p>
+<div class="math-block">$$\int g'(x)\,f(g(x))\,dx,$$</div>
+<p>the substitution $u=g(x)$ simplifies it to $\int f(u)\,du$.</p>
+<p>Even if the outside factor differs from $g'(x)$ by a <strong>constant multiplier</strong> (for example, we have $x$ instead of $2x$), substitution still works easily because constants can be factored out of the integral.</p>
+<h3>1. Comparing the structure with Problem 4</h3>
+<p>Let us compare the two integrals side by side:</p>
+<ul><li><strong>Problem 4:</strong> $\displaystyle\int 2x\,(x^2+1)^4\,dx$ — an inner quadratic $x^2+1$ inside the outer power function $u^4$, multiplied outside by $2x$.</li><li><strong>Problem 5:</strong> $\displaystyle\int x\,e^{x^2}\,dx$ — an inner quadratic $x^2$ in the exponent of the outer function $e^u$, multiplied outside by $x$.</li></ul>
+<p><strong>What is common:</strong> In both problems, the inner function is a quadratic expression in $x^2$, and the factor outside ($2x$ or $x$) is proportional to the derivative $\frac{d}{dx}(x^2)=2x$. Only the outer function changed (from $u^4$ to $e^u$) and a constant factor of $2$ is missing in front of $x$.</p>
+<h3>2. Setting up the substitution</h3>
+<p>Choose the inner function in the exponent as the new variable:</p>
+<div class="math-block">$$u=x^2.$$</div>
+<p>Differentiating gives:</p>
+<div class="math-block">$$du=2x\,dx \implies x\,dx=\frac{1}{2}\,du.$$</div>
+<h3>3. Rewriting and computing the integral</h3>
+<p>Substitute $x^2=u$ and $x\,dx=\dfrac{1}{2}\,du$ into the integral:</p>
+<div class="math-block">$$\int e^{x^2}\,(x\,dx) = \int e^u\left(\frac{1}{2}\,du\right)=\frac{1}{2}\int e^u\,du.$$</div>
+<p>Since the antiderivative of $e^u$ is $e^u$, we obtain:</p>
+<div class="math-block">$$\frac{1}{2}e^u+C.$$</div>
+<p>Replacing $u$ back with $x^2$ gives the final family of antiderivatives:</p>
+<div class="math-block">$$\int xe^{x^2}\,dx = \frac{1}{2}e^{x^2}+C.$$</div>
+<h3>Quick verification</h3>
+<p>We differentiate $F(x)=\dfrac{1}{2}e^{x^2}+C$ using the chain rule:</p>
+<div class="math-block">$$F'(x)=\frac{1}{2}\cdot\frac{d}{dx}\left(e^{x^2}\right)+0=\frac{1}{2}\cdot e^{x^2}\cdot\frac{d}{dx}(x^2)=\frac{1}{2}e^{x^2}\cdot(2x)=xe^{x^2}.$$</div>
+<p>The factor $\frac{1}{2}$ cancels the $2$ produced by differentiating $x^2$, leaving $xe^{x^2}$. ✓</p>
+<h3>A concrete example</h3>
+<p>Why is the factor $x$ in front of $e^{x^2}$ so important?</p>
+<ul><li><strong>With $x$ in front:</strong> $\int xe^{x^2}\,dx = \frac{1}{2}e^{x^2}+C$ is an elementary integral because $x$ supplies the chain-rule derivative of the inner function $x^2$.</li><li><strong>Without $x$ in front:</strong> $\int e^{x^2}\,dx$ cannot be written in terms of elementary functions at all! Without the outside factor $x$, setting $u=x^2$ leaves $dx=\frac{du}{2\sqrt{u}}$, which does not simplify.</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Even though $xe^{x^2}$ has an exponential instead of a power like in Problem 4, the underlying mechanism is identical: there is an inner $x^2$ and an outer $x\,dx$ that matches its derivative up to a constant factor. Setting $u=x^2$ gives $du=2x\,dx$, so $x\,dx=\frac{1}{2}\,du$. The integral immediately becomes $\frac{1}{2}\int e^u\,du = \frac{1}{2}e^{x^2}+C$. When we differentiate to check, the chain rule brings down $2x$, which cancels the $\frac{1}{2}$ and gives $xe^{x^2}$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-4">Exercise 4: Substitution as Reversing the Chain Rule</a></li><li><a href="#exercise-15">Exercise 15: Recovering a Function from Its Derivative and a Condition</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-6">
+<h2 class="exercise-title">Exercise 6. When Does a Logarithm Appear from an Integral?</h2>
+<h3>The question</h3>
+<p>Compute</p>
+<div class="math-block">$$\int\frac{2x}{x^2+5}\,dx.$$</div>
+<p>Identify the denominator as a candidate for substitution, compare the numerator with its derivative, and explain the source of the logarithm in the result.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>The power rule $\int u^n\,du=\dfrac{u^{n+1}}{n+1}+C$ works for every exponent <strong>except $n=-1$</strong> (where dividing by $n+1=0$ is impossible). That missing case is filled by the natural logarithm:</p>
+<div class="math-block">$$\frac{d}{du}\bigl(\ln|u|\bigr)=\frac{1}{u} \implies \int\frac{1}{u}\,du=\ln|u|+C.$$</div>
+<p>When we combine this with the chain rule for $u=g(x)$, we get a famous pattern:</p>
+<div class="math-block">$$\frac{d}{dx}\Bigl(\ln|g(x)|\Bigr)=\frac{g'(x)}{g(x)} \implies \int\frac{g'(x)}{g(x)}\,dx=\ln|g(x)|+C.$$</div>
+<p>Whenever a fraction has the <strong>derivative of the denominator sitting in the numerator</strong>, the integral is the natural logarithm of the denominator.</p>
+<h3>1. Comparing the denominator and numerator</h3>
+<p>In the fraction $\dfrac{2x}{x^2+5}$:</p>
+<ul><li>The denominator is $u=x^2+5$.</li><li>Its derivative with respect to $x$ is $\dfrac{du}{dx}=2x$, which is <strong>identical to the numerator</strong>.</li></ul>
+<p>Thus, the differential is:</p>
+<div class="math-block">$$du=2x\,dx.$$</div>
+<h3>2. Applying the substitution</h3>
+<p>Replacing $x^2+5$ by $u$ and $2x\,dx$ by $du$ transforms the integral into:</p>
+<div class="math-block">$$\int\frac{2x\,dx}{x^2+5}=\int\frac{1}{u}\,du.$$</div>
+<h3>3. Integrating and explaining the logarithm</h3>
+<p>Integrating $\dfrac{1}{u}$ with respect to $u$ gives the natural logarithm:</p>
+<div class="math-block">$$\int\frac{1}{u}\,du=\ln|u|+C.$$</div>
+<p>Substituting $u=x^2+5$ back in:</p>
+<div class="math-block">$$\int\frac{2x}{x^2+5}\,dx=\ln|x^2+5|+C=\ln(x^2+5)+C.$$</div>
+<ul><li><strong>Why the logarithm appears:</strong> Because the denominator $u=x^2+5$ is to the first power in the denominator ($u^{-1}$), and $\ln|u|$ is the unique elementary function whose derivative is $u^{-1}$.</li><li><strong>Why we can drop the absolute value bars here:</strong> For every real number $x$, $x^2\ge 0$, so $x^2+5\ge 5&gt;0$. Since the argument is strictly positive everywhere, $|x^2+5|=x^2+5$.</li></ul>
+<h3>Quick verification</h3>
+<p>We differentiate $F(x)=\ln(x^2+5)+C$ using the chain rule:</p>
+<div class="math-block">$$F'(x)=\frac{1}{x^2+5}\cdot\frac{d}{dx}(x^2+5)+0=\frac{1}{x^2+5}\cdot 2x=\frac{2x}{x^2+5}.$$</div>
+<p>The outer derivative of $\ln u$ puts $x^2+5$ in the denominator, and the inner derivative puts $2x$ in the numerator. ✓</p>
+<h3>A concrete example</h3>
+<p>Compare two slightly different denominators with the same numerator $2x$:</p>
+<ol><li><strong>First power in denominator (Problem 6):</strong> $$\int\frac{2x}{x^2+5}\,dx=\int u^{-1}\,du=\ln(x^2+5)+C\quad\text{(logarithm)}.$$</li><li><strong>Square Root or Higher Power in denominator (like Problem 11.3):</strong> $$\int\frac{2x}{(x^2+5)^2}\,dx=\int u^{-2}\,du=-u^{-1}+C=-\frac{1}{x^2+5}+C\quad\text{(power rule, no logarithm!)}.$$</li></ol>
+<p>A logarithm appears <strong>only</strong> when the whole denominator has exponent $1$ (so $u^{-1}$).</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Whenever I see a fraction in an integral, the first question I ask is: <em>"Is the numerator the derivative of the denominator?"</em> Here the denominator is $u=x^2+5$ and its derivative is $2x$, which is the exact numerator. Setting $u=x^2+5$ turns the integral into $\int\frac{1}{u}\,du = \ln|u|+C$. That's why a logarithm appears: $\frac{1}{u}$ is the $n=-1$ gap in the power rule. Since $x^2+5$ is always positive, we can write the final answer cleanly as $\ln(x^2+5)+C$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-4">Exercise 4: Substitution as Reversing the Chain Rule</a></li><li><a href="#exercise-11">Exercise 11: Choose the Method First</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-7">
+<h2 class="exercise-title">Exercise 7. Integration by Parts as Reversing the Product Rule</h2>
+<h3>The question</h3>
+<p>Compute</p>
+<div class="math-block">$$\int xe^x\,dx.$$</div>
+<p>First write the product differentiation rule and, on that basis, explain the meaning of the integration-by-parts formula. Verify the result by differentiation.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Why doesn't substitution work on $\int xe^x\,dx$? Because the exponent is $x$ (not $x^2$), so the factor $x$ in front is <strong>not</strong> the derivative of the inner function; instead, $x$ and $e^x$ are two independent factors multiplied together.</p>
+<p>Just as substitution reverses the chain rule, <strong>integration by parts</strong> reverses the <strong>product rule</strong> for derivatives. It trades an integral of one product $\int u\,dv$ for an integral of another product $\int v\,du$ that is simpler to compute.</p>
+<h3>1. From the product rule to integration by parts</h3>
+<p>For two differentiable functions $u(x)$ and $v(x)$, the product differentiation rule states:</p>
+<div class="math-block">$$(u\cdot v)' = u'\cdot v + u\cdot v'.$$</div>
+<p>Integrating both sides with respect to $x$ gives:</p>
+<div class="math-block">$$u\cdot v = \int u'\,v\,dx + \int u\,v'\,dx.$$</div>
+<p>Rearranging to isolate $\int u\,v'\,dx$ (and writing $du=u'\,dx$, $dv=v'\,dx$) yields the <strong>integration-by-parts formula</strong>:</p>
+<div class="math-block">$$\int u\,dv = u\,v - \int v\,du.$$</div>
+<p><strong>Meaning of the formula:</strong> If we split our integrand into a factor $u$ (which we differentiate) and a differential $dv$ (which we integrate), we can shift the derivative onto $u$ so that the new integral $\int v\,du$ becomes easier than the original one.</p>
+<h3>2. Choosing the parts for $\int xe^x\,dx$</h3>
+<p>We want the new integral $\int v\,du$ to be simpler than $\int xe^x\,dx$. Notice that differentiating $x$ reduces it to the constant $1$, while integrating $e^x$ leaves $e^x$ unchanged:</p>
+<div class="math-block">$$\begin{aligned}
+u &amp;= x &amp; \implies \quad du &amp;= 1\,dx, \\
+dv &amp;= e^x\,dx &amp; \implies \quad v &amp;= e^x.
+\end{aligned}$$</div>
+<h3>3. Applying the integration-by-parts formula</h3>
+<p>Substitute $u$, $du$, $v$, and $dv$ into $\int u\,dv = u\,v - \int v\,du$:</p>
+<div class="math-block">$$\int \underbrace{x}_{u}\underbrace{e^x\,dx}_{dv} = \underbrace{x}_{u}\underbrace{e^x}_{v} - \int \underbrace{e^x}_{v}\underbrace{dx}_{du} = xe^x - \int e^x\,dx.$$</div>
+<p>The remaining integral is the basic exponential integral $\int e^x\,dx=e^x+C$, so we get:</p>
+<div class="math-block">$$\int xe^x\,dx = xe^x - e^x + C = (x-1)e^x + C.$$</div>
+<h3>Quick verification</h3>
+<p>We differentiate $F(x)=xe^x-e^x+C$ using the product rule on the first term $xe^x$:</p>
+<div class="math-block">$$F'(x)=\frac{d}{dx}(x\cdot e^x)-\frac{d}{dx}(e^x)+0=\left(1\cdot e^x + x\cdot e^x\right)-e^x=e^x+xe^x-e^x=xe^x.$$</div>
+<p>Notice how the extra $+e^x$ created by the product rule on $xe^x$ is cancelled by the derivative of $-e^x$, leaving $xe^x$. ✓</p>
+<h3>A concrete example</h3>
+<p>Why isn't the antiderivative of a product simply the product of the antiderivatives? If someone guessed $\left(\int x\,dx\right)\left(\int e^x\,dx\right)=\frac{1}{2}x^2e^x$, its derivative would be $xe^x+\frac{1}{2}x^2e^x$, which is wrong. Even if someone guessed $xe^x$, differentiating $xe^x$ by the product rule gives $xe^x+e^x$—it has an unwanted $+e^x$ term. Subtracting $e^x$ in $xe^x-e^x$ is precisely what cancels that unwanted product-rule term!</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>The product rule says $(uv)' = u'v + uv'$. Rearranging and integrating gives $\int u\,dv = uv - \int v\,du$. For $\int xe^x\,dx$, I choose $u=x$ and $dv=e^x\,dx$ because differentiating $x$ turns it into $1$, which eliminates the $x$ factor from the new integral. The formula gives $xe^x - \int e^x\,dx = xe^x - e^x + C$. When we check by differentiating $xe^x - e^x$, the product rule on $xe^x$ gives $e^x + xe^x$, and the $-e^x$ cancels the extra $e^x$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-8">Exercise 8: Choosing the Factors in Integration by Parts</a></li><li><a href="#exercise-11">Exercise 11: Choose the Method First</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-8">
+<h2 class="exercise-title">Exercise 8. Choosing the Factors in Integration by Parts</h2>
+<h3>The question</h3>
+<p>Compute</p>
+<div class="math-block">$$\int x\cos x\,dx.$$</div>
+<p>Before calculating, justify why it is convenient to differentiate $x$ and integrate $\cos x$, rather than the other way around.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>In integration by parts,</p>
+<div class="math-block">$$\int u\,dv = u\,v - \int v\,du,$$</div>
+<p>the entire goal is to make the <strong>new integral $\int v\,du$ simpler</strong> than the original integral $\int u\,dv$.</p>
+<p>When our integrand is a product of two functions, we have two ways to assign $u$ (the factor to differentiate) and $dv$ (the factor to integrate). We should choose $u$ so that differentiating it simplifies it, while $dv$ can be integrated without becoming more complicated.</p>
+<h3>1. Justifying the choice of factors</h3>
+<p>We compare the two possible assignments for $\int x\cos x\,dx$:</p>
+<ul><li><strong>Choice A (differentiate $x$, integrate $\cos x$):</strong> $$u=x \implies du=1\,dx,\qquad dv=\cos x\,dx \implies v=\sin x.$$ Here, differentiating $x$ drops its degree from $1$ to $0$ (it becomes the constant $1$), while integrating $\cos x$ simply switches it to $\sin x$ without increasing complexity. The new integral is $\int \sin x\,dx$, which is an immediate basic integral.</li><li><strong>Choice B (differentiate $\cos x$, integrate $x$):</strong> $$u=\cos x \implies du=-\sin x\,dx,\qquad dv=x\,dx \implies v=\frac{x^2}{2}.$$ Here, integrating $x$ <strong>raises</strong> the power of $x$ to $\frac{1}{2}x^2$, turning the new integral into $\int \frac{1}{2}x^2(-\sin x)\,dx$, which is <strong>more complicated</strong> than what we started with!</li></ul>
+<p>Therefore, we must choose $u=x$ and $dv=\cos x\,dx$.</p>
+<h3>2. Applying integration by parts</h3>
+<p>With $u=x$, $du=dx$, $dv=\cos x\,dx$, and $v=\sin x$, the integration-by-parts formula gives:</p>
+<div class="math-block">$$\int \underbrace{x}_{u}\underbrace{\cos x\,dx}_{dv} = \underbrace{x}_{u}\underbrace{\sin x}_{v} - \int \underbrace{\sin x}_{v}\underbrace{dx}_{du} = x\sin x - \int \sin x\,dx.$$</div>
+<h3>3. Computing the remaining basic integral</h3>
+<p>Since $\dfrac{d}{dx}(\cos x)=-\sin x$, we have $\int \sin x\,dx = -\cos x + C$. Substituting this in (and watching the double minus sign):</p>
+<div class="math-block">$$\int x\cos x\,dx = x\sin x - (-\cos x) + C = x\sin x + \cos x + C.$$</div>
+<h3>Quick verification</h3>
+<p>We differentiate $F(x)=x\sin x+\cos x+C$ using the product rule on $x\sin x$:</p>
+<div class="math-block">$$F'(x)=\frac{d}{dx}(x\sin x)+\frac{d}{dx}(\cos x)+0=\left(1\cdot\sin x + x\cos x\right)-\sin x = x\cos x.$$</div>
+<p>The $+\sin x$ from differentiating the first factor cancels the $-\sin x$ from differentiating $\cos x$, leaving $x\cos x$. ✓</p>
+<h3>A concrete example</h3>
+<p>Let us see explicitly what happens if we make the wrong choice (Choice B: $u=\cos x$, $dv=x\,dx$):</p>
+<div class="math-block">$$\int x\cos x\,dx = \frac{1}{2}x^2\cos x - \int \frac{1}{2}x^2(-\sin x)\,dx = \frac{1}{2}x^2\cos x + \frac{1}{2}\int x^2\sin x\,dx.$$</div>
+<p>Although this equation is mathematically true, it replaced $x\cos x$ with $x^2\sin x$, moving us one step further away from an elementary integral instead of closer to one.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>In integration by parts, we want $\int v\,du$ to be simpler than $\int u\,dv$. For $\int x\cos x\,dx$, differentiating $x$ reduces it to $1$, whereas integrating $x$ would turn it into $\frac{1}{2}x^2$ and make the integral worse. Meanwhile, integrating $\cos x$ just gives $\sin x$. So I set $u=x$ and $dv=\cos x\,dx$, which gives $x\sin x - \int \sin x\,dx = x\sin x + \cos x + C$. Differentiating by the product rule confirms the answer right away.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-7">Exercise 7: Integration by Parts as Reversing the Product Rule</a></li><li><a href="#exercise-11">Exercise 11: Choose the Method First</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-9">
+<h2 class="exercise-title">Exercise 9. Definite Integral and Geometric Area</h2>
+<h3>The question</h3>
+<p>Compute</p>
+<div class="math-block">$$\int_{-1}^{2}x\,dx.$$</div>
+<p>Then separately compute the areas of the parts of the graph below and above the $x$-axis and explain the difference between the definite integral and geometric area.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>By the <strong>Fundamental Theorem of Calculus (Newton–Leibniz formula)</strong>, if $F(x)$ is any antiderivative of a continuous function $f(x)$, then:</p>
+<div class="math-block">$$\int_a^b f(x)\,dx = \Bigl[F(x)\Bigr]_a^b = F(b)-F(a).$$</div>
+<p>However, a <strong>definite integral is not always equal to geometric area</strong>:</p>
+<ul><li>The <strong>definite integral</strong> computes <strong>signed (net) area</strong>: regions where $f(x)&gt;0$ (above the $x$-axis) contribute with a <strong>$+$ sign</strong>, while regions where $f(x)&lt;0$ (below the $x$-axis) contribute with a <strong>$-$ sign</strong>.</li><li>The <strong>geometric area</strong> between the graph and the $x$-axis counts every region as <strong>positive</strong>, regardless of whether it lies above or below the $x$-axis: $\text{Area}=\int_a^b |f(x)|\,dx$.</li></ul>
+<h3>1. Computing the definite integral</h3>
+<p>An antiderivative of $f(x)=x$ is $F(x)=\dfrac{x^2}{2}$. Applying the Newton–Leibniz formula from $x=-1$ to $x=2$:</p>
+<div class="math-block">$$\int_{-1}^{2}x\,dx = \left[\frac{x^2}{2}\right]_{-1}^{2} = \frac{2^2}{2}-\frac{(-1)^2}{2} = \frac{4}{2}-\frac{1}{2} = 2-\frac{1}{2}=\frac{3}{2}=1.5.$$</div>
+<h3>2. Computing the geometric areas below and above the $x$-axis</h3>
+<p>The line $y=x$ crosses the $x$-axis at $x=0$, splitting $[-1,2]$ into two right triangles:</p>
+<ol><li><strong>Part below the $x$-axis on $[-1,0]$:</strong> Here $x\le 0$. The region between $y=x$ and the $x$-axis is a right triangle with base $1$ (from $-1$ to $0$) and height $1$ (since $|{-1}|=1$). Its geometric area is: $$A_{\text{below}}=\frac{1}{2}\cdot\text{base}\cdot\text{height}=\frac{1}{2}\cdot 1\cdot 1=\frac{1}{2}=0.5,$$ or by integration: $A_{\text{below}}=\int_{-1}^{0}(-x)\,dx=\left[-\frac{x^2}{2}\right]_{-1}^{0}=0-\left(-\frac{1}{2}\right)=\frac{1}{2}$.</li></ol>
+<ol><li><strong>Part above the $x$-axis on $[0,2]$:</strong> Here $x\ge 0$. The region is a right triangle with base $2$ (from $0$ to $2$) and height $2$. Its geometric area is: $$A_{\text{above}}=\frac{1}{2}\cdot\text{base}\cdot\text{height}=\frac{1}{2}\cdot 2\cdot 2=2,$$ or by integration: $A_{\text{above}}=\int_{0}^{2}x\,dx=\left[\frac{x^2}{2}\right]_{0}^{2}=2-0=2$.</li></ol>
+<h3>3. Comparing the definite integral and the total geometric area</h3>
+<ul><li><strong>Definite integral (net signed area):</strong> $$\int_{-1}^{2}x\,dx = A_{\text{above}} - A_{\text{below}} = 2 - \frac{1}{2} = \frac{3}{2}=1.5.$$</li><li><strong>Total geometric area:</strong> $$A_{\text{total}} = A_{\text{above}} + A_{\text{below}} = 2 + \frac{1}{2} = \frac{5}{2}=2.5.$$</li></ul>
+<p>The definite integral subtracts the area below the axis from the area above the axis, whereas geometric area adds both positive magnitudes together.</p>
+<h3>Quick verification</h3>
+<p>We split the definite integral at the zero crossing $x=0$ using additivity of the integral:</p>
+<div class="math-block">$$\int_{-1}^{2}x\,dx = \int_{-1}^{0}x\,dx + \int_{0}^{2}x\,dx = \left(-\frac{1}{2}\right) + 2 = \frac{3}{2}.$$</div>
+<p>Both the direct antiderivative calculation and the geometric triangle subtraction give $\dfrac{3}{2}$. ✓</p>
+<h3>A concrete example</h3>
+<p>Think of $f(t)=t$ as the <strong>velocity</strong> (in m/s) of an object moving along a line from $t=-1\text{ s}$ to $t=2\text{ s}$:</p>
+<ul><li>Between $t=-1$ and $t=0$, velocity is negative, so the object moves <strong>backward</strong> by $0.5\text{ m}$.</li><li>Between $t=0$ and $t=2$, velocity is positive, so the object moves <strong>forward</strong> by $2\text{ m}$.</li><li>The <strong>definite integral</strong> $\int_{-1}^2 t\,dt = 2-0.5=1.5\text{ m}$ gives the <strong>net displacement</strong> from start to finish, while the <strong>geometric area</strong> $2+0.5=2.5\text{ m}$ gives the <strong>total distance traveled</strong>.</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Evaluating $\int_{-1}^2 x\,dx$ with the antiderivative $\frac{x^2}{2}$ gives $\frac{4}{2}-\frac{1}{2}=\frac{3}{2}$. Geometrically, the graph of $y=x$ forms a small triangle of area $\frac{1}{2}$ below the $x$-axis on $[-1,0]$ and a larger triangle of area $2$ above the $x$-axis on $[0,2]$. The definite integral equals $2-\frac{1}{2}=\frac{3}{2}$ because it treats area below the $x$-axis as negative (signed accumulation), whereas the total geometric area is $2+\frac{1}{2}=\frac{5}{2}$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-12">Exercise 12: Symmetry, Sign, and Absolute Value</a></li><li><a href="#exercise-14">Exercise 14: A Piecewise-Defined Function</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-10">
+<h2 class="exercise-title">Exercise 10. Definite Integral and Checking the Result</h2>
+<h3>The question</h3>
+<p>Before carrying out the exact calculation, estimate the possible range of values of the integral</p>
+<div class="math-block">$$\int_0^2(x^2+1)\,dx,$$</div>
+<p>using</p>
+<div class="math-block">$$1\le x^2+1\le 5$$</div>
+<p>on $[0,2]$. Only then compute the integral exactly, compare the result with the earlier estimate, and explain what type of computational error such a check can detect.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>If a continuous function $f(x)$ stays between a minimum value $m$ and a maximum value $M$ on the interval $[a,b]$, that is,</p>
+<div class="math-block">$$m\le f(x)\le M\qquad\text{for all }x\in[a,b],$$</div>
+<p>then the area under the graph of $f(x)$ must lie between the area of the lower rectangle of height $m$ and the area of the upper rectangle of height $M$:</p>
+<div class="math-block">$$m(b-a)\le \int_a^b f(x)\,dx \le M(b-a).$$</div>
+<p>This <strong>bounding property</strong> gives us a fast sanity check before we touch any antiderivatives.</p>
+<h3>1. Estimating the range of the integral before calculating</h3>
+<p>On the interval $[0,2]$ of length $b-a=2-0=2$, the function $f(x)=x^2+1$ is strictly increasing:</p>
+<ul><li>Its minimum value is at $x=0$: $m=0^2+1=1$.</li><li>Its maximum value is at $x=2$: $M=2^2+1=5$.</li></ul>
+<p>Integrating the inequality $1\le x^2+1\le 5$ over $[0,2]$ gives:</p>
+<div class="math-block">$$\int_0^2 1\,dx \le \int_0^2 (x^2+1)\,dx \le \int_0^2 5\,dx$$</div>
+<div class="math-block">$$1\cdot(2-0) \le \int_0^2 (x^2+1)\,dx \le 5\cdot(2-0)$$</div>
+<div class="math-block">$$2 \le \int_0^2 (x^2+1)\,dx \le 10.$$</div>
+<p>So the exact value <strong>must lie in the interval $[2,10]$</strong>.</p>
+<h3>2. Computing the exact integral</h3>
+<p>An antiderivative of $x^2+1$ is $F(x)=\dfrac{x^3}{3}+x$. Using the Newton–Leibniz formula:</p>
+<div class="math-block">$$\int_0^2 (x^2+1)\,dx = \left[\frac{x^3}{3}+x\right]_0^2 = \left(\frac{2^3}{3}+2\right)-\left(0+0\right) = \frac{8}{3}+2 = \frac{14}{3}\approx 4.67.$$</div>
+<h3>3. Comparing with the estimate and explaining what errors it detects</h3>
+<p>Since $2 \le \dfrac{14}{3}\approx 4.67 \le 10$, our exact result sits comfortably inside the predicted range $[2,10]$.</p>
+<p><strong>What types of computational errors this check detects:</strong></p>
+<ul><li><strong>Sign errors</strong> (e.g., subtracting limits in the wrong order $F(0)-F(2)=-\frac{14}{3}&lt;2$, or writing $\frac{x^3}{3}-x$ which gives $\frac{2}{3}&lt;2$).</li><li><strong>Differentiating instead of integrating</strong> (e.g., writing $[2x]_0^2=4$ or forgetting to integrate the constant $1$, which gives $\frac{8}{3}$—and on tighter bounds, gross power mistakes like $\left[3x^3+x\right]_0^2=26&gt;10$).</li><li><strong>Arithmetic or exponent mistakes</strong> (such as evaluating $2^3=6$ or multiplying by $3$ instead of dividing by $3$, which gives $3(8)+2=26&gt;10$).</li></ul>
+<h3>Quick verification</h3>
+<p>We can obtain an even tighter geometric estimate by bounding the curve $y=x^2+1$ from above with the secant line connecting $(0,1)$ and $(2,5)$. Since $f(x)=x^2+1$ is convex ($f''(x)=2&gt;0$), the area under the parabola is slightly less than the area of that trapezoid:</p>
+<div class="math-block">$$A_{\text{trapezoid}}=\frac{f(0)+f(2)}{2}\cdot(2-0)=\frac{1+5}{2}\cdot 2=6.$$</div>
+<p>Indeed, $2 &lt; \dfrac{14}{3}\approx 4.67 &lt; 6 \le 10$. ✓</p>
+<h3>A concrete example</h3>
+<p>Suppose a student accidentally forgot the $+1$ term when integrating (treating $\int 1\,dx$ as $0$ like a derivative!) or subtracted instead of adding, getting $\frac{8}{3}-2=\frac{2}{3}\approx 0.67$. Because $0.67&lt;2$, the lower rectangle bound $m(b-a)=1\cdot 2=2$ immediately flags that $\frac{2}{3}$ is impossible: a function that is always at least $1$ on an interval of width $2$ must accumulate an area of at least $2$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Before integrating $\int_0^2(x^2+1)\,dx$, I note that on $[0,2]$ the function stays between $1$ and $5$ over an interval of width $2$. So the area under the curve must be trapped between a rectangle of area $1\times 2=2$ and a rectangle of area $5\times 2=10$. Then I compute the exact integral $\left[\frac{x^3}{3}+x\right]_0^2 = \frac{8}{3}+2=\frac{14}{3}\approx 4.67$, which falls right inside $[2,10]$. This five-second rectangle check catches flipped signs, missing constants, or exponent blunders right away.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-9">Exercise 9: Definite Integral and Geometric Area</a></li><li><a href="#exercise-13">Exercise 13: An Integral Depending on the Upper Limit</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-11">
+<h2 class="exercise-title">Exercise 11. Choose the Method First</h2>
+<h3>The question</h3>
+<p>For each integral, first write which method you choose and how you recognize it, and then compute:</p>
+<ol><li>$\displaystyle\int\sin(3x)\,dx$,</li><li>$\displaystyle\int x\ln x\,dx$,</li><li>$\displaystyle\int\frac{x}{\sqrt{x^2+1}}\,dx$.</li></ol>
+<h3>Before calculating: what idea do we need?</h3>
+<p>When facing an unfamiliar integral, we first inspect its <strong>algebraic structure</strong> before calculating:</p>
+<ol><li><strong>Composite function with a linear inner function</strong> $f(ax+b)$: use <strong>linear substitution</strong> $u=ax+b$ (which simply divides the outer antiderivative by $a$).</li><li><strong>Product of two unrelated function types</strong> (such as a power $x^n$ times a logarithm $\ln x$, where neither is the derivative of an inner function of the other): use <strong>integration by parts</strong> $\int u\,dv = uv - \int v\,du$.</li><li><strong>Composite function multiplied by the derivative of its inside</strong> $g'(x)\,f(g(x))$: use <strong>substitution</strong> $u=g(x)$.</li></ol>
+<h3>1. First integral: $\displaystyle\int\sin(3x)\,dx$</h3>
+<ul><li><strong>Method & how we recognize it:</strong> <strong>Linear substitution.</strong> The integrand is a basic trigonometric function $\sin u$ composed with a linear inner function $u=3x$, whose derivative is the constant $3$.</li><li><strong>Calculation:</strong> Set $u=3x$, so $du=3\,dx \implies dx=\dfrac{1}{3}\,du$. Then: $$\int\sin(3x)\,dx = \int\sin u\left(\frac{1}{3}\,du\right) = \frac{1}{3}(-\cos u)+C = -\frac{1}{3}\cos(3x)+C.$$</li></ul>
+<h3>2. Second integral: $\displaystyle\int x\ln x\,dx$ (for $x&gt;0$)</h3>
+<ul><li><strong>Method & how we recognize it:</strong> <strong>Integration by parts.</strong> This is a product of a polynomial ($x$) and a logarithm ($\ln x$). Substitution cannot work because neither factor is the derivative of an inner expression in the other. However, differentiating $\ln x$ turns it into the algebraic fraction $\dfrac{1}{x}$, which combines cleanly with the power of $x$!</li><li><strong>Choice of parts:</strong> We must differentiate $\ln x$ and integrate $x$: $$u=\ln x \implies du=\frac{1}{x}\,dx,\qquad dv=x\,dx \implies v=\frac{x^2}{2}.$$</li><li><strong>Calculation:</strong> Applying $\int u\,dv = uv - \int v\,du$: $$\int x\ln x\,dx = \frac{x^2}{2}\ln x - \int\frac{x^2}{2}\cdot\frac{1}{x}\,dx = \frac{x^2}{2}\ln x - \frac{1}{2}\int x\,dx = \frac{x^2}{2}\ln x - \frac{x^2}{4}+C.$$</li></ul>
+<h3>3. Third integral: $\displaystyle\int\frac{x}{\sqrt{x^2+1}}\,dx$</h3>
+<ul><li><strong>Method & how we recognize it:</strong> <strong>Substitution (reversing the chain rule).</strong> Inside the square root in the denominator is the quadratic $u=x^2+1$, and its derivative $2x$ is proportional to the numerator $x$.</li><li><strong>Calculation:</strong> Set $u=x^2+1$, so $du=2x\,dx \implies x\,dx=\dfrac{1}{2}\,du$. Rewriting the square root in the denominator as a power $u^{-1/2}$: $$\int\frac{x\,dx}{\sqrt{x^2+1}} = \int\frac{\frac{1}{2}\,du}{\sqrt{u}} = \frac{1}{2}\int u^{-1/2}\,du = \frac{1}{2}\cdot\frac{u^{1/2}}{1/2}+C = \sqrt{u}+C = \sqrt{x^2+1}+C.$$</li></ul>
+<h3>Quick verification</h3>
+<p>We differentiate all three results to verify them:</p>
+<ol><li>$\dfrac{d}{dx}\left(-\dfrac{1}{3}\cos(3x)+C\right) = -\dfrac{1}{3}\bigl(-\sin(3x)\cdot 3\bigr)=\sin(3x)$. ✓</li><li>$\dfrac{d}{dx}\left(\dfrac{x^2}{2}\ln x - \dfrac{x^2}{4}+C\right) = \left(x\ln x + \dfrac{x^2}{2}\cdot\dfrac{1}{x}\right)-\dfrac{2x}{4} = x\ln x + \dfrac{x}{2}-\dfrac{x}{2}=x\ln x$. ✓</li><li>$\dfrac{d}{dx}\left((x^2+1)^{1/2}+C\right) = \dfrac{1}{2}(x^2+1)^{-1/2}\cdot(2x) = \dfrac{x}{\sqrt{x^2+1}}$. ✓</li></ol>
+<h3>A concrete example</h3>
+<p>Notice how in integral (2), $\int x\ln x\,dx$, the roles in integration by parts are the <strong>reverse</strong> of $\int xe^x\,dx$ and $\int x\cos x\,dx$:</p>
+<ul><li>For $xe^x$ and $x\cos x$, we set $u=x$ to eliminate the polynomial.</li><li>For $x\ln x$, if we set $dv=\ln x\,dx$, we immediately get stuck because $\ln x$ is not an elementary derivative on our basic list; whereas setting $u=\ln x$ turns the transcendental function $\ln x$ into the rational function $\frac{1}{x}$, reducing $\int v\,du$ to the simple polynomial integral $\frac{1}{2}\int x\,dx$.</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>I always diagnose the structure before computing. In (1), $\sin(3x)$ has a linear inside $3x$, so substitution $u=3x$ just divides by $3$ to give $-\frac{1}{3}\cos(3x)+C$. In (2), $x\ln x$ is a product of a power and a logarithm, which calls for integration by parts with $u=\ln x$ and $dv=x\,dx$ because differentiating $\ln x$ gives $\frac{1}{x}$ and cancels a power of $x^2$, yielding $\frac{x^2}{2}\ln x-\frac{x^2}{4}+C$. In (3), the numerator $x$ is half the derivative of the inside $x^2+1$ under the square root, so substituting $u=x^2+1$ turns it into $\frac{1}{2}\int u^{-1/2}\,du = \sqrt{x^2+1}+C$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-4">Exercise 4: Substitution as Reversing the Chain Rule</a></li><li><a href="#exercise-8">Exercise 8: Choosing the Factors in Integration by Parts</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-12">
+<h2 class="exercise-title">Exercise 12. Symmetry, Sign, and Absolute Value</h2>
+<h3>The question</h3>
+<p>Compare</p>
+<div class="math-block">$$\int_{-2}^{2}x\,dx\qquad\text{and}\qquad\int_{-2}^{2}|x|\,dx.$$</div>
+<p>Before calculating, predict the results from symmetry and a sketch, then carry out the calculation and explain the difference.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>On a <strong>symmetric interval $[-a,a]$</strong> centered at the origin, the symmetry of the integrand drastically simplifies integration:</p>
+<ul><li><strong>Odd function</strong> ($f(-x)=-f(x)$, symmetric about the origin): Every positive height at $+x$ is matched by an equal and opposite negative height at $-x$. The signed areas on $[-a,0]$ and $[0,a]$ cancel out completely: $$\int_{-a}^{a} f(x)\,dx = 0.$$</li><li><strong>Even function</strong> ($f(-x)=f(x)$, symmetric across the $y$-axis): The graph on $[-a,0]$ is a mirror image of the graph on $[0,a]$, so both halves contribute the exact same signed area: $$\int_{-a}^{a} f(x)\,dx = 2\int_{0}^{a} f(x)\,dx.$$</li></ul>
+<h3>1. Predicting the results from symmetry and a sketch</h3>
+<ol><li><strong>For $f(x)=x$ on $[-2,2]$:</strong> The graph of $y=x$ is a straight line through the origin. On $[-2,0]$ it forms a right triangle of base $2$ and height $2$ <strong>below</strong> the $x$-axis (signed area $-2$), and on $[0,2]$ it forms an identical right triangle <strong>above</strong> the $x$-axis (signed area $+2$). Since $f(-x)=-x=-f(x)$ is <strong>odd</strong>, the two triangles cancel and we predict: $$\int_{-2}^{2}x\,dx = 0.$$</li></ol>
+<ol><li><strong>For $g(x)=|x|$ on $[-2,2]$:</strong> The absolute value reflects the negative left branch upward across the $x$-axis, creating a V-shaped graph that lies entirely above the $x$-axis. Both $[-2,0]$ and $[0,2]$ form right triangles of base $2$ and height $2$ <strong>above</strong> the $x$-axis, each of area $\frac{1}{2}(2)(2)=2$. Since $g(-x)=|-x|=|x|$ is <strong>even</strong>, the two areas add up and we predict: $$\int_{-2}^{2}|x|\,dx = 2+2 = 4.$$</li></ol>
+<h3>2. Carrying out the analytical calculations</h3>
+<ol><li><strong>First integral:</strong> Using the antiderivative $F(x)=\dfrac{x^2}{2}$: $$\int_{-2}^{2}x\,dx = \left[\frac{x^2}{2}\right]_{-2}^{2} = \frac{2^2}{2}-\frac{(-2)^2}{2} = 2-2 = 0.$$</li></ol>
+<ol><li><strong>Second integral:</strong> Since $|x|=\begin{cases}-x,&amp;x&lt;0,\\x,&amp;x\ge 0,\end{cases}$ we split the integral at the corner $x=0$: $$\int_{-2}^{2}|x|\,dx = \int_{-2}^{0}(-x)\,dx + \int_{0}^{2}x\,dx = \left[-\frac{x^2}{2}\right]_{-2}^{0} + \left[\frac{x^2}{2}\right]_{0}^{2} = \left(0-\left(-\frac{4}{2}\right)\right)+\left(\frac{4}{2}-0\right) = 2+2 = 4.$$</li></ol>
+<h3>3. Explaining the difference</h3>
+<ul><li>$\int_{-2}^{2}x\,dx=0$ measures <strong>net signed accumulation</strong>: the negative half on $[-2,0]$ cancels the positive half on $[0,2]$.</li><li>$\int_{-2}^{2}|x|\,dx=4$ measures the <strong>total geometric area</strong> between the line $y=x$ and the $x$-axis on $[-2,2]$, because $|x|$ makes all heights non-negative so that both halves contribute positively.</li></ul>
+<h3>Quick verification</h3>
+<p>Using the even-function property for $|x|$ directly avoids integrating on the negative interval altogether:</p>
+<div class="math-block">$$\int_{-2}^{2}|x|\,dx = 2\int_{0}^{2}x\,dx = 2\left[\frac{x^2}{2}\right]_{0}^{2} = 2(2-0) = 4.$$</div>
+<p>Both the piecewise split and the even-symmetry shortcut give $4$, while the odd integral gives $0$. ✓</p>
+<h3>A concrete example</h3>
+<p>Symmetry can save enormous work on much harder integrals. For example, consider:</p>
+<div class="math-block">$$\int_{-2}^{2} x^3\cos x\,dx.$$</div>
+<p>Instead of doing integration by parts three times, we simply check symmetry: $(-x)^3\cos(-x)=-x^3\cos x$, which is an <strong>odd</strong> function on the symmetric interval $[-2,2]$. Therefore, the integral is immediately $0$ without a single line of antiderivative calculation!</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Before touching an antiderivative on $[-2,2]$, I look at symmetry. The function $y=x$ is odd: the triangle of area $2$ below the axis on $[-2,0]$ cancels the triangle of area $2$ above the axis on $[0,2]$, so $\int_{-2}^2 x\,dx = 0$. Taking the absolute value $|x|$ flips the negative triangle above the axis, turning the function into an even V-shape where both triangles have area $+2$, so $\int_{-2}^2 |x|\,dx = 2+2=4$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-9">Exercise 9: Definite Integral and Geometric Area</a></li><li><a href="#exercise-14">Exercise 14: A Piecewise-Defined Function</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-13">
+<h2 class="exercise-title">Exercise 13. An Integral Depending on the Upper Limit</h2>
+<h3>The question</h3>
+<p>Let</p>
+<div class="math-block">$$F(x)=\int_0^x(t^2+1)\,dt.$$</div>
+<p>Determine $F(x)$, compute $F'(x)$, and compare the result with the integrand. Explain in your own words why the height of the function describes the local rate of increase of the accumulated area.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>When we replace the upper limit of a definite integral by a variable $x$, the integral</p>
+<div class="math-block">$$F(x)=\int_a^x f(t)\,dt$$</div>
+<p>becomes an <strong>area accumulation function</strong>: it measures the signed area accumulated under the graph of $f(t)$ from the starting point $t=a$ up to $t=x$. (We use the dummy variable $t$ inside the integral so we do not confuse it with the upper limit $x$.)</p>
+<p>The <strong>First Fundamental Theorem of Calculus</strong> states that differentiating the accumulated area with respect to the right endpoint $x$ simply gives back the height of the curve at $x$:</p>
+<div class="math-block">$$F'(x)=\frac{d}{dx}\int_a^x f(t)\,dt = f(x).$$</div>
+<h3>1. Determining the explicit formula for $F(x)$</h3>
+<p>First we find an antiderivative of the integrand $f(t)=t^2+1$ with respect to $t$:</p>
+<div class="math-block">$$\int (t^2+1)\,dt = \frac{t^3}{3}+t+C.$$</div>
+<p>Evaluating from the lower limit $t=0$ to the upper limit $t=x$:</p>
+<div class="math-block">$$F(x)=\left[\frac{t^3}{3}+t\right]_{t=0}^{t=x} = \left(\frac{x^3}{3}+x\right)-\left(\frac{0^3}{3}+0\right) = \frac{x^3}{3}+x.$$</div>
+<h3>2. Computing $F'(x)$ and comparing with the integrand</h3>
+<p>Now we differentiate $F(x)=\dfrac{x^3}{3}+x$ with respect to $x$:</p>
+<div class="math-block">$$F'(x)=\frac{d}{dx}\left(\frac{x^3}{3}+x\right) = \frac{3x^2}{3}+1 = x^2+1.$$</div>
+<p><strong>Comparison:</strong> $F'(x)=x^2+1$ is the <strong>exact integrand</strong> $f(t)=t^2+1$ evaluated at the upper limit $t=x$.</p>
+<h3>3. Why the height of the function is the rate of increase of accumulated area</h3>
+<p>Imagine moving the right boundary $x$ slightly to the right by a tiny width $\Delta x$:</p>
+<ul><li>The newly added slice of area is $\Delta F = F(x+\Delta x)-F(x) = \int_x^{x+\Delta x} f(t)\,dt$.</li><li>When $\Delta x$ is very small, the curve $y=f(t)$ barely changes height over $[x,x+\Delta x]$, so this thin vertical strip is almost a <strong>rectangle</strong> of width $\Delta x$ and height $f(x)$: $$\Delta F \approx \text{height}\times\text{width} = f(x)\cdot\Delta x.$$</li><li>Dividing both sides by the width $\Delta x$ gives the average rate of change of area per unit width: $$\frac{\Delta F}{\Delta x} \approx f(x).$$</li></ul>
+<p>In the limit as $\Delta x\to 0$, the instantaneous rate at which accumulated area grows, $F'(x)$, is literally the height $f(x)$ of the boundary strip being swept out at $x$.</p>
+<h3>Quick verification</h3>
+<p>Let us check that $F(x)=\dfrac{x^3}{3}+x$ agrees with our earlier calculation in Problem 10:</p>
+<ul><li>At $x=0$: $F(0)=\int_0^0(t^2+1)\,dt=0$, and $\frac{0^3}{3}+0=0$. ✓</li><li>At $x=2$: $F(2)=\int_0^2(t^2+1)\,dt=\frac{2^3}{3}+2=\frac{14}{3}$, which matches Problem 10. ✓</li><li>Differentiating $F(x)$ gives $F'(x)=x^2+1=f(x)$. ✓</li></ul>
+<h3>A concrete example</h3>
+<p>Compare the rate of area growth at two different positions:</p>
+<ul><li>At $x=1$, the height of the curve is $f(1)=1^2+1=2$. If we push the boundary from $x=1$ to $x=1.01$ ($\Delta x=0.01$), the area increases by approximately $f(1)\Delta x = 2(0.01)=0.02$. (The exact increase is $F(1.01)-F(1)\approx 0.0201003$.)</li><li>At $x=3$, the curve is much taller: $f(3)=3^2+1=10$. Pushing the boundary by the same $\Delta x=0.01$ from $x=3$ to $x=3.01$ adds approximately $10(0.01)=0.10$ of area—five times as much, because the vertical strip at $x=3$ is five times as tall!</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Integrating $t^2+1$ from $0$ to $x$ gives the accumulation function $F(x)=\frac{x^3}{3}+x$. When we differentiate $F(x)$, we get $F'(x)=x^2+1$, which is just the integrand with $t$ replaced by $x$. Geometrically, if you slide the right wall at $x$ outward by a tiny step $\Delta x$, the extra sliver of area you sweep out is a thin rectangle of width $\Delta x$ and height $f(x)$. Dividing the new area $f(x)\Delta x$ by $\Delta x$ leaves the height $f(x)$ as the instantaneous rate of area growth.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: Antiderivative and Verification</a></li><li><a href="#exercise-10">Exercise 10: Definite Integral and Checking the Result</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-14">
+<h2 class="exercise-title">Exercise 14. A Piecewise-Defined Function</h2>
+<h3>The question</h3>
+<p>Let</p>
+<div class="math-block">$$f(x)=\begin{cases}x+1,&amp;-1\le x&lt;1,\\2,&amp;1\le x\le 3.\end{cases}$$</div>
+<p>Sketch the graph, decide where to split the integral, compute</p>
+<div class="math-block">$$\int_{-1}^{3}f(x)\,dx$$</div>
+<p>and verify the result geometrically.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>When a function is defined by <strong>different formulas on different subintervals</strong>, there is no single algebraic formula for its antiderivative across the entire interval. Instead, we use the <strong>interval additivity property</strong> of the definite integral:</p>
+<div class="math-block">$$\int_a^b f(x)\,dx = \int_a^c f(x)\,dx + \int_c^b f(x)\,dx,$$</div>
+<p>splitting the integral at the boundary point $x=c$ where the rule of $f(x)$ changes.</p>
+<h3>1. Describing the graph and deciding where to split the integral</h3>
+<p>The definition of $f(x)$ changes at <strong>$x=1$</strong>, so we must split $[-1,3]$ at $x=1$ into $[-1,1]$ and $[1,3]$:</p>
+<ul><li><strong>On $[-1,1]$:</strong> $f(x)=x+1$ is a straight line with slope $1$, rising from the point $(-1,0)$ on the $x$-axis up to $(1,2)$.</li><li><strong>On $[1,3]$:</strong> $f(x)=2$ is a horizontal line segment at height $y=2$ from $(1,2)$ to $(3,2)$.</li></ul>
+<p>Notice that the two pieces meet continuously at $(1,2)$, forming a rising ramp followed by a flat plateau, all lying on or above the $x$-axis.</p>
+<pre><code>y
+2 |         *---------*  y = 2
+  |       / |         |
+1 |     *   |         |
+  |   /     |         |
+0 +-*-------+---------+---&gt; x
+   -1       0    1    3</code></pre>
+<h3>2. Computing the integral analytically by splitting at $x=1$</h3>
+<p>Using additivity at $x=1$:</p>
+<div class="math-block">$$\int_{-1}^{3}f(x)\,dx = \int_{-1}^{1}(x+1)\,dx + \int_{1}^{3}2\,dx.$$</div>
+<p>We compute each piece separately:</p>
+<ol><li><strong>First piece on $[-1,1]$:</strong> $$\int_{-1}^{1}(x+1)\,dx = \left[\frac{x^2}{2}+x\right]_{-1}^{1} = \left(\frac{1^2}{2}+1\right)-\left(\frac{(-1)^2}{2}+(-1)\right) = \frac{3}{2}-\left(-\frac{1}{2}\right) = 2.$$</li><li><strong>Second piece on $[1,3]$:</strong> $$\int_{1}^{3}2\,dx = \Bigl[2x\Bigr]_{1}^{3} = 2(3)-2(1) = 6-2 = 4.$$</li></ol>
+<p>Adding the two contributions gives:</p>
+<div class="math-block">$$\int_{-1}^{3}f(x)\,dx = 2 + 4 = 6.$$</div>
+<h3>3. Geometric verification</h3>
+<p>Because $f(x)\ge 0$ on $[-1,3]$, the definite integral equals the geometric area under the graph, which decomposes into two basic shapes:</p>
+<ol><li><strong>On $[-1,1]$ (a right triangle):</strong> The base has length $1-(-1)=2$ and the height at $x=1$ is $2$. Its area is: $$A_{\text{triangle}}=\frac{1}{2}\cdot\text{base}\cdot\text{height}=\frac{1}{2}\cdot 2\cdot 2 = 2.$$</li><li><strong>On $[1,3]$ (a rectangle):</strong> The base has length $3-1=2$ and the constant height is $2$. Its area is: $$A_{\text{rectangle}}=\text{base}\cdot\text{height}=2\cdot 2 = 4.$$</li></ol>
+<p>Total geometric area:</p>
+<div class="math-block">$$A_{\text{total}} = A_{\text{triangle}} + A_{\text{rectangle}} = 2 + 4 = 6.$$</div>
+<h3>Quick verification</h3>
+<p>We can also view the entire region under $y=f(x)$ on $[-1,3]$ as a single <strong>right trapezoid</strong> lying on its side (or with parallel horizontal bases of length $b_1=3-(-1)=4$ at the bottom $y=0$ and $b_2=3-1=2$ at the top $y=2$, and height $h=2$):</p>
+<div class="math-block">$$A_{\text{trapezoid}}=\frac{b_1+b_2}{2}\cdot h = \frac{4+2}{2}\cdot 2 = 6.$$</div>
+<p>All three methods (analytical integration, triangle + rectangle, and single trapezoid) give $6$. ✓</p>
+<h3>A concrete example</h3>
+<p>Note that in the definition of $f(x)$, the formula $x+1$ is given on $-1\le x&lt;1$ with a strict inequality $&lt;1$. Does a single boundary point affect the integral on $[-1,1]$? No: changing the value of a function at a single point changes the area under the curve by a line segment of width $0$ (area $0$). Here $f(x)$ is even continuous at $x=1$ since $\lim_{x\to 1^-}(x+1)=2=f(1)$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Because $f(x)$ changes its formula at $x=1$, I split the integral at $x=1$ into $\int_{-1}^1(x+1)\,dx + \int_1^3 2\,dx$. The first integral evaluates to $\frac{3}{2}-(-\frac{1}{2})=2$, and the second evaluates to $2(3-1)=4$, giving a total of $6$. Geometrically, the graph on $[-1,1]$ is a right triangle of base $2$ and height $2$ (area $2$), and on $[1,3]$ it is a $2\times 2$ square (area $4$), which immediately confirms $2+4=6$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-9">Exercise 9: Definite Integral and Geometric Area</a></li><li><a href="#exercise-12">Exercise 12: Symmetry, Sign, and Absolute Value</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-15">
+<h2 class="exercise-title">Exercise 15. Recovering a Function from Its Derivative and a Condition</h2>
+<h3>The question</h3>
+<p>The function $F$ satisfies</p>
+<div class="math-block">$$F'(x)=2xe^{x^2}\qquad\text{and}\qquad F(0)=3.$$</div>
+<ol><li>Recognize the method needed to find the function $F$.</li><li>Determine the entire family of functions with the given derivative.</li><li>Use the condition $F(0)=3$ to determine the correct constant.</li><li>Verify the final result by differentiation and substitution of $x=0$.</li></ol>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Knowing the derivative $F'(x)$ of a function tells us its <strong>slope everywhere</strong>, which determines the function up to an unknown vertical shift $+C$:</p>
+<div class="math-block">$$F(x)=\int F'(x)\,dx.$$</div>
+<p>To single out <strong>one specific function</strong> from this infinite family of parallel curves, we need one piece of pinpoint information—an <strong>initial condition</strong> $F(x_0)=y_0$ that tells us one point $(x_0,y_0)$ through which the graph must pass.</p>
+<h3>1. Recognizing the method to find $F$</h3>
+<p>We need to integrate $F'(x)=2xe^{x^2}$:</p>
+<div class="math-block">$$F(x)=\int 2xe^{x^2}\,dx.$$</div>
+<p>Looking at the structure of $2xe^{x^2}$, we see an inner function $u=x^2$ inside the exponential $e^u$, multiplied outside by its exact derivative $u'=2x$. Therefore, the appropriate method is <strong>substitution</strong> (reversing the chain rule) with $u=x^2$.</p>
+<h3>2. Determining the entire family of antiderivatives</h3>
+<p>Set $u=x^2$, so that $du=2x\,dx$. Substituting into the integral gives:</p>
+<div class="math-block">$$F(x)=\int e^{x^2}\,(2x\,dx) = \int e^u\,du = e^u + C = e^{x^2} + C,\qquad C\in\mathbb{R}.$$</div>
+<p>This is the entire family of functions whose derivative is $2xe^{x^2}$.</p>
+<h3>3. Using the condition $F(0)=3$ to find the constant $C$</h3>
+<p>We substitute $x=0$ into $F(x)=e^{x^2}+C$ and set the result equal to $3$:</p>
+<div class="math-block">$$F(0)=e^{0^2}+C=3.$$</div>
+<p>Since $e^0=1$ (a very important detail—$e^0$ is $1$, not $0$!), this gives:</p>
+<div class="math-block">$$1+C=3 \implies C=2.$$</div>
+<p>Therefore, the unique function satisfying both conditions is:</p>
+<div class="math-block">$$F(x)=e^{x^2}+2.$$</div>
+<h3>4. Quick verification</h3>
+<p>We check both conditions independently:</p>
+<ol><li><strong>Differentiation check:</strong> Using the chain rule on $F(x)=e^{x^2}+2$: $$F'(x)=\frac{d}{dx}\left(e^{x^2}\right)+\frac{d}{dx}(2)=e^{x^2}\cdot(2x)+0=2xe^{x^2}.\quad\checkmark$$</li><li><strong>Initial condition check at $x=0$:</strong> $$F(0)=e^{0^2}+2=1+2=3.\quad\checkmark$$</li></ol>
+<p>Both requirements of the problem are satisfied. ✓</p>
+<h3>A concrete example</h3>
+<p>A frequent trap in initial-value problems involving exponentials or cosines is assuming that plugging in $x=0$ makes the function part vanish so that $C=F(0)$. Here:</p>
+<ul><li>Had the function been a polynomial with no constant term, like $G(x)=x^3+C$, then $G(0)=3$ would indeed give $0+C=3 \implies C=3$.</li><li>For $F(x)=e^{x^2}+C$, however, the base function already has height $e^0=1$ at $x=0$. To reach a total height of $F(0)=3$, we only need to shift the curve up by $C=3-1=2$.</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>To recover $F(x)$ from $F'(x)=2xe^{x^2}$, I first integrate to get the family of antiderivatives. Since $2x$ is the exact derivative of the exponent $x^2$, substituting $u=x^2$ gives $\int e^u\,du = e^{x^2}+C$. That $+C$ represents a whole vertical family of curves. To pick out the one curve passing through $(0,3)$, I plug $x=0$ into $F(0)=e^0+C=3$. Since $e^0=1$, we get $1+C=3$, so $C=2$ and $F(x)=e^{x^2}+2$. Differentiating gives $2xe^{x^2}$ and plugging in $0$ gives $1+2=3$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: Antiderivative and Verification</a></li><li><a href="#exercise-5">Exercise 5: The Same Substitution in a Different Context</a></li></ul>
+</section>
+    </main>
+  </div>
+</body>
+</html>

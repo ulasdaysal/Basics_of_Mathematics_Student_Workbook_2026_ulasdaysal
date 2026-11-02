@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>03. Second-Degree Curves and Surfaces — Complete Solutions</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false}
+      ],
+      throwOnError: false
+    });"></script>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --muted: #475569;
+      --accent: #2563eb;
+      --accent-soft: #eff6ff;
+      --quote-bg: #f1f5f9;
+      --quote-border: #3b82f6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 310px 1fr;
+      min-height: 100vh;
+    }
+    aside.sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 1.5rem 1.25rem;
+    }
+    .brand {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    .brand-sub {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .toc-group-title {
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin: 1rem 0 0.35rem 0.5rem;
+    }
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .toc-list li { margin-bottom: 0.2rem; }
+    .toc-list a {
+      display: block;
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.86rem;
+      transition: background 0.15s, color 0.15s;
+    }
+    .toc-list a:hover {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+    main.content {
+      max-width: 940px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    header.page-header {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    }
+    header.page-header h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.85rem;
+      color: var(--text);
+    }
+    header.page-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+    .section-banner {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: #ffffff;
+      border-radius: 12px;
+      padding: 1.5rem 2rem;
+      margin: 2.5rem 0 1.5rem;
+      scroll-margin-top: 1.5rem;
+    }
+    .section-banner h2 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    .section-banner p {
+      margin: 0.25rem 0 0;
+      opacity: 0.9;
+      font-size: 0.92rem;
+    }
+    section.exercise-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem 2.25rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+      scroll-margin-top: 1.5rem;
+    }
+    section.exercise-card h2.exercise-title {
+      margin-top: 0;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--accent-soft);
+      color: var(--accent);
+      font-size: 1.4rem;
+    }
+    section.exercise-card h3 {
+      margin-top: 1.5rem;
+      margin-bottom: 0.55rem;
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+    section.exercise-card h4 {
+      margin-top: 1.15rem;
+      margin-bottom: 0.45rem;
+      font-size: 1rem;
+      color: var(--muted);
+    }
+    p { margin: 0.65rem 0; }
+    ul, ol { margin: 0.65rem 0; padding-left: 1.5rem; }
+    li { margin-bottom: 0.35rem; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.85rem;
+      text-align: left;
+    }
+    th { background: var(--bg); font-weight: 600; }
+    blockquote {
+      margin: 1rem 0;
+      padding: 0.9rem 1.2rem;
+      background: var(--quote-bg);
+      border-left: 4px solid var(--quote-border);
+      border-radius: 0 8px 8px 0;
+      color: var(--text);
+    }
+    blockquote p { margin: 0; }
+    pre {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 1rem 1.25rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+    code {
+      font-family: Consolas, Monaco, "Courier New", monospace;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .katex-display {
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 0.25rem 0;
+    }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      aside.sidebar {
+        position: static;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      main.content { padding: 1.5rem 1rem 3rem; }
+      section.exercise-card { padding: 1.5rem; }
+    }
+    @media print {
+      aside.sidebar { display: none; }
+      .layout { display: block; }
+      body { background: #fff; }
+      section.exercise-card { box-shadow: none; break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">2. Geometry</div>
+      <div class="brand-sub">03. Second-Degree Curves and Surfaces (Exercises 1–15)</div>
+      <ul class="toc-list">
+<li><a href="#exercise-1">1. Recognizing Curves from Canonical Form</a></li>
+<li><a href="#exercise-2">2. Circle by Completing the Square</a></li>
+<li><a href="#exercise-3">3. Ellipse</a></li>
+<li><a href="#exercise-4">4. Parabola</a></li>
+<li><a href="#exercise-5">5. Hyperbola and Asymptotes</a></li>
+<li><a href="#exercise-6">6. Shifted Ellipse</a></li>
+<li><a href="#exercise-7">7. Classifying a Second-Degree Equation</a></li>
+<li><a href="#exercise-8">8. Sphere</a></li>
+<li><a href="#exercise-9">9. Ellipsoid and Its Cross-Sections</a></li>
+<li><a href="#exercise-10">10. Paraboloids</a></li>
+<li><a href="#exercise-11">11. Two Similar Surfaces</a></li>
+<li><a href="#exercise-12">12. Recognizing a Surface from Cross-Sections</a></li>
+<li><a href="#exercise-13">13. Intersection of a Sphere and a Plane</a></li>
+<li><a href="#exercise-14">14. Cone and Cylinder</a></li>
+<li><a href="#exercise-15">15. Recognition and Sketch Without a Given Name</a></li>
+</ul>
+    </aside>
+    <main class="content">
+      <header class="page-header">
+        <h1>03. Second-Degree Curves and Surfaces — Complete Solutions</h1>
+        <p>Basics of Mathematics Student Workbook (2026) · 2. Geometry · All 15 Exercises with Detailed Explanations</p>
+      </header>
+      <section class="exercise-card" id="exercise-1">
+<h2 class="exercise-title">Exercise 1. Recognizing Curves from Canonical Form</h2>
+<h3>The question</h3>
+<p>Recognize the curves</p>
+<div class="math-block">$$x^2+y^2=9,$$</div>
+<div class="math-block">$$\frac{x^2}{16}+\frac{y^2}{9}=1,$$</div>
+<div class="math-block">$$y^2=8x,$$</div>
+<div class="math-block">$$\frac{x^2}{9}-\frac{y^2}{4}=1.$$</div>
+<p>For each one, identify the most important features and make a sketch. Explain which parts of the equation let you recognize the type of curve.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>When a second-degree curve in the plane is written in canonical form (centered at the origin or with vertex at the origin), the <strong>signs and degrees of the terms in $x$ and $y$</strong> immediately reveal its geometric family:</p>
+<ul><li><strong>Two squared terms with the same sign and equal coefficients</strong> ($x^2+y^2=r^2$): a <strong>circle</strong> of radius $r$.</li><li><strong>Two squared terms with the same sign and different denominators</strong> ($\frac{x^2}{a^2}+\frac{y^2}{b^2}=1$): an <strong>ellipse</strong> with semiaxes $a$ and $b$.</li><li><strong>One squared term and one linear term</strong> ($y^2=2px$ or $x^2=2py$): a <strong>parabola</strong>.</li><li><strong>Two squared terms with opposite signs</strong> ($\frac{x^2}{a^2}-\frac{y^2}{b^2}=1$): a <strong>hyperbola</strong>.</li></ul>
+<h3>1. First curve: $x^2+y^2=9$</h3>
+<p>Both $x^2$ and $y^2$ appear with coefficient $+1$, and the right-hand side is $9=3^2&gt;0$.</p>
+<ul><li><strong>Type:</strong> Circle.</li><li><strong>Key features:</strong> Center at $(0,0)$, radius $r=3$, axis intercepts at $(\pm 3,0)$ and $(0,\pm 3)$.</li><li><strong>How we recognize it:</strong> $x^2+y^2$ measures the squared distance from $(0,0)$, so setting it equal to $3^2$ selects all points at distance $3$ from the origin.</li></ul>
+<pre><code>          y
+         3* (0,3)
+       *  |  *
+  (-3,0)  |   (3,0)
+  ----*---+---*---- x
+       *  |  *
+        -3* (0,-3)</code></pre>
+<h3>2. Second curve: $\frac{x^2}{16}+\frac{y^2}{9}=1$</h3>
+<p>Both $x^2$ and $y^2$ are positive and sum to $1$, with denominators $16=4^2$ and $9=3^2$.</p>
+<ul><li><strong>Type:</strong> Ellipse.</li><li><strong>Key features:</strong> Center at $(0,0)$, horizontal semiaxis $a=4$, vertical semiaxis $b=3$, vertices at $(\pm 4,0)$ and $(0,\pm 3)$, stretched horizontally since $4&gt;3$.</li><li><strong>How we recognize it:</strong> A sum of two positive squares equals $1$, so neither coordinate can grow unboundedly ($|x|\le 4$, $|y|\le 3$), producing a closed oval with different scales along $Ox$ and $Oy$.</li></ul>
+<pre><code>            y
+           3* (0,3)
+       *    |    *
+  (-4,0)    |     (4,0)
+  ---*------+------*--- x
+       *    |    *
+          -3* (0,-3)</code></pre>
+<h3>3. Third curve: $y^2=8x$</h3>
+<p>Only $y$ is squared ($y^2\ge 0$), while $x$ is linear with a positive coefficient ($8=2p$, so $p=4$).</p>
+<ul><li><strong>Type:</strong> Parabola.</li><li><strong>Key features:</strong> Vertex at $(0,0)$, axis of symmetry is the $x$-axis ($y=0$), opens to the right ($x\ge 0$), focus at $(2,0)$, directrix $x=-2$, passes through $(2,\pm 4)$.</li><li><strong>How we recognize it:</strong> Because $y$ is squared and $x$ is in the first power, every positive $x$ gives two symmetric values $y=\pm\sqrt{8x}$, while negative $x$ gives no real points.</li></ul>
+<pre><code>        y
+        |      * (2,4)
+        |   *
+  (0,0) | *
+  ------+--------- x
+        | *
+        |   *
+        |      * (2,-4)</code></pre>
+<h3>4. Fourth curve: $\frac{x^2}{9}-\frac{y^2}{4}=1$</h3>
+<p>Both variables are squared, but they have <strong>opposite signs</strong> ($+$ before $\frac{x^2}{3^2}$ and $-$ before $\frac{y^2}{2^2}$).</p>
+<ul><li><strong>Type:</strong> Hyperbola.</li><li><strong>Key features:</strong> Center at $(0,0)$, real semiaxis $a=3$ along $Ox$, imaginary semiaxis $b=2$ along $Oy$, vertices at $(\pm 3,0)$, no $y$-intercepts, asymptotes $y=\pm\frac{2}{3}x$.</li><li><strong>How we recognize it:</strong> The minus sign allows $x^2$ and $y^2$ to grow arbitrarily large together, while $\frac{x^2}{9}=1+\frac{y^2}{4}\ge 1$ forces $|x|\ge 3$, splitting the curve into two separate branches opening left and right.</li></ul>
+<pre><code>        \   y   /
+     *   \  |  /   *
+      *   \ | /   *
+  (-3,0)*  \|/  *(3,0)
+  -------*--+--*------- x
+      *   / | \   *
+     *   /  |  \   *
+        /   |   \</code></pre>
+<h3>Quick verification</h3>
+<p>Let us check one characteristic point on each curve:</p>
+<ul><li>Circle: $(3,0)\implies 3^2+0^2=9$. ✓</li><li>Ellipse: $(4,0)\implies \frac{16}{16}+\frac{0}{9}=1$, and $(0,3)\implies \frac{0}{16}+\frac{9}{9}=1$. ✓</li><li>Parabola: $(2,4)\implies 4^2=16=8\cdot 2$. ✓</li><li>Hyperbola: $(3,0)\implies \frac{9}{9}-\frac{0}{4}=1$, and $(0,y)$ gives $-\frac{y^2}{4}=1$ (no real solution). ✓</li></ul>
+<h3>A concrete example</h3>
+<p>Suppose we change a single feature in $\frac{x^2}{9}+\frac{y^2}{4}=1$:</p>
+<ul><li>Keep $+$ and make denominators equal ($9$ and $9$): $\frac{x^2}{9}+\frac{y^2}{9}=1 \iff x^2+y^2=9$, which turns the ellipse into a circle.</li><li>Change $+$ to $-$: $\frac{x^2}{9}-\frac{y^2}{4}=1$, which breaks the closed loop into the two unbounded branches of a hyperbola.</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>To recognize a second-degree curve in canonical form, I first check which variables are squared and what signs they have. If only one variable is squared, like $y^2=8x$, it is a parabola. If both are squared with the same sign, the curve is bounded: equal coefficients give a circle ($x^2+y^2=9$ with radius $3$), and different denominators give an ellipse ($\frac{x^2}{16}+\frac{y^2}{9}=1$ with semiaxes $4$ and $3$). If the squared terms have opposite signs, like $\frac{x^2}{9}-\frac{y^2}{4}=1$, it is a hyperbola with vertices at $(\pm 3,0)$ and asymptotes $y=\pm\frac{2}{3}x$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-3">Exercise 3: Ellipse</a></li><li><a href="#exercise-7">Exercise 7: Classifying a Second-Degree Equation</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-2">
+<h2 class="exercise-title">Exercise 2. Circle by Completing the Square</h2>
+<h3>The question</h3>
+<p>Reduce</p>
+<div class="math-block">$$x^2+y^2-6x+4y-3=0$$</div>
+<p>to canonical form. Find the center and radius, then substitute two simple points from the circle into both forms of the equation.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>A circle with center $(x_0,y_0)$ and radius $r&gt;0$ has the canonical equation</p>
+<div class="math-block">$$(x-x_0)^2+(y-y_0)^2=r^2.$$</div>
+<p>When this equation is expanded, it produces linear terms $-2x_0 x$ and $-2y_0 y$. To reverse the expansion, we group the $x$-terms and $y$-terms separately and <strong>complete the square</strong> using</p>
+<div class="math-block">$$x^2+bx = \left(x+\frac{b}{2}\right)^2 - \left(\frac{b}{2}\right)^2.$$</div>
+<h3>1. Grouping terms and completing the square</h3>
+<p>Start by grouping the $x$-terms, grouping the $y$-terms, and moving the constant to the right-hand side:</p>
+<div class="math-block">$$(x^2-6x) + (y^2+4y) = 3.$$</div>
+<p>For $x^2-6x$, half of $-6$ is $-3$, and $(-3)^2=9$:</p>
+<div class="math-block">$$x^2-6x = (x-3)^2 - 9.$$</div>
+<p>For $y^2+4y$, half of $4$ is $2$, and $2^2=4$:</p>
+<div class="math-block">$$y^2+4y = (y+2)^2 - 4.$$</div>
+<p>Substitute these into the grouped equation:</p>
+<div class="math-block">$$(x-3)^2 - 9 + (y+2)^2 - 4 = 3.$$</div>
+<p>Add $9+4=13$ to both sides to obtain the canonical form:</p>
+<div class="math-block">$$(x-3)^2 + (y+2)^2 = 16.$$</div>
+<h3>2. Reading the center and radius</h3>
+<p>Compare $(x-3)^2 + (y-(-2))^2 = 4^2$ with $(x-x_0)^2 + (y-y_0)^2 = r^2$:</p>
+<ul><li><strong>Center:</strong> $C = (3,-2)$ (note the opposite signs of the numbers inside the parentheses).</li><li><strong>Radius:</strong> $r = \sqrt{16} = 4$.</li></ul>
+<h3>3. Finding two simple points on the circle</h3>
+<p>From the center $(3,-2)$, moving by the radius $r=4$ parallel to the coordinate axes gives four cardinal points:</p>
+<ul><li>Moving right by $4$: $P_1 = (3+4,-2) = (7,-2)$.</li><li>Moving up by $4$: $P_2 = (3,-2+4) = (3,2)$.</li><li>(Also left: $(-1,-2)$ and down: $(3,-6)$.)</li></ul>
+<h3>4. Substituting the points into both forms</h3>
+<p>For $P_1 = (7,-2)$:</p>
+<ul><li><strong>Canonical form:</strong> $(7-3)^2 + (-2+2)^2 = 4^2 + 0^2 = 16$.</li><li><strong>General form:</strong> $7^2 + (-2)^2 - 6(7) + 4(-2) - 3 = 49 + 4 - 42 - 8 - 3 = 0$.</li></ul>
+<p>For $P_2 = (3,2)$:</p>
+<ul><li><strong>Canonical form:</strong> $(3-3)^2 + (2+2)^2 = 0^2 + 4^2 = 16$.</li><li><strong>General form:</strong> $3^2 + 2^2 - 6(3) + 4(2) - 3 = 9 + 4 - 18 + 8 - 3 = 0$.</li></ul>
+<p>Both forms represent the exact same set of points.</p>
+<h3>Quick verification</h3>
+<p>Expand the canonical form $(x-3)^2+(y+2)^2=16$ back out:</p>
+<div class="math-block">$$(x^2-6x+9) + (y^2+4y+4) - 16 = x^2+y^2-6x+4y-3 = 0.$$</div>
+<p>This recovers the original equation identically. ✓</p>
+<h3>A concrete example</h3>
+<p>Notice that $(0,0)$ is at squared distance $(0-3)^2+(0+2)^2 = 9+4 = 13 &lt; 16$ from the center $(3,-2)$, so the origin lies <strong>inside</strong> the circle. In the general equation, substituting $(0,0)$ gives $-3&lt;0$, which also shows that $(0,0)$ is inside the circle.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>To find the center and radius of $x^2+y^2-6x+4y-3=0$, we complete the square separately for $x$ and $y$. Half of $-6$ is $-3$ and half of $+4$ is $+2$, which gives $(x-3)^2-9 + (y+2)^2-4 - 3 = 0$, or $(x-3)^2+(y+2)^2=16$. From this canonical form we immediately read the center $(3,-2)$ and radius $r=4$. Stepping $4$ units right or up from the center gives $(7,-2)$ and $(3,2)$, which satisfy both equations.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-6">Exercise 6: Shifted Ellipse</a></li><li><a href="#exercise-8">Exercise 8: Sphere</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-3">
+<h2 class="exercise-title">Exercise 3. Ellipse</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$\frac{x^2}{25}+\frac{y^2}{9}=1,$$</div>
+<p>find the semiaxis lengths, the intercepts with the coordinate axes, and make a sketch. Explain along which axis the ellipse is more stretched and how this is visible in the equation.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>The canonical equation of an ellipse centered at the origin is</p>
+<div class="math-block">$$\frac{x^2}{a^2}+\frac{y^2}{b^2}=1\qquad (a&gt;0,\;b&gt;0).$$</div>
+<p>Because a square is never negative ($x^2\ge 0$ and $y^2\ge 0$), neither fraction can exceed $1$:</p>
+<div class="math-block">$$\frac{x^2}{a^2}\le 1 \iff |x|\le a,\qquad \frac{y^2}{b^2}\le 1 \iff |y|\le b.$$</div>
+<p>Thus $a$ is the horizontal semiaxis (maximum horizontal reach from the center) and $b$ is the vertical semiaxis (maximum vertical reach from the center).</p>
+<h3>1. Semiaxis lengths</h3>
+<p>Write the denominators as squares of positive numbers:</p>
+<div class="math-block">$$25 = 5^2,\qquad 9 = 3^2.$$</div>
+<p>Therefore:</p>
+<ul><li><strong>Horizontal semiaxis (along $Ox$):</strong> $a = \sqrt{25} = 5$.</li><li><strong>Vertical semiaxis (along $Oy$):</strong> $b = \sqrt{9} = 3$.</li></ul>
+<p>The full major axis has length $2a=10$, and the full minor axis has length $2b=6$.</p>
+<h3>2. Intercepts with the coordinate axes</h3>
+<ul><li><strong>Intercepts with the $x$-axis ($y=0$):</strong> $$\frac{x^2}{25} + 0 = 1 \implies x^2 = 25 \implies x = \pm 5.$$ The $x$-intercepts (major vertices) are $(-5,0)$ and $(5,0)$.</li></ul>
+<ul><li><strong>Intercepts with the $y$-axis ($x=0$):</strong> $$0 + \frac{y^2}{9} = 1 \implies y^2 = 9 \implies y = \pm 3.$$ The $y$-intercepts (minor vertices) are $(0,-3)$ and $(0,3)$.</li></ul>
+<h3>3. Direction of stretching and why it appears in the equation</h3>
+<p>The ellipse is <strong>more stretched along the $x$-axis</strong> (horizontally) because $a=5 &gt; b=3$.</p>
+<p>How is this visible in the equation? The denominator under $x^2$ is $25$, which is larger than the denominator $9$ under $y^2$. Since $\frac{x^2}{25}+\frac{y^2}{9}=1$, dividing $x^2$ by a larger number means $x$ must reach a larger magnitude ($|x|=5$) than $y$ ($|y|=3$) to make its fraction equal to $1$.</p>
+<h3>4. Sketch of the ellipse</h3>
+<p>Plot the center $(0,0)$ and the four vertices $(\pm 5,0)$ and $(0,\pm 3)$, then connect them with a smooth symmetric oval:</p>
+<pre><code>               y
+              3* (0,3)
+         *     |     *
+     *         |         *
+  (-5,0)       |        (5,0)
+  --*----------+----------*-- x
+     *         |         *
+         *     |     *
+             -3* (0,-3)</code></pre>
+<table><thead><tr><th>Point</th><th>Coordinates</th><th>Role</th></tr></thead><tbody><tr><td>Left / Right vertices</td><td>$(-5,0),\;(5,0)$</td><td>Endpoints of major axis (length $10$)</td></tr><tr><td>Bottom / Top vertices</td><td>$(0,-3),\;(0,3)$</td><td>Endpoints of minor axis (length $6$)</td></tr></tbody></table>
+<h3>Quick verification</h3>
+<p>Let us check a non-vertex point on the ellipse. If $x=4$, then</p>
+<div class="math-block">$$\frac{4^2}{25}+\frac{y^2}{9}=1 \implies \frac{y^2}{9}=1-\frac{16}{25}=\frac{9}{25} \implies y=\pm\frac{9}{5}=\pm 1.8.$$</div>
+<p>Substituting $(4, 1.8)$ gives $\frac{16}{25}+\frac{3.24}{9}=0.64+0.36=1$, and indeed $|x|=4\le 5$ and $|y|=1.8\le 3$. ✓</p>
+<h3>A concrete example</h3>
+<p>Think of the ellipse as a rescaled unit circle $u^2+v^2=1$ where $u=\frac{x}{5}$ and $v=\frac{y}{3}$, so $x=5u$ and $y=3v$. A unit circle is stretched by a factor of $5$ horizontally and by a factor of $3$ vertically, which directly explains why the horizontal span $[-5,5]$ is wider than the vertical span $[-3,3]$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>In the equation $\frac{x^2}{25}+\frac{y^2}{9}=1$, the denominators are $5^2$ and $3^2$, so the semiaxes are $a=5$ along the $x$-axis and $b=3$ along the $y$-axis. Setting $y=0$ gives $x$-intercepts $(\pm 5,0)$, and setting $x=0$ gives $y$-intercepts $(0,\pm 3)$. Because $x^2$ is divided by the larger denominator $25$, $x$ can grow further before the fraction hits $1$, so the ellipse is stretched horizontally along $Ox$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: Recognizing Curves from Canonical Form</a></li><li><a href="#exercise-6">Exercise 6: Shifted Ellipse</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-4">
+<h2 class="exercise-title">Exercise 4. Parabola</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$y^2=12x,$$</div>
+<p>identify the vertex, axis of symmetry, and opening direction. Find points on the parabola for $x=3$ and use them to make a sketch.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>A parabola in canonical form has one variable squared and the other variable linear:</p>
+<div class="math-block">$$y^2 = 2px \qquad\text{or}\qquad x^2 = 2py.$$</div>
+<p>For $y^2 = 12x$:</p>
+<ul><li>Because $y^2\ge 0$ for every real $y$, the right-hand side must satisfy $12x\ge 0$, so $x\ge 0$.</li><li>Replacing $y$ with $-y$ leaves $y^2$ unchanged, which means the curve is symmetric across the line $y=0$ (the $x$-axis).</li></ul>
+<h3>1. Vertex, axis of symmetry, and opening direction</h3>
+<p>From the equation $y^2=12x$:</p>
+<ul><li><strong>Vertex:</strong> $(0,0)$, the extreme point where $x$ takes its minimum value $x=0$ (giving $y=0$).</li><li><strong>Axis of symmetry:</strong> The $x$-axis ($y=0$), because $(-y)^2 = y^2 = 12x$ pairs every point $(x,y)$ with $(x,-y)$.</li><li><strong>Opening direction:</strong> Opens <strong>to the right</strong> (along the positive $x$-axis), since real solutions exist only when $12x\ge 0 \iff x\ge 0$.</li><li><em>(Optional focal parameter)</em>: Comparing $y^2=12x$ with $y^2=2px$ (or $4fx$) gives $p=6$, so the focus is $(3,0)$ and the directrix is $x=-3$.</li></ul>
+<h3>2. Points on the parabola for $x=3$</h3>
+<p>Substitute $x=3$ into $y^2=12x$:</p>
+<div class="math-block">$$y^2 = 12\cdot 3 = 36 \implies y = \pm\sqrt{36} = \pm 6.$$</div>
+<p>This gives two symmetric points on the parabola:</p>
+<div class="math-block">$$A = (3,6)\qquad\text{and}\qquad B = (3,-6).$$</div>
+<h3>3. Additional reference points and coordinate table</h3>
+<p>To make an accurate sketch, we can also check $x=0$ and $x=\frac{4}{3}$ (or $x=1$):</p>
+<table><thead><tr><th>$x$</th><th>$y^2=12x$</th><th>$y=\pm\sqrt{12x}$</th><th>Points $(x,y)$</th></tr></thead><tbody><tr><td>$0$</td><td>$0$</td><td>$0$</td><td>$(0,0)$ (vertex)</td></tr><tr><td>$\frac{3}{4}$</td><td>$9$</td><td>$\pm 3$</td><td>$(\frac{3}{4},3),\;(\frac{3}{4},-3)$</td></tr><tr><td>$3$</td><td>$36$</td><td>$\pm 6$</td><td>$(3,6),\;(3,-6)$</td></tr></tbody></table>
+<h3>4. Sketch of the parabola</h3>
+<pre><code>        y
+       6|         * (3,6)
+        |     *
+       3|  * (0.75,3)
+  (0,0) |*
+  ------+---------*---- x
+        |*        3
+      -3|  * (0.75,-3)
+        |     *
+      -6|         * (3,-6)</code></pre>
+<h3>Quick verification</h3>
+<p>Substitute $A=(3,6)$ and $B=(3,-6)$ into $y^2=12x$:</p>
+<ul><li>Left-hand side: $(\pm 6)^2 = 36$.</li><li>Right-hand side: $12\cdot 3 = 36$. ✓</li></ul>
+<p>Also check $x=-1$: $y^2 = -12$ has no real solutions, confirming the curve does not enter the left half-plane $x&lt;0$. ✓</p>
+<h3>A concrete example</h3>
+<p>Notice that at $x=3$, the segment connecting $(3,6)$ and $(3,-6)$ passes right through the focus $F=(3,0)$ and has total length $6-(-6)=12$, which matches the coefficient $2p=12$ in $y^2=12x$ (this segment is called the <em>latus rectum</em> of the parabola).</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>In $y^2=12x$, only $y$ is squared, so the curve is a parabola with vertex at $(0,0)$. Since $y^2\ge 0$, we need $x\ge 0$, so the parabola opens to the right, and because $(\pm y)^2$ gives the same value, the $x$-axis ($y=0$) is the axis of symmetry. Plugging in $x=3$ gives $y^2=36$, so $y=\pm 6$; plotting $(0,0)$, $(3,6)$, and $(3,-6)$ immediately gives the shape of the parabola.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: Recognizing Curves from Canonical Form</a></li><li><a href="#exercise-10">Exercise 10: Paraboloids</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-5">
+<h2 class="exercise-title">Exercise 5. Hyperbola and Asymptotes</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$\frac{x^2}{16}-\frac{y^2}{9}=1,$$</div>
+<p>find the intercepts with the $x$-axis, the asymptotes, and make a sketch. Explain why the asymptotes describe the behavior of the curve far from the center.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>A hyperbola in canonical form</p>
+<div class="math-block">$$\frac{x^2}{a^2}-\frac{y^2}{b^2}=1$$</div>
+<p>has a positive term in $x^2$ and a negative term in $y^2$. From $\frac{x^2}{a^2} = 1 + \frac{y^2}{b^2} \ge 1$, we see that $|x|\ge a$: the curve has two separate branches ($x\le -a$ and $x\ge a$) and never crosses the $y$-axis. Its global opening is guided by the rectangle of dimensions $2a\times 2b$ centered at the origin and its diagonal lines $y=\pm\frac{b}{a}x$, called the <strong>asymptotes</strong>.</p>
+<h3>1. Semiaxes and intercepts with the $x$-axis</h3>
+<p>From the denominators $16=4^2$ and $9=3^2$, we read:</p>
+<ul><li><strong>Real semiaxis:</strong> $a = 4$ (along $Ox$).</li><li><strong>Imaginary semiaxis:</strong> $b = 3$ (along $Oy$).</li></ul>
+<p>To find the intercepts with the $x$-axis, set $y=0$:</p>
+<div class="math-block">$$\frac{x^2}{16} - 0 = 1 \implies x^2 = 16 \implies x = \pm 4.$$</div>
+<p>Thus the $x$-intercepts (the vertices of the hyperbola) are $(-4,0)$ and $(4,0)$. (Setting $x=0$ gives $-\frac{y^2}{9}=1$, which has no real solutions, so there are no $y$-intercepts.)</p>
+<h3>2. Finding the asymptotes</h3>
+<p>Replace the $1$ on the right-hand side with $0$ to find the asymptotic directions:</p>
+<div class="math-block">$$\frac{x^2}{16}-\frac{y^2}{9}=0 \iff \frac{y^2}{9}=\frac{x^2}{16} \iff y = \pm\frac{3}{4}x.$$</div>
+<p>The two asymptotes are the lines $y = \frac{3}{4}x$ and $y = -\frac{3}{4}x$.</p>
+<h3>3. Why the asymptotes describe the curve far from the center</h3>
+<p>Solve the hyperbola equation for $y^2$ and factor out $x^2$ (for $|x|\ge 4$):</p>
+<div class="math-block">$$\frac{y^2}{9} = \frac{x^2}{16}-1 = \frac{x^2}{16}\left(1-\frac{16}{x^2}\right) \implies y = \pm\frac{3}{4}x\sqrt{1-\frac{16}{x^2}}.$$</div>
+<p>When $|x|$ is very large (far from the center $(0,0)$), the fraction $\frac{16}{x^2}$ becomes tiny and approaches $0$. Consequently, the square root $\sqrt{1-\frac{16}{x^2}}$ approaches $1$, and the $y$-coordinate on the hyperbola approaches $\pm\frac{3}{4}x$. Equivalently, the vertical distance between the curve and the line $y=\frac{3}{4}x$ in the first quadrant is</p>
+<div class="math-block">$$\frac{3}{4}x - \frac{3}{4}\sqrt{x^2-16} = \frac{3}{4}\cdot\frac{16}{x+\sqrt{x^2-16}} = \frac{12}{x+\sqrt{x^2-16}} \xrightarrow{x\to\infty} 0.$$</div>
+<h3>4. Sketch of the hyperbola and its asymptotes</h3>
+<p>Draw the central reference box $[-4,4]\times[-3,3]$, its diagonals $y=\pm\frac{3}{4}x$, and the two branches passing through $(\pm 4,0)$ approaching the diagonals:</p>
+<pre><code>       \      y      /
+   *    \    3+     /    *   y = (3/4)x
+     *   \  ..|..  /   *
+       *  \ : | : /  *
+  (-4,0) * \: | :/ * (4,0)
+  ---------*--+--*--------- x
+       *  / : | : \  *
+     *   /  ..|..  \   *
+   *    /   -3+     \    *   y = -(3/4)x
+       /      |      \</code></pre>
+<h3>Quick verification</h3>
+<p>Let us test $x=5$:</p>
+<ul><li>On the hyperbola: $\frac{25}{16}-\frac{y^2}{9}=1 \implies \frac{y^2}{9}=\frac{9}{16} \implies y=\pm\frac{9}{4}=\pm 2.25$. ✓</li><li>On the asymptote: $y=\pm\frac{3}{4}(5)=\pm\frac{15}{4}=\pm 3.75$.</li></ul>
+<p>Now test $x=20$:</p>
+<ul><li>On the hyperbola: $y=\frac{3}{4}\sqrt{400-16}=\frac{3}{4}\sqrt{384}\approx 14.697$.</li><li>On the asymptote: $y=\frac{3}{4}(20)=15$.</li></ul>
+<p>The gap shrinks from $1.5$ at $x=5$ down to $0.303$ at $x=20$. ✓</p>
+<h3>A concrete example</h3>
+<p>At $x=4$, the hyperbola is at $(4,0)$ while the asymptote is at $(4,3)$ (gap $=3$). By $x=40$, the hyperbola is at $y=\frac{3}{4}\sqrt{1584}\approx 29.85$ while the asymptote is at $y=30$ (gap $\approx 0.15$). Far from the origin, the constant $1$ on the right-hand side of $\frac{x^2}{16}-\frac{y^2}{9}=1$ becomes negligible compared to the huge numbers $\frac{x^2}{16}$ and $\frac{y^2}{9}$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>For $\frac{x^2}{16}-\frac{y^2}{9}=1$, we have $a=4$ and $b=3$. Setting $y=0$ gives the $x$-intercepts $(\pm 4,0)$, and replacing $1$ by $0$ gives the asymptotes $y=\pm\frac{3}{4}x$. Rewriting the equation as $y=\pm\frac{3}{4}x\sqrt{1-\frac{16}{x^2}}$ shows why the asymptotes control the shape far from the origin: as $|x|\to\infty$, the term $\frac{16}{x^2}$ vanishes, so the curve becomes indistinguishable from the lines $y=\pm\frac{3}{4}x$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: Recognizing Curves from Canonical Form</a></li><li><a href="#exercise-7">Exercise 7: Classifying a Second-Degree Equation</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-6">
+<h2 class="exercise-title">Exercise 6. Shifted Ellipse</h2>
+<h3>The question</h3>
+<p>Reduce</p>
+<div class="math-block">$$4x^2+9y^2-16x+18y-11=0$$</div>
+<p>to canonical form. Give the center and semiaxis lengths. Check that substituting the coordinates of the center into the left-hand side gives a value consistent with the form you obtained.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>When $x^2$ and $y^2$ have different positive coefficients ($4$ and $9$), the curve is an <strong>ellipse</strong>, and the linear terms $-16x$ and $+18y$ indicate that its center has been shifted away from $(0,0)$.</p>
+<p>Before completing the square in each variable, we must <strong>factor out the leading coefficient</strong> ($4$ from the $x$-terms and $9$ from the $y$-terms) so that the expression inside each parenthesis starts with a plain $x^2$ or $y^2$.</p>
+<h3>1. Factoring and completing the square</h3>
+<p>Group the $x$-terms and $y$-terms, and move $-11$ to the right-hand side:</p>
+<div class="math-block">$$(4x^2-16x) + (9y^2+18y) = 11.$$</div>
+<p>Factor $4$ from the $x$-group and $9$ from the $y$-group:</p>
+<div class="math-block">$$4(x^2-4x) + 9(y^2+2y) = 11.$$</div>
+<p>Complete the square inside each parenthesis:</p>
+<ul><li>$x^2-4x = (x-2)^2 - 4$,</li><li>$y^2+2y = (y+1)^2 - 1$.</li></ul>
+<p>Substitute these back, remembering to multiply the subtracted constants by the outside factors $4$ and $9$:</p>
+<div class="math-block">$$4\big((x-2)^2 - 4\big) + 9\big((y+1)^2 - 1\big) = 11$$</div>
+<div class="math-block">$$4(x-2)^2 - 16 + 9(y+1)^2 - 9 = 11$$</div>
+<div class="math-block">$$4(x-2)^2 + 9(y+1)^2 = 11 + 16 + 9 = 36.$$</div>
+<h3>2. Dividing to obtain canonical form</h3>
+<p>Divide both sides of $4(x-2)^2 + 9(y+1)^2 = 36$ by $36$:</p>
+<div class="math-block">$$\frac{4(x-2)^2}{36} + \frac{9(y+1)^2}{36} = 1 \implies \frac{(x-2)^2}{9} + \frac{(y+1)^2}{4} = 1.$$</div>
+<p>This is the canonical form of the shifted ellipse.</p>
+<h3>3. Center and semiaxis lengths</h3>
+<p>Comparing $\frac{(x-2)^2}{3^2} + \frac{(y-(-1))^2}{2^2} = 1$ with $\frac{(x-x_0)^2}{a^2} + \frac{(y-y_0)^2}{b^2} = 1$:</p>
+<ul><li><strong>Center:</strong> $C = (2,-1)$.</li><li><strong>Horizontal semiaxis (along $Ox$):</strong> $a = \sqrt{9} = 3$.</li><li><strong>Vertical semiaxis (along $Oy$):</strong> $b = \sqrt{4} = 2$.</li></ul>
+<h3>4. Checking the center in the left-hand side</h3>
+<p>Before dividing by $36$, the completed-square form of the left-hand side is</p>
+<div class="math-block">$$L(x,y) = 4x^2+9y^2-16x+18y-11 = 4(x-2)^2 + 9(y+1)^2 - 36.$$</div>
+<p>If we substitute the center $(x,y)=(2,-1)$ into the completed-square form, both squared brackets vanish and we get</p>
+<div class="math-block">$$L(2,-1) = 4(0)^2 + 9(0)^2 - 36 = -36.$$</div>
+<p>Now let us substitute $(2,-1)$ directly into the original left-hand side:</p>
+<div class="math-block">$$L(2,-1) = 4(2)^2 + 9(-1)^2 - 16(2) + 18(-1) - 11 = 16 + 9 - 32 - 18 - 11 = -36.$$</div>
+<p>Both expressions evaluate to $-36$ (and in the normalized form $\frac{(x-2)^2}{9}+\frac{(y+1)^2}{4}-1$, substituting $(2,-1)$ gives $-1 = \frac{-36}{36}$).</p>
+<h3>Quick verification</h3>
+<p>Let us also check one vertex of the shifted ellipse, say $(2+3,-1) = (5,-1)$, in the original equation:</p>
+<div class="math-block">$$4(5)^2 + 9(-1)^2 - 16(5) + 18(-1) - 11 = 100 + 9 - 80 - 18 - 11 = 0.$$</div>
+<p>It satisfies the original equation. ✓</p>
+<h3>A concrete example</h3>
+<p>By introducing shifted coordinates $X = x-2$ and $Y = y+1$, the origin $(X,Y)=(0,0)$ is placed at $(x,y)=(2,-1)$, and our equation becomes the standard centered ellipse</p>
+<div class="math-block">$$\frac{X^2}{9} + \frac{Y^2}{4} = 1.$$</div>
+<p>Thus the four vertices in $(x,y)$-coordinates are $(2\pm 3, -1) = (-1,-1),\;(5,-1)$ and $(2, -1\pm 2) = (2,-3),\;(2,1)$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>First, I group the $x$- and $y$-terms and factor out the leading coefficients: $4(x^2-4x)+9(y^2+2y)=11$. Completing the squares gives $4(x-2)^2-16+9(y+1)^2-9=11$, so $4(x-2)^2+9(y+1)^2=36$. Dividing by $36$ yields the canonical form $\frac{(x-2)^2}{9}+\frac{(y+1)^2}{4}=1$, which is an ellipse centered at $(2,-1)$ with semiaxes $a=3$ and $b=2$. Plugging $(2,-1)$ into the original left-hand side gives $16+9-32-18-11=-36$, matching $4(x-2)^2+9(y+1)^2-36$ at the center.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-2">Exercise 2: Circle by Completing the Square</a></li><li><a href="#exercise-15">Exercise 15: Recognition and Sketch Without a Given Name</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-7">
+<h2 class="exercise-title">Exercise 7. Classifying a Second-Degree Equation</h2>
+<h3>The question</h3>
+<p>Determine the type of object described by:</p>
+<ol><li>$4x^2+9y^2=36$,</li><li>$x^2-y^2=1$,</li><li>$x^2-4y=0$,</li><li>$x^2+y^2+1=0$.</li></ol>
+<p>In the last case, explain why there are no real points.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>To classify a second-degree equation in the plane:</p>
+<ol><li>Check <strong>which variables are squared</strong> (both $x$ and $y$, or only one).</li><li>If both are squared, check the <strong>signs of the squared terms</strong> and the <strong>sign of the constant term</strong> after bringing constants to the right-hand side.</li><li>Always verify whether the equation admits <strong>real solutions</strong>—a sum of squares of real numbers can never be negative!</li></ol>
+<h3>1. Equation 1: $4x^2+9y^2=36$</h3>
+<p>Divide both sides by $36$ to put the equation in canonical form:</p>
+<div class="math-block">$$\frac{4x^2}{36} + \frac{9y^2}{36} = 1 \implies \frac{x^2}{9} + \frac{y^2}{4} = 1.$$</div>
+<ul><li>Both $x^2$ and $y^2$ have positive coefficients, the right-hand side is $+1&gt;0$, and the denominators $9=3^2$ and $4=2^2$ are different.</li><li><strong>Type of object:</strong> <strong>Ellipse</strong> centered at $(0,0)$ with semiaxes $a=3$ (horizontal) and $b=2$ (vertical).</li></ul>
+<h3>2. Equation 2: $x^2-y^2=1$</h3>
+<p>This is already in the canonical form</p>
+<div class="math-block">$$\frac{x^2}{1^2} - \frac{y^2}{1^2} = 1.$$</div>
+<ul><li>Both $x$ and $y$ are squared, but their coefficients have <strong>opposite signs</strong> ($+1$ and $-1$).</li><li><strong>Type of object:</strong> <strong>Hyperbola</strong> (specifically a <em>rectangular</em> or <em>equilateral</em> hyperbola, since $a=b=1$ and the asymptotes $y=\pm x$ are perpendicular), with vertices at $(\pm 1,0)$.</li></ul>
+<h3>3. Equation 3: $x^2-4y=0$</h3>
+<p>Move $4y$ to the right-hand side:</p>
+<div class="math-block">$$x^2 = 4y.$$</div>
+<ul><li>Only $x$ is squared, while $y$ appears in the first power.</li><li><strong>Type of object:</strong> <strong>Parabola</strong> with vertex at $(0,0)$, symmetric across the $y$-axis ($x=0$), opening upward ($y = \frac{1}{4}x^2 \ge 0$).</li></ul>
+<h3>4. Equation 4: $x^2+y^2+1=0$ (and why there are no real points)</h3>
+<p>Move $1$ to the right-hand side:</p>
+<div class="math-block">$$x^2 + y^2 = -1.$$</div>
+<ul><li><strong>Type of object:</strong> <strong>Empty set</strong> in the real plane $\mathbb{R}^2$ (often called an <em>imaginary circle</em>).</li><li><strong>Why there are no real points:</strong> For any real numbers $x,y\in\mathbb{R}$, their squares are non-negative: $$x^2 \ge 0 \qquad\text{and}\qquad y^2 \ge 0.$$ Therefore, their sum satisfies $$x^2 + y^2 \ge 0,$$ so $x^2+y^2+1 \ge 1 &gt; 0$. It can never equal $0$ for any pair of real coordinates $(x,y)$.</li></ul>
+<h3>Quick verification</h3>
+<p>Let us summarize and verify with test points for the first three and a bound for the fourth:</p>
+<table><thead><tr><th>Equation</th><th>Canonical Form</th><th>Object Type</th><th>Sample Real Point</th><th>Check</th></tr></thead><tbody><tr><td>$4x^2+9y^2=36$</td><td>$\frac{x^2}{9}+\frac{y^2}{4}=1$</td><td>Ellipse</td><td>$(3,0)$</td><td>$4(9)+0=36$ ✓</td></tr><tr><td>$x^2-y^2=1$</td><td>$\frac{x^2}{1}-\frac{y^2}{1}=1$</td><td>Hyperbola</td><td>$(1,0)$</td><td>$1-0=1$ ✓</td></tr><tr><td>$x^2-4y=0$</td><td>$x^2=4y$</td><td>Parabola</td><td>$(2,1)$</td><td>$4-4(1)=0$ ✓</td></tr><tr><td>$x^2+y^2+1=0$</td><td>$x^2+y^2=-1$</td><td>Empty set (no real points)</td><td>None ($\min(x^2+y^2+1)=1$)</td><td>$1\neq 0$ ✓</td></tr></tbody></table>
+<h3>A concrete example</h3>
+<p>Compare the family of equations $x^2+y^2 = c$ as the constant $c$ changes:</p>
+<ul><li>For $c = 1$: $x^2+y^2=1$ is the <strong>unit circle</strong> of radius $1$.</li><li>For $c = 0$: $x^2+y^2=0$ has only the <strong>single point</strong> $(0,0)$.</li><li>For $c = -1$: $x^2+y^2=-1$ (which is $x^2+y^2+1=0$) has <strong>no real points at all</strong>, because shrinking the radius past $0$ makes the circle disappear from the real plane.</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>To classify these four equations, I put each one into standard form. First, $4x^2+9y^2=36$ divides by $36$ to give $\frac{x^2}{9}+\frac{y^2}{4}=1$, an ellipse with semiaxes $3$ and $2$. Second, $x^2-y^2=1$ has opposite signs on the squared terms, so it is a hyperbola. Third, $x^2-4y=0$ or $x^2=4y$ has only $x$ squared and $y$ linear, so it is a parabola opening upward. Fourth, $x^2+y^2+1=0$ means $x^2+y^2=-1$; since squares of real numbers are never negative ($x^2+y^2\ge 0$), no real point $(x,y)$ can satisfy the equation, so it describes the empty set.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: Recognizing Curves from Canonical Form</a></li><li><a href="#exercise-5">Exercise 5: Hyperbola and Asymptotes</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-8">
+<h2 class="exercise-title">Exercise 8. Sphere</h2>
+<h3>The question</h3>
+<p>Reduce</p>
+<div class="math-block">$$x^2+y^2+z^2-4x+2y-6z-2=0$$</div>
+<p>to canonical form. Find the center and radius. Give two points on the sphere and check them in the equation.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>A sphere in three-dimensional space is the set of all points $(x,y,z)$ at a fixed distance $r$ from a center $C=(x_0,y_0,z_0)$. By the 3D distance formula, its canonical equation is</p>
+<div class="math-block">$$(x-x_0)^2 + (y-y_0)^2 + (z-z_0)^2 = r^2.$$</div>
+<p>Just as for a circle in the plane, we reduce a general sphere equation to canonical form by <strong>completing the square independently in $x$, $y$, and $z$</strong>.</p>
+<h3>1. Grouping terms and completing the three squares</h3>
+<p>Group the $x$-, $y$-, and $z$-terms, and move the constant $-2$ to the right-hand side:</p>
+<div class="math-block">$$(x^2-4x) + (y^2+2y) + (z^2-6z) = 2.$$</div>
+<p>Complete each square using $u^2+bu = \left(u+\frac{b}{2}\right)^2 - \left(\frac{b}{2}\right)^2$:</p>
+<ul><li>For $x$: $x^2-4x = (x-2)^2 - 4$,</li><li>For $y$: $y^2+2y = (y+1)^2 - 1$,</li><li>For $z$: $z^2-6z = (z-3)^2 - 9$.</li></ul>
+<p>Substitute these into the equation:</p>
+<div class="math-block">$$(x-2)^2 - 4 + (y+1)^2 - 1 + (z-3)^2 - 9 = 2.$$</div>
+<p>Add $4+1+9=14$ to both sides to get the canonical form:</p>
+<div class="math-block">$$(x-2)^2 + (y+1)^2 + (z-3)^2 = 16.$$</div>
+<h3>2. Center and radius</h3>
+<p>Comparing $(x-2)^2 + (y-(-1))^2 + (z-3)^2 = 4^2$ with $(x-x_0)^2 + (y-y_0)^2 + (z-z_0)^2 = r^2$:</p>
+<ul><li><strong>Center:</strong> $C = (2,-1,3)$.</li><li><strong>Radius:</strong> $r = \sqrt{16} = 4$.</li></ul>
+<h3>3. Finding two points on the sphere</h3>
+<p>Starting from the center $C=(2,-1,3)$, we can step by the radius $r=4$ along any coordinate axis:</p>
+<ul><li>Step $+4$ along the $x$-axis: $P_1 = (2+4, -1, 3) = (6,-1,3)$.</li><li>Step $+4$ along the $y$-axis: $P_2 = (2, -1+4, 3) = (2,3,3)$.</li><li><em>(Other cardinal points include $(-2,-1,3)$, $(2,-5,3)$, $(2,-1,7)$, and $(2,-1,-1)$.)</em></li></ul>
+<h3>4. Checking the two points in the equation</h3>
+<p>Let us check $P_1=(6,-1,3)$ and $P_2=(2,3,3)$ in both forms of the equation:</p>
+<ul><li><strong>For $P_1=(6,-1,3)$:</strong></li><li>Canonical: $(6-2)^2 + (-1+1)^2 + (3-3)^2 = 4^2 + 0 + 0 = 16$.</li><li>Original: $6^2 + (-1)^2 + 3^2 - 4(6) + 2(-1) - 6(3) - 2 = 36 + 1 + 9 - 24 - 2 - 18 - 2 = 0$.</li></ul>
+<ul><li><strong>For $P_2=(2,3,3)$:</strong></li><li>Canonical: $(2-2)^2 + (3+1)^2 + (3-3)^2 = 0 + 4^2 + 0 = 16$.</li><li>Original: $2^2 + 3^2 + 3^2 - 4(2) + 2(3) - 6(3) - 2 = 4 + 9 + 9 - 8 + 6 - 18 - 2 = 0$.</li></ul>
+<h3>Quick verification</h3>
+<p>Let us also check the antipodal point along the $z$-axis, $P_3 = (2,-1,3-4) = (2,-1,-1)$, in the original equation:</p>
+<div class="math-block">$$2^2 + (-1)^2 + (-1)^2 - 4(2) + 2(-1) - 6(-1) - 2 = 4 + 1 + 1 - 8 - 2 + 6 - 2 = 0.$$</div>
+<p>And expanding $(x-2)^2+(y+1)^2+(z-3)^2-16 = (x^2-4x+4)+(y^2+2y+1)+(z^2-6z+9)-16 = x^2+y^2+z^2-4x+2y-6z-2=0$. ✓</p>
+<h3>A concrete example</h3>
+<p>Does this sphere intersect the $xy$-plane ($z=0$)? Setting $z=0$ in the canonical equation gives</p>
+<div class="math-block">$$(x-2)^2 + (y+1)^2 + (0-3)^2 = 16 \implies (x-2)^2 + (y+1)^2 = 16 - 9 = 7.$$</div>
+<p>So the sphere slices the $xy$-plane in a circle centered at $(2,-1,0)$ with radius $\sqrt{7}$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Completing the square for a sphere in 3D works just like for a circle in 2D, with one extra variable $z$. Grouping terms gives $(x^2-4x)+(y^2+2y)+(z^2-6z)=2$, which becomes $(x-2)^2-4+(y+1)^2-1+(z-3)^2-9=2$, or $(x-2)^2+(y+1)^2+(z-3)^2=16$. That tells us the center is $(2,-1,3)$ and the radius is $r=4$. Moving $4$ units along the $x$- or $y$-axis from the center gives $(6,-1,3)$ and $(2,3,3)$, which both make the original equation equal to $0$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-2">Exercise 2: Circle by Completing the Square</a></li><li><a href="#exercise-13">Exercise 13: Intersection of a Sphere and a Plane</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-9">
+<h2 class="exercise-title">Exercise 9. Ellipsoid and Its Cross-Sections</h2>
+<h3>The question</h3>
+<p>Consider</p>
+<div class="math-block">$$\frac{x^2}{9}+\frac{y^2}{4}+\frac{z^2}{16}=1.$$</div>
+<p>Give the semiaxis lengths, describe the cross-section $z=0$, and explain how the cross-sections $z=c$ change for $|c|&lt;4$.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>An <strong>ellipsoid</strong> centered at the origin has the canonical equation</p>
+<div class="math-block">$$\frac{x^2}{a^2}+\frac{y^2}{b^2}+\frac{z^2}{c_0^2}=1.$$</div>
+<p>To understand a 3D surface, we slice it with horizontal planes $z=c$ (like a CT scan). Substituting $z=c$ freezes one variable and leaves a 2D equation in $x$ and $y$, whose size depends on $c$.</p>
+<h3>1. Semiaxis lengths</h3>
+<p>Write the denominators as squares:</p>
+<div class="math-block">$$9 = 3^2,\qquad 4 = 2^2,\qquad 16 = 4^2.$$</div>
+<p>Thus the three semiaxis lengths are:</p>
+<ul><li><strong>Along the $x$-axis ($Ox$):</strong> $a = \sqrt{9} = 3$ (vertices at $(\pm 3,0,0)$).</li><li><strong>Along the $y$-axis ($Oy$):</strong> $b = \sqrt{4} = 2$ (vertices at $(0,\pm 2,0)$).</li><li><strong>Along the $z$-axis ($Oz$):</strong> $c_0 = \sqrt{16} = 4$ (vertices at $(0,0,\pm 4)$).</li></ul>
+<p>The ellipsoid is longest vertically along $Oz$ ($c_0=4$) and narrowest along $Oy$ ($b=2$).</p>
+<h3>2. The cross-section $z=0$</h3>
+<p>Substitute $z=0$ into the equation of the ellipsoid:</p>
+<div class="math-block">$$\frac{x^2}{9} + \frac{y^2}{4} + \frac{0^2}{16} = 1 \implies \frac{x^2}{9} + \frac{y^2}{4} = 1\quad\text{in the plane }z=0.$$</div>
+<p>This cross-section (the "equator" of the ellipsoid in the $xy$-plane) is an <strong>ellipse</strong> centered at $(0,0,0)$ with semiaxes $a=3$ along $Ox$ and $b=2$ along $Oy$.</p>
+<h3>3. How the cross-sections $z=c$ change for $|c|&lt;4$</h3>
+<p>Fix a constant height $z=c$ with $|c|&lt;4$ (so $c^2&lt;16$ and $1-\frac{c^2}{16}&gt;0$). Substituting $z=c$ gives:</p>
+<div class="math-block">$$\frac{x^2}{9} + \frac{y^2}{4} + \frac{c^2}{16} = 1 \implies \frac{x^2}{9} + \frac{y^2}{4} = 1 - \frac{c^2}{16}.$$</div>
+<p>To put this 2D curve into canonical ellipse form, divide both sides by $1-\frac{c^2}{16} &gt; 0$:</p>
+<div class="math-block">$$\frac{x^2}{9\left(1-\frac{c^2}{16}\right)} + \frac{y^2}{4\left(1-\frac{c^2}{16}\right)} = 1.$$</div>
+<p>Let $k(c) = \sqrt{1-\frac{c^2}{16}} \in (0,1]$. Then the slice at height $z=c$ is an <strong>ellipse</strong> with semiaxes</p>
+<div class="math-block">$$a(c) = 3\sqrt{1-\frac{c^2}{16}},\qquad b(c) = 2\sqrt{1-\frac{c^2}{16}}.$$</div>
+<p>How the slices behave as $c$ varies:</p>
+<ol><li><strong>At $c=0$:</strong> $k(0)=1$, so the ellipse has its <strong>maximum size</strong> ($a(0)=3$, $b(0)=2$).</li><li><strong>As $|c|$ increases from $0$ toward $4$:</strong> The factor $\sqrt{1-\frac{c^2}{16}}$ decreases steadily toward $0$. The cross-sections remain <strong>similar ellipses</strong> (their aspect ratio $\frac{a(c)}{b(c)} = \frac{3}{2}$ never changes!), but they <strong>shrink</strong> symmetrically as we move either up ($c&gt;0$) or down ($c&lt;0$).</li><li><strong>At the poles $c=\pm 4$:</strong> $1-\frac{c^2}{16}=0$, so the ellipse shrinks to a <strong>single point</strong> $(0,0,\pm 4)$. (For $|c|&gt;4$, the right-hand side is negative and the plane misses the ellipsoid completely.)</li></ol>
+<h3>4. Summary table of horizontal slices</h3>
+<table><thead><tr><th>Height $z=c$</th><th>Scale factor $\sqrt{1-c^2/16}$</th><th>Horizontal semiaxes $(a(c),\,b(c))$</th><th>Geometric slice</th></tr></thead><tbody><tr><td>$c = 0$</td><td>$1$</td><td>$(3,\;2)$</td><td>Largest ellipse (equator)</td></tr><tr><td>$c = \pm 2$</td><td>$\frac{\sqrt{3}}{2}\approx 0.866$</td><td>$\left(\frac{3\sqrt{3}}{2},\;\sqrt{3}\right)$</td><td>Smaller similar ellipse</td></tr><tr><td>$c = \pm 2\sqrt{3}$</td><td>$\frac{1}{2} = 0.5$</td><td>$(1.5,\;1)$</td><td>Half-scale ellipse</td></tr><tr><td>$c = \pm 4$</td><td>$0$</td><td>$(0,\;0)$</td><td>Single point $(0,0,\pm 4)$</td></tr><tr><td>$|c| &gt; 4$</td><td>—</td><td>—</td><td>Empty set</td></tr></tbody></table>
+<h3>Quick verification</h3>
+<p>Let us check a point on the slice $z = 2\sqrt{3}$ (where the scale factor is $\frac{1}{2}$): its $x$-vertex in that plane is $(x,y,z) = \left(\frac{3}{2}, 0, 2\sqrt{3}\right)$. Substitute into the ellipsoid equation:</p>
+<div class="math-block">$$\frac{(3/2)^2}{9} + \frac{0^2}{4} + \frac{(2\sqrt{3})^2}{16} = \frac{9/4}{9} + 0 + \frac{12}{16} = \frac{1}{4} + \frac{3}{4} = 1.$$</div>
+<p>It lies on the ellipsoid. ✓</p>
+<h3>A concrete example</h3>
+<p>At height $z = \frac{12}{5} = 2.4$, the scale factor is</p>
+<div class="math-block">$$\sqrt{1 - \frac{(12/5)^2}{16}} = \sqrt{1 - \frac{144}{400}} = \sqrt{1 - \frac{9}{25}} = \sqrt{\frac{16}{25}} = \frac{4}{5}.$$</div>
+<p>So the horizontal cross-section at $z=2.4$ is an ellipse with exact rational semiaxes $a = 3\cdot\frac{4}{5} = 2.4$ and $b = 2\cdot\frac{4}{5} = 1.6$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>From $\frac{x^2}{9}+\frac{y^2}{4}+\frac{z^2}{16}=1$, the denominators are $3^2, 2^2, 4^2$, so the semiaxes are $3$ along $Ox$, $2$ along $Oy$, and $4$ along $Oz$. Setting $z=0$ gives the biggest horizontal cross-section, the ellipse $\frac{x^2}{9}+\frac{y^2}{4}=1$ with semiaxes $3$ and $2$. For any height $z=c$ with $|c|&lt;4$, we get $\frac{x^2}{9}+\frac{y^2}{4}=1-\frac{c^2}{16}$, which is a family of ellipses with the same $3:2$ proportion whose semiaxes $3\sqrt{1-c^2/16}$ and $2\sqrt{1-c^2/16}$ shrink as $|c|$ grows, until they collapse to a single point at the top and bottom poles $z=\pm 4$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-3">Exercise 3: Ellipse</a></li><li><a href="#exercise-13">Exercise 13: Intersection of a Sphere and a Plane</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-10">
+<h2 class="exercise-title">Exercise 10. Paraboloids</h2>
+<h3>The question</h3>
+<p>Compare</p>
+<div class="math-block">$$z=x^2+y^2$$</div>
+<p>and</p>
+<div class="math-block">$$z=x^2-y^2.$$</div>
+<p>For each surface, describe the cross-sections $x=0$, $y=0$, and $z=c$, then make a qualitative sketch.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>In both equations, $z$ appears linearly while $x$ and $y$ are squared—this is the signature of a <strong>paraboloid</strong>. The entire geometric difference between the two surfaces comes from the <strong>relative sign</strong> of $x^2$ and $y^2$:</p>
+<ul><li>Same sign ($z=x^2+y^2$): both vertical coordinate slices curve in the <strong>same direction</strong> (upward), forming a bowl (<strong>elliptic/circular paraboloid</strong>).</li><li>Opposite signs ($z=x^2-y^2$): the two vertical coordinate slices curve in <strong>opposite directions</strong> (one upward, one downward), forming a saddle (<strong>hyperbolic paraboloid</strong>).</li></ul>
+<h3>1. First surface: $z = x^2+y^2$ (Elliptic / Circular Paraboloid)</h3>
+<p>Let us examine its three families of cross-sections:</p>
+<ul><li><strong>Cross-section $x=0$ (in the $yz$-plane):</strong> $z = y^2$, a parabola with vertex at $(0,0,0)$ opening <strong>upward</strong> ($+Oz$).</li><li><strong>Cross-section $y=0$ (in the $xz$-plane):</strong> $z = x^2$, an identical parabola with vertex at $(0,0,0)$ opening <strong>upward</strong> ($+Oz$).</li><li><strong>Horizontal cross-sections $z=c$:</strong> $x^2+y^2 = c$.</li><li>For $c &lt; 0$: <strong>empty set</strong> (no real points, since $x^2+y^2\ge 0$).</li><li>For $c = 0$: the <strong>single point</strong> $(0,0,0)$ (the vertex/bottom of the bowl).</li><li>For $c &gt; 0$: a <strong>circle</strong> of radius $r = \sqrt{c}$, which expands as we move higher.</li></ul>
+<pre><code>          z
+          |   .-&quot;&quot;&quot;-.     z = c &gt; 0 (circles)
+          |  &#x27;---+---&#x27;
+          |   \  |  /     z = x^2 and z = y^2
+          |    \ | /      (both open upward)
+          |     \|/
+  --------+------*------- x, y
+                (0,0,0)</code></pre>
+<h3>2. Second surface: $z = x^2-y^2$ (Hyperbolic Paraboloid)</h3>
+<p>Now examine the same three cross-sections when $+y^2$ is replaced by $-y^2$:</p>
+<ul><li><strong>Cross-section $x=0$ (in the $yz$-plane):</strong> $z = -y^2$, a parabola with vertex at $(0,0,0)$ opening <strong>downward</strong> ($-Oz$).</li><li><strong>Cross-section $y=0$ (in the $xz$-plane):</strong> $z = x^2$, a parabola with vertex at $(0,0,0)$ opening <strong>upward</strong> ($+Oz$).</li><li><strong>Horizontal cross-sections $z=c$:</strong> $x^2-y^2 = c$.</li><li>For $c &gt; 0$: a <strong>hyperbola</strong> $x^2-y^2=c$ opening along the $x$-axis (vertices at $(\pm\sqrt{c},0,c)$).</li><li>For $c = 0$: $x^2-y^2 = (x-y)(x+y) = 0$, a <strong>pair of intersecting lines</strong> $y=x$ and $y=-x$ in the plane $z=0$.</li><li>For $c &lt; 0$: $y^2-x^2 = |c|$, a <strong>hyperbola</strong> opening along the $y$-axis (vertices at $(0,\pm\sqrt{|c|},c)$).</li></ul>
+<pre><code>          z
+      *   |   *      y = 0: z = x^2 (curves up along Ox)
+       \  |  /
+        \ | / (0,0,0) saddle point
+  -------*+*-------
+        / | \
+       /  |  \       x = 0: z = -y^2 (curves down along Oy)
+      *   |   *</code></pre>
+<h3>3. Side-by-side comparison table</h3>
+<table><thead><tr><th>Slice / Feature</th><th>$z = x^2+y^2$ (Bowl)</th><th>$z = x^2-y^2$ (Saddle)</th></tr></thead><tbody><tr><td>Slice $x=0$</td><td>Parabola $z=y^2$ (opens <strong>up</strong>)</td><td>Parabola $z=-y^2$ (opens <strong>down</strong>)</td></tr><tr><td>Slice $y=0$</td><td>Parabola $z=x^2$ (opens <strong>up</strong>)</td><td>Parabola $z=x^2$ (opens <strong>up</strong>)</td></tr><tr><td>Slice $z=c&gt;0$</td><td>Circle of radius $\sqrt{c}$</td><td>Hyperbola along $Ox$</td></tr><tr><td>Slice $z=0$</td><td>Single point $(0,0,0)$</td><td>Two crossed lines $y=\pm x$</td></tr><tr><td>Slice $z=c&lt;0$</td><td>Empty set</td><td>Hyperbola along $Oy$</td></tr><tr><td>Origin $(0,0,0)$</td><td>Global minimum ($z\ge 0$)</td><td>Saddle point ($z$ takes both signs)</td></tr></tbody></table>
+<h3>Quick verification</h3>
+<p>Check the points $(2,1,z)$ and $(1,2,z)$ on both surfaces:</p>
+<ul><li>On $z=x^2+y^2$: both give $z = 4+1 = 5 &gt; 0$, lying on the circle $x^2+y^2=5$ at height $z=5$. ✓</li><li>On $z=x^2-y^2$: $(2,1)$ gives $z = 4-1 = +3$ (on the hyperbola $x^2-y^2=3$ above $z=0$), while $(1,2)$ gives $z = 1-4 = -3$ (on the hyperbola $y^2-x^2=3$ below $z=0$). ✓</li></ul>
+<h3>A concrete example</h3>
+<p>Imagine walking across the origin $(0,0,0)$ on the surface $z=x^2-y^2$:</p>
+<ul><li>If you walk along the $x$-axis ($y=0$), your elevation is $z=x^2$, so $(0,0,0)$ is the bottom of a valley.</li><li>If you walk along the $y$-axis ($x=0$), your elevation is $z=-y^2$, so $(0,0,0)$ is the top of a mountain ridge.</li><li>If you walk diagonally along $y=x$, your elevation is $z=x^2-x^2=0$, so you walk along a completely flat horizontal straight line!</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Both $z=x^2+y^2$ and $z=x^2-y^2$ are paraboloids because $z$ is in the first power and $x,y$ are squared. For $z=x^2+y^2$, setting $x=0$ or $y=0$ gives upward-opening parabolas $z=y^2$ and $z=x^2$, and horizontal slices $z=c&gt;0$ are circles of radius $\sqrt{c}$, forming a rotational bowl above $z=0$. For $z=x^2-y^2$, the slice $y=0$ is an upward parabola $z=x^2$ while $x=0$ is a downward parabola $z=-y^2$; horizontal slices are hyperbolas opening along $Ox$ for $c&gt;0$, two crossed lines $y=\pm x$ for $c=0$, and hyperbolas opening along $Oy$ for $c&lt;0$, giving a saddle surface.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-4">Exercise 4: Parabola</a></li><li><a href="#exercise-12">Exercise 12: Recognizing a Surface from Cross-Sections</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-11">
+<h2 class="exercise-title">Exercise 11. Two Similar Surfaces</h2>
+<h3>The question</h3>
+<p>Compare</p>
+<div class="math-block">$$x^2+y^2-z^2=1$$</div>
+<p>and</p>
+<div class="math-block">$$x^2+y^2-z^2=-1.$$</div>
+<p>For several values $z=c$, check whether the cross-section exists and what its radius is. Based on this, describe qualitatively the difference between the surfaces and make sketches.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Both surfaces have the exact same left-hand side $x^2+y^2-z^2$ and differ only in the sign of the right-hand side ($+1$ vs. $-1$). To see what each surface looks like without memorizing names, we move $-z^2$ to the right-hand side and slice with horizontal planes $z=c$:</p>
+<ul><li>First surface: $x^2+y^2 = 1 + c^2$.</li><li>Second surface: $x^2+y^2 = c^2 - 1$.</li></ul>
+<p>In each plane $z=c$, the equation $x^2+y^2 = R^2$ describes a circle of radius $R$ whenever the right-hand side is positive, a single point when it is $0$, and the empty set when it is negative.</p>
+<h3>1. First surface: $x^2+y^2-z^2 = 1$</h3>
+<p>For $z=c$, the horizontal slice is</p>
+<div class="math-block">$$x^2+y^2 = 1 + c^2.$$</div>
+<p>Since $1+c^2 \ge 1 &gt; 0$ for <strong>every</strong> real number $c\in\mathbb{R}$, the cross-section <strong>always exists</strong> and is a circle of radius</p>
+<div class="math-block">$$r_1(c) = \sqrt{1+c^2}.$$</div>
+<p>Let us check several values of $z=c$:</p>
+<ul><li>$c = 0$: circle $x^2+y^2=1$, radius $r_1(0) = 1$ (the narrowest "waist" or "neck" of the surface).</li><li>$c = \pm 1$: circle $x^2+y^2=2$, radius $r_1(\pm 1) = \sqrt{2} \approx 1.41$.</li><li>$c = \pm 2$: circle $x^2+y^2=5$, radius $r_1(\pm 2) = \sqrt{5} \approx 2.24$.</li></ul>
+<p>Because a circle exists at every height $z=c$, all these circles stack continuously into <strong>one connected piece</strong> shaped like a cooling tower (<strong>hyperboloid of one sheet</strong>).</p>
+<h3>2. Second surface: $x^2+y^2-z^2 = -1$</h3>
+<p>For $z=c$, the horizontal slice is</p>
+<div class="math-block">$$x^2+y^2 = c^2 - 1.$$</div>
+<p>Here a real cross-section exists <strong>only when $c^2 - 1 \ge 0 \iff |c| \ge 1$</strong>:</p>
+<ul><li>$c = 0$: $x^2+y^2 = -1$, <strong>does not exist</strong> (empty set). In fact, for any $|c|&lt;1$, there are no real points!</li><li>$c = \pm 1$: $x^2+y^2 = 0$, a <strong>single point</strong> $(0,0,1)$ and $(0,0,-1)$ (radius $r_2(\pm 1) = 0$).</li><li>$c = \pm\sqrt{2}$: circle $x^2+y^2 = 1$, radius $r_2(\pm\sqrt{2}) = 1$.</li><li>$c = \pm 2$: circle $x^2+y^2 = 3$, radius $r_2(\pm 2) = \sqrt{3} \approx 1.73$.</li></ul>
+<p>In general, for $|c|\ge 1$, the slice is a circle of radius $r_2(c) = \sqrt{c^2-1}$. Because the slab $-1 &lt; z &lt; 1$ is completely empty, the surface is split into <strong>two separate bowls</strong>—one opening upward for $z\ge 1$ and one opening downward for $z\le -1$ (<strong>hyperboloid of two sheets</strong>).</p>
+<h3>3. Comparison table of horizontal cross-sections</h3>
+<table><thead><tr><th>Height $z=c$</th><th>First Surface: $x^2+y^2 = 1+c^2$</th><th>Second Surface: $x^2+y^2 = c^2-1$</th></tr></thead><tbody><tr><td>$c = 0$</td><td>Circle, $r = 1$ (narrowest waist)</td><td>Empty ($c^2-1 = -1 &lt; 0$)</td></tr><tr><td>$c = \pm 0.5$</td><td>Circle, $r = \sqrt{1.25} \approx 1.12$</td><td>Empty ($c^2-1 = -0.75 &lt; 0$)</td></tr><tr><td>$c = \pm 1$</td><td>Circle, $r = \sqrt{2} \approx 1.41$</td><td>Single points $(0,0,\pm 1)$ ($r = 0$)</td></tr><tr><td>$c = \pm 2$</td><td>Circle, $r = \sqrt{5} \approx 2.24$</td><td>Circle, $r = \sqrt{3} \approx 1.73$</td></tr><tr><td>$c = \pm 3$</td><td>Circle, $r = \sqrt{10} \approx 3.16$</td><td>Circle, $r = \sqrt{8} \approx 2.83$</td></tr></tbody></table>
+<h3>4. Qualitative difference and sketches</h3>
+<ul><li><strong>$x^2+y^2-z^2=1$ (Hyperboloid of one sheet):</strong> One connected, hourglass/cooling-tower tube surrounding the $z$-axis, narrowest at $z=0$ ($r=1$) and flaring out as $|z|\to\infty$.</li><li><strong>$x^2+y^2-z^2=-1$ (Hyperboloid of two sheets):</strong> Two disconnected sheets separated by the forbidden gap $-1&lt;z&lt;1$, with vertices at $(0,0,1)$ and $(0,0,-1)$.</li></ul>
+<pre><code>   x^2 + y^2 - z^2 = 1                  x^2 + y^2 - z^2 = -1
+  (One connected sheet)                 (Two separate sheets)
+
+           z                                      z
+     \     |     /                          \     |     /
+      \  .-+-.  /                            \  .-+-.  /
+       )|  |  |(  r=1 at z=0                  &#x27;---*---&#x27;  (0,0,1)
+  -----+-*-+-*-+----- x,y               ----------+---------- x,y
+       )|  |  |(                               .---*---.  (0,0,-1)
+      /  &#x27;-+-&#x27;  \                            /  &#x27;-+-&#x27;  \
+     /     |     \                          /     |     \</code></pre>
+<h3>Quick verification</h3>
+<p>Look at the vertical slice $y=0$ (in the $xz$-plane) for both surfaces:</p>
+<ul><li>First surface ($y=0$): $x^2-z^2 = 1$, a hyperbola opening left/right with vertices $(\pm 1,0,0)$. Rotating this around the $z$-axis sweeps out a single connected tube of minimum radius $1$. ✓</li><li>Second surface ($y=0$): $z^2-x^2 = 1$, a hyperbola opening up/down with vertices $(0,0,\pm 1)$. Rotating this around the $z$-axis sweeps out two separate bowls. ✓</li></ul>
+<h3>A concrete example</h3>
+<p>Notice that both surfaces share the exact same asymptotic cone $x^2+y^2-z^2=0$ (where $r(c)=|c|$): at $z=10$, the first surface has radius $\sqrt{101}\approx 10.05$, the cone has radius $10$, and the second surface has radius $\sqrt{99}\approx 9.95$. Far from the origin, both surfaces hug the cone $x^2+y^2=z^2$, one just outside it and the other just inside it.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>I rewrite the equations as $x^2+y^2 = 1+z^2$ and $x^2+y^2 = z^2-1$ and slice with $z=c$. For the first equation, $1+c^2$ is always at least $1$, so every horizontal slice is a circle of radius $\sqrt{1+c^2}$: it starts with a waist of radius $1$ at $z=0$ and flares out into a single connected hourglass (a hyperboloid of one sheet). For the second equation, $c^2-1$ is negative for $|c|&lt;1$, so there are no points between $z=-1$ and $z=1$; at $z=\pm 1$ we get two points $(0,0,\pm 1)$, and for $|c|&gt;1$ we get circles of radius $\sqrt{c^2-1}$, forming two separate bowls (a hyperboloid of two sheets).</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-5">Exercise 5: Hyperbola and Asymptotes</a></li><li><a href="#exercise-14">Exercise 14: Cone and Cylinder</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-12">
+<h2 class="exercise-title">Exercise 12. Recognizing a Surface from Cross-Sections</h2>
+<h3>The question</h3>
+<p>A certain surface has the following properties:</p>
+<ul><li>the cross-section $z=0$ is a point,</li><li>for $z&gt;0$, the cross-sections $z=\text{const}$ are circles with increasing radius,</li><li>vertical cross-sections through the $Oz$ axis are parabolas.</li></ul>
+<p>Propose a simple equation for such a surface and justify your choice.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Here we reverse the usual workflow: instead of starting from an equation and finding its slices, we <strong>translate each geometric slice condition into an algebraic requirement</strong> on $x,y,z$:</p>
+<ol><li>Horizontal cross-sections $z=\text{const}$ are <strong>circles</strong> centered on the $z$-axis $\implies x$ and $y$ must appear together in the rotational combination $x^2+y^2$.</li><li>Vertical cross-sections through the $Oz$ axis are <strong>parabolas</strong> $\implies$ the height $z$ must be a <strong>first-degree</strong> (linear) term while the horizontal distance is squared.</li></ol>
+<h3>1. Translating the circular cross-sections into algebra</h3>
+<p>Since every horizontal cross-section $z=c$ ($c&gt;0$) is a circle centered on the $Oz$ axis, the equation in the plane $z=c$ must have the form</p>
+<div class="math-block">$$x^2+y^2 = r(c)^2,$$</div>
+<p>where $r(c)&gt;0$ is the radius of the circle at height $z=c$, and $r(c)$ increases with $c$.</p>
+<h3>2. Using the vertical cross-sections to determine $r(c)^2$</h3>
+<p>The third property states that vertical planes through the $Oz$ axis—for example, the plane $y=0$ (the $xz$-plane) or $x=0$ (the $yz$-plane)—cut the surface in <strong>parabolas</strong>.</p>
+<ul><li>In the plane $y=0$, our equation $x^2+y^2 = f(z)$ becomes $x^2 = f(z)$.</li><li>For $x^2 = f(z)$ to be a parabola opening upward from $z=0$, $f(z)$ must be a positive constant multiple of $z$ (the simplest choice is $f(z)=z$).</li></ul>
+<p><em>(Note: If we chose $f(z)=z^2$, then $x^2=z^2 \iff z=\pm x$ would give straight lines—a cone—rather than parabolas!)</em></p>
+<h3>3. Proposed equation and full justification</h3>
+<p>The simplest equation satisfying all three conditions is the circular paraboloid:</p>
+<div class="math-block">$$z = x^2+y^2.$$</div>
+<p>Let us verify each of the three given properties directly from $z = x^2+y^2$:</p>
+<ol><li><strong>Cross-section $z=0$ is a point:</strong> Setting $z=0$ gives $x^2+y^2=0$. Since $x^2\ge 0$ and $y^2\ge 0$ for real $x,y$, the only real solution is the single point $(0,0,0)$.</li><li><strong>For $z&gt;0$, cross-sections $z=c$ are circles with increasing radius:</strong> Setting $z=c&gt;0$ gives $x^2+y^2=c$, which is a circle of radius $r(c)=\sqrt{c}$. Because $\sqrt{c}$ is strictly increasing for $c&gt;0$, the radius grows as $c$ increases.</li><li><strong>Vertical cross-sections through $Oz$ are parabolas:</strong> Any vertical plane through the $Oz$ axis is parameterized by setting $x = t\cos\theta$, $y = t\sin\theta$ where $t\in\mathbb{R}$ is the signed horizontal coordinate in that plane. Substituting into $z=x^2+y^2$ gives $$z = t^2(\cos^2\theta+\sin^2\theta) = t^2,$$ which is a standard parabola in every vertical plane through $Oz$ (in particular, $z=x^2$ when $y=0$ and $z=y^2$ when $x=0$).</li></ol>
+<h3>Quick verification</h3>
+<p>Let us check a few concrete slices of $z=x^2+y^2$:</p>
+<ul><li>At $z=0$: $x^2+y^2=0 \implies (0,0,0)$ (1 point). ✓</li><li>At $z=1$: $x^2+y^2=1$ (circle of radius $1$). ✓</li><li>At $z=4$: $x^2+y^2=4$ (circle of radius $2 &gt; 1$). ✓</li><li>At $y=0$: $z=x^2$ (parabola). ✓</li></ul>
+<p><em>(Any positive scaling $z = a(x^2+y^2)$ with $a&gt;0$ is also a valid answer.)</em></p>
+<h3>A concrete example</h3>
+<p>Why couldn't the surface be the upper half-cone $z = \sqrt{x^2+y^2}$ (i.e., $x^2+y^2=z^2$ for $z\ge 0$)?</p>
+<ul><li>For the cone, $z=0$ is also a point $(0,0,0)$, and $z=c&gt;0$ is also a circle of increasing radius $r=c$.</li><li><strong>However</strong>, setting $y=0$ on the cone gives $z=|x|$, which is a V-shaped pair of rays, <strong>not a smooth parabola</strong>. The third condition ("vertical cross-sections through $Oz$ are parabolas") uniquely picks out the quadratic relation $z = x^2+y^2$ instead of $z^2 = x^2+y^2$.</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Because the horizontal slices $z=c&gt;0$ are circles centered on the $z$-axis, $x$ and $y$ must appear as $x^2+y^2$. Because the vertical slices through the $z$-axis (like $x=0$ or $y=0$) are parabolas, $z$ must be in the first power while $x$ and $y$ are squared. Putting those together with the vertex at $z=0$ gives $z=x^2+y^2$: at $z=0$ we get the single point $(0,0,0)$, for $z=c&gt;0$ we get circles $x^2+y^2=c$ of increasing radius $\sqrt{c}$, and slicing with $x=0$ or $y=0$ gives the parabolas $z=y^2$ and $z=x^2$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-10">Exercise 10: Paraboloids</a></li><li><a href="#exercise-14">Exercise 14: Cone and Cylinder</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-13">
+<h2 class="exercise-title">Exercise 13. Intersection of a Sphere and a Plane</h2>
+<h3>The question</h3>
+<p>Given the sphere</p>
+<div class="math-block">$$x^2+y^2+z^2=25$$</div>
+<p>and the plane $z=3$, find the equation of the intersection curve and its radius. Then describe what happens for $z=c$ depending on $c$.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>The equation $x^2+y^2+z^2=25$ describes a sphere centered at the origin $(0,0,0)$ with radius $R = \sqrt{25} = 5$.</p>
+<p>A point lies on the intersection of the sphere and the horizontal plane $z=c$ if and only if its coordinates satisfy <strong>both equations simultaneously</strong>. Algebraically, we substitute $z=c$ into the sphere's equation; geometrically, $c^2 + r^2 = R^2$ forms a right triangle with hypotenuse $R=5$ (sphere radius), vertical leg $|c|$ (plane height), and horizontal leg $r = \sqrt{25-c^2}$ (cross-section radius).</p>
+<h3>1. Intersection curve and radius for $z=3$</h3>
+<p>Substitute $z=3$ into $x^2+y^2+z^2=25$:</p>
+<div class="math-block">$$x^2 + y^2 + 3^2 = 25 \implies x^2 + y^2 + 9 = 25 \implies x^2 + y^2 = 16.$$</div>
+<p>Thus, the intersection curve is given by the system</p>
+<div class="math-block">$$\begin{cases} x^2+y^2 = 16, \\ z = 3. \end{cases}$$</div>
+<p>Geometrically, this is a <strong>circle</strong> lying in the horizontal plane $z=3$, centered at $(0,0,3)$ on the $z$-axis, with <strong>radius</strong></p>
+<div class="math-block">$$r = \sqrt{16} = 4.$$</div>
+<pre><code>          z
+         5* (0,0,5) North pole
+      *   |   *
+    *  r=4|     *
+   *------*------*  &lt;-- Plane z = 3: circle x^2+y^2 = 16
+   |      |3   / |
+  -+------+---/--+-- x, y
+   |      |0/R=5 |</code></pre>
+<h3>2. What happens for $z=c$ depending on $c$</h3>
+<p>Substitute a general height $z=c$ into $x^2+y^2+z^2=25$:</p>
+<div class="math-block">$$x^2 + y^2 = 25 - c^2.$$</div>
+<p>Depending on the sign of $25-c^2$, there are three distinct geometric regimes:</p>
+<ol><li><strong>Case 1: $|c| &lt; 5$ (i.e., $-5 &lt; c &lt; 5$):</strong> Here $25-c^2 &gt; 0$. The plane cuts through the interior of the sphere, and the intersection is a <strong>circle</strong> centered at $(0,0,c)$ of radius $$r(c) = \sqrt{25-c^2}.$$</li></ol>
+<ul><li>At $c=0$ (the equator), the radius is maximal: $r(0) = 5$.</li><li>As $|c|$ increases from $0$ toward $5$, the circle shrinks.</li></ul>
+<ol><li><strong>Case 2: $|c| = 5$ (i.e., $c = 5$ or $c = -5$):</strong> Here $25-c^2 = 0$, so $x^2+y^2 = 0 \implies x=0,\;y=0$. The plane is <strong>tangent</strong> to the sphere at the north pole $(0,0,5)$ or south pole $(0,0,-5)$, so the intersection is a <strong>single point</strong> (a degenerate circle of radius $r=0$).</li></ol>
+<ol><li><strong>Case 3: $|c| &gt; 5$ (i.e., $c &gt; 5$ or $c &lt; -5$):</strong> Here $25-c^2 &lt; 0$. Since $x^2+y^2\ge 0$ for all real $x,y$, there are <strong>no real solutions</strong>. The plane passes completely above or below the sphere, so the intersection is the <strong>empty set</strong>.</li></ol>
+<h3>3. Summary table across values of $c$</h3>
+<table><thead><tr><th>Parameter $c$</th><th>Equation $x^2+y^2 = 25-c^2$</th><th>Intersection Geometry</th><th>Radius $r(c)$</th></tr></thead><tbody><tr><td>$c = 0$</td><td>$x^2+y^2 = 25$</td><td>Great circle (equator)</td><td>$5$</td></tr><tr><td>$c = \pm 3$</td><td>$x^2+y^2 = 16$</td><td>Circle in plane $z=\pm 3$</td><td>$4$</td></tr><tr><td>$c = \pm 4$</td><td>$x^2+y^2 = 9$</td><td>Circle in plane $z=\pm 4$</td><td>$3$</td></tr><tr><td>$c = \pm 5$</td><td>$x^2+y^2 = 0$</td><td>Single tangent point $(0,0,\pm 5)$</td><td>$0$</td></tr><tr><td>$|c| &gt; 5$</td><td>$x^2+y^2 &lt; 0$</td><td>Empty set (no intersection)</td><td>—</td></tr></tbody></table>
+<h3>Quick verification</h3>
+<p>Pick a point on the circle $x^2+y^2=16$ in the plane $z=3$, for instance $(4,0,3)$ or $(0,-4,3)$:</p>
+<div class="math-block">$$4^2 + 0^2 + 3^2 = 16 + 0 + 9 = 25.$$</div>
+<p>It satisfies the sphere equation $x^2+y^2+z^2=25$ and has $z=3$. ✓</p>
+<h3>A concrete example</h3>
+<p>Notice the Pythagorean triple $(3,4,5)$:</p>
+<ul><li>When we slice at height $z=3$, the circle has radius $r=4$.</li><li>When we slice higher at height $z=4$, the circle has radius $r=\sqrt{25-4^2}=3$. Swapping the height $3$ and $4$ swaps the horizontal radius $4$ and $3$ because $3^2+4^2=5^2$.</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Plugging $z=3$ into the sphere equation $x^2+y^2+z^2=25$ gives $x^2+y^2=25-9=16$, which is a circle of radius $r=4$ centered at $(0,0,3)$ in the plane $z=3$. More generally, for any plane $z=c$ we get $x^2+y^2=25-c^2$: for $|c|&lt;5$ the intersection is a circle of radius $\sqrt{25-c^2}$ (largest at $c=0$ with radius $5$, shrinking as $|c|$ grows); for $c=\pm 5$ the plane just touches the north or south pole in a single point $(0,0,\pm 5)$; and for $|c|&gt;5$ the right-hand side is negative, so the plane misses the sphere completely.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-8">Exercise 8: Sphere</a></li><li><a href="#exercise-9">Exercise 9: Ellipsoid and Its Cross-Sections</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-14">
+<h2 class="exercise-title">Exercise 14. Cone and Cylinder</h2>
+<h3>The question</h3>
+<p>Compare</p>
+<div class="math-block">$$x^2+y^2=z^2$$</div>
+<p>and</p>
+<div class="math-block">$$x^2+y^2=4.$$</div>
+<p>For each surface, describe the cross-sections $z=c$, $x=0$, and $y=0$, make a sketch, and explain why the radius of the cross-section depends on $z$ in the first case but is constant in the second.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>In three-dimensional space $(x,y,z)$, the quantity $\sqrt{x^2+y^2}$ is the <strong>horizontal distance</strong> of a point $(x,y,z)$ from the vertical $Oz$ axis:</p>
+<ul><li>In $x^2+y^2 = z^2$, the squared distance from the $z$-axis is set equal to $z^2$, so the distance grows proportionally with $|z|$ (<strong>circular cone</strong>).</li><li>In $x^2+y^2 = 4$, the variable $z$ does not appear in the equation at all! That means $z$ is completely free while the distance from the $z$-axis is locked at $2$ (<strong>circular cylinder</strong>).</li></ul>
+<h3>1. First surface: $x^2+y^2 = z^2$ (Circular Cone)</h3>
+<p>Let us find its cross-sections:</p>
+<ul><li><strong>Horizontal cross-sections $z=c$:</strong> $x^2+y^2 = c^2$.</li><li>For $c = 0$: $x^2+y^2 = 0$, a <strong>single point</strong> $(0,0,0)$ (the apex/vertex of the cone).</li><li>For $c \neq 0$: a <strong>circle</strong> of radius $r(c) = \sqrt{c^2} = |c|$, growing linearly with $|c|$.</li><li><strong>Vertical cross-section $x=0$ (in the $yz$-plane):</strong> $y^2 = z^2 \iff z = \pm y$, a <strong>pair of intersecting straight lines</strong> passing through the origin at $45^\circ$.</li><li><strong>Vertical cross-section $y=0$ (in the $xz$-plane):</strong> $x^2 = z^2 \iff z = \pm x$, a <strong>pair of intersecting straight lines</strong> passing through the origin at $45^\circ$.</li></ul>
+<pre><code>          z
+     \    |    /   z = c: circle of radius |c|
+      \ .-+-./
+       \  |  /     x=0 or y=0: crossed lines z = +-x, z = +-y
+        \ | /
+         \|/ (0,0,0) apex
+  --------+-------- x, y
+         /|\
+        / | \
+       /.-+-.\
+      /   |   \</code></pre>
+<h3>2. Second surface: $x^2+y^2 = 4$ (Circular Cylinder)</h3>
+<p>Now find the cross-sections of $x^2+y^2 = 4$ in $\mathbb{R}^3$:</p>
+<ul><li><strong>Horizontal cross-sections $z=c$:</strong> $x^2+y^2 = 4$. For <strong>every</strong> real value $c\in\mathbb{R}$, this is the exact same <strong>circle</strong> of radius $r = \sqrt{4} = 2$ centered at $(0,0,c)$.</li><li><strong>Vertical cross-section $x=0$ (in the $yz$-plane):</strong> $0 + y^2 = 4 \iff y = \pm 2$ (with $z$ arbitrary). This is a <strong>pair of parallel vertical lines</strong> $(0,2,z)$ and $(0,-2,z)$.</li><li><strong>Vertical cross-section $y=0$ (in the $xz$-plane):</strong> $x^2 + 0 = 4 \iff x = \pm 2$ (with $z$ arbitrary). This is a <strong>pair of parallel vertical lines</strong> $(2,0,z)$ and $(-2,0,z)$.</li></ul>
+<pre><code>          z
+      | .-f-. |    z = c: circle of constant radius 2
+      | &#x27;---&#x27; |
+      |   |   |    x=0: parallel lines y = +-2
+  ----+---+---+---- x, y
+      |   |   |    y=0: parallel lines x = +-2
+      | .-f-. |
+      | &#x27;---&#x27; |</code></pre>
+<h3>3. Why the radius depends on $z$ in the first case but is constant in the second</h3>
+<p>In any horizontal plane $z=c$, the left-hand side $x^2+y^2$ represents $r^2$, the square of the horizontal radius:</p>
+<ul><li><strong>In $x^2+y^2=z^2$:</strong> The right-hand side is $z^2$, which <strong>explicitly contains $z$</strong>. When we slice at height $z=c$, the equation sets $r^2 = c^2$, forcing the radius $r = |c|$ to scale directly with the height $|z|$.</li><li><strong>In $x^2+y^2=4$:</strong> The right-hand side is the constant $4=2^2$, and the variable <strong>$z$ is absent</strong> from the equation (its coefficient is $0\cdot z^2 + 0\cdot z$). Because the equation places no restriction on $z$ and does not link $x,y$ to $z$, shifting the slice to any height $z=c$ leaves the 2D equation $x^2+y^2=4$ unchanged, so the radius stays constant at $r=2$.</li></ul>
+<h3>Quick verification</h3>
+<p>Let us check what happens to the point $(2,0,z)$ on both surfaces:</p>
+<ul><li>On the cylinder $x^2+y^2=4$: $2^2+0^2=4$ holds for <strong>every</strong> $z\in\mathbb{R}$, confirming the vertical line $(2,0,z)$ lies entirely on the cylinder. ✓</li><li>On the cone $x^2+y^2=z^2$: $2^2+0^2=z^2 \implies z=\pm 2$, so a radius of $2$ occurs <strong>only</strong> at the two heights $z=2$ and $z=-2$. ✓</li></ul>
+<h3>A concrete example</h3>
+<p>Compare the horizontal slices at heights $z=0, 1, 2, 3$:</p>
+<table><thead><tr><th>Height $z=c$</th><th>Cone $x^2+y^2=z^2$ radius $r=|c|$</th><th>Cylinder $x^2+y^2=4$ radius $r=2$</th></tr></thead><tbody><tr><td>$z=0$</td><td>$0$ (point)</td><td>$2$</td></tr><tr><td>$z=1$</td><td>$1$</td><td>$2$</td></tr><tr><td>$z=2$</td><td>$2$ (cone & cylinder intersect!)</td><td>$2$</td></tr><tr><td>$z=3$</td><td>$3$</td><td>$2$</td></tr></tbody></table>
+<p>In fact, the cone $x^2+y^2=z^2$ and the cylinder $x^2+y^2=4$ intersect precisely in the two circles at $z=2$ and $z=-2$ where $|z|=2$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Both equations have $x^2+y^2$ on the left, so every horizontal slice $z=c$ is a circle (or a point). In $x^2+y^2=z^2$, the right-hand side depends on $z$, so at height $z=c$ the radius is $r=|c|$; it shrinks to a point at $z=0$ and its vertical slices $x=0$ and $y=0$ are crossed lines $z=\pm y$ and $z=\pm x$, forming a double cone. In $x^2+y^2=4$, the variable $z$ does not appear at all, so at every height $z=c$ we get the exact same circle of radius $r=2$, and its vertical slices $x=0$ and $y=0$ are parallel vertical lines $y=\pm 2$ and $x=\pm 2$, forming an infinite vertical cylinder.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-11">Exercise 11: Two Similar Surfaces</a></li><li><a href="#exercise-15">Exercise 15: Recognition and Sketch Without a Given Name</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-15">
+<h2 class="exercise-title">Exercise 15. Recognition and Sketch Without a Given Name</h2>
+<h3>The question</h3>
+<p>Consider the two equations:</p>
+<div class="math-block">$$4x^2+9y^2-8x+36y+4=0,$$</div>
+<div class="math-block">$$4x^2+y^2=z^2.$$</div>
+<p>For the first equation, reduce it to canonical form, recognize the curve, give its most important features, and make a sketch.</p>
+<p>For the second equation, do not begin by using a ready-made name for the surface. First describe the cross-sections $z=c$ and the cross-sections by the planes $x=0$ and $y=0$, paying attention to the different scales along the axes. Only then identify the surface and make a sketch.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>This exercise brings together the two central tools of the entire set:</p>
+<ol><li><strong>Completing the square (for shifted equations):</strong> Factor out the leading coefficients of $x^2$ and $y^2$ to find the center and semiaxes of a shifted 2D curve.</li><li><strong>Slicing by coordinate planes (for 3D surfaces):</strong> Freeze one variable at a time ($z=c$, $x=0$, $y=0$) to read the 2D cross-sections and their axis scales before naming the 3D surface.</li></ol>
+<h3>1. First equation: reducing $4x^2+9y^2-8x+36y+4=0$ to canonical form</h3>
+<p>Group the $x$-terms and $y$-terms, and move the constant $+4$ to the right-hand side:</p>
+<div class="math-block">$$(4x^2-8x) + (9y^2+36y) = -4.$$</div>
+<p>Factor out $4$ from the $x$-group and $9$ from the $y$-group:</p>
+<div class="math-block">$$4(x^2-2x) + 9(y^2+4y) = -4.$$</div>
+<p>Complete the square inside each bracket:</p>
+<ul><li>$x^2-2x = (x-1)^2 - 1$,</li><li>$y^2+4y = (y+2)^2 - 4$.</li></ul>
+<p>Substitute back:</p>
+<div class="math-block">$$4\big((x-1)^2 - 1\big) + 9\big((y+2)^2 - 4\big) = -4$$</div>
+<div class="math-block">$$4(x-1)^2 - 4 + 9(y+2)^2 - 36 = -4$$</div>
+<div class="math-block">$$4(x-1)^2 + 9(y+2)^2 = 36.$$</div>
+<p>Divide both sides by $36$ to get the canonical form:</p>
+<div class="math-block">$$\frac{(x-1)^2}{9} + \frac{(y+2)^2}{4} = 1.$$</div>
+<h3>2. Recognizing the first curve, its features, and sketch</h3>
+<ul><li><strong>Type of curve:</strong> <strong>Shifted ellipse</strong>.</li><li><strong>Center:</strong> $C = (1,-2)$.</li><li><strong>Semiaxes:</strong> Horizontal semiaxis $a = \sqrt{9} = 3$ (along $Ox$), vertical semiaxis $b = \sqrt{4} = 2$ (along $Oy$). The ellipse is stretched horizontally since $a=3&gt;b=2$.</li><li><strong>Vertices:</strong></li><li>Horizontal vertices: $(1\pm 3, -2) = (-2,-2)$ and $(4,-2)$.</li><li>Vertical vertices: $(1, -2\pm 2) = (1,-4)$ and $(1,0)$ (tangent to the $x$-axis at $(1,0)$!).</li></ul>
+<pre><code>            y
+            |  (1,0)
+  ----------+---*---------- x
+       *    |   :    *
+  (-2,-2)*..+...C(1,-2)..*(4,-2)
+       *    |   :    *
+            |   *(1,-4)</code></pre>
+<h3>3. Second equation: cross-sections of $4x^2+y^2=z^2$</h3>
+<p>Let us analyze the slices of $4x^2+y^2=z^2$ <strong>before</strong> naming the surface:</p>
+<ol><li><strong>Horizontal cross-sections $z=c$:</strong></li></ol>
+<ul><li>For $c = 0$: $4x^2+y^2 = 0 \implies (0,0,0)$, a <strong>single point</strong> at the origin.</li><li>For $c \neq 0$: $4x^2+y^2 = c^2$. Divide by $c^2&gt;0$: $$\frac{x^2}{(c/2)^2} + \frac{y^2}{c^2} = 1.$$ This is an <strong>ellipse</strong> centered at $(0,0,c)$ with horizontal semiaxes $$a(c) = \frac{|c|}{2}\quad\text{(along }Ox\text{)},\qquad b(c) = |c|\quad\text{(along }Oy\text{)}.$$ Notice the different scales: at every height $z=c\neq 0$, the ellipse is <strong>twice as wide along the $y$-axis as along the $x$-axis</strong>, and both semiaxes grow linearly with $|c|$.</li></ul>
+<ol><li><strong>Cross-section by the plane $x=0$ (in the $yz$-plane):</strong> $$y^2 = z^2 \iff z = \pm y.$$ This is a <strong>pair of intersecting straight lines</strong> through the origin with slopes $\pm 1$ (wide opening: $|y|=|z|$).</li></ol>
+<ol><li><strong>Cross-section by the plane $y=0$ (in the $xz$-plane):</strong> $$4x^2 = z^2 \iff z = \pm 2x.$$ This is a <strong>pair of intersecting straight lines</strong> through the origin with steeper slopes $\pm 2$ (narrower opening: $|x|=\frac{1}{2}|z|$).</li></ol>
+<h3>4. Identifying and sketching the second surface</h3>
+<p>Putting the cross-sections together—a single vertex at $(0,0,0)$, straight-line generators in vertical planes through $Oz$ with steeper slope along $Ox$ than $Oy$, and horizontal cross-sections that are ellipses expanding linearly with $|z|$—we identify the surface as an <strong>elliptic cone</strong> (double cone with elliptical horizontal slices stretched along $Oy$).</p>
+<pre><code>             z
+       \  \  |  /  /      z = c: ellipse x^2/(c/2)^2 + y^2/c^2 = 1
+        \ .--+--. /       (semiaxis |c|/2 along Ox, |c| along Oy)
+         \ \ | / /
+          \ \|/ /         x = 0: wider lines z = +-y
+           \ * /          y = 0: steeper lines z = +-2x
+  -----------+----------- x, y
+           / * \ (0,0,0)
+          / /|\ \
+         / .-+-. \
+        / /  |  \ \</code></pre>
+<h3>Quick verification</h3>
+<ul><li><strong>First equation:</strong> Substitute the top vertex $(1,0)$ and right vertex $(4,-2)$ into $4x^2+9y^2-8x+36y+4$:</li><li>At $(1,0)$: $4(1) + 0 - 8(1) + 0 + 4 = 0$. ✓</li><li>At $(4,-2)$: $4(16) + 9(4) - 8(4) + 36(-2) + 4 = 64 + 36 - 32 - 72 + 4 = 0$. ✓</li><li><strong>Second equation:</strong> At height $z=2$, the ellipse vertices are $(1,0,2)$ along $Ox$ and $(0,2,2)$ along $Oy$:</li><li>At $(1,0,2)$: $4(1)^2 + 0^2 = 4 = 2^2$. ✓</li><li>At $(0,2,2)$: $4(0)^2 + 2^2 = 4 = 2^2$. ✓</li></ul>
+<h3>A concrete example</h3>
+<p>At height $z=4$ on the surface $4x^2+y^2=z^2$, the horizontal cross-section is $4x^2+y^2=16$, or</p>
+<div class="math-block">$$\frac{x^2}{2^2} + \frac{y^2}{4^2} = 1.$$</div>
+<p>Thus, at $z=4$, the surface extends from $x=-2$ to $x=2$ along the $x$-axis (total width $4$), and from $y=-4$ to $y=4$ along the $y$-axis (total width $8$).</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>For the first equation, I factor out $4$ and $9$ and complete the squares: $4(x-1)^2-4+9(y+2)^2-36+4=0$, which simplifies to $\frac{(x-1)^2}{9}+\frac{(y+2)^2}{4}=1$. That is a shifted ellipse centered at $(1,-2)$ with horizontal semiaxis $3$ and vertical semiaxis $2$. For the second equation $4x^2+y^2=z^2$, slicing with $z=c\neq 0$ gives $\frac{x^2}{(c/2)^2}+\frac{y^2}{c^2}=1$, which is a family of ellipses twice as wide along $Oy$ ($b=|c|$) as along $Ox$ ($a=|c|/2$), shrinking to a single point at $z=0$. Slicing with $x=0$ gives the lines $z=\pm y$ and slicing with $y=0$ gives the steeper lines $z=\pm 2x$. Together, these slices show that the surface is an elliptic cone with vertex at the origin.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-6">Exercise 6: Shifted Ellipse</a></li><li><a href="#exercise-14">Exercise 14: Cone and Cylinder</a></li></ul>
+</section>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>01. Vectors — Complete Solutions</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false}
+      ],
+      throwOnError: false
+    });"></script>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --muted: #475569;
+      --accent: #2563eb;
+      --accent-soft: #eff6ff;
+      --quote-bg: #f1f5f9;
+      --quote-border: #3b82f6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 310px 1fr;
+      min-height: 100vh;
+    }
+    aside.sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 1.5rem 1.25rem;
+    }
+    .brand {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    .brand-sub {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .toc-group-title {
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin: 1rem 0 0.35rem 0.5rem;
+    }
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .toc-list li { margin-bottom: 0.2rem; }
+    .toc-list a {
+      display: block;
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.86rem;
+      transition: background 0.15s, color 0.15s;
+    }
+    .toc-list a:hover {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+    main.content {
+      max-width: 940px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    header.page-header {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    }
+    header.page-header h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.85rem;
+      color: var(--text);
+    }
+    header.page-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+    .section-banner {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: #ffffff;
+      border-radius: 12px;
+      padding: 1.5rem 2rem;
+      margin: 2.5rem 0 1.5rem;
+      scroll-margin-top: 1.5rem;
+    }
+    .section-banner h2 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    .section-banner p {
+      margin: 0.25rem 0 0;
+      opacity: 0.9;
+      font-size: 0.92rem;
+    }
+    section.exercise-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem 2.25rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+      scroll-margin-top: 1.5rem;
+    }
+    section.exercise-card h2.exercise-title {
+      margin-top: 0;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--accent-soft);
+      color: var(--accent);
+      font-size: 1.4rem;
+    }
+    section.exercise-card h3 {
+      margin-top: 1.5rem;
+      margin-bottom: 0.55rem;
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+    section.exercise-card h4 {
+      margin-top: 1.15rem;
+      margin-bottom: 0.45rem;
+      font-size: 1rem;
+      color: var(--muted);
+    }
+    p { margin: 0.65rem 0; }
+    ul, ol { margin: 0.65rem 0; padding-left: 1.5rem; }
+    li { margin-bottom: 0.35rem; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.85rem;
+      text-align: left;
+    }
+    th { background: var(--bg); font-weight: 600; }
+    blockquote {
+      margin: 1rem 0;
+      padding: 0.9rem 1.2rem;
+      background: var(--quote-bg);
+      border-left: 4px solid var(--quote-border);
+      border-radius: 0 8px 8px 0;
+      color: var(--text);
+    }
+    blockquote p { margin: 0; }
+    pre {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 1rem 1.25rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+    code {
+      font-family: Consolas, Monaco, "Courier New", monospace;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .katex-display {
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 0.25rem 0;
+    }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      aside.sidebar {
+        position: static;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      main.content { padding: 1.5rem 1rem 3rem; }
+      section.exercise-card { padding: 1.5rem; }
+    }
+    @media print {
+      aside.sidebar { display: none; }
+      .layout { display: block; }
+      body { background: #fff; }
+      section.exercise-card { box-shadow: none; break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">2. Geometry</div>
+      <div class="brand-sub">01. Vectors (Exercises 1–15)</div>
+      <ul class="toc-list">
+<li><a href="#exercise-1">1. Vector Operations and Their Meaning</a></li>
+<li><a href="#exercise-2">2. Distance as the Length of a Vector</a></li>
+<li><a href="#exercise-3">3. Vector Normalization</a></li>
+<li><a href="#exercise-4">4. Dot Product and Perpendicularity</a></li>
+<li><a href="#exercise-5">5. Angle Between Vectors</a></li>
+<li><a href="#exercise-6">6. Projection and Perpendicular Component</a></li>
+<li><a href="#exercise-7">7. Linear Dependence Without Heavy Computation</a></li>
+<li><a href="#exercise-8">8. Linear Combination and Checking the Result</a></li>
+<li><a href="#exercise-9">9. Cross Product as a Perpendicular Direction</a></li>
+<li><a href="#exercise-10">10. Triangle Area from Vectors</a></li>
+<li><a href="#exercise-11">11. Decomposition into Parallel and Perpendicular Components</a></li>
+<li><a href="#exercise-12">12. A Normal Vector to a Plane</a></li>
+<li><a href="#exercise-13">13. Do Four Points Lie in One Plane?</a></li>
+<li><a href="#exercise-14">14. Closest Point on a Line</a></li>
+<li><a href="#exercise-15">15. Comparing Directions Using the Cosine of the Angle</a></li>
+</ul>
+    </aside>
+    <main class="content">
+      <header class="page-header">
+        <h1>01. Vectors — Complete Solutions</h1>
+        <p>Basics of Mathematics Student Workbook (2026) · 2. Geometry · All 15 Exercises with Detailed Explanations</p>
+      </header>
+      <section class="exercise-card" id="exercise-1">
+<h2 class="exercise-title">Exercise 1. Vector Operations and Their Meaning</h2>
+<h3>The question</h3>
+<p>For $u=(2,-1,3)$ and $v=(-1,4,2)$ compute</p>
+<div class="math-block">$$u+v,\qquad u-v,\qquad 3u-2v.$$</div>
+<p>Then verify that $(u+v)-v=u$, and explain geometrically what adding two vectors means.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>In $\mathbb R^3$, vector addition, subtraction, and scalar multiplication act <strong>component by component</strong>:</p>
+<ul><li><strong>Addition</strong> combines two displacements performed one after another.</li><li><strong>Subtraction</strong> $u-v=u+(-v)$ adds the opposite of $v$, or represents the displacement needed to go from the tip of $v$ to the tip of $u$.</li><li><strong>Scalar multiplication</strong> stretches or shrinks a vector by a factor (and reverses its orientation if the factor is negative) before we combine it with another vector.</li></ul>
+<h3>1. Vector sum $u+v$</h3>
+<p>We add corresponding coordinates:</p>
+<div class="math-block">$$u+v = (2,-1,3) + (-1,4,2) = (2+(-1),\, -1+4,\, 3+2) = (1,3,5).$$</div>
+<h3>2. Vector difference $u-v$</h3>
+<p>We subtract the coordinates of $v$ from the coordinates of $u$:</p>
+<div class="math-block">$$u-v = (2,-1,3) - (-1,4,2) = (2-(-1),\, -1-4,\, 3-2) = (3,-5,1).$$</div>
+<h3>3. Linear combination $3u-2v$</h3>
+<p>First we scale each vector separately:</p>
+<div class="math-block">$$3u = 3(2,-1,3) = (6,-3,9),\qquad 2v = 2(-1,4,2) = (-2,8,4).$$</div>
+<p>Now we subtract $2v$ from $3u$:</p>
+<div class="math-block">$$3u-2v = (6,-3,9) - (-2,8,4) = (6-(-2),\, -3-8,\, 9-4) = (8,-11,5).$$</div>
+<h3>4. Geometric meaning of vector addition</h3>
+<p>Geometrically, each vector represents a <strong>directed displacement</strong> in space:</p>
+<ul><li><strong>Tip-to-tail rule (triangle law):</strong> Start at the origin, move along $u$ to reach $(2,-1,3)$, and from there move by $v=(-1,4,2)$. You land at $u+v=(1,3,5)$. The sum vector is the direct shortcut from the starting point to the final point.</li><li><strong>Parallelogram law:</strong> Place $u$ and $v$ with the same starting point. They span a parallelogram, and $u+v$ is the diagonal starting at their common origin.</li></ul>
+<p>Subtracting $v$ after adding $v$ simply walks back along $-v$ from the tip of $u+v$ to the tip of $u$.</p>
+<h3>Quick verification</h3>
+<p>We check that $(u+v)-v=u$ directly using our computed sum $u+v=(1,3,5)$:</p>
+<div class="math-block">$$(u+v)-v = (1,3,5) - (-1,4,2) = (1-(-1),\, 3-4,\, 5-2) = (2,-1,3) = u.\quad \checkmark$$</div>
+<p>We can also check the linear combination $3u-2v$ by using the algebraic identity $3u-2v = (u+v) + 2(u-v) - v$:</p>
+<div class="math-block">$$(1,3,5) + 2(3,-5,1) - (-1,4,2) = (1+6+1,\, 3-10-4,\, 5+2-2) = (8,-11,5).\quad \checkmark$$</div>
+<h3>A concrete example</h3>
+<p>Imagine walking in a room where coordinates $(x,y,z)$ are measured in meters (east, north, up):</p>
+<ul><li>Displacement $u=(2,-1,3)$ moves you $2\text{ m}$ east, $1\text{ m}$ south, and $3\text{ m}$ up.</li><li>Displacement $v=(-1,4,2)$ moves you $1\text{ m}$ west, $4\text{ m}$ north, and $2\text{ m}$ up.</li></ul>
+<p>Combined, your net change in position is $u+v=(1,3,5)$: $1\text{ m}$ east, $3\text{ m}$ north, and $5\text{ m}$ up. If you then undo the second move by applying $-v=(1,-4,-2)$, you return to $(2,-1,3)$, which is your position after $u$ alone.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Vector operations in $\mathbb R^3$ happen coordinate by coordinate. Adding $u$ and $v$ gives $(1,3,5)$, subtracting gives $(3,-5,1)$, and the combination $3u-2v$ gives $(8,-11,5)$. Geometrically, $u+v$ is the net displacement when we follow $u$ and then $v$ tip-to-tail. That also explains why $(u+v)-v=u$: adding $v$ and then subtracting $v$ just steps forward along $v$ and immediately steps back along $-v$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-2">Exercise 2: Distance as the length of a vector</a></li><li><a href="#exercise-8">Exercise 8: Linear combination and checking the result</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-2">
+<h2 class="exercise-title">Exercise 2. Distance as the Length of a Vector</h2>
+<h3>The question</h3>
+<p>The points are $A=(1,2,3)$ and $B=(4,-2,6)$.</p>
+<ol><li>Construct $\overrightarrow{AB}$.</li><li>Compute its length.</li><li>Compute the distance between the points using the coordinate formula.</li><li>Explain why both calculations give the same result.</li></ol>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Given two points $A=(x_A,y_A,z_A)$ and $B=(x_B,y_B,z_B)$, the displacement from $A$ to $B$ is obtained by <strong>"terminal minus initial"</strong>:</p>
+<div class="math-block">$$\overrightarrow{AB} = B - A = (x_B-x_A,\, y_B-y_A,\, z_B-z_A).$$</div>
+<p>The Euclidean length (norm) of any vector $w=(w_1,w_2,w_3)$ is</p>
+<div class="math-block">$$\|w\| = \sqrt{w_1^2 + w_2^2 + w_3^2}.$$</div>
+<p>The distance between two points in space is simply the length of the displacement vector connecting them.</p>
+<h3>1. Constructing the vector $\overrightarrow{AB}$</h3>
+<p>Subtracting the coordinates of the initial point $A=(1,2,3)$ from the terminal point $B=(4,-2,6)$:</p>
+<div class="math-block">$$\overrightarrow{AB} = (4-1,\, -2-2,\, 6-3) = (3,-4,3).$$</div>
+<h3>2. Computing the length of $\overrightarrow{AB}$</h3>
+<p>Applying the norm formula to $\overrightarrow{AB}=(3,-4,3)$:</p>
+<div class="math-block">$$\|\overrightarrow{AB}\| = \sqrt{3^2 + (-4)^2 + 3^2} = \sqrt{9 + 16 + 9} = \sqrt{34}.$$</div>
+<h3>3. Computing the distance using the coordinate formula</h3>
+<p>The three-dimensional Euclidean distance formula between $A=(x_A,y_A,z_A)$ and $B=(x_B,y_B,z_B)$ is</p>
+<div class="math-block">$$d(A,B) = \sqrt{(x_B-x_A)^2 + (y_B-y_A)^2 + (z_B-z_A)^2}.$$</div>
+<p>Substituting $A=(1,2,3)$ and $B=(4,-2,6)$:</p>
+<div class="math-block">$$d(A,B) = \sqrt{(4-1)^2 + (-2-2)^2 + (6-3)^2} = \sqrt{3^2 + (-4)^2 + 3^2} = \sqrt{9 + 16 + 9} = \sqrt{34}.$$</div>
+<h3>4. Why both calculations give the same result</h3>
+<p>The two formulas are identical because the differences $(x_B-x_A)$, $(y_B-y_A)$, and $(z_B-z_A)$ inside the distance formula <strong>are</strong> the components of $\overrightarrow{AB}$.</p>
+<p>Geometrically, moving from $A$ to $B$ changes the coordinates by $\Delta x=3$, $\Delta y=-4$, and $\Delta z=3$. These three mutually perpendicular displacements form the edges of a $3\times 4\times 3$ rectangular box, and the segment $AB$ (as well as the arrow $\overrightarrow{AB}$) is the space diagonal of that box. By the 3D Pythagorean theorem, the length of that diagonal is $\sqrt{(\Delta x)^2+(\Delta y)^2+(\Delta z)^2}$.</p>
+<h3>Quick verification</h3>
+<ol><li><strong>Adding displacement to the start point recovers the endpoint:</strong> $$A + \overrightarrow{AB} = (1,2,3) + (3,-4,3) = (4,-2,6) = B.\quad \checkmark$$</li><li><strong>Reversing direction keeps the same distance:</strong> $$\overrightarrow{BA} = A - B = (-3,4,-3),\qquad \|\overrightarrow{BA}\| = \sqrt{(-3)^2+4^2+(-3)^2} = \sqrt{34}.\quad \checkmark$$</li></ol>
+<h3>A concrete example</h3>
+<p>Notice the first two components of $\overrightarrow{AB}=(3,-4,3)$: in the horizontal $xy$-plane, the displacement $(3,-4,0)$ has length</p>
+<div class="math-block">$$\sqrt{3^2+(-4)^2} = \sqrt{9+16} = 5$$</div>
+<p>(a classic $3\text{–}4\text{–}5$ right triangle). Then we climb $\Delta z = 3$ units vertically, creating a second right triangle with horizontal leg $5$ and vertical leg $3$. Its hypotenuse has length $\sqrt{5^2+3^2}=\sqrt{25+9}=\sqrt{34}\approx 5.83$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>To find the vector from $A$ to $B$, we subtract the start point from the end point: $\overrightarrow{AB}=(4-1,-2-2,6-3)=(3,-4,3)$. Its length is $\sqrt{3^2+(-4)^2+3^2}=\sqrt{34}$. The point-distance formula does the exact same calculation in one expression because the distance between $A$ and $B$ is literally the length of the displacement vector $\overrightarrow{AB}$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: Vector operations and their meaning</a></li><li><a href="#exercise-3">Exercise 3: Vector normalization</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-3">
+<h2 class="exercise-title">Exercise 3. Vector Normalization</h2>
+<h3>The question</h3>
+<p>For $v=(3,4)$ find a unit vector $e$ with the same direction and orientation. Check that $\|e\|=1$, reconstruct $v$ in the form $v=\|v\|e$, and explain what changes during normalization and what remains unchanged.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Every nonzero vector $v$ carries two pieces of geometric information:</p>
+<ol><li><strong>Its length (magnitude):</strong> $\|v\| = \sqrt{v_1^2+v_2^2}$, which is a positive number.</li><li><strong>Its direction and orientation:</strong> the ray along which the arrow points.</li></ol>
+<p><strong>Normalization</strong> separates these two aspects. By dividing $v$ by its own length $\|v\|$ (which is multiplying by the positive scalar $\frac{1}{\|v\|}$), we rescale the vector to length $1$ without rotating or flipping it:</p>
+<div class="math-block">$$e = \frac{1}{\|v\|}v.$$</div>
+<h3>1. Length of $v$ and the unit vector $e$</h3>
+<p>First, we compute the norm of $v=(3,4)$:</p>
+<div class="math-block">$$\|v\| = \sqrt{3^2+4^2} = \sqrt{9+16} = \sqrt{25} = 5.$$</div>
+<p>Next, we divide $v$ by $\|v\|=5$:</p>
+<div class="math-block">$$e = \frac{1}{5}(3,4) = \left(\frac{3}{5},\, \frac{4}{5}\right).$$</div>
+<p>Since we multiplied $v$ by a <strong>positive</strong> scalar $\frac15 &gt; 0$, $e$ has the exact same direction and orientation as $v$.</p>
+<h3>2. Checking that $\|e\|=1$</h3>
+<p>We compute the Euclidean norm of $e=\left(\frac35,\frac45\right)$:</p>
+<div class="math-block">$$\|e\| = \sqrt{\left(\frac{3}{5}\right)^2 + \left(\frac{4}{5}\right)^2} = \sqrt{\frac{9}{25} + \frac{16}{25}} = \sqrt{\frac{25}{25}} = \sqrt{1} = 1.$$</div>
+<h3>3. Reconstructing $v=\|v\|e$</h3>
+<p>Multiplying the unit direction vector $e$ by the magnitude $\|v\|=5$ gives back the original vector:</p>
+<div class="math-block">$$\|v\|e = 5\left(\frac{3}{5},\, \frac{4}{5}\right) = \left(5\cdot\frac{3}{5},\, 5\cdot\frac{4}{5}\right) = (3,4) = v.$$</div>
+<h3>4. What changes and what remains unchanged</h3>
+<p>During normalization:</p>
+<ul><li><strong>What changes:</strong> The <strong>length (norm)</strong> of the vector changes from $\|v\|=5$ to $\|e\|=1$, and its individual coordinates are scaled down by a factor of $5$.</li><li><strong>What remains unchanged:</strong></li><li>The <strong>direction</strong> (the line of action, with slope $\frac{4/5}{3/5} = \frac{4}{3}$),</li><li>The <strong>orientation</strong> (pointing into the first quadrant, since $\frac15&gt;0$),</li><li>The <strong>ratio of the components</strong> ($3:4$) and the angles the vector makes with the coordinate axes ($\cos\theta_x = \frac35$, $\cos\theta_y = \frac45$).</li></ul>
+<h3>Quick verification</h3>
+<ol><li><strong>Norm check:</strong> $\left(\frac35\right)^2 + \left(\frac45\right)^2 = 0.36 + 0.64 = 1.00.\quad \checkmark$</li><li><strong>Collinearity and orientation check via dot product:</strong> $$v\cdot e = 3\cdot\frac{3}{5} + 4\cdot\frac{4}{5} = \frac{9+16}{5} = 5 = \|v\|\,\|e\|,$$ so $\cos\angle(v,e) = 1$, confirming the angle between $v$ and $e$ is $0^\circ$. $\checkmark$</li></ol>
+<h3>A concrete example</h3>
+<p>Suppose a boat moves with velocity vector $v=(3,4)\text{ m/s}$ (so $3\text{ m/s}$ east and $4\text{ m/s}$ north).</p>
+<ul><li>Its <strong>speed</strong> is $\|v\|=5\text{ m/s}$.</li><li>Its <strong>pure heading</strong> is the unit vector $e=(0.6, 0.8)$: for every $1\text{ m}$ of travel along its path, the boat advances $0.6\text{ m}$ east and $0.8\text{ m}$ north.</li></ul>
+<p>Writing $v = 5\cdot(0.6, 0.8)$ cleanly factors the velocity into $\text{speed} \times \text{heading}$. If the boat speeds up to $10\text{ m/s}$ along the same heading, its new velocity is simply $10e = (6,8)\text{ m/s}$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>A vector $v=(3,4)$ has length $\sqrt{3^2+4^2}=5$. To turn it into a unit vector pointing the same way, we divide by its length: $e=\frac15(3,4)=(\frac35,\frac45)$. Normalization changes the length to $1$, while keeping the direction, orientation, and component ratio $3:4$ completely unchanged. Writing $v=5\cdot(\frac35,\frac45)$ separates "how far" ($5$) from "which way" ($e$).</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-2">Exercise 2: Distance as the length of a vector</a></li><li><a href="#exercise-15">Exercise 15: Comparing directions using the cosine of the angle</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-4">
+<h2 class="exercise-title">Exercise 4. Dot Product and Perpendicularity</h2>
+<h3>The question</h3>
+<p>For $u=(1,2,-1)$ and $v=(2,-1,3)$ compute $u\cdot v$ and determine whether the vectors are perpendicular. Then find $a$ so that $w=(2,-1,a)$ is perpendicular to $u$, and check the result.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>For two vectors $u=(u_1,u_2,u_3)$ and $v=(v_1,v_2,v_3)$ in $\mathbb R^3$, the <strong>dot product (scalar product)</strong> is computed algebraically as</p>
+<div class="math-block">$$u\cdot v = u_1v_1 + u_2v_2 + u_3v_3,$$</div>
+<p>and geometrically satisfies</p>
+<div class="math-block">$$u\cdot v = \|u\|\,\|v\|\cos\theta,$$</div>
+<p>where $\theta$ is the angle between $u$ and $v$. For nonzero vectors, $\cos\theta=0$ if and only if $\theta=90^\circ$ ($\frac{\pi}{2}$). This gives the fundamental <strong>orthogonality criterion</strong>:</p>
+<div class="math-block">$$u \perp v \iff u\cdot v = 0.$$</div>
+<p>This criterion works both as a <strong>test</strong> (check whether $u\cdot v=0$) and as a <strong>design tool</strong> (set $u\cdot w=0$ to solve for an unknown coordinate).</p>
+<h3>1. Computing $u\cdot v$ and testing perpendicularity</h3>
+<p>For $u=(1,2,-1)$ and $v=(2,-1,3)$:</p>
+<div class="math-block">$$u\cdot v = 1\cdot 2 + 2\cdot(-1) + (-1)\cdot 3 = 2 - 2 - 3 = -3.$$</div>
+<p>Because $u\cdot v = -3 \neq 0$, the vectors $u$ and $v$ <strong>are not perpendicular</strong> (in fact, since $u\cdot v &lt; 0$, the angle between them is obtuse).</p>
+<h3>2. Finding $a$ so that $w=(2,-1,a)$ is perpendicular to $u$</h3>
+<p>We require $u\perp w$, which means $u\cdot w = 0$. Using $u=(1,2,-1)$ and $w=(2,-1,a)$:</p>
+<div class="math-block">$$u\cdot w = 1\cdot 2 + 2\cdot(-1) + (-1)\cdot a = 2 - 2 - a = -a.$$</div>
+<p>Setting this equal to zero gives:</p>
+<div class="math-block">$$-a = 0 \implies a = 0.$$</div>
+<p>Thus, the required vector is $w=(2,-1,0)$.</p>
+<h3>3. Why $a=0$ works here</h3>
+<p>Notice that the first two coordinates of $u=(1,2,-1)$ and $w=(2,-1,a)$ already cancel in the dot product:</p>
+<div class="math-block">$$1\cdot 2 + 2\cdot(-1) = 2 - 2 = 0.$$</div>
+<p>Because the horizontal ($xy$) parts are already orthogonal, the third product $(-1)\cdot a$ must also be $0$ for the total dot product to vanish. Since $-1\neq 0$, we must have $a=0$.</p>
+<h3>Quick verification</h3>
+<ol><li><strong>Direct dot product check for $w=(2,-1,0)$:</strong> $$u\cdot w = (1,2,-1)\cdot(2,-1,0) = 1(2) + 2(-1) + (-1)(0) = 2 - 2 + 0 = 0.\quad \checkmark$$</li><li><strong>Pythagorean theorem check:</strong> Two vectors $u$ and $w$ are perpendicular if and only if $\|u\|^2 + \|w\|^2 = \|u-w\|^2$. Here: $$\|u\|^2 = 1^2+2^2+(-1)^2 = 6,\qquad \|w\|^2 = 2^2+(-1)^2+0^2 = 5,$$ $$\|u-w\|^2 = \|(-1,3,-1)\|^2 = (-1)^2+3^2+(-1)^2 = 11 = 6 + 5.\quad \checkmark$$</li></ol>
+<h3>A concrete example</h3>
+<p>The equation $u\cdot (x,y,z) = 0$, or</p>
+<div class="math-block">$$x + 2y - z = 0,$$</div>
+<p>describes the entire <strong>plane</strong> of vectors through the origin perpendicular to $u=(1,2,-1)$. Once we fix $x=2$ and $y=-1$, we are asking at what height $z=a$ the vertical line $(2,-1,z)$ pierces that plane:</p>
+<div class="math-block">$$2 + 2(-1) - a = 0 \implies a = 0.$$</div>
+<p>For $v=(2,-1,3)$, the height is $z=3$ instead of $0$, which is why $v$ misses the perpendicular plane and gives $u\cdot v = -3$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Two nonzero vectors are perpendicular exactly when their dot product is zero. For $u=(1,2,-1)$ and $v=(2,-1,3)$, we get $u\cdot v = 2-2-3 = -3 \neq 0$, so they are not perpendicular. To make $w=(2,-1,a)$ perpendicular to $u$, we solve $u\cdot w = 2-2-a = 0$, which immediately gives $a=0$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-5">Exercise 5: Angle between vectors</a></li><li><a href="#exercise-9">Exercise 9: Cross product as a perpendicular direction</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-5">
+<h2 class="exercise-title">Exercise 5. Angle Between Vectors</h2>
+<h3>The question</h3>
+<p>Given $u=(1,1,0)$ and $v=(1,0,1)$:</p>
+<ol><li>Use the sign of $u\cdot v$ to predict the type of angle.</li><li>Compute the angle.</li><li>Compare the result with the prediction.</li></ol>
+<h3>Before calculating: what idea do we need?</h3>
+<p>The geometric formula for the dot product of two nonzero vectors $u$ and $v$ is</p>
+<div class="math-block">$$u\cdot v = \|u\|\,\|v\|\cos\theta, \qquad \theta \in [0,\pi].$$</div>
+<p>Because the norms $\|u\|$ and $\|v\|$ are strictly positive, <strong>the sign of $\cos\theta$ is the same as the sign of $u\cdot v$</strong>:</p>
+<ul><li>$u\cdot v &gt; 0 \iff \cos\theta &gt; 0 \iff \theta \in \left[0,\frac{\pi}{2}\right)$ (<strong>acute angle</strong>),</li><li>$u\cdot v = 0 \iff \cos\theta = 0 \iff \theta = \frac{\pi}{2}$ (<strong>right angle</strong>),</li><li>$u\cdot v &lt; 0 \iff \cos\theta &lt; 0 \iff \theta \in \left(\frac{\pi}{2},\pi\right]$ (<strong>obtuse angle</strong>).</li></ul>
+<p>This allows us to classify the angle qualitatively before computing any square roots or inverse trig functions.</p>
+<h3>1. Predicting the type of angle from the sign of $u\cdot v$</h3>
+<p>We compute the dot product of $u=(1,1,0)$ and $v=(1,0,1)$:</p>
+<div class="math-block">$$u\cdot v = 1\cdot 1 + 1\cdot 0 + 0\cdot 1 = 1 + 0 + 0 = 1.$$</div>
+<p>Since $u\cdot v = 1 &gt; 0$, we have $\cos\theta &gt; 0$, so the angle $\theta$ between $u$ and $v$ must be <strong>acute</strong> ($\theta &lt; 90^\circ$).</p>
+<h3>2. Computing the exact angle</h3>
+<p>First, we compute the lengths of both vectors:</p>
+<div class="math-block">$$\|u\| = \sqrt{1^2+1^2+0^2} = \sqrt{2},\qquad \|v\| = \sqrt{1^2+0^2+1^2} = \sqrt{2}.$$</div>
+<p>Now we substitute $u\cdot v = 1$ and $\|u\|=\|v\|=\sqrt{2}$ into the cosine formula:</p>
+<div class="math-block">$$\cos\theta = \frac{u\cdot v}{\|u\|\,\|v\|} = \frac{1}{\sqrt{2}\cdot\sqrt{2}} = \frac{1}{2}.$$</div>
+<p>Since $\theta \in [0,\pi]$ and $\cos\theta = \frac{1}{2}$, we get</p>
+<div class="math-block">$$\theta = \frac{\pi}{3} \text{ radians} = 60^\circ.$$</div>
+<h3>3. Comparing the result with the prediction</h3>
+<p>Our exact calculation gives $\theta = 60^\circ$ ($\frac{\pi}{3}$), which lies strictly between $0^\circ$ and $90^\circ$. This matches our qualitative prediction from Step 1 that the angle is <strong>acute</strong>.</p>
+<h3>Quick verification</h3>
+<p>Let us check the triangle formed by the origin $O=(0,0,0)$ and the endpoints $P=(1,1,0)$ and $Q=(1,0,1)$:</p>
+<ul><li>$\|u\| = d(O,P) = \sqrt{2}$,</li><li>$\|v\| = d(O,Q) = \sqrt{2}$,</li><li>$\|u-v\| = \|(0,1,-1)\| = \sqrt{0^2+1^2+(-1)^2} = \sqrt{2}$.</li></ul>
+<p>All three sides have the same length $\sqrt{2}$! Therefore, $\triangle OPQ$ is an <strong>equilateral triangle</strong>, and every interior angle of an equilateral triangle is $60^\circ$ ($\frac{\pi}{3}$). $\checkmark$</p>
+<h3>A concrete example</h3>
+<p>Consider the unit cube $[0,1]^3$ with one corner at the origin $(0,0,0)$:</p>
+<ul><li>$u=(1,1,0)$ is the diagonal of the bottom face (in the $xy$-plane).</li><li>$v=(1,0,1)$ is the diagonal of the front face (in the $xz$-plane).</li><li>The segment connecting their tips $(1,1,0)$ and $(1,0,1)$ has vector $(0,-1,1)$, which is a diagonal of the right face (in the $yz$-plane).</li></ul>
+<p>Because all three segments are face diagonals of the same unit cube, they have equal length $\sqrt{2}$ and meet at $60^\circ$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>First, $u\cdot v = 1\cdot 1 + 1\cdot 0 + 0\cdot 1 = 1 &gt; 0$. Because the lengths are positive, a positive dot product immediately tells us $\cos\theta &gt; 0$, so the angle is acute. Next, both vectors have length $\sqrt{2}$, so $\cos\theta = \frac{1}{\sqrt{2}\sqrt{2}} = \frac{1}{2}$, which gives $\theta = 60^\circ$ ($\frac{\pi}{3}$)—confirming our prediction.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-4">Exercise 4: Dot product and perpendicularity</a></li><li><a href="#exercise-15">Exercise 15: Comparing directions using the cosine of the angle</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-6">
+<h2 class="exercise-title">Exercise 6. Projection and Perpendicular Component</h2>
+<h3>The question</h3>
+<p>Find the projection of $u=(4,2)$ onto the direction $v=(1,1)$. Then compute</p>
+<div class="math-block">$$r=u-\operatorname{proj}_v u$$</div>
+<p>and verify that $r\cdot v=0$. Explain this result geometrically.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Given a vector $u$ and a nonzero direction vector $v$, the <strong>orthogonal projection</strong> of $u$ onto $v$ is the vector along the line of $v$ formed by dropping a perpendicular from the tip of $u$ onto that line:</p>
+<div class="math-block">$$\operatorname{proj}_v u = \frac{u\cdot v}{v\cdot v}\,v = \frac{u\cdot v}{\|v\|^2}\,v.$$</div>
+<p>Once we have the shadow $\operatorname{proj}_v u$ along $v$, the <strong>residual (perpendicular) vector</strong></p>
+<div class="math-block">$$r = u - \operatorname{proj}_v u$$</div>
+<p>connects the tip of the shadow on the line of $v$ directly to the tip of $u$. Because we dropped a <strong>perpendicular</strong> to find the shadow, $r$ must be orthogonal to $v$ ($r\cdot v=0$).</p>
+<h3>1. Computing the projection $\operatorname{proj}_v u$</h3>
+<p>For $u=(4,2)$ and $v=(1,1)$, we first compute the two dot products:</p>
+<div class="math-block">$$u\cdot v = 4\cdot 1 + 2\cdot 1 = 4 + 2 = 6,$$</div>
+<div class="math-block">$$v\cdot v = 1^2 + 1^2 = 2.$$</div>
+<p>Now we substitute these into the projection formula:</p>
+<div class="math-block">$$\operatorname{proj}_v u = \frac{u\cdot v}{v\cdot v}\,v = \frac{6}{2}(1,1) = 3(1,1) = (3,3).$$</div>
+<h3>2. Computing the perpendicular residual $r$</h3>
+<p>Subtracting the projection from $u$:</p>
+<div class="math-block">$$r = u - \operatorname{proj}_v u = (4,2) - (3,3) = (4-3,\, 2-3) = (1,-1).$$</div>
+<h3>3. Verifying that $r\cdot v = 0$</h3>
+<p>We compute the dot product of $r=(1,-1)$ and $v=(1,1)$:</p>
+<div class="math-block">$$r\cdot v = 1\cdot 1 + (-1)\cdot 1 = 1 - 1 = 0.$$</div>
+<p>Since $r\cdot v=0$, the vector $r$ is indeed perpendicular to $v$.</p>
+<h3>4. Geometric explanation</h3>
+<p>The vector $v=(1,1)$ defines the $45^\circ$ diagonal line $y=x$ in the plane:</p>
+<ul><li>$\operatorname{proj}_v u = (3,3)$ is the orthogonal shadow of $u=(4,2)$ on the line $y=x$. Notice that $3 = \frac{4+2}{2}$ is the average of the two coordinates of $u$.</li><li>$r = u - \operatorname{proj}_v u = (1,-1)$ is the altitude vector from the point $(3,3)$ on the line $y=x$ to the point $(4,2)$.</li><li>Together, the vectors $\operatorname{proj}_v u = (3,3)$ and $r=(1,-1)$ are the two legs of a right triangle whose hypotenuse is $u=(4,2)$.</li></ul>
+<h3>Quick verification</h3>
+<ol><li><strong>Reconstruction check:</strong> $$\operatorname{proj}_v u + r = (3,3) + (1,-1) = (4,2) = u.\quad \checkmark$$</li><li><strong>Pythagorean theorem check:</strong> Since $\operatorname{proj}_v u \perp r$, their squared lengths must add up to $\|u\|^2$: $$\|\operatorname{proj}_v u\|^2 + \|r\|^2 = (3^2+3^2) + (1^2+(-1)^2) = 18 + 2 = 20,$$ $$\|u\|^2 = 4^2+2^2 = 16 + 4 = 20.\quad \checkmark$$</li></ol>
+<h3>A concrete example</h3>
+<p>Suppose a rail cart can only roll along a straight track pointing in the direction $v=(1,1)$, and you pull on it with force $u=(4,2)\text{ N}$:</p>
+<ul><li>The component $\operatorname{proj}_v u = (3,3)\text{ N}$ (of magnitude $3\sqrt{2}\approx 4.24\text{ N}$) is the <strong>effective force</strong> that actually accelerates the cart along the track.</li><li>The component $r=(1,-1)\text{ N}$ (of magnitude $\sqrt{2}\approx 1.41\text{ N}$) pulls <strong>sideways</strong> against the rails and is completely absorbed by the track without moving the cart forward.</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>To project $u=(4,2)$ onto $v=(1,1)$, we compute $\frac{u\cdot v}{v\cdot v}v = \frac{6}{2}(1,1) = (3,3)$. That is the part of $u$ parallel to $v$. Subtracting it from $u$ leaves $r = (4,2)-(3,3) = (1,-1)$, whose dot product with $v$ is $1(1)+(-1)(1)=0$. Geometrically, we split $u$ into two perpendicular legs of a right triangle: its shadow $(3,3)$ along the line of $v$, and the perpendicular drop $(1,-1)$ from $u$ to that line.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-11">Exercise 11: Decomposition into parallel and perpendicular components</a></li><li><a href="#exercise-14">Exercise 14: Closest point on a line</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-7">
+<h2 class="exercise-title">Exercise 7. Linear Dependence Without Heavy Computation</h2>
+<h3>The question</h3>
+<p>Given</p>
+<div class="math-block">$$u=(1,2,3),\qquad v=(2,4,6),\qquad w=(0,1,1).$$</div>
+<p>Identify a specific relation between $u$ and $v$, decide whether the three vectors can be linearly independent, and explain why no long calculation is needed.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Vectors $v_1, v_2, v_3$ are <strong>linearly dependent</strong> if there exist scalars $c_1, c_2, c_3$, <strong>not all zero</strong>, such that</p>
+<div class="math-block">$$c_1 v_1 + c_2 v_2 + c_3 v_3 = \mathbf{0}.$$</div>
+<p>A key structural rule is:</p>
+<blockquote><p><strong>If any subset of a collection of vectors is already linearly dependent (for instance, if two vectors are scalar multiples of each other), then the entire collection is automatically linearly dependent.</strong></p></blockquote>
+<p>We can simply assign coefficient $0$ to all the remaining vectors.</p>
+<h3>1. Identifying the relation between $u$ and $v$</h3>
+<p>Comparing the coordinates of $u=(1,2,3)$ and $v=(2,4,6)$ term by term:</p>
+<div class="math-block">$$v = (2,4,6) = (2\cdot 1,\, 2\cdot 2,\, 2\cdot 3) = 2(1,2,3) = 2u.$$</div>
+<p>Equivalently,</p>
+<div class="math-block">$$2u - v = (0,0,0) = \mathbf{0}.$$</div>
+<p>Geometrically, $u$ and $v$ are <strong>collinear</strong>: they lie on the exact same line through the origin, with $v$ having twice the length of $u$.</p>
+<h3>2. Deciding whether $u,v,w$ can be linearly independent</h3>
+<p>No—the three vectors $u,v,w$ are <strong>linearly dependent</strong> (so they <strong>cannot</strong> be linearly independent).</p>
+<p>Indeed, using the relation $2u-v=\mathbf{0}$, we can write a nontrivial linear combination of all three vectors by giving $w$ the coefficient $0$:</p>
+<div class="math-block">$$2u - 1v + 0w = \mathbf{0}.$$</div>
+<p>Because the coefficients $(c_1,c_2,c_3)=(2,-1,0)$ are not all zero, the definition of linear dependence is satisfied immediately.</p>
+<h3>3. Why no long calculation is needed</h3>
+<p>Normally, testing three vectors in $\mathbb R^3$ for linear independence might involve row-reducing a $3\times 3$ matrix or computing a $3\times 3$ determinant. Here, no such calculation is needed because:</p>
+<ol><li><strong>Redundancy is already visible in the first two vectors:</strong> Since $v=2u$, $v$ contributes no new direction beyond $u$. Together, $\operatorname{span}(u,v)$ is just a 1D line.</li><li><strong>Adding one more vector $w$ can increase the dimension by at most $1$:</strong> A line plus one vector $w$ can span at most a 2D plane in $\mathbb R^3$, never all of $\mathbb R^3$. Three vectors trapped inside a 2D plane are always linearly dependent.</li></ol>
+<h3>Quick verification</h3>
+<ol><li><strong>Direct substitution into the linear combination:</strong> $$2u - 1v + 0w = 2(1,2,3) - 1(2,4,6) + 0(0,1,1) = (2-2,\, 4-4,\, 6-6) = (0,0,0).\quad \checkmark$$</li><li><strong>Determinant check:</strong> If we place $u,v,w$ as the rows of a $3\times 3$ matrix, $$\det\begin{pmatrix}1&amp;2&amp;3\\2&amp;4&amp;6\\0&amp;1&amp;1\end{pmatrix} = 0$$ because Row 2 is twice Row 1, and any matrix with proportional rows has determinant $0$. $\checkmark$</li></ol>
+<h3>A concrete example</h3>
+<p>Think of $u,v,w$ as three movement instructions in 3D space:</p>
+<ul><li>Instruction $u$: step along $(1,2,3)$.</li><li>Instruction $v$: step along $(2,4,6)$—which is just <strong>two steps of instruction $u$</strong>.</li><li>Instruction $w$: step along $(0,1,1)$.</li></ul>
+<p>Because instruction $v$ duplicates the direction of instruction $u$, you only have <strong>two independent directions</strong> of motion ($u$ and $w$), not three. You are confined to the plane spanned by $u$ and $w$, and taking $2$ steps of $u$ followed by $-1$ step of $v$ brings you right back to the origin without ever using $w$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Before setting up a matrix or a determinant, always look at the vectors first. Here $v=(2,4,6)$ is simply $2u$. That means $2u - v + 0w = \mathbf{0}$ is a nontrivial linear combination equal to the zero vector, with coefficients $(2,-1,0)\neq(0,0,0)$. Whenever two vectors in a set are proportional, the whole set is automatically linearly dependent—no row reduction or determinant calculation is needed.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-8">Exercise 8: Linear combination and checking the result</a></li><li><a href="#exercise-15">Exercise 15: Comparing directions using the cosine of the angle</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-8">
+<h2 class="exercise-title">Exercise 8. Linear Combination and Checking the Result</h2>
+<h3>The question</h3>
+<p>Check whether $w=(5,1)$ can be written as</p>
+<div class="math-block">$$w=au+bv,$$</div>
+<p>where $u=(1,1)$ and $v=(2,-1)$. If so, find $a,b$, reconstruct $w$ from them, and explain the geometric meaning of the existence of such coefficients.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Writing a target vector $w$ as a <strong>linear combination</strong></p>
+<div class="math-block">$$w = au + bv$$</div>
+<p>means finding how much we need to stretch or shrink $u$ (by factor $a$) and $v$ (by factor $b$) so that their vector sum reaches $w$.</p>
+<p>In $\mathbb R^2$, equating the two coordinates of $au+bv$ and $w$ turns the single vector equation into a system of two linear equations in the two unknowns $a$ and $b$. Since $u=(1,1)$ and $v=(2,-1)$ are not scalar multiples of each other, they point in two different directions and span the entire plane $\mathbb R^2$.</p>
+<h3>1. Setting up the system of equations</h3>
+<p>We substitute $u=(1,1)$, $v=(2,-1)$, and $w=(5,1)$ into $au+bv=w$:</p>
+<div class="math-block">$$a(1,1) + b(2,-1) = (5,1) \iff (a+2b,\, a-b) = (5,1).$$</div>
+<p>Comparing the first and second coordinates gives the linear system:</p>
+<div class="math-block">$$\begin{cases}
+a + 2b = 5, \\
+a - b = 1.
+\end{cases}$$</div>
+<h3>2. Solving for $a$ and $b$</h3>
+<p>From the second equation, we express $a$ in terms of $b$:</p>
+<div class="math-block">$$a = b + 1.$$</div>
+<p>Substituting $a = b + 1$ into the first equation:</p>
+<div class="math-block">$$(b + 1) + 2b = 5 \implies 3b + 1 = 5 \implies 3b = 4 \implies b = \frac{4}{3}.$$</div>
+<p>Now we find $a$:</p>
+<div class="math-block">$$a = \frac{4}{3} + 1 = \frac{7}{3}.$$</div>
+<p>So $w$ <strong>can</strong> be written as $au+bv$, with unique coefficients $a = \frac{7}{3}$ and $b = \frac{4}{3}$.</p>
+<h3>3. Reconstructing $w$ from $a$ and $b$</h3>
+<p>We compute $\frac{7}{3}u + \frac{4}{3}v$ directly:</p>
+<div class="math-block">$$\frac{7}{3}(1,1) + \frac{4}{3}(2,-1) = \left(\frac{7}{3},\, \frac{7}{3}\right) + \left(\frac{8}{3},\, -\frac{4}{3}\right) = \left(\frac{7+8}{3},\, \frac{7-4}{3}\right) = \left(\frac{15}{3},\, \frac{3}{3}\right) = (5,1) = w.$$</div>
+<h3>4. Geometric meaning of the existence of $a$ and $b$</h3>
+<p>Geometrically, the existence of $a=\frac73$ and $b=\frac43$ means:</p>
+<ol><li><strong>$u$ and $v$ form a basis (a skewed coordinate grid) for $\mathbb R^2$:</strong> Because $u=(1,1)$ and $v=(2,-1)$ are non-collinear, we can reach any point in the plane by moving exclusively along the directions of $u$ and $v$.</li><li><strong>Parallelogram decomposition:</strong> If we draw lines through the origin along $u$ and $v$, and lines through $w=(5,1)$ parallel to $u$ and $v$, we form a parallelogram with vertices $(0,0)$, $au=\left(\frac73,\frac73\right)$, $bv=\left(\frac83,-\frac43\right)$, and $w=(5,1)$.</li><li><strong>New coordinates:</strong> The pair $(a,b)=\left(\frac73,\frac43\right)$ are the coordinates of $w$ in the basis $\{u,v\}$: to reach $(5,1)$, take $\frac73$ steps of $u$ followed by $\frac43$ steps of $v$.</li></ol>
+<h3>Quick verification</h3>
+<p>Let us check both scalar equations with $a=\frac73$ and $b=\frac43$:</p>
+<ul><li>First coordinate: $a + 2b = \frac{7}{3} + 2\left(\frac{4}{3}\right) = \frac{7+8}{3} = \frac{15}{3} = 5.\quad \checkmark$</li><li>Second coordinate: $a - b = \frac{7}{3} - \frac{4}{3} = \frac{3}{3} = 1.\quad \checkmark$</li></ul>
+<p>We can also check using Cramer's rule:</p>
+<div class="math-block">$$\det\begin{pmatrix}1&amp;2\\1&amp;-1\end{pmatrix} = -1 - 2 = -3 \neq 0,$$</div>
+<div class="math-block">$$a = \frac{\det\begin{pmatrix}5&amp;2\\1&amp;-1\end{pmatrix}}{-3} = \frac{-5-2}{-3} = \frac{7}{3},\qquad b = \frac{\det\begin{pmatrix}1&amp;5\\1&amp;1\end{pmatrix}}{-3} = \frac{1-5}{-3} = \frac{4}{3}.\quad \checkmark$$</div>
+<h3>A concrete example</h3>
+<p>Compare this with standard coordinates: when we write $w=(5,1)$, we are writing</p>
+<div class="math-block">$$(5,1) = 5(1,0) + 1(0,1),$$</div>
+<p>which uses the standard horizontal and vertical unit vectors $e_1=(1,0)$ and $e_2=(0,1)$. When we instead use the tilted axes $u=(1,1)$ and $v=(2,-1)$, the exact same geometric arrow $w$ is described by the recipe $\frac73 u + \frac43 v$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Writing $w=au+bv$ gives the system $a+2b=5$ and $a-b=1$. Subtracting the second equation from the first gives $3b=4$, so $b=\frac43$ and $a=b+1=\frac73$. Reconstructing $\frac73(1,1)+\frac43(2,-1)$ gives $(\frac{15}{3},\frac33)=(5,1)=w$. Geometrically, because $u$ and $v$ point in different directions in $\mathbb R^2$, they act as a tilted coordinate grid, and $(\frac73,\frac43)$ tells us how far to travel along each direction to land on $w$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: Vector operations and their meaning</a></li><li><a href="#exercise-7">Exercise 7: Linear dependence without heavy computation</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-9">
+<h2 class="exercise-title">Exercise 9. Cross Product as a Perpendicular Direction</h2>
+<h3>The question</h3>
+<p>For $u=(1,2,0)$ and $v=(0,1,3)$ compute $u\times v$. Use dot products to check perpendicularity to both vectors, compute $v\times u$, and compare the results.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>In $\mathbb R^3$, the <strong>cross product</strong> of $u=(u_1,u_2,u_3)$ and $v=(v_1,v_2,v_3)$ is a <strong>vector</strong> given by the symbolic determinant</p>
+<div class="math-block">$$u\times v = \begin{vmatrix}\mathbf{i}&amp;\mathbf{j}&amp;\mathbf{k}\\u_1&amp;u_2&amp;u_3\\v_1&amp;v_2&amp;v_3\end{vmatrix} = \left(u_2v_3-u_3v_2,\; u_3v_1-u_1v_3,\; u_1v_2-u_2v_1\right).$$</div>
+<p>Key geometric properties of $u\times v$:</p>
+<ol><li><strong>Perpendicularity:</strong> $u\times v$ is orthogonal to both $u$ and $v$ (and therefore perpendicular to the plane spanned by $u$ and $v$).</li><li><strong>Anticommutativity (orientation):</strong> Swapping the order of the two vectors reverses the orientation of the cross product (by the right-hand rule): $$v\times u = -(u\times v).$$</li></ol>
+<h3>1. Computing $u\times v$</h3>
+<p>For $u=(1,2,0)$ and $v=(0,1,3)$:</p>
+<div class="math-block">$$u\times v = \begin{vmatrix}\mathbf{i}&amp;\mathbf{j}&amp;\mathbf{k}\\1&amp;2&amp;0\\0&amp;1&amp;3\end{vmatrix} = \left(\begin{vmatrix}2&amp;0\\1&amp;3\end{vmatrix},\; -\begin{vmatrix}1&amp;0\\0&amp;3\end{vmatrix},\; \begin{vmatrix}1&amp;2\\0&amp;1\end{vmatrix}\right).$$</div>
+<p>Evaluating the three $2\times 2$ determinants:</p>
+<ul><li>First component: $2\cdot 3 - 0\cdot 1 = 6$,</li><li>Second component: $-(1\cdot 3 - 0\cdot 0) = -3$,</li><li>Third component: $1\cdot 1 - 2\cdot 0 = 1$.</li></ul>
+<p>Therefore,</p>
+<div class="math-block">$$u\times v = (6,-3,1).$$</div>
+<h3>2. Checking perpendicularity using dot products</h3>
+<p>We take the dot product of $u\times v = (6,-3,1)$ with $u=(1,2,0)$ and with $v=(0,1,3)$:</p>
+<div class="math-block">$$(u\times v)\cdot u = (6,-3,1)\cdot(1,2,0) = 6\cdot 1 + (-3)\cdot 2 + 1\cdot 0 = 6 - 6 + 0 = 0,$$</div>
+<div class="math-block">$$(u\times v)\cdot v = (6,-3,1)\cdot(0,1,3) = 6\cdot 0 + (-3)\cdot 1 + 1\cdot 3 = 0 - 3 + 3 = 0.$$</div>
+<p>Since both dot products are $0$, $u\times v$ is perpendicular to both $u$ and $v$.</p>
+<h3>3. Computing $v\times u$</h3>
+<p>Now we put $v=(0,1,3)$ in the second row and $u=(1,2,0)$ in the third row:</p>
+<div class="math-block">$$v\times u = \begin{vmatrix}\mathbf{i}&amp;\mathbf{j}&amp;\mathbf{k}\\0&amp;1&amp;3\\1&amp;2&amp;0\end{vmatrix} = \left(\begin{vmatrix}1&amp;3\\2&amp;0\end{vmatrix},\; -\begin{vmatrix}0&amp;3\\1&amp;0\end{vmatrix},\; \begin{vmatrix}0&amp;1\\1&amp;2\end{vmatrix}\right).$$</div>
+<p>Evaluating each component:</p>
+<ul><li>First component: $1\cdot 0 - 3\cdot 2 = -6$,</li><li>Second component: $-(0\cdot 0 - 3\cdot 1) = -(-3) = 3$,</li><li>Third component: $0\cdot 2 - 1\cdot 1 = -1$.</li></ul>
+<p>Thus,</p>
+<div class="math-block">$$v\times u = (-6,3,-1).$$</div>
+<h3>4. Comparing $u\times v$ and $v\times u$</h3>
+<p>Comparing the two results:</p>
+<div class="math-block">$$u\times v = (6,-3,1),\qquad v\times u = (-6,3,-1) = -(u\times v).$$</div>
+<ul><li><strong>Same line and same length:</strong> Both vectors lie on the exact same line perpendicular to the plane of $u$ and $v$, and both have length $\sqrt{6^2+(-3)^2+1^2}=\sqrt{46}$.</li><li><strong>Opposite orientation:</strong> They point in <strong>opposite directions</strong>. Geometrically, curling the fingers of your right hand from $u$ to $v$ makes your thumb point along $u\times v=(6,-3,1)$, whereas curling them from $v$ to $u$ flips your thumb to point along $v\times u=(-6,3,-1)$. Algebraically, swapping two rows of a determinant multiplies the determinant by $-1$.</li></ul>
+<h3>Quick verification</h3>
+<p>Let us verify Lagrange's identity $\|u\times v\|^2 = \|u\|^2\|v\|^2 - (u\cdot v)^2$:</p>
+<ul><li>Left side: $\|u\times v\|^2 = 6^2 + (-3)^2 + 1^2 = 36 + 9 + 1 = 46$.</li><li>Right side: $\|u\|^2 = 1^2+2^2+0^2 = 5$, $\|v\|^2 = 0^2+1^2+3^2 = 10$, and $u\cdot v = 1(0)+2(1)+0(3) = 2$, so $$\|u\|^2\|v\|^2 - (u\cdot v)^2 = 5\cdot 10 - 2^2 = 50 - 4 = 46.\quad \checkmark$$</li></ul>
+<h3>A concrete example</h3>
+<p>Think of turning a right-handed screw with a wrench:</p>
+<ul><li>If the wrench handle lies along $u$ and you push in the direction $v$, the torque vector is $u\times v$, which drives the screw <strong>outward</strong> along $(6,-3,1)$.</li><li>If the handle is along $v$ and you push in the direction $u$, the rotation reverses and the screw moves <strong>inward</strong> along $v\times u = (-6,3,-1)$.</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Using the $2\times 2$ minors, $u\times v = (6,-3,1)$. We immediately verify our arithmetic by checking $(6,-3,1)\cdot(1,2,0)=6-6=0$ and $(6,-3,1)\cdot(0,1,3)=-3+3=0$, confirming that $u\times v$ is perpendicular to both $u$ and $v$. When we compute $v\times u$, we get $(-6,3,-1) = -(u\times v)$: swapping the two vectors keeps the same perpendicular line and length, but flips the orientation to the opposite side of the plane.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-10">Exercise 10: Triangle area from vectors</a></li><li><a href="#exercise-12">Exercise 12: A normal vector to a plane</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-10">
+<h2 class="exercise-title">Exercise 10. Triangle Area from Vectors</h2>
+<h3>The question</h3>
+<p>The points $A=(0,0,0)$, $B=(2,1,0)$, and $C=(1,3,2)$ form a triangle. Construct $\overrightarrow{AB}$ and $\overrightarrow{AC}$, compute the area of the parallelogram using the cross product, and then find the area of the triangle. Explain the factor $\frac12$.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>For two vectors $u=\overrightarrow{AB}$ and $v=\overrightarrow{AC}$ sharing the initial point $A$ in $\mathbb R^3$, the <strong>length of their cross product</strong> equals the area of the parallelogram they span:</p>
+<div class="math-block">$$\text{Area}_{\text{parallelogram}} = \|u\times v\| = \|u\|\,\|v\|\sin\theta,$$</div>
+<p>where $\|u\|$ is the base of the parallelogram and $\|v\|\sin\theta$ is its perpendicular height.</p>
+<p>Because the triangle $\triangle ABC$ is formed by cutting this parallelogram in half along the diagonal $BC$, the area of the triangle is half the area of the parallelogram:</p>
+<div class="math-block">$$\text{Area}_{\triangle ABC} = \frac{1}{2}\left\|\overrightarrow{AB}\times\overrightarrow{AC}\right\|.$$</div>
+<h3>1. Constructing $\overrightarrow{AB}$ and $\overrightarrow{AC}$</h3>
+<p>Since $A=(0,0,0)$ is at the origin, subtracting $A$ from $B=(2,1,0)$ and $C=(1,3,2)$ gives:</p>
+<div class="math-block">$$\overrightarrow{AB} = B - A = (2-0,\, 1-0,\, 0-0) = (2,1,0),$$</div>
+<div class="math-block">$$\overrightarrow{AC} = C - A = (1-0,\, 3-0,\, 2-0) = (1,3,2).$$</div>
+<h3>2. Computing the cross product and the parallelogram area</h3>
+<p>First we compute the cross product $\overrightarrow{AB}\times\overrightarrow{AC}$:</p>
+<div class="math-block">$$\overrightarrow{AB}\times\overrightarrow{AC} = \begin{vmatrix}\mathbf{i}&amp;\mathbf{j}&amp;\mathbf{k}\\2&amp;1&amp;0\\1&amp;3&amp;2\end{vmatrix} = \left(\begin{vmatrix}1&amp;0\\3&amp;2\end{vmatrix},\; -\begin{vmatrix}2&amp;0\\1&amp;2\end{vmatrix},\; \begin{vmatrix}2&amp;1\\1&amp;3\end{vmatrix}\right).$$</div>
+<p>Evaluating the $2\times 2$ determinants:</p>
+<ul><li>First component: $1\cdot 2 - 0\cdot 3 = 2$,</li><li>Second component: $-(2\cdot 2 - 0\cdot 1) = -4$,</li><li>Third component: $2\cdot 3 - 1\cdot 1 = 6 - 1 = 5$.</li></ul>
+<p>So</p>
+<div class="math-block">$$\overrightarrow{AB}\times\overrightarrow{AC} = (2,-4,5).$$</div>
+<p>The area of the parallelogram spanned by $\overrightarrow{AB}$ and $\overrightarrow{AC}$ is the norm of this cross product:</p>
+<div class="math-block">$$\text{Area}_{\text{parallelogram}} = \left\|\overrightarrow{AB}\times\overrightarrow{AC}\right\| = \sqrt{2^2 + (-4)^2 + 5^2} = \sqrt{4 + 16 + 25} = \sqrt{45} = 3\sqrt{5}.$$</div>
+<h3>3. Finding the area of $\triangle ABC$</h3>
+<p>Dividing the parallelogram area by $2$:</p>
+<div class="math-block">$$\text{Area}_{\triangle ABC} = \frac{1}{2}\text{Area}_{\text{parallelogram}} = \frac{3\sqrt{5}}{2}.$$</div>
+<h3>4. Explaining the factor $\frac{1}{2}$</h3>
+<p>Let $D = B + \overrightarrow{AC} = (3,4,2)$ be the fourth vertex of the parallelogram spanned by $\overrightarrow{AB}$ and $\overrightarrow{AC}$:</p>
+<ul><li>The diagonal segment $BC$ splits the parallelogram $ABDC$ into two triangles: $\triangle ABC$ and $\triangle DCB$.</li><li>These two triangles have identical side lengths ($\|\overrightarrow{AB}\|=\|\overrightarrow{CD}\|$, $\|\overrightarrow{AC}\|=\|\overrightarrow{BD}\|$, and common side $BC$), so they are <strong>congruent</strong> by Side-Side-Side (SSS) and have equal area.</li><li>Therefore, $\triangle ABC$ occupies <strong>exactly half</strong> of the parallelogram's area. This is the exact same $\frac12$ that appears in the familiar formula $\text{Area}_{\triangle} = \frac12\cdot\text{base}\cdot\text{height}$, whereas a parallelogram has $\text{Area} = \text{base}\cdot\text{height}$.</li></ul>
+<h3>Quick verification</h3>
+<p>Let us verify the area without the cross product using $\text{Area}_{\triangle ABC} = \frac{1}{2}\sqrt{\|\overrightarrow{AB}\|^2\|\overrightarrow{AC}\|^2 - (\overrightarrow{AB}\cdot\overrightarrow{AC})^2}$:</p>
+<ul><li>$\|\overrightarrow{AB}\|^2 = 2^2+1^2+0^2 = 5$,</li><li>$\|\overrightarrow{AC}\|^2 = 1^2+3^2+2^2 = 14$,</li><li>$\overrightarrow{AB}\cdot\overrightarrow{AC} = 2(1)+1(3)+0(2) = 5$.</li></ul>
+<p>Then:</p>
+<div class="math-block">$$\text{Area}_{\triangle ABC} = \frac{1}{2}\sqrt{5\cdot 14 - 5^2} = \frac{1}{2}\sqrt{70 - 25} = \frac{1}{2}\sqrt{45} = \frac{3\sqrt{5}}{2}.\quad \checkmark$$</div>
+<p>Also check orthogonality of the cross product: $(2,-4,5)\cdot(2,1,0)=4-4=0$ and $(2,-4,5)\cdot(1,3,2)=2-12+10=0$. $\checkmark$</p>
+<h3>A concrete example</h3>
+<p>Notice the three components of $\overrightarrow{AB}\times\overrightarrow{AC} = (2,-4,5)$:</p>
+<ul><li>If we project $\triangle ABC$ onto the $yz$-plane (setting $x=0$), its shadow has vertices $(0,0)$, $(1,0)$, $(3,2)$ and area $\frac12|2| = 1$.</li><li>Its shadow on the $xz$-plane has area $\frac12|-4| = 2$.</li><li>Its shadow on the $xy$-plane has area $\frac12|5| = \frac52$.</li></ul>
+<p>By the 3D Pythagorean theorem for areas (De Gua's / Cauchy–Binet formula), the true tilted triangle area satisfies</p>
+<div class="math-block">$$\text{Area}_{\triangle ABC} = \sqrt{1^2 + 2^2 + \left(\frac{5}{2}\right)^2} = \sqrt{1 + 4 + \frac{25}{4}} = \sqrt{\frac{45}{4}} = \frac{3\sqrt{5}}{2}.$$</div>
+<h3>How I would explain this in class</h3>
+<blockquote><p>First, the edge vectors from $A$ are $\overrightarrow{AB}=(2,1,0)$ and $\overrightarrow{AC}=(1,3,2)$. Their cross product is $\overrightarrow{AB}\times\overrightarrow{AC}=(2,-4,5)$. The length of that cross product gives the area of the full parallelogram they span: $\sqrt{4+16+25}=\sqrt{45}=3\sqrt{5}$. Finally, because the diagonal $BC$ cuts the parallelogram into two congruent triangles, the area of $\triangle ABC$ is half of the parallelogram's area, giving $\frac{3\sqrt{5}}{2}$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-9">Exercise 9: Cross product as a perpendicular direction</a></li><li><a href="#exercise-12">Exercise 12: A normal vector to a plane</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-11">
+<h2 class="exercise-title">Exercise 11. Decomposition into Parallel and Perpendicular Components</h2>
+<h3>The question</h3>
+<p>Decompose $u=(3,4)$ into components parallel and perpendicular to $v=(1,2)$. Check</p>
+<div class="math-block">$$u=u_{\parallel}+u_{\perp},\qquad u_{\perp}\cdot v=0.$$</div>
+<p>Explain why these are two independent checks of correctness.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Every vector $u$ can be uniquely decomposed with respect to a nonzero reference direction $v$ as</p>
+<div class="math-block">$$u = u_{\parallel} + u_{\perp},$$</div>
+<p>where:</p>
+<ul><li>$u_{\parallel} = \operatorname{proj}_v u = \dfrac{u\cdot v}{v\cdot v}\,v$ is a scalar multiple of $v$ (<strong>parallel component</strong>),</li><li>$u_{\perp} = u - u_{\parallel}$ is orthogonal to $v$, meaning $u_{\perp}\cdot v = 0$ (<strong>perpendicular component</strong>).</li></ul>
+<p>Geometrically, we are setting up a local right-angled coordinate system aligned with $v$ and splitting $u$ into a leg along $v$ and a leg perpendicular to $v$.</p>
+<h3>1. Finding the parallel component $u_{\parallel}$</h3>
+<p>For $u=(3,4)$ and $v=(1,2)$, we compute the dot products:</p>
+<div class="math-block">$$u\cdot v = 3\cdot 1 + 4\cdot 2 = 3 + 8 = 11,$$</div>
+<div class="math-block">$$v\cdot v = 1^2 + 2^2 = 1 + 4 = 5.$$</div>
+<p>Therefore, the parallel component is</p>
+<div class="math-block">$$u_{\parallel} = \operatorname{proj}_v u = \frac{u\cdot v}{v\cdot v}\,v = \frac{11}{5}(1,2) = \left(\frac{11}{5},\, \frac{22}{5}\right).$$</div>
+<h3>2. Finding the perpendicular component $u_{\perp}$</h3>
+<p>We subtract $u_{\parallel}$ from $u=(3,4)=\left(\frac{15}{5},\frac{20}{5}\right)$:</p>
+<div class="math-block">$$u_{\perp} = u - u_{\parallel} = \left(\frac{15}{5},\, \frac{20}{5}\right) - \left(\frac{11}{5},\, \frac{22}{5}\right) = \left(\frac{4}{5},\, -\frac{2}{5}\right).$$</div>
+<h3>3. Checking the two required conditions</h3>
+<ol><li><strong>Sum check ($u = u_{\parallel} + u_{\perp}$):</strong> $$u_{\parallel} + u_{\perp} = \left(\frac{11}{5},\, \frac{22}{5}\right) + \left(\frac{4}{5},\, -\frac{2}{5}\right) = \left(\frac{11+4}{5},\, \frac{22-2}{5}\right) = \left(\frac{15}{5},\, \frac{20}{5}\right) = (3,4) = u.$$</li><li><strong>Orthogonality check ($u_{\perp}\cdot v = 0$):</strong> $$u_{\perp}\cdot v = \left(\frac{4}{5},\, -\frac{2}{5}\right)\cdot(1,2) = \frac{4}{5}\cdot 1 + \left(-\frac{2}{5}\right)\cdot 2 = \frac{4 - 4}{5} = 0.$$</li></ol>
+<h3>4. Why these are two independent checks of correctness</h3>
+<p>Neither condition alone guarantees that $(u_{\parallel}, u_{\perp})$ is the true orthogonal decomposition of $u$ along $v$:</p>
+<ul><li><strong>Why $u = u_{\parallel} + u_{\perp}$ alone is not enough:</strong> If we picked <em>any</em> wrong scalar multiple of $v$—say $\tilde{u}_{\parallel} = 2v = (2,4)$—and defined $\tilde{u}_{\perp} = u - \tilde{u}_{\parallel} = (1,0)$, their sum $\tilde{u}_{\parallel} + \tilde{u}_{\perp}$ would still equal $(3,4)=u$ automatically! However, $\tilde{u}_{\perp}\cdot v = (1,0)\cdot(1,2) = 1 \neq 0$, so the second check catches the wrong projection factor.</li><li><strong>Why $u_{\perp}\cdot v = 0$ alone is not enough:</strong> Any multiple of $(2,-1)$, such as $(2,-1)$ or $(0,0)$, satisfies $w\cdot v = 0$, even if it has nothing to do with $u=(3,4)$. The sum check $u_{\parallel}+u_{\perp}=u$ ensures that our two components actually reconstruct the given vector $u$ without arithmetic mistakes during subtraction.</li></ul>
+<p>Together, (1) $u_{\parallel}$ being a multiple of $v$, (2) $u_{\perp}\cdot v = 0$, and (3) $u_{\parallel}+u_{\perp}=u$ uniquely lock in the decomposition.</p>
+<h3>Quick verification</h3>
+<p>Let us also check the <strong>Pythagorean theorem</strong> $\|u_{\parallel}\|^2 + \|u_{\perp}\|^2 = \|u\|^2$:</p>
+<div class="math-block">$$\|u_{\parallel}\|^2 = \left(\frac{11}{5}\right)^2 + \left(\frac{22}{5}\right)^2 = \frac{121 + 484}{25} = \frac{605}{25} = \frac{121}{5},$$</div>
+<div class="math-block">$$\|u_{\perp}\|^2 = \left(\frac{4}{5}\right)^2 + \left(-\frac{2}{5}\right)^2 = \frac{16 + 4}{25} = \frac{20}{25} = \frac{4}{5}.$$</div>
+<p>Adding them:</p>
+<div class="math-block">$$\|u_{\parallel}\|^2 + \|u_{\perp}\|^2 = \frac{121}{5} + \frac{4}{5} = \frac{125}{5} = 25 = 3^2 + 4^2 = \|u\|^2.\quad \checkmark$$</div>
+<h3>A concrete example</h3>
+<p>Notice that $v=(1,2)$ has perpendicular direction $v_{\perp}=(2,-1)$ (obtained by swapping the two coordinates and negating one, since $(1,2)\cdot(2,-1)=0$). Writing $u=(3,4)$ in the orthogonal basis $\{v, v_{\perp}\}$ gives</p>
+<div class="math-block">$$(3,4) = \frac{11}{5}(1,2) + \frac{2}{5}(2,-1) = \left(\frac{11}{5},\, \frac{22}{5}\right) + \left(\frac{4}{5},\, -\frac{2}{5}\right),$$</div>
+<p>which immediately produces $u_{\parallel}$ and $u_{\perp}$ at the same time!</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>First, we project $u=(3,4)$ onto $v=(1,2)$: $u_{\parallel} = \frac{u\cdot v}{v\cdot v}v = \frac{11}{5}(1,2) = (\frac{11}{5},\frac{22}{5})$. Subtracting this from $u$ gives $u_{\perp} = (3,4)-(\frac{11}{5},\frac{22}{5}) = (\frac45,-\frac25)$. The two checks test two completely different things: $u_{\parallel}+u_{\perp}=u$ verifies that the pieces add back up to $u$, while $u_{\perp}\cdot v=0$ verifies that we chose the exact multiple of $v$ that makes the remainder perpendicular to $v$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-6">Exercise 6: Projection and perpendicular component</a></li><li><a href="#exercise-14">Exercise 14: Closest point on a line</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-12">
+<h2 class="exercise-title">Exercise 12. A Normal Vector to a Plane</h2>
+<h3>The question</h3>
+<p>Given $A=(1,0,2)$, $B=(2,1,0)$, and $C=(0,3,1)$. Construct two vectors lying in the plane, find a vector perpendicular to both, and check the perpendicularity using dot products.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Three non-collinear points $A,B,C$ in $\mathbb R^3$ determine a unique plane. To find a <strong>normal vector</strong> $n$ (a vector perpendicular to the entire plane):</p>
+<ol><li>Pick one point (such as $A$) as an anchor and form two displacement vectors $\overrightarrow{AB}$ and $\overrightarrow{AC}$ lying inside the plane.</li><li>Compute their cross product: $$n = \overrightarrow{AB}\times\overrightarrow{AC}.$$</li></ol>
+<p>Because $n$ is perpendicular to both spanning vectors $\overrightarrow{AB}$ and $\overrightarrow{AC}$, it is automatically perpendicular to every linear combination of them—and therefore perpendicular to every line in the plane.</p>
+<h3>1. Constructing two vectors in the plane</h3>
+<p>Using $A=(1,0,2)$ as the common starting point:</p>
+<div class="math-block">$$\overrightarrow{AB} = B - A = (2-1,\, 1-0,\, 0-2) = (1,1,-2),$$</div>
+<div class="math-block">$$\overrightarrow{AC} = C - A = (0-1,\, 3-0,\, 1-2) = (-1,3,-1).$$</div>
+<p>Both $\overrightarrow{AB}$ and $\overrightarrow{AC}$ lie in the plane through $A,B,C$.</p>
+<h3>2. Finding a vector perpendicular to both</h3>
+<p>We compute the cross product $n = \overrightarrow{AB}\times\overrightarrow{AC}$:</p>
+<div class="math-block">$$n = \begin{vmatrix}\mathbf{i}&amp;\mathbf{j}&amp;\mathbf{k}\\1&amp;1&amp;-2\\-1&amp;3&amp;-1\end{vmatrix} = \left(\begin{vmatrix}1&amp;-2\\3&amp;-1\end{vmatrix},\; -\begin{vmatrix}1&amp;-2\\-1&amp;-1\end{vmatrix},\; \begin{vmatrix}1&amp;1\\-1&amp;3\end{vmatrix}\right).$$</div>
+<p>Evaluating the three $2\times 2$ determinants carefully:</p>
+<ul><li>First component: $1(-1) - (-2)(3) = -1 + 6 = 5$,</li><li>Second component: $-(1(-1) - (-2)(-1)) = -(-1 - 2) = 3$,</li><li>Third component: $1(3) - 1(-1) = 3 + 1 = 4$.</li></ul>
+<p>Therefore, a normal vector to the plane is</p>
+<div class="math-block">$$n = (5,3,4).$$</div>
+<p><em>(Note: because $n\neq(0,0,0)$, the three points $A,B,C$ are not collinear and genuinely determine a unique plane. Any nonzero scalar multiple of $(5,3,4)$ is also a valid normal vector.)</em></p>
+<h3>3. Checking perpendicularity using dot products</h3>
+<p>We compute the dot products of $n=(5,3,4)$ with $\overrightarrow{AB}=(1,1,-2)$ and $\overrightarrow{AC}=(-1,3,-1)$:</p>
+<div class="math-block">$$n\cdot\overrightarrow{AB} = (5,3,4)\cdot(1,1,-2) = 5(1) + 3(1) + 4(-2) = 5 + 3 - 8 = 0,$$</div>
+<div class="math-block">$$n\cdot\overrightarrow{AC} = (5,3,4)\cdot(-1,3,-1) = 5(-1) + 3(3) + 4(-1) = -5 + 9 - 4 = 0.$$</div>
+<p>Since both dot products vanish, $n=(5,3,4)$ is perpendicular to both $\overrightarrow{AB}$ and $\overrightarrow{AC}$.</p>
+<h3>Quick verification</h3>
+<p>What about the third edge of the triangle, $\overrightarrow{BC} = C - B = (0-2,\, 3-1,\, 1-0) = (-2,2,1)$? It also lies in the plane, so $n$ must be perpendicular to $\overrightarrow{BC}$ as well:</p>
+<div class="math-block">$$n\cdot\overrightarrow{BC} = (5,3,4)\cdot(-2,2,1) = -10 + 6 + 4 = 0.\quad \checkmark$$</div>
+<h3>A concrete example</h3>
+<p>Once we have the normal vector $n=(5,3,4)$ and the point $A=(1,0,2)$, we can write the <strong>equation of the plane</strong> through $A,B,C$ in one line: a point $P=(x,y,z)$ lies in the plane if and only if $\overrightarrow{AP}\perp n$, that is,</p>
+<div class="math-block">$$n\cdot(x-1,\, y-0,\, z-2) = 0 \iff 5(x-1) + 3y + 4(z-2) = 0 \iff 5x + 3y + 4z = 13.$$</div>
+<p>Let us plug all three given points into $5x+3y+4z$:</p>
+<ul><li>For $A=(1,0,2)$: $5(1)+3(0)+4(2) = 5+0+8 = 13$,</li><li>For $B=(2,1,0)$: $5(2)+3(1)+4(0) = 10+3+0 = 13$,</li><li>For $C=(0,3,1)$: $5(0)+3(3)+4(1) = 0+9+4 = 13$.</li></ul>
+<p>Every point in the plane has the exact same dot product $13$ with the normal vector $n=(5,3,4)$!</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>To find a normal to the plane through $A,B,C$, we first anchor at $A$ and form two vectors inside the plane: $\overrightarrow{AB}=(1,1,-2)$ and $\overrightarrow{AC}=(-1,3,-1)$. Then we take their cross product, $\overrightarrow{AB}\times\overrightarrow{AC}=(5,3,4)$. Finally, we check our work with dot products: $(5,3,4)\cdot(1,1,-2)=5+3-8=0$ and $(5,3,4)\cdot(-1,3,-1)=-5+9-4=0$. Because $(5,3,4)$ is perpendicular to two non-parallel directions in the plane, it is perpendicular to the entire plane.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-9">Exercise 9: Cross product as a perpendicular direction</a></li><li><a href="#exercise-13">Exercise 13: Do four points lie in one plane?</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-13">
+<h2 class="exercise-title">Exercise 13. Do Four Points Lie in One Plane?</h2>
+<h3>The question</h3>
+<p>Given</p>
+<div class="math-block">$$A=(0,0,0),\qquad B=(1,2,0),\qquad C=(0,1,1),\qquad D=(2,5,1).$$</div>
+<ol><li>Construct $\overrightarrow{AB}$ and $\overrightarrow{AC}$.</li><li>Find $n=\overrightarrow{AB}\times\overrightarrow{AC}$.</li><li>Construct $\overrightarrow{AD}$ and check whether $\overrightarrow{AD}\cdot n=0$.</li><li>Based on this, decide whether $D$ lies in the plane determined by $A,B,C$, and justify the criterion.</li></ol>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Suppose $A,B,C$ are three non-collinear points in $\mathbb R^3$. The cross product</p>
+<div class="math-block">$$n = \overrightarrow{AB}\times\overrightarrow{AC}$$</div>
+<p>is a nonzero <strong>normal vector</strong> perpendicular to the plane through $A,B,C$.</p>
+<p>Now take any fourth point $D$. The plane through $A,B,C$ consists of all points whose displacement from $A$ is perpendicular to $n$. Therefore:</p>
+<div class="math-block">$$D \text{ lies in the plane } ABC \iff \overrightarrow{AD} \perp n \iff \overrightarrow{AD}\cdot n = 0.$$</div>
+<p>Geometrically, $|\overrightarrow{AD}\cdot n|$ is the volume of the parallelepiped spanned by $\overrightarrow{AB},\overrightarrow{AC},\overrightarrow{AD}$; this volume is zero if and only if all three vectors lie flat in the same plane.</p>
+<h3>1. Constructing $\overrightarrow{AB}$ and $\overrightarrow{AC}$</h3>
+<p>Since $A=(0,0,0)$, subtracting $A$ from $B=(1,2,0)$ and $C=(0,1,1)$ gives:</p>
+<div class="math-block">$$\overrightarrow{AB} = B - A = (1,2,0),$$</div>
+<div class="math-block">$$\overrightarrow{AC} = C - A = (0,1,1).$$</div>
+<h3>2. Finding the normal vector $n=\overrightarrow{AB}\times\overrightarrow{AC}$</h3>
+<p>We compute the cross product of $\overrightarrow{AB}=(1,2,0)$ and $\overrightarrow{AC}=(0,1,1)$:</p>
+<div class="math-block">$$n = \overrightarrow{AB}\times\overrightarrow{AC} = \begin{vmatrix}\mathbf{i}&amp;\mathbf{j}&amp;\mathbf{k}\\1&amp;2&amp;0\\0&amp;1&amp;1\end{vmatrix} = \left(\begin{vmatrix}2&amp;0\\1&amp;1\end{vmatrix},\; -\begin{vmatrix}1&amp;0\\0&amp;1\end{vmatrix},\; \begin{vmatrix}1&amp;2\\0&amp;1\end{vmatrix}\right).$$</div>
+<p>Evaluating the $2\times 2$ determinants:</p>
+<ul><li>First component: $2(1) - 0(1) = 2$,</li><li>Second component: $-(1(1) - 0(0)) = -1$,</li><li>Third component: $1(1) - 2(0) = 1$.</li></ul>
+<p>Thus,</p>
+<div class="math-block">$$n = (2,-1,1).$$</div>
+<p><em>(Quick check: $n\cdot\overrightarrow{AB} = 2-2+0=0$ and $n\cdot\overrightarrow{AC} = 0-1+1=0$.)</em></p>
+<h3>3. Constructing $\overrightarrow{AD}$ and checking $\overrightarrow{AD}\cdot n=0$</h3>
+<p>For $D=(2,5,1)$ and $A=(0,0,0)$:</p>
+<div class="math-block">$$\overrightarrow{AD} = D - A = (2,5,1).$$</div>
+<p>Taking the dot product with $n=(2,-1,1)$:</p>
+<div class="math-block">$$\overrightarrow{AD}\cdot n = (2,5,1)\cdot(2,-1,1) = 2\cdot 2 + 5\cdot(-1) + 1\cdot 1 = 4 - 5 + 1 = 0.$$</div>
+<h3>4. Decision and justification of the criterion</h3>
+<p>Because $\overrightarrow{AD}\cdot n = 0$, the point $D$ <strong>does lie in the plane</strong> determined by $A,B,C$ (the four points $A,B,C,D$ are <strong>coplanar</strong>).</p>
+<p><strong>Why this criterion works:</strong> Since $n=\overrightarrow{AB}\times\overrightarrow{AC}=(2,-1,1)\neq\mathbf{0}$, the vectors $\overrightarrow{AB}$ and $\overrightarrow{AC}$ span a 2D plane through $A$, and $n$ is perpendicular to that plane. The orthogonal complement of the nonzero vector $n$ in $\mathbb R^3$ is a 2D subspace—namely, the exact plane spanned by $\overrightarrow{AB}$ and $\overrightarrow{AC}$. Therefore, $\overrightarrow{AD}\cdot n=0$ means $\overrightarrow{AD}$ has zero component in the normal direction (zero height above or below the plane $ABC$), so $D$ lies inside the plane $ABC$.</p>
+<h3>Quick verification</h3>
+<p>If $D$ lies in the plane spanned by $\overrightarrow{AB}=(1,2,0)$ and $\overrightarrow{AC}=(0,1,1)$ through $A$, then $\overrightarrow{AD}=(2,5,1)$ must be an explicit linear combination of $\overrightarrow{AB}$ and $\overrightarrow{AC}$:</p>
+<div class="math-block">$$\overrightarrow{AD} = \alpha\overrightarrow{AB} + \beta\overrightarrow{AC} = \alpha(1,2,0) + \beta(0,1,1) = (\alpha,\, 2\alpha+\beta,\, \beta).$$</div>
+<p>Comparing with $(2,5,1)$ immediately gives $\alpha=2$ and $\beta=1$, and the middle coordinate satisfies $2(2)+1 = 5$! Indeed:</p>
+<div class="math-block">$$2\overrightarrow{AB} + 1\overrightarrow{AC} = 2(1,2,0) + (0,1,1) = (2,5,1) = \overrightarrow{AD}.\quad \checkmark$$</div>
+<h3>A concrete example</h3>
+<p>What if the fourth point were $D'=(2,5,2)$, just $1$ unit higher in the $z$-direction than $D=(2,5,1)$? Then $\overrightarrow{AD'}=(2,5,2)$, and</p>
+<div class="math-block">$$\overrightarrow{AD'}\cdot n = (2,5,2)\cdot(2,-1,1) = 4 - 5 + 2 = 1 \neq 0.$$</div>
+<p>That nonzero result ($1$) tells us immediately that $D'$ does <strong>not</strong> lie in the plane $ABC$—it sticks out of the plane on the side toward which $n$ points.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>First, $\overrightarrow{AB}=(1,2,0)$ and $\overrightarrow{AC}=(0,1,1)$ lie in the plane through $A,B,C$, so their cross product $n=\overrightarrow{AB}\times\overrightarrow{AC}=(2,-1,1)$ is a normal vector perpendicular to that plane. Next, we check whether $\overrightarrow{AD}=(2,5,1)$ is also perpendicular to $n$: $(2,5,1)\cdot(2,-1,1) = 4-5+1 = 0$. Because $\overrightarrow{AD}$ has zero component along the normal $n$, it does not rise above or dip below the plane—in fact, $\overrightarrow{AD}=2\overrightarrow{AB}+\overrightarrow{AC}$, so $D$ lies in the plane $ABC$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-8">Exercise 8: Linear combination and checking the result</a></li><li><a href="#exercise-12">Exercise 12: A normal vector to a plane</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-14">
+<h2 class="exercise-title">Exercise 14. Closest Point on a Line</h2>
+<h3>The question</h3>
+<p>Given a point $P=(4,1)$ and a line through the origin with direction $v=(1,2)$. Using projection, find the closest point on the line, the distance from $P$ to the line, and verify that the appropriate vector is perpendicular to the direction of the line.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Let $\ell$ be the line through the origin $O=(0,0)$ with direction vector $v=(1,2)$, so every point on $\ell$ has position vector $tv$ for some $t\in\mathbb R$.</p>
+<p>By the <strong>Pythagorean theorem</strong>, the shortest path from an external point $P$ to a line $\ell$ is along the <strong>perpendicular</strong> dropped from $P$ to $\ell$:</p>
+<ol><li>The foot of the perpendicular—the <strong>closest point $Q$ on the line</strong>—has position vector equal to the orthogonal projection of $p=\overrightarrow{OP}$ onto $v$: $$\overrightarrow{OQ} = \operatorname{proj}_v p = \frac{p\cdot v}{v\cdot v}\,v.$$</li><li>The displacement vector from the closest point $Q$ to $P$ is the perpendicular residual $$\overrightarrow{QP} = p - \operatorname{proj}_v p,$$ and its length $\|\overrightarrow{QP}\|$ is the <strong>distance from $P$ to the line</strong>.</li></ol>
+<h3>1. Finding the closest point $Q$ on the line</h3>
+<p>Let $p = \overrightarrow{OP} = (4,1)$ and $v = (1,2)$. We compute the dot products:</p>
+<div class="math-block">$$p\cdot v = 4\cdot 1 + 1\cdot 2 = 4 + 2 = 6,$$</div>
+<div class="math-block">$$v\cdot v = 1^2 + 2^2 = 1 + 4 = 5.$$</div>
+<p>The projection of $p$ onto $v$ is</p>
+<div class="math-block">$$\overrightarrow{OQ} = \operatorname{proj}_v p = \frac{p\cdot v}{v\cdot v}\,v = \frac{6}{5}(1,2) = \left(\frac{6}{5},\, \frac{12}{5}\right).$$</div>
+<p>Therefore, the closest point on the line is</p>
+<div class="math-block">$$Q = \left(\frac{6}{5},\, \frac{12}{5}\right) = (1.2,\, 2.4).$$</div>
+<h3>2. Finding the distance from $P$ to the line</h3>
+<p>First, we construct the vector from the closest point $Q$ to $P$:</p>
+<div class="math-block">$$\overrightarrow{QP} = P - Q = (4,1) - \left(\frac{6}{5},\, \frac{12}{5}\right) = \left(\frac{20-6}{5},\, \frac{5-12}{5}\right) = \left(\frac{14}{5},\, -\frac{7}{5}\right).$$</div>
+<p>The distance $d(P,\ell)$ from $P$ to the line is the norm of $\overrightarrow{QP}$:</p>
+<div class="math-block">$$d(P,\ell) = \left\|\overrightarrow{QP}\right\| = \sqrt{\left(\frac{14}{5}\right)^2 + \left(-\frac{7}{5}\right)^2} = \frac{1}{5}\sqrt{196 + 49} = \frac{\sqrt{245}}{5} = \frac{7\sqrt{5}}{5}.$$</div>
+<h3>3. Verifying perpendicularity to the line</h3>
+<p>The vector connecting the closest point $Q$ on the line to $P$ is $\overrightarrow{QP} = \left(\frac{14}{5}, -\frac{7}{5}\right)$. Taking its dot product with the line's direction vector $v=(1,2)$:</p>
+<div class="math-block">$$\overrightarrow{QP}\cdot v = \left(\frac{14}{5},\, -\frac{7}{5}\right)\cdot(1,2) = \frac{14}{5}\cdot 1 + \left(-\frac{7}{5}\right)\cdot 2 = \frac{14 - 14}{5} = 0.$$</div>
+<p>Since $\overrightarrow{QP}\cdot v = 0$, the segment $QP$ is perpendicular to the direction of the line.</p>
+<h3>4. Why this perpendicularity guarantees minimum distance</h3>
+<p>Take <strong>any</strong> point $X = tv$ on the line $\ell$. We can split the displacement $\overrightarrow{XP}$ into a piece along the line ($\overrightarrow{XQ}$) and the perpendicular piece ($\overrightarrow{QP}$):</p>
+<div class="math-block">$$\overrightarrow{XP} = \overrightarrow{XQ} + \overrightarrow{QP}.$$</div>
+<p>Since $\overrightarrow{XQ}$ is parallel to $v$ and $\overrightarrow{QP} \perp v$, the Pythagorean theorem gives</p>
+<div class="math-block">$$\|\overrightarrow{XP}\|^2 = \|\overrightarrow{XQ}\|^2 + \|\overrightarrow{QP}\|^2 \ge \|\overrightarrow{QP}\|^2,$$</div>
+<p>with equality if and only if $\|\overrightarrow{XQ}\|=0$, i.e., $X=Q$. Thus $Q=\left(\frac65,\frac{12}{5}\right)$ uniquely minimizes the distance.</p>
+<h3>Quick verification</h3>
+<p>Let us check the distance using the 2D point-to-line formula: the line through $(0,0)$ with direction $v=(1,2)$ has Cartesian equation $2x - y = 0$. The distance from $P=(4,1)$ to $2x - y = 0$ is</p>
+<div class="math-block">$$d = \frac{|2(4) - 1(1)|}{\sqrt{2^2 + (-1)^2}} = \frac{|8 - 1|}{\sqrt{5}} = \frac{7}{\sqrt{5}} = \frac{7\sqrt{5}}{5}.\quad \checkmark$$</div>
+<p>Also check the Pythagorean theorem on $\triangle OQP$:</p>
+<div class="math-block">$$\|\overrightarrow{OQ}\|^2 + \|\overrightarrow{QP}\|^2 = \frac{36+144}{25} + \frac{196+49}{25} = \frac{180 + 245}{25} = \frac{425}{25} = 17 = 4^2 + 1^2 = \|\overrightarrow{OP}\|^2.\quad \checkmark$$</div>
+<h3>A concrete example</h3>
+<p>Let us compare $Q=(1.2, 2.4)$ with two nearby integer-parameter points on the line $X(t)=t(1,2)$:</p>
+<ul><li>At $t=1$, $X(1)=(1,2)$ has distance $\|(4,1)-(1,2)\| = \|(3,-1)\| = \sqrt{10} \approx 3.162$.</li><li>At $t=2$, $X(2)=(2,4)$ has distance $\|(4,1)-(2,4)\| = \|(2,-3)\| = \sqrt{13} \approx 3.606$.</li><li>At the projection parameter $t=\frac65=1.2$, $Q=(1.2, 2.4)$ achieves the minimum distance $\frac{7\sqrt{5}}{5} = \sqrt{9.8} \approx 3.130$.</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Every point on the line has position $tv$, and the closest point $Q$ to $P=(4,1)$ is the orthogonal projection of $p=(4,1)$ onto $v=(1,2)$: $Q = \frac{p\cdot v}{v\cdot v}v = \frac65(1,2) = (\frac65,\frac{12}{5})$. The connecting vector from $Q$ to $P$ is $\overrightarrow{QP} = (4,1)-(\frac65,\frac{12}{5}) = (\frac{14}{5},-\frac75)$. We check $\overrightarrow{QP}\cdot(1,2) = \frac{14}{5}-\frac{14}{5}=0$, confirming $\overrightarrow{QP}\perp v$, and its length $\|\overrightarrow{QP}\| = \frac{7\sqrt{5}}{5}$ is the shortest distance from $P$ to the line.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-6">Exercise 6: Projection and perpendicular component</a></li><li><a href="#exercise-11">Exercise 11: Decomposition into parallel and perpendicular components</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-15">
+<h2 class="exercise-title">Exercise 15. Comparing Directions Using the Cosine of the Angle</h2>
+<h3>The question</h3>
+<p>Given</p>
+<div class="math-block">$$a=(1,2,1),\qquad b=(2,4,2),\qquad c=(2,0,3).$$</div>
+<p>For each pair, compute</p>
+<div class="math-block">$$\frac{u\cdot v}{\|u\|\,\|v\|}.$$</div>
+<p>Order the pairs by increasing angle between the vectors. Explain why for $a$ and $b$ the value is $1$ even though the vectors have different lengths.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>For any two nonzero vectors $u$ and $v$, the quantity</p>
+<div class="math-block">$$\cos\theta = \frac{u\cdot v}{\|u\|\,\|v\|}$$</div>
+<p>is the <strong>cosine of the angle</strong> $\theta \in [0,\pi]$ between them. Notice that we can also write it as the dot product of their <strong>unit normalizations</strong>:</p>
+<div class="math-block">$$\frac{u\cdot v}{\|u\|\,\|v\|} = \left(\frac{u}{\|u\|}\right)\cdot\left(\frac{v}{\|v\|}\right).$$</div>
+<p>Because the function $\cos\theta$ is <strong>strictly decreasing</strong> on the interval $[0,\pi]$ (from $\cos 0 = 1$ down to $\cos\pi = -1$), a <strong>larger cosine means a smaller angle</strong>, and a <strong>smaller cosine means a larger angle</strong>.</p>
+<h3>1. Computing the lengths of $a,b,c$</h3>
+<p>First, we compute the norm of each vector:</p>
+<div class="math-block">$$\|a\| = \sqrt{1^2+2^2+1^2} = \sqrt{1+4+1} = \sqrt{6},$$</div>
+<div class="math-block">$$\|b\| = \sqrt{2^2+4^2+2^2} = \sqrt{4+16+4} = \sqrt{24} = 2\sqrt{6},$$</div>
+<div class="math-block">$$\|c\| = \sqrt{2^2+0^2+3^2} = \sqrt{4+0+9} = \sqrt{13}.$$</div>
+<h3>2. Computing $\dfrac{u\cdot v}{\|u\|\,\|v\|}$ for each pair</h3>
+<ol><li><strong>Pair $(a,b)$:</strong> $$a\cdot b = 1(2) + 2(4) + 1(2) = 2 + 8 + 2 = 12,$$ $$\cos\angle(a,b) = \frac{a\cdot b}{\|a\|\,\|b\|} = \frac{12}{\sqrt{6}\cdot 2\sqrt{6}} = \frac{12}{12} = 1.$$</li><li><strong>Pair $(a,c)$:</strong> $$a\cdot c = 1(2) + 2(0) + 1(3) = 2 + 0 + 3 = 5,$$ $$\cos\angle(a,c) = \frac{a\cdot c}{\|a\|\,\|c\|} = \frac{5}{\sqrt{6}\,\sqrt{13}} = \frac{5}{\sqrt{78}} \approx 0.566.$$</li><li><strong>Pair $(b,c)$:</strong> $$b\cdot c = 2(2) + 4(0) + 2(3) = 4 + 0 + 6 = 10,$$ $$\cos\angle(b,c) = \frac{b\cdot c}{\|b\|\,\|c\|} = \frac{10}{2\sqrt{6}\,\sqrt{13}} = \frac{5}{\sqrt{78}} \approx 0.566.$$</li></ol>
+<h3>3. Ordering the pairs by increasing angle</h3>
+<p>Comparing the cosines:</p>
+<div class="math-block">$$\cos\angle(a,b) = 1 &gt; \cos\angle(a,c) = \cos\angle(b,c) = \frac{5}{\sqrt{78}}.$$</div>
+<p>Since $\cos\theta$ decreases as $\theta$ increases on $[0,\pi]$:</p>
+<ul><li>$\angle(a,b) = \arccos(1) = 0^\circ$ ($0\text{ rad}$) is the <strong>smallest angle</strong>,</li><li>$\angle(a,c) = \angle(b,c) = \arccos\!\left(\frac{5}{\sqrt{78}}\right) \approx 55.5^\circ$ ($0.969\text{ rad}$) are <strong>equal and larger</strong>.</li></ul>
+<p>So in order of increasing angle:</p>
+<div class="math-block">$$\angle(a,b) &lt; \angle(a,c) = \angle(b,c).$$</div>
+<h3>4. Why the value for $a$ and $b$ is $1$ despite different lengths</h3>
+<p>Notice that $b = (2,4,2) = 2(1,2,1) = 2a$. The vector $b$ is a <strong>positive scalar multiple</strong> of $a$: it points in the exact same direction and orientation as $a$, so the angle between $a$ and $b$ is $0^\circ$ and $\cos 0^\circ = 1$.</p>
+<p>Algebraically, when we replace $a$ by $b=2a$ in the cosine formula, the scaling factor $2$ appears in both the numerator and the denominator and <strong>cancels out completely</strong>:</p>
+<div class="math-block">$$\frac{a\cdot(2a)}{\|a\|\,\|2a\|} = \frac{2(a\cdot a)}{2\|a\|\,\|a\|} = \frac{\|a\|^2}{\|a\|^2} = 1.$$</div>
+<p>For the exact same reason, $\cos\angle(a,c)$ and $\cos\angle(b,c)$ are identical: dividing by $\|u\|\,\|v\|$ normalizes both vectors to unit length first, so $\frac{u\cdot v}{\|u\|\,\|v\|}$ measures <strong>pure direction</strong> and is completely independent of vector length.</p>
+<h3>Quick verification</h3>
+<p>Let us normalize $a$ and $b$ first:</p>
+<div class="math-block">$$\hat{a} = \frac{a}{\|a\|} = \frac{1}{\sqrt{6}}(1,2,1),\qquad \hat{b} = \frac{b}{\|b\|} = \frac{1}{2\sqrt{6}}(2,4,2) = \frac{1}{\sqrt{6}}(1,2,1).$$</div>
+<p>Because $\hat{a} = \hat{b}$, their unit direction vectors are identical! Therefore:</p>
+<ul><li>$\hat{a}\cdot\hat{b} = \|\hat{a}\|^2 = 1$, $\checkmark$</li><li>$\hat{a}\cdot\hat{c} = \hat{b}\cdot\hat{c} = \frac{5}{\sqrt{78}}$. $\checkmark$</li></ul>
+<p>Also note that $\left(\frac{5}{\sqrt{78}}\right)^2 = \frac{25}{78} &lt; 1$, satisfying the Cauchy–Schwarz inequality $|u\cdot v| \le \|u\|\,\|v\|$. $\checkmark$</p>
+<h3>A concrete example</h3>
+<p>In information retrieval and machine learning, $\frac{u\cdot v}{\|u\|\,\|v\|}$ is called <strong>cosine similarity</strong>. Suppose two readers rate three genres (Sci-Fi, Math, History):</p>
+<ul><li>Reader $A$ rates them $a=(1,2,1)$ (out of $5$),</li><li>Reader $B$ rates them $b=(2,4,2)$ (out of $10$),</li><li>Reader $C$ rates them $c=(2,0,3)$.</li></ul>
+<p>Even though Reader $B$'s raw numbers are twice as large as Reader $A$'s, their relative preferences are identical ($1:2:1$). Cosine similarity divides out the overall scale and reports $\cos\angle(a,b)=1$ (a perfect match in profile direction), while giving both $A$ and $B$ the exact same similarity $\frac{5}{\sqrt{78}}\approx 0.566$ with Reader $C$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>First, $\|a\|=\sqrt{6}$, $\|b\|=2\sqrt{6}$, and $\|c\|=\sqrt{13}$. Computing $\frac{u\cdot v}{\|u\|\,\|v\|}$ gives $1$ for $(a,b)$ and $\frac{5}{\sqrt{78}}$ for both $(a,c)$ and $(b,c)$. Because cosine decreases as the angle increases on $[0,\pi]$, $(a,b)$ has the smallest angle ($0^\circ$), followed by $(a,c)$ and $(b,c)$ which tie at $\arccos(5/\sqrt{78})\approx 55.5^\circ$. The value for $(a,b)$ is $1$—and $(a,c)$ matches $(b,c)$—because $b=2a$ points in the exact same direction as $a$, and dividing by the norms cancels out the factor of $2$ in length.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-3">Exercise 3: Vector normalization</a></li><li><a href="#exercise-5">Exercise 5: Angle between vectors</a></li></ul>
+</section>
+    </main>
+  </div>
+</body>
+</html>

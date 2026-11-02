@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>01. Limits of Sequences and Functions — Complete Solutions</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false}
+      ],
+      throwOnError: false
+    });"></script>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --muted: #475569;
+      --accent: #2563eb;
+      --accent-soft: #eff6ff;
+      --quote-bg: #f1f5f9;
+      --quote-border: #3b82f6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 310px 1fr;
+      min-height: 100vh;
+    }
+    aside.sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 1.5rem 1.25rem;
+    }
+    .brand {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    .brand-sub {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .toc-group-title {
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin: 1rem 0 0.35rem 0.5rem;
+    }
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .toc-list li { margin-bottom: 0.2rem; }
+    .toc-list a {
+      display: block;
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.86rem;
+      transition: background 0.15s, color 0.15s;
+    }
+    .toc-list a:hover {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+    main.content {
+      max-width: 940px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    header.page-header {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    }
+    header.page-header h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.85rem;
+      color: var(--text);
+    }
+    header.page-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+    .section-banner {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: #ffffff;
+      border-radius: 12px;
+      padding: 1.5rem 2rem;
+      margin: 2.5rem 0 1.5rem;
+      scroll-margin-top: 1.5rem;
+    }
+    .section-banner h2 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    .section-banner p {
+      margin: 0.25rem 0 0;
+      opacity: 0.9;
+      font-size: 0.92rem;
+    }
+    section.exercise-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem 2.25rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+      scroll-margin-top: 1.5rem;
+    }
+    section.exercise-card h2.exercise-title {
+      margin-top: 0;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--accent-soft);
+      color: var(--accent);
+      font-size: 1.4rem;
+    }
+    section.exercise-card h3 {
+      margin-top: 1.5rem;
+      margin-bottom: 0.55rem;
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+    section.exercise-card h4 {
+      margin-top: 1.15rem;
+      margin-bottom: 0.45rem;
+      font-size: 1rem;
+      color: var(--muted);
+    }
+    p { margin: 0.65rem 0; }
+    ul, ol { margin: 0.65rem 0; padding-left: 1.5rem; }
+    li { margin-bottom: 0.35rem; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.85rem;
+      text-align: left;
+    }
+    th { background: var(--bg); font-weight: 600; }
+    blockquote {
+      margin: 1rem 0;
+      padding: 0.9rem 1.2rem;
+      background: var(--quote-bg);
+      border-left: 4px solid var(--quote-border);
+      border-radius: 0 8px 8px 0;
+      color: var(--text);
+    }
+    blockquote p { margin: 0; }
+    pre {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 1rem 1.25rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+    code {
+      font-family: Consolas, Monaco, "Courier New", monospace;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .katex-display {
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 0.25rem 0;
+    }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      aside.sidebar {
+        position: static;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      main.content { padding: 1.5rem 1rem 3rem; }
+      section.exercise-card { padding: 1.5rem; }
+    }
+    @media print {
+      aside.sidebar { display: none; }
+      .layout { display: block; }
+      body { background: #fff; }
+      section.exercise-card { box-shadow: none; break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">3. Calculus</div>
+      <div class="brand-sub">01. Limits of Sequences and Functions (Exercises 1–15)</div>
+      <ul class="toc-list">
+<li><a href="#exercise-1">1. Dominant Terms in a Sequence</a></li>
+<li><a href="#exercise-2">2. Different Growth Rates</a></li>
+<li><a href="#exercise-3">3. A Square Root and Removing an Indeterminate Form</a></li>
+<li><a href="#exercise-4">4. Powers and Oscillation</a></li>
+<li><a href="#exercise-5">5. The Classical Limit Leading to the Number $e$</a></li>
+<li><a href="#exercise-6">6. From a Sequence to a Function — Limit at Infinity</a></li>
+<li><a href="#exercise-7">7. Limit at a Point and Canceling a Factor</a></li>
+<li><a href="#exercise-8">8. A Square Root in a Function Limit</a></li>
+<li><a href="#exercise-9">9. One-Sided Limits and an Asymptote</a></li>
+<li><a href="#exercise-10">10. Continuity of a Piecewise Function</a></li>
+<li><a href="#exercise-11">11. An n-th Root</a></li>
+<li><a href="#exercise-12">12. Exponential Function Limit</a></li>
+<li><a href="#exercise-13">13. Fundamental Trigonometric Limit</a></li>
+<li><a href="#exercise-14">14. A $0/0$ Limit with Trigonometry</a></li>
+<li><a href="#exercise-15">15. Observation Versus Proof</a></li>
+</ul>
+    </aside>
+    <main class="content">
+      <header class="page-header">
+        <h1>01. Limits of Sequences and Functions — Complete Solutions</h1>
+        <p>Basics of Mathematics Student Workbook (2026) · 3. Calculus · All 15 Exercises with Detailed Explanations</p>
+      </header>
+      <section class="exercise-card" id="exercise-1">
+<h2 class="exercise-title">Exercise 1. Dominant Terms in a Sequence</h2>
+<h3>The question</h3>
+<p>Compute</p>
+<div class="math-block">$$\lim_{n\to\infty}\frac{4n^2-3n+1}{2n^2+5n-7}.$$</div>
+<p>Explain why the highest-degree terms determine the result.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>When $n\to\infty$, directly plugging in $\infty$ produces the indeterminate form $\dfrac{\infty}{\infty}$. To resolve it, we look at the <strong>dominant term</strong>—the highest power of $n$ appearing in the denominator (and numerator), which here is $n^2$.</p>
+<p>Why does $n^2$ dominate? Because for very large $n$, $n^2$ grows much faster than $n$ or a constant. If we factor out $n^2$ from both the numerator and the denominator, the highest-degree terms become constants while every lower-degree term gets divided by $n$ or $n^2$ and shrinks to $0$.</p>
+<h3>1. Factor out the highest power of $n$</h3>
+<p>The highest power in both numerator and denominator is $n^2$. Factoring $n^2$ out of the numerator and denominator gives:</p>
+<div class="math-block">$$\frac{4n^2-3n+1}{2n^2+5n-7}=\frac{n^2\left(4-\dfrac{3}{n}+\dfrac{1}{n^2}\right)}{n^2\left(2+\dfrac{5}{n}-\dfrac{7}{n^2}\right)}.$$</div>
+<h3>2. Cancel $n^2$</h3>
+<p>Since $n\ge1$, $n^2\neq0$, so we can cancel the common factor $n^2$:</p>
+<div class="math-block">$$\frac{4n^2-3n+1}{2n^2+5n-7}=\frac{4-\dfrac{3}{n}+\dfrac{1}{n^2}}{2+\dfrac{5}{n}-\dfrac{7}{n^2}}.$$</div>
+<h3>3. Evaluate the limit of each piece</h3>
+<p>As $n\to\infty$, the elementary reciprocal sequences converge to zero:</p>
+<div class="math-block">$$\lim_{n\to\infty}\frac{1}{n}=0,\qquad \lim_{n\to\infty}\frac{1}{n^2}=0.$$</div>
+<p>Applying the limit laws for sums and quotients:</p>
+<div class="math-block">$$\lim_{n\to\infty}\frac{4-\dfrac{3}{n}+\dfrac{1}{n^2}}{2+\dfrac{5}{n}-\dfrac{7}{n^2}}=\frac{4-3\cdot0+0}{2+5\cdot0-7\cdot0}=\frac{4}{2}=2.$$</div>
+<h3>4. Why the highest-degree terms determine the result</h3>
+<p>In $4n^2-3n+1$, the ratio of the lower-order terms to the leading term $4n^2$ is</p>
+<div class="math-block">$$\frac{-3n+1}{4n^2}=-\frac{3}{4n}+\frac{1}{4n^2}\xrightarrow[n\to\infty]{}0.$$</div>
+<p>Relative to $n^2$, the linear term $-3n$ and the constant $1$ become negligible dust for large $n$. Thus, for large $n$, the numerator behaves like $4n^2$ and the denominator behaves like $2n^2$, so their quotient behaves like $\dfrac{4n^2}{2n^2}=2$.</p>
+<h3>Quick verification</h3>
+<p>Let us split the fraction by polynomial division:</p>
+<div class="math-block">$$4n^2-3n+1 = 2(2n^2+5n-7) - 13n + 15.$$</div>
+<p>Dividing by $2n^2+5n-7$ gives:</p>
+<div class="math-block">$$\frac{4n^2-3n+1}{2n^2+5n-7} = 2 - \frac{13n-15}{2n^2+5n-7}.$$</div>
+<p>In the remainder fraction, the denominator grows like $n^2$ while the numerator grows only like $n$, so the remainder vanishes as $n\to\infty$, leaving $2-0=2$. ✓</p>
+<h3>A concrete example</h3>
+<p>Let us evaluate the sequence at $n=10$, $n=100$, and $n=1000$:</p>
+<ul><li>For $n=10$: $\dfrac{4(100)-30+1}{2(100)+50-7}=\dfrac{371}{243}\approx 1.5267$.</li><li>For $n=100$: $\dfrac{40000-300+1}{20000+500-7}=\dfrac{39701}{20493}\approx 1.9373$.</li><li>For $n=1000$: $\dfrac{4000000-3000+1}{2000000+5000-7}=\dfrac{3997001}{2004993}\approx 1.9935$.</li></ul>
+<p>At $n=1000$, the $n^2$ terms contribute $4\,000\,000$ and $2\,000\,000$, whereas the linear and constant terms only shift the totals by a few thousand—less than $0.35\%$ of the value.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Both the top and the bottom are degree-2 polynomials in $n$. When $n$ is huge, $n^2$ completely dwarfs $n$ and the constants. To make that rigorous, I divide every term on top and bottom by $n^2$. All the fractions with $n$ or $n^2$ in the denominator go to $0$, leaving just the ratio of the leading coefficients, $\dfrac{4}{2}=2$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-2">Exercise 2: Different growth rates</a></li><li><a href="#exercise-6">Exercise 6: From a sequence to a function — limit at infinity</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-2">
+<h2 class="exercise-title">Exercise 2. Different Growth Rates</h2>
+<h3>The question</h3>
+<p>Compute</p>
+<div class="math-block">$$\lim_{n\to\infty}\frac{3n+1}{n^2+4},\qquad \lim_{n\to\infty}\frac{2n^3-n}{5n^2+1}.$$</div>
+<p>Compare the two cases and formulate a general observation about the degrees of the polynomials in the numerator and denominator.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>When we take the limit as $n\to\infty$ of a rational expression $\dfrac{P(n)}{Q(n)}$, the result is a tug-of-war between the growth rate of the numerator $P(n)$ and the growth rate of the denominator $Q(n)$.</p>
+<p>To compare them cleanly, we factor out the highest power of $n$ from the numerator and the highest power of $n$ from the denominator (or divide top and bottom by the highest power in the denominator) and see whether a power of $n$ remains in the numerator or in the denominator.</p>
+<h3>1. First limit: denominator has higher degree</h3>
+<p>In $\dfrac{3n+1}{n^2+4}$, the highest power of $n$ in the denominator is $n^2$. Dividing every term in the numerator and denominator by $n^2$ gives:</p>
+<div class="math-block">$$\frac{3n+1}{n^2+4}=\frac{\dfrac{3}{n}+\dfrac{1}{n^2}}{1+\dfrac{4}{n^2}}.$$</div>
+<p>As $n\to\infty$, $\dfrac{3}{n}\to0$, $\dfrac{1}{n^2}\to0$, and $\dfrac{4}{n^2}\to0$. Therefore:</p>
+<div class="math-block">$$\lim_{n\to\infty}\frac{3n+1}{n^2+4}=\frac{0+0}{1+0}=0.$$</div>
+<h3>2. Second limit: numerator has higher degree</h3>
+<p>In $\dfrac{2n^3-n}{5n^2+1}$, the denominator has degree $2$ while the numerator has degree $3$. Dividing numerator and denominator by $n^2$ (the highest power in the denominator) gives:</p>
+<div class="math-block">$$\frac{2n^3-n}{5n^2+1}=\frac{2n-\dfrac{1}{n}}{5+\dfrac{1}{n^2}}=n\cdot\frac{2-\dfrac{1}{n^2}}{5+\dfrac{1}{n^2}}.$$</div>
+<p>As $n\to\infty$, the fraction $\dfrac{2-1/n^2}{5+1/n^2}$ approaches $\dfrac{2}{5}&gt;0$, while the factor $n$ grows to $+\infty$. Therefore:</p>
+<div class="math-block">$$\lim_{n\to\infty}\frac{2n^3-n}{5n^2+1}=+\infty.$$</div>
+<h3>3. Comparison of the two cases</h3>
+<ul><li>In the <strong>first sequence</strong>, the numerator grows linearly ($\sim 3n$) while the denominator grows quadratically ($\sim n^2$). After canceling one factor of $n$, we still have $\sim \dfrac{3}{n}$, so the denominator overwhelms the numerator and drives the quotient to $0$.</li><li>In the <strong>second sequence</strong>, the numerator grows cubically ($\sim 2n^3$) while the denominator grows quadratically ($\sim 5n^2$). After canceling $n^2$, an uncompensated factor of $\sim \dfrac{2}{5}n$ remains in the numerator, which grows without bound.</li></ul>
+<h3>4. General rule for degrees of polynomials</h3>
+<p>For two polynomials $P(n)=a_p n^p+\dots+a_0$ ($a_p\neq0$) and $Q(n)=b_q n^q+\dots+b_0$ ($b_q\neq0$) as $n\to\infty$:</p>
+<ol><li><strong>$\deg P &lt; \deg Q$ ($p&lt;q$):</strong> the denominator grows faster, so $\lim_{n\to\infty}\dfrac{P(n)}{Q(n)}=0$.</li><li><strong>$\deg P = \deg Q$ ($p=q$):</strong> both grow at the same rate, so $\lim_{n\to\infty}\dfrac{P(n)}{Q(n)}=\dfrac{a_p}{b_q}$ (as in Exercise 1).</li><li><strong>$\deg P &gt; \deg Q$ ($p&gt;q$):</strong> the numerator grows faster, so $\lim_{n\to\infty}\dfrac{P(n)}{Q(n)}=+\infty$ (if $\dfrac{a_p}{b_q}&gt;0$) or $-\infty$ (if $\dfrac{a_p}{b_q}&lt;0$).</li></ol>
+<h3>Quick verification</h3>
+<p>We can bound both sequences for $n\ge1$:</p>
+<ul><li>First sequence: $0 &lt; \dfrac{3n+1}{n^2+4} \le \dfrac{3n+n}{n^2} = \dfrac{4}{n} \xrightarrow[n\to\infty]{} 0$. By the squeeze theorem, the limit is $0$. ✓</li><li>Second sequence: for $n\ge1$, $2n^3-n \ge n^3$ and $5n^2+1 \le 6n^2$, so $\dfrac{2n^3-n}{5n^2+1} \ge \dfrac{n^3}{6n^2} = \dfrac{n}{6} \xrightarrow[n\to\infty]{} +\infty$. ✓</li></ul>
+<h3>A concrete example</h3>
+<p>At $n=100$:</p>
+<ul><li>First sequence: $\dfrac{3(100)+1}{100^2+4}=\dfrac{301}{10004}\approx 0.0301$ (very close to $\dfrac{3}{100}=0.03$, heading to $0$).</li><li>Second sequence: $\dfrac{2(100^3)-100}{5(100^2)+1}=\dfrac{1\,999\,900}{50\,001}\approx 39.997$ (very close to $\dfrac{2}{5}\cdot 100=40$, heading to $+\infty$).</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>When you divide two polynomials at infinity, you just compare their degrees. In the first limit, degree $1$ divided by degree $2$ behaves like $\dfrac{3n}{n^2}=\dfrac{3}{n}$, which shrinks to $0$. In the second limit, degree $3$ divided by degree $2$ behaves like $\dfrac{2n^3}{5n^2}=\dfrac{2}{5}n$, which blows up to $+\infty$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: Dominant terms in a sequence</a></li><li><a href="#exercise-6">Exercise 6: From a sequence to a function — limit at infinity</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-3">
+<h2 class="exercise-title">Exercise 3. A Square Root and Removing an Indeterminate Form</h2>
+<h3>The question</h3>
+<p>Compute</p>
+<div class="math-block">$$\lim_{n\to\infty}\left(\sqrt{n^2+5n}-n\right).$$</div>
+<p>Use the conjugate expression and explain why this transformation removes the difficulty.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>As $n\to\infty$, both $\sqrt{n^2+5n}$ and $n$ grow to $+\infty$, so their difference has the indeterminate form $\infty-\infty$. We cannot simply drop $5n$ inside the square root and say $\sqrt{n^2+5n}\approx n$, because the leading $n$'s cancel out in subtraction, making the next correction term the star of the show!</p>
+<p>To eliminate the square root from the subtraction, we multiply and divide by the <strong>conjugate expression</strong> $\sqrt{n^2+5n}+n$ and apply the difference-of-squares identity $(A-B)(A+B)=A^2-B^2$.</p>
+<h3>1. Multiply and divide by the conjugate</h3>
+<p>Write the sequence as a fraction with denominator $1$ and multiply top and bottom by $\sqrt{n^2+5n}+n$:</p>
+<div class="math-block">$$\sqrt{n^2+5n}-n = \frac{\left(\sqrt{n^2+5n}-n\right)\left(\sqrt{n^2+5n}+n\right)}{\sqrt{n^2+5n}+n}.$$</div>
+<h3>2. Simplify the numerator using $(A-B)(A+B)=A^2-B^2$</h3>
+<p>Expanding the numerator clears the square root:</p>
+<div class="math-block">$$\left(\sqrt{n^2+5n}\right)^2 - n^2 = (n^2+5n)-n^2 = 5n.$$</div>
+<p>Thus our sequence becomes:</p>
+<div class="math-block">$$\sqrt{n^2+5n}-n = \frac{5n}{\sqrt{n^2+5n}+n}.$$</div>
+<h3>3. Factor out the dominant term $n$ and take the limit</h3>
+<p>Since $n&gt;0$, we have $\sqrt{n^2}=n$, so we can factor $n$ out of the square root:</p>
+<div class="math-block">$$\sqrt{n^2+5n} = \sqrt{n^2\left(1+\frac{5}{n}\right)} = n\sqrt{1+\frac{5}{n}}.$$</div>
+<p>Substituting this into the denominator and canceling $n$ gives:</p>
+<div class="math-block">$$\frac{5n}{n\sqrt{1+\dfrac{5}{n}}+n} = \frac{5}{\sqrt{1+\dfrac{5}{n}}+1}.$$</div>
+<p>As $n\to\infty$, $\dfrac{5}{n}\to0$, so $\sqrt{1+5/n}\to\sqrt{1}=1$. Hence:</p>
+<div class="math-block">$$\lim_{n\to\infty}\left(\sqrt{n^2+5n}-n\right) = \frac{5}{\sqrt{1+0}+1} = \frac{5}{1+1} = \frac{5}{2}.$$</div>
+<h3>4. Why conjugation removes the difficulty</h3>
+<p>In the original expression $\sqrt{n^2+5n}-n$, two nearly equal large quantities are subtracted ($\infty-\infty$), so their leading $n$ terms cancel implicitly in a way hidden inside the radical. Multiplying by the conjugate:</p>
+<ol><li><strong>In the numerator</strong>, squares the radical so the cancelling $n^2$ terms are exposed explicitly: $(n^2+5n)-n^2=5n$.</li><li><strong>In the denominator</strong>, replaces subtraction with addition ($\sqrt{n^2+5n}+n$), where the leading terms <em>reinforce</em> each other ($n+n=2n$) instead of canceling.</li></ol>
+<p>This converts an unstable $\infty-\infty$ difference into a standard $\dfrac{\infty}{\infty}$ quotient of degree $1$ over degree $1$.</p>
+<h3>Quick verification</h3>
+<p>Complete the square inside the radical:</p>
+<div class="math-block">$$n^2+5n = \left(n+\frac{5}{2}\right)^2 - \frac{25}{4}.$$</div>
+<p>For large $n$, the constant $-\dfrac{25}{4}$ is negligible compared to $\left(n+\dfrac{5}{2}\right)^2$, so $\sqrt{n^2+5n}$ is just slightly less than $n+\dfrac{5}{2}$. Subtracting $n$ leaves $\dfrac{5}{2}$. ✓</p>
+<h3>A concrete example</h3>
+<p>Let us check the terms of the sequence for $n=10$ and $n=100$:</p>
+<ul><li>For $n=10$: $\sqrt{100+50}-10 = \sqrt{150}-10 \approx 12.2474 - 10 = 2.2474$.</li><li>For $n=100$: $\sqrt{10000+500}-100 = \sqrt{10500}-100 \approx 102.4695 - 100 = 2.4695$.</li><li>For $n=1000$: $\sqrt{1005000}-1000 \approx 1002.4969 - 1000 = 2.4969$.</li></ul>
+<p>The values steadily approach $\dfrac{5}{2}=2.5$ from below.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>We have $\infty-\infty$, and we can't just ignore the $5n$ because the $n^2$ under the root cancels against the $-n$ outside. By multiplying top and bottom by the conjugate $\sqrt{n^2+5n}+n$, the top becomes $(n^2+5n)-n^2=5n$, and the bottom behaves like $n+n=2n$. Dividing top and bottom by $n$ gives $\dfrac{5}{1+1}=\dfrac{5}{2}$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: Dominant terms in a sequence</a></li><li><a href="#exercise-8">Exercise 8: A square root in a function limit</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-4">
+<h2 class="exercise-title">Exercise 4. Powers and Oscillation</h2>
+<h3>The question</h3>
+<p>Analyze</p>
+<div class="math-block">$$\left(\frac23\right)^n,\qquad \left(\frac32\right)^n,\qquad (-1)^n,\qquad \frac{(-1)^n}{n}.$$</div>
+<p>For each sequence, describe the type of behavior and justify your answer.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>A geometric sequence $q^n$ behaves in fundamentally different ways depending on the base $q$:</p>
+<ul><li>If $|q|&lt;1$, multiplying by $q$ repeatedly shrinks the magnitude toward $0$.</li><li>If $q&gt;1$, multiplying by $q$ repeatedly amplifies the value toward $+\infty$.</li><li>If $q=-1$, the sign alternates forever without the magnitude shrinking, causing <strong>undamped oscillation</strong>.</li><li>If an alternating factor $(-1)^n$ is divided by $n$, the sign still flips, but the amplitude $\dfrac{1}{n}$ shrinks to $0$, producing <strong>damped oscillation</strong> that converges to $0$.</li></ul>
+<h3>1. First sequence: $a_n = \left(\dfrac{2}{3}\right)^n$</h3>
+<p>Here the base satisfies $0 &lt; \dfrac{2}{3} &lt; 1$. Each term is two-thirds of the previous term ($a_{n+1}=\dfrac{2}{3}a_n &lt; a_n$), so the sequence is <strong>strictly decreasing and positive</strong>, converging to zero:</p>
+<div class="math-block">$$\lim_{n\to\infty}\left(\frac{2}{3}\right)^n = 0.$$</div>
+<h3>2. Second sequence: $b_n = \left(\dfrac{3}{2}\right)^n$</h3>
+<p>Here the base is $q = \dfrac{3}{2} = 1 + \frac{1}{2} &gt; 1$. By Bernoulli's inequality,</p>
+<div class="math-block">$$\left(1+\frac{1}{2}\right)^n \ge 1 + \frac{n}{2} \xrightarrow[n\to\infty]{} +\infty.$$</div>
+<p>Thus the sequence is <strong>strictly increasing and diverges to $+\infty$</strong>:</p>
+<div class="math-block">$$\lim_{n\to\infty}\left(\frac{3}{2}\right)^n = +\infty.$$</div>
+<h3>3. Third sequence: $c_n = (-1)^n$</h3>
+<p>For even indices $n=2k$, $c_{2k}=(-1)^{2k}=1$. For odd indices $n=2k-1$, $c_{2k-1}=(-1)^{2k-1}=-1$. Because the even-indexed subsequence converges to $1$ and the odd-indexed subsequence converges to $-1\neq 1$, the sequence <strong>oscillates between $-1$ and $1$ and diverges</strong> (has no limit).</p>
+<h3>4. Fourth sequence: $d_n = \dfrac{(-1)^n}{n}$</h3>
+<p>Here the sign alternates, so the sequence is neither increasing nor decreasing. However, its absolute value satisfies</p>
+<div class="math-block">$$-\frac{1}{n} \le \frac{(-1)^n}{n} \le \frac{1}{n}.$$</div>
+<p>Since $\lim_{n\to\infty}\left(-\dfrac{1}{n}\right)=0$ and $\lim_{n\to\infty}\dfrac{1}{n}=0$, the <strong>Squeeze Theorem</strong> implies:</p>
+<div class="math-block">$$\lim_{n\to\infty}\frac{(-1)^n}{n} = 0.$$</div>
+<p>This is <strong>damped oscillation</strong>: the sequence jumps back and forth across $0$, but the jumps shrink to zero.</p>
+<h3>Quick verification</h3>
+<p>Let us compare the subsequences of even and odd indices for $c_n=(-1)^n$ and $d_n=\dfrac{(-1)^n}{n}$:</p>
+<ul><li>For $c_n$: $c_{2k}=1\to 1$ and $c_{2k-1}=-1\to -1$. Different limits $\implies$ no limit exists. ✓</li><li>For $d_n$: $d_{2k}=\dfrac{1}{2k}\to 0$ and $d_{2k-1}=-\dfrac{1}{2k-1}\to 0$. Both subsequences converge to the same number $0$ $\implies$ $\lim_{n\to\infty} d_n=0$. ✓</li></ul>
+<h3>A concrete example</h3>
+<p>Write out the first five terms ($n=1,2,3,4,5$) of each sequence:</p>
+<ul><li>$\left(\dfrac{2}{3}\right)^n$: $\dfrac{2}{3}\approx 0.67,\; \dfrac{4}{9}\approx 0.44,\; \dfrac{8}{27}\approx 0.30,\; \dfrac{16}{81}\approx 0.20,\; \dfrac{32}{243}\approx 0.13 \to 0$.</li><li>$\left(\dfrac{3}{2}\right)^n$: $1.5,\; 2.25,\; 3.375,\; 5.0625,\; 7.59375 \to +\infty$.</li><li>$(-1)^n$: $-1,\; 1,\; -1,\; 1,\; -1$ (never settles down).</li><li>$\dfrac{(-1)^n}{n}$: $-1,\; 0.5,\; -0.333\dots,\; 0.25,\; -0.2 \to 0$.</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Powers $(2/3)^n$ shrink to $0$ because the base is between $-1$ and $1$, while $(3/2)^n$ blows up to $+\infty$ because the base is greater than $1$. The sequence $(-1)^n$ bounces between $-1$ and $1$ forever, so it has no limit. But $\dfrac{(-1)^n}{n}$ is a great lesson: even though it oscillates in sign, its distance from $0$ is $\dfrac{1}{n}$, which shrinks to $0$, so the sequence still converges to $0$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-2">Exercise 2: Different growth rates</a></li><li><a href="#exercise-11">Exercise 11: An n-th root</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-5">
+<h2 class="exercise-title">Exercise 5. The Classical Limit Leading to the Number $e$</h2>
+<h3>The question</h3>
+<p>Compute</p>
+<div class="math-block">$$\lim_{n\to\infty}\left(1+\frac1n\right)^n.$$</div>
+<p>Calculate several values for increasing $n$ and compare the observed behavior with the value of the limit. Explain why a few values do not constitute a proof.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>In the expression $a_n = \left(1+\dfrac{1}{n}\right)^n$, two competing forces act as $n\to\infty$:</p>
+<ul><li><strong>Inside the parentheses</strong>, $\dfrac{1}{n}\to 0$, so the base $1+\dfrac{1}{n}$ approaches $1$ (which tries to pull the result toward $1$).</li><li><strong>In the exponent</strong>, $n\to\infty$, so we multiply numbers slightly larger than $1$ an ever-growing number of times (which tries to push the result up).</li></ul>
+<p>This creates the indeterminate form $1^\infty$. The balance between the shrinking increment $\dfrac{1}{n}$ and the growing exponent $n$ defines Euler's number $e$.</p>
+<h3>1. Value of the fundamental limit</h3>
+<p>By a fundamental theorem of analysis (proved by showing that the sequence $a_n=\left(1+\dfrac{1}{n}\right)^n$ is strictly increasing and bounded above, for instance by $3$), this sequence converges to Euler's constant $e$:</p>
+<div class="math-block">$$\lim_{n\to\infty}\left(1+\frac{1}{n}\right)^n = e \approx 2.718281828\dots$$</div>
+<h3>2. Calculating values for increasing $n$</h3>
+<p>Let us compute $a_n = \left(1+\dfrac{1}{n}\right)^n$ for several values of $n$:</p>
+<table><thead><tr><th>$n$</th><th>Formula</th><th>Value (to 5 decimal places)</th></tr></thead><tbody><tr><td>$1$</td><td>$(1+1)^1$</td><td>$2.00000$</td></tr><tr><td>$2$</td><td>$(1+0.5)^2 = (1.5)^2$</td><td>$2.25000$</td></tr><tr><td>$5$</td><td>$(1+0.2)^5 = (1.2)^5$</td><td>$2.48832$</td></tr><tr><td>$10$</td><td>$(1.1)^{10}$</td><td>$2.59374$</td></tr><tr><td>$100$</td><td>$(1.01)^{100}$</td><td>$2.70481$</td></tr><tr><td>$1000$</td><td>$(1.001)^{1000}$</td><td>$2.71692$</td></tr><tr><td>$10000$</td><td>$(1.0001)^{10000}$</td><td>$2.71815$</td></tr></tbody></table>
+<h3>3. Comparing observed values with the limit</h3>
+<p>Looking at the table, we observe two key properties:</p>
+<ol><li>As $n$ grows, $a_n$ <strong>increases</strong> at every step ($2 &lt; 2.25 &lt; 2.48832 &lt; \dots$).</li><li>The growth slows down dramatically: jumping from $n=1$ to $n=10$ adds about $0.59$, whereas jumping from $n=1000$ to $n=10000$ adds only about $0.0012$, creeping closer and closer to $e\approx 2.71828$ from below.</li></ol>
+<h3>4. Why a few values do not constitute a proof</h3>
+<p>Computing a finite table of values—even for $n=10^6$ or $n=10^{12}$—cannot prove that the limit is $e$, for three reasons:</p>
+<ol><li><strong>Unseen future behavior:</strong> A sequence can grow very slowly and still diverge to $+\infty$ (for example, the harmonic sum $1+\frac12+\dots+\frac1n$ or $\ln(\ln n)$), or it could change behavior after $n=10^{100}$.</li><li><strong>Rounding vs. exactness:</strong> Numerical evaluations have finite decimal precision and cannot distinguish between $e$ and a nearby number like $2.7182818$.</li><li><strong>What a proof actually requires:</strong> To prove convergence rigorously, we must demonstrate for <em>all</em> $n\in\mathbb{N}$ that $a_n &lt; a_{n+1}$ (monotonicity) and $a_n &lt; 3$ (boundedness), using the binomial theorem.</li></ol>
+<h3>Quick verification</h3>
+<p>Using the Binomial Theorem for $a_n = \left(1+\dfrac{1}{n}\right)^n$:</p>
+<div class="math-block">$$a_n = 1 + \binom{n}{1}\frac{1}{n} + \binom{n}{2}\frac{1}{n^2} + \binom{n}{3}\frac{1}{n^3} + \dots = 1 + 1 + \frac{1}{2!}\left(1-\frac{1}{n}\right) + \frac{1}{3!}\left(1-\frac{1}{n}\right)\left(1-\frac{2}{n}\right) + \dots$$</div>
+<p>As $n\to\infty$, each factor $\left(1-\dfrac{k}{n}\right)\to 1$ and increased $n$ adds more positive terms, converging to $1+1+\dfrac{1}{2!}+\dfrac{1}{3!}+\dots \approx 1+1+0.5+0.1667+0.0417+0.0083 = 2.7167\dots = e$. ✓</p>
+<h3>A concrete example</h3>
+<p>In compound interest, if $\$1$ is invested at $100\%$ annual interest compounded $n$ times per year:</p>
+<ul><li>Annually ($n=1$): you end the year with $\left(1+1\right)^1 = \$2.00$.</li><li>Monthly ($n=12$): you end the year with $\left(1+\frac{1}{12}\right)^{12} \approx \$2.61$.</li><li>Daily ($n=365$): you end the year with $\left(1+\frac{1}{365}\right)^{365} \approx \$2.7146$.</li><li>Continuously ($n\to\infty$): you end the year with $\$e \approx \$2.7183$.</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>You might be tempted to say $1+\frac{1}{n}\to 1$ and $1^n=1$, so the limit is $1$. That's a classic trap because the base isn't equal to $1$—it only approaches $1$ while the exponent goes to $\infty$. Plugging in $n=1, 10, 100, 1000$ shows the terms climbing past $2$, $2.59$, $2.70$, $2.716$ toward $e\approx 2.71828$. Still, a table only builds intuition; a real proof needs monotonicity and an upper bound for all $n$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-12">Exercise 12: Exponential function limit</a></li><li><a href="#exercise-15">Exercise 15: Observation versus proof</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-6">
+<h2 class="exercise-title">Exercise 6. From a Sequence to a Function — Limit at Infinity</h2>
+<h3>The question</h3>
+<p>Compute</p>
+<div class="math-block">$$\lim_{x\to\infty}\frac{3x^2-x+1}{5x^2+4x-2}.$$</div>
+<p>Compare the method with Exercise 1. Explain what changes when moving from $n$ to a real variable $x$, and what stays the same.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>A sequence $(a_n)$ is just a function whose domain is restricted to positive integers $n\in\{1,2,3,\dots\}$, whereas a function $f(x)$ takes all real values $x\in\mathbb{R}$ (outside the zeros of the denominator).</p>
+<p>When $x\to\infty$, the algebraic behavior of polynomials in $x$ is identical to that of polynomials in $n$: the highest-degree term $x^2$ dominates, and lower-degree terms vanish after dividing by $x^2$.</p>
+<h3>1. Factor out and cancel the dominant power $x^2$</h3>
+<p>For $x&gt;0$ (since $x\to+\infty$, we may assume $x&gt;1$), $x^2\neq0$. Factoring $x^2$ out of the numerator and denominator:</p>
+<div class="math-block">$$\frac{3x^2-x+1}{5x^2+4x-2} = \frac{x^2\left(3-\dfrac{1}{x}+\dfrac{1}{x^2}\right)}{x^2\left(5+\dfrac{4}{x}-\dfrac{2}{x^2}\right)} = \frac{3-\dfrac{1}{x}+\dfrac{1}{x^2}}{5+\dfrac{4}{x}-\dfrac{2}{x^2}}.$$</div>
+<h3>2. Compute the limit as $x\to\infty$</h3>
+<p>Using the elementary limits $\lim_{x\to\infty}\dfrac{1}{x}=0$ and $\lim_{x\to\infty}\dfrac{1}{x^2}=0$, we obtain:</p>
+<div class="math-block">$$\lim_{x\to\infty}\frac{3x^2-x+1}{5x^2+4x-2} = \frac{3-0+0}{5+0-0} = \frac{3}{5}.$$</div>
+<h3>3. What stays the same compared to Exercise 1</h3>
+<ul><li><strong>The indeterminate form</strong> is still $\dfrac{\infty}{\infty}$.</li><li><strong>The algebraic mechanism</strong> is identical: identify the highest degree ($2$), factor out $x^2$, cancel it, and use the fact that reciprocals $\dfrac{1}{x^k}\to0$.</li><li><strong>The shortcut rule</strong> is identical: for equal degrees, the limit at infinity is the ratio of the leading coefficients, $\dfrac{3}{5}$.</li></ul>
+<h3>4. What changes when moving from $n$ to a real variable $x$</h3>
+<ol><li><strong>Continuous vs. discrete approach:</strong> In Exercise 1, $n$ steps through isolated integers $1,2,3,\dots$, whereas here $x$ slides continuously through all large real numbers (e.g., $x=100.37$, $x=1000\pi$).</li><li><strong>Geometric interpretation:</strong> On the graph of $y=f(x)$, $\lim_{x\to\infty}f(x)=\dfrac{3}{5}$ means the line $y=\dfrac{3}{5}$ is a <strong>horizontal asymptote</strong> of the curve as $x\to+\infty$ (and in fact also as $x\to-\infty$, a direction that does not exist for $n\in\mathbb{N}$).</li></ol>
+<h3>Quick verification</h3>
+<p>By polynomial division:</p>
+<div class="math-block">$$\frac{3x^2-x+1}{5x^2+4x-2} = \frac{3}{5} - \frac{\dfrac{17}{5}x-\dfrac{11}{5}}{5x^2+4x-2}.$$</div>
+<p>As $x\to\infty$, the degree-$1$ over degree-$2$ remainder fraction goes to $0$ (by Exercise 2), leaving $\dfrac{3}{5} = 0.6$. ✓</p>
+<h3>A concrete example</h3>
+<p>Because $x$ is a real variable, we can evaluate $f(x)$ at non-integer points as well as negative points:</p>
+<ul><li>At $x=50.5$: $f(50.5)=\dfrac{3(50.5)^2-50.5+1}{5(50.5)^2+4(50.5)-2}=\dfrac{7600.25}{12951.25}\approx 0.5868$.</li><li>At $x=1000$: $f(1000)=\dfrac{2\,999\,001}{5\,003\,998}\approx 0.59932$.</li><li>At $x=-1000$: $f(-1000)=\dfrac{3\,001\,001}{4\,995\,998}\approx 0.60068$.</li></ul>
+<p>In both directions, the graph approaches the horizontal asymptote $y=0.6$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Algebraically, solving this limit is the exact same move as Exercise 1: divide top and bottom by $x^2$, watch $\dfrac{1}{x}$ and $\dfrac{1}{x^2}$ go to $0$, and get the leading-coefficient ratio $\dfrac{3}{5}$. What changes conceptually is that $x$ varies continuously over all real numbers instead of jumping across integers $n$, so the result $\dfrac{3}{5}$ represents a horizontal asymptote $y=\dfrac{3}{5}$ of a continuous curve.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: Dominant terms in a sequence</a></li><li><a href="#exercise-2">Exercise 2: Different growth rates</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-7">
+<h2 class="exercise-title">Exercise 7. Limit at a Point and Canceling a Factor</h2>
+<h3>The question</h3>
+<p>Compute</p>
+<div class="math-block">$$\lim_{x\to3}\frac{x^2-4x+3}{x-3}.$$</div>
+<p>Explain why the value of the function at $x=3$ is not needed to compute the limit.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>When we substitute $x=3$ into $f(x)=\dfrac{x^2-4x+3}{x-3}$, both the numerator $3^2-4(3)+3=0$ and the denominator $3-3=0$ vanish, giving the indeterminate form $\dfrac{0}{0}$.</p>
+<p>By Bézout's theorem, the fact that the polynomial $x^2-4x+3$ equals $0$ at $x=3$ guarantees that $(x-3)$ is a factor of the numerator! Because the limit as $x\to3$ only examines points <em>near</em> $3$ with $x\neq3$, we have $x-3\neq0$ and can legally cancel the factor $(x-3)$.</p>
+<h3>1. Check the direct substitution and factor the numerator</h3>
+<p>At $x=3$, the numerator is $3^2-4(3)+3 = 9-12+3 = 0$ and the denominator is $3-3=0$ (type $\dfrac{0}{0}$). Factoring the quadratic numerator:</p>
+<div class="math-block">$$x^2-4x+3 = (x-1)(x-3).$$</div>
+<h3>2. Cancel the common factor for $x\neq3$</h3>
+<p>For every $x\neq3$, $x-3\neq0$, so we can divide numerator and denominator by $x-3$:</p>
+<div class="math-block">$$\frac{x^2-4x+3}{x-3} = \frac{(x-1)(x-3)}{x-3} = x-1\qquad (\text{for } x\neq3).$$</div>
+<h3>3. Compute the limit</h3>
+<p>Since $\dfrac{x^2-4x+3}{x-3}$ and $x-1$ are equal at every point $x\neq3$, they have the exact same limit as $x\to3$. Because $g(x)=x-1$ is a polynomial (hence continuous everywhere), we find the limit by substituting $x=3$ into the simplified expression:</p>
+<div class="math-block">$$\lim_{x\to3}\frac{x^2-4x+3}{x-3} = \lim_{x\to3}(x-1) = 3-1 = 2.$$</div>
+<h3>4. Why the value at $x=3$ is not needed</h3>
+<p>By definition, $\lim_{x\to3}f(x)$ describes what $f(x)$ approaches as $x$ gets arbitrarily close to $3$ <strong>while satisfying $x\neq3$</strong>.</p>
+<ul><li>Here, $f(3)$ is not even defined ($3$ is outside the domain of $f$).</li><li>Geometrically, the graph of $f(x)=\dfrac{x^2-4x+3}{x-3}$ is the straight line $y=x-1$ with a single <strong>puncture (hole)</strong> at the point $(3,2)$.</li><li>Walking along the line toward $x=3$ from either side brings you right up to height $y=2$, regardless of whether the point at $x=3$ is missing or moved elsewhere.</li></ul>
+<h3>Quick verification</h3>
+<p>Substitute $x=3+h$ with a small nonzero increment $h\neq0$:</p>
+<div class="math-block">$$f(3+h) = \frac{(3+h)^2-4(3+h)+3}{(3+h)-3} = \frac{9+6h+h^2-12-4h+3}{h} = \frac{2h+h^2}{h} = 2+h.$$</div>
+<p>As $h\to0$, $2+h\to2$. ✓</p>
+<h3>A concrete example</h3>
+<p>Evaluate $f(x)=\dfrac{x^2-4x+3}{x-3}$ at points approaching $3$ from the left and right:</p>
+<ul><li>$x=2.9$: $f(2.9) = \dfrac{(2.9)^2-4(2.9)+3}{2.9-3} = \dfrac{-0.19}{-0.1} = 1.9$.</li><li>$x=2.99$: $f(2.99) = \dfrac{-0.0199}{-0.01} = 1.99$.</li><li>$x=3.01$: $f(3.01) = \dfrac{0.0201}{0.01} = 2.01$.</li><li>$x=3.1$: $f(3.1) = \dfrac{0.21}{0.1} = 2.1$.</li></ul>
+<p>From both sides, the values pinch toward $2$, even though $f(3)$ does not exist.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Plugging in $x=3$ gives $0/0$, which tells us $(x-3)$ factors out of the top: $x^2-4x+3=(x-1)(x-3)$. Since a limit as $x\to3$ only cares about $x$ near $3$ and never uses $x=3$ itself, $x-3$ is nonzero and cancels out. That leaves $x-1$, which goes to $3-1=2$. The graph is just the line $y=x-1$ with a tiny hole at $(3,2)$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-8">Exercise 8: A square root in a function limit</a></li><li><a href="#exercise-10">Exercise 10: Continuity of a piecewise function</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-8">
+<h2 class="exercise-title">Exercise 8. A Square Root in a Function Limit</h2>
+<h3>The question</h3>
+<p>Compute</p>
+<div class="math-block">$$\lim_{x\to4}\frac{\sqrt{x}-2}{x-4}$$</div>
+<p>by rationalizing the numerator. Compare the idea with Exercise 3 involving a sequence.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Substituting $x=4$ into $\dfrac{\sqrt{x}-2}{x-4}$ gives $\dfrac{\sqrt{4}-2}{4-4}=\dfrac{0}{0}$. Just as in Exercise 7, a $\dfrac{0}{0}$ limit means a hidden common factor is vanishing in both the numerator and denominator.</p>
+<p>Here the factor $x-4$ is hidden beneath the square root in $\sqrt{x}-2$. Multiplying the numerator and denominator by the <strong>conjugate</strong> $\sqrt{x}+2$ uses $(\sqrt{x}-2)(\sqrt{x}+2)=x-4$ to bring that factor into the open so it can cancel!</p>
+<h3>1. Multiply numerator and denominator by the conjugate</h3>
+<p>For $x\ge0$, $x\neq4$, multiply top and bottom by $\sqrt{x}+2$:</p>
+<div class="math-block">$$\frac{\sqrt{x}-2}{x-4} = \frac{(\sqrt{x}-2)(\sqrt{x}+2)}{(x-4)(\sqrt{x}+2)}.$$</div>
+<h3>2. Expand the numerator and cancel $(x-4)$</h3>
+<p>Using the difference-of-squares formula $(A-B)(A+B)=A^2-B^2$ in the numerator gives $(\sqrt{x})^2-2^2=x-4$. Therefore, for $x\neq4$:</p>
+<div class="math-block">$$\frac{(\sqrt{x}-2)(\sqrt{x}+2)}{(x-4)(\sqrt{x}+2)} = \frac{x-4}{(x-4)(\sqrt{x}+2)} = \frac{1}{\sqrt{x}+2}.$$</div>
+<h3>3. Evaluate the limit as $x\to4$</h3>
+<p>Now the denominator no longer vanishes at $x=4$, so we can substitute $x=4$ directly:</p>
+<div class="math-block">$$\lim_{x\to4}\frac{\sqrt{x}-2}{x-4} = \lim_{x\to4}\frac{1}{\sqrt{x}+2} = \frac{1}{\sqrt{4}+2} = \frac{1}{2+2} = \frac{1}{4}.$$</div>
+<h3>4. Comparison with Exercise 3</h3>
+<ul><li><strong>What is the same:</strong> Both exercises use the exact same algebraic identity, $(\sqrt{A}-B)(\sqrt{A}+B)=A-B^2$, to remove a square root from a difference and turn a problematic subtraction into a benign sum in the other position.</li><li><strong>What is different:</strong> In Exercise 3 ($n\to\infty$), conjugation turned an $\infty-\infty$ form into an $\dfrac{\infty}{\infty}$ fraction where the dominant term $n$ was factored out. Here ($x\to4$), conjugation turns a $\dfrac{0}{0}$ form into a product where the vanishing factor $(x-4)$ cancels directly.</li></ul>
+<h3>Quick verification</h3>
+<p>We can also factor the denominator directly as a difference of squares since $x-4=(\sqrt{x})^2-2^2$:</p>
+<div class="math-block">$$\frac{\sqrt{x}-2}{x-4} = \frac{\sqrt{x}-2}{(\sqrt{x}-2)(\sqrt{x}+2)} = \frac{1}{\sqrt{x}+2}\xrightarrow[x\to4]{}\frac{1}{4}.$$</div>
+<p>Both viewpoints yield $\dfrac{1}{4}=0.25$. ✓</p>
+<h3>A concrete example</h3>
+<p>Notice that $\dfrac{\sqrt{x}-2}{x-4}$ is the slope of the secant line to $y=\sqrt{x}$ between $(4,2)$ and $(x,\sqrt{x})$:</p>
+<ul><li>For $x=4.04$: $\sqrt{4.04}\approx 2.009975$, so $\dfrac{2.009975-2}{4.04-4} \approx \dfrac{0.009975}{0.04} \approx 0.2494$.</li><li>For $x=3.96$: $\sqrt{3.96}\approx 1.989975$, so $\dfrac{1.989975-2}{3.96-4} \approx \dfrac{-0.010025}{-0.04} \approx 0.2506$.</li></ul>
+<p>As $x\to4$, the secant slope approaches the tangent slope $\dfrac{1}{4}=0.25$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Plugging in $x=4$ gives $0/0$. Just like in Exercise 3, whenever a square root sits in a difference, we multiply top and bottom by its conjugate, $\sqrt{x}+2$. The top simplifies to $(\sqrt{x})^2-2^2=x-4$, which cancels the $(x-4)$ on the bottom! That leaves $\dfrac{1}{\sqrt{x}+2}$, and plugging in $x=4$ gives $\dfrac{1}{2+2}=\dfrac{1}{4}$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-3">Exercise 3: A square root and removing an indeterminate form</a></li><li><a href="#exercise-7">Exercise 7: Limit at a point and canceling a factor</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-9">
+<h2 class="exercise-title">Exercise 9. One-Sided Limits and an Asymptote</h2>
+<h3>The question</h3>
+<p>Analyze the left-hand and right-hand limits of</p>
+<div class="math-block">$$f(x)=\frac1{x-2}$$</div>
+<p>as $x\to2$. Does the two-sided limit exist? Interpret the result on a sketch of the graph and identify the vertical asymptote.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>When $x\to2$, the numerator of $f(x)=\dfrac{1}{x-2}$ is a nonzero constant ($1$) while the denominator $x-2$ approaches $0$. Dividing $1$ by a number tiny in magnitude produces a result huge in magnitude ($\left|\dfrac{1}{x-2}\right|\to+\infty$).</p>
+<p>However, the <strong>sign</strong> of the result depends on whether $x$ approaches $2$ from the left ($x&lt;2$, so $x-2&lt;0$) or from the right ($x&gt;2$, so $x-2&gt;0$). That is why we must examine the two <strong>one-sided limits</strong> separately.</p>
+<h3>1. Left-hand limit ($x\to2^-$)</h3>
+<p>When $x$ approaches $2$ from the left, we have $x&lt;2$, which means the denominator $x-2$ is a tiny <strong>negative</strong> number ($x-2\to0^-$). Dividing $+1$ by a tiny negative number gives a large negative number:</p>
+<div class="math-block">$$\lim_{x\to2^-}\frac{1}{x-2} = \left[\frac{1}{0^-}\right] = -\infty.$$</div>
+<h3>2. Right-hand limit ($x\to2^+$)</h3>
+<p>When $x$ approaches $2$ from the right, we have $x&gt;2$, which means the denominator $x-2$ is a tiny <strong>positive</strong> number ($x-2\to0^+$). Dividing $+1$ by a tiny positive number gives a large positive number:</p>
+<div class="math-block">$$\lim_{x\to2^+}\frac{1}{x-2} = \left[\frac{1}{0^+}\right] = +\infty.$$</div>
+<h3>3. Does the two-sided limit exist?</h3>
+<p>A two-sided limit $\lim_{x\to2}f(x)$ exists only if the left-hand limit and the right-hand limit are <strong>equal</strong>. Here:</p>
+<div class="math-block">$$\lim_{x\to2^-}f(x) = -\infty \neq +\infty = \lim_{x\to2^+}f(x).$$</div>
+<p>Therefore, the two-sided limit $\lim_{x\to2}\dfrac{1}{x-2}$ <strong>does not exist</strong> (not even as an improper limit $\pm\infty$).</p>
+<h3>4. Geometric interpretation and vertical asymptote</h3>
+<p>The graph of $f(x)=\dfrac{1}{x-2}$ is the standard hyperbola $y=\dfrac{1}{x}$ shifted $2$ units to the right:</p>
+<pre><code>        y
+        |      :  |
+        |      :  |  (right branch -&gt; +infinity)
+        |      :   \
+--------+------2----+--------&gt; x
+        |    / :
+        |   |  :
+        |   |  :  (left branch -&gt; -infinity)
+            x = 2</code></pre>
+<ul><li>As $x$ nears $2$ from the left, the curve plunges straight down toward $-\infty$.</li><li>As $x$ nears $2$ from the right, the curve shoots straight up toward $+\infty$.</li><li>The vertical line <strong>$x=2$ is a vertical asymptote</strong> of the graph of $f$.</li></ul>
+<h3>Quick verification</h3>
+<p>Let us write $x=2+h$:</p>
+<ul><li>From the left, $h=-10^{-k}$ ($k\in\mathbb{N}$): $f(2-10^{-k}) = \dfrac{1}{-10^{-k}} = -10^k \xrightarrow[k\to\infty]{} -\infty$. ✓</li><li>From the right, $h=+10^{-k}$ ($k\in\mathbb{N}$): $f(2+10^{-k}) = \dfrac{1}{10^{-k}} = +10^k \xrightarrow[k\to\infty]{} +\infty$. ✓</li></ul>
+<h3>A concrete example</h3>
+<p>Let us compute $f(x)=\dfrac{1}{x-2}$ on both sides of $x=2$:</p>
+<table><thead><tr><th>Approaching from the left ($x&lt;2$)</th><th>$f(x)$</th><th>Approaching from the right ($x&gt;2$)</th><th>$f(x)$</th></tr></thead><tbody><tr><td>$x=1.9$</td><td>$-10$</td><td>$x=2.1$</td><td>$+10$</td></tr><tr><td>$x=1.99$</td><td>$-100$</td><td>$x=2.01$</td><td>$+100$</td></tr><tr><td>$x=1.999$</td><td>$-1000$</td><td>$x=2.001$</td><td>$+1000$</td></tr></tbody></table>
+<h3>How I would explain this in class</h3>
+<blockquote><p>When $x$ gets close to $2$, the bottom $x-2$ goes to $0$ while the top stays at $1$, so the fraction blows up in size. Which way it blows up depends on the sign of $x-2$: for $x&lt;2$, $x-2$ is negative so the limit from the left is $-\infty$; for $x&gt;2$, $x-2$ is positive so the limit from the right is $+\infty$. Because $-\infty\neq+\infty$, the two-sided limit does not exist, and the line $x=2$ is a vertical asymptote.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-7">Exercise 7: Limit at a point and canceling a factor</a></li><li><a href="#exercise-10">Exercise 10: Continuity of a piecewise function</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-10">
+<h2 class="exercise-title">Exercise 10. Continuity of a Piecewise Function</h2>
+<h3>The question</h3>
+<p>Find $a$ so that</p>
+<div class="math-block">$$f(x)=\begin{cases}ax+1,&amp;x&lt;2,\\x^2-1,&amp;x\ge2\end{cases}$$</div>
+<p>is continuous at $x=2$. Explicitly compare the left-hand limit, right-hand limit, and function value.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>A function $f$ is <strong>continuous at a point $x_0$</strong> if three quantities exist and are equal:</p>
+<ol><li>The left-hand limit $\lim_{x\to x_0^-}f(x)$,</li><li>The right-hand limit $\lim_{x\to x_0^+}f(x)$,</li><li>The function value $f(x_0)$.</li></ol>
+<p>Geometrically, for a piecewise function that switches formulas at $x_0=2$, continuity means the left-hand branch ($y=ax+1$) and the right-hand branch ($y=x^2-1$) must meet at the exact same point $(2, f(2))$ without a jump.</p>
+<h3>1. Compute the function value at $x=2$</h3>
+<p>Because the condition $x\ge2$ includes $x=2$, we use the second formula to find $f(2)$:</p>
+<div class="math-block">$$f(2) = 2^2-1 = 4-1 = 3.$$</div>
+<h3>2. Compute the right-hand limit ($x\to2^+$)</h3>
+<p>When $x\to2^+$, we have $x&gt;2$, so $f(x)=x^2-1$:</p>
+<div class="math-block">$$\lim_{x\to2^+}f(x) = \lim_{x\to2^+}(x^2-1) = 2^2-1 = 3.$$</div>
+<p>Notice that the right-hand limit automatically agrees with $f(2)=3$.</p>
+<h3>3. Compute the left-hand limit ($x\to2^-$)</h3>
+<p>When $x\to2^-$, we have $x&lt;2$, so $f(x)=ax+1$:</p>
+<div class="math-block">$$\lim_{x\to2^-}f(x) = \lim_{x\to2^-}(ax+1) = 2a+1.$$</div>
+<h3>4. Equate the three quantities to find $a$</h3>
+<p>For $f$ to be continuous at $x=2$, the left-hand limit, right-hand limit, and function value must all be equal:</p>
+<div class="math-block">$$\lim_{x\to2^-}f(x) = \lim_{x\to2^+}f(x) = f(2).$$</div>
+<p>Substituting the expressions we found:</p>
+<div class="math-block">$$2a+1 = 3 \implies 2a = 2 \implies a = 1.$$</div>
+<p>Thus, $f$ is continuous at $x=2$ if and only if <strong>$a=1$</strong>.</p>
+<h3>Quick verification</h3>
+<p>Substitute $a=1$ back into $f(x)$:</p>
+<div class="math-block">$$f(x)=\begin{cases}x+1,&amp;x&lt;2,\\x^2-1,&amp;x\ge2.\end{cases}$$</div>
+<p>At the junction $x=2$:</p>
+<ul><li>Left-hand limit: $\lim_{x\to2^-}(x+1) = 2+1 = 3$.</li><li>Right-hand limit: $\lim_{x\to2^+}(x^2-1) = 4-1 = 3$.</li><li>Function value: $f(2) = 4-1 = 3$.</li></ul>
+<p>All three equal $3$. ✓</p>
+<h3>A concrete example</h3>
+<p>What happens if we choose a different parameter, say $a=2$?</p>
+<ul><li>Then for $x&lt;2$, $f(x)=2x+1\xrightarrow[x\to2^-]{} 5$, while for $x\ge2$, $f(x)=x^2-1\xrightarrow[x\to2^+]{} 3$.</li><li>At $x=2$, the graph jumps abruptly from height $5$ down to height $3$ (a jump discontinuity of size $2$). Choosing $a=1$ tilts the line $y=ax+1$ so that its endpoint lands right on $(2,3)$, sealing the gap.</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Continuity at $x=2$ means no break in the graph at $x=2$, which requires three numbers to match: the left-hand limit, the right-hand limit, and $f(2)$. For $x\ge2$, the formula $x^2-1$ gives both the right-hand limit and $f(2)$ as $2^2-1=3$. For $x&lt;2$, the formula $ax+1$ approaches $2a+1$ from the left. Setting $2a+1=3$ gives $a=1$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-7">Exercise 7: Limit at a point and canceling a factor</a></li><li><a href="#exercise-9">Exercise 9: One-sided limits and an asymptote</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-11">
+<h2 class="exercise-title">Exercise 11. An n-th Root</h2>
+<h3>The question</h3>
+<p>Compute</p>
+<div class="math-block">$$\lim_{n\to\infty}\sqrt[n]{5^n+2^n}.$$</div>
+<p>Explain which term dominates and why the transformation looks different from the case of a quotient of polynomials.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Inside the $n$-th root we have the sum of two exponential terms, $5^n$ and $2^n$. Which one dominates? Because the base $5$ is larger than the base $2$, $5^n$ grows vastly faster than $2^n$.</p>
+<p>Just as we factored out the highest power of $n$ in Exercise 1, here we factor out the <strong>exponential with the largest base</strong>, $5^n$, from under the $n$-th root—or equivalently bound the expression from below and above using the Squeeze Theorem.</p>
+<h3>1. Factor out the dominant term $5^n$</h3>
+<p>Factor $5^n$ out of the sum inside the radical:</p>
+<div class="math-block">$$5^n+2^n = 5^n\left(1+\frac{2^n}{5^n}\right) = 5^n\left(1+\left(\frac{2}{5}\right)^n\right).$$</div>
+<p>Taking the $n$-th root and using $\sqrt[n]{5^n}=5$:</p>
+<div class="math-block">$$\sqrt[n]{5^n+2^n} = \sqrt[n]{5^n\left(1+\left(\frac{2}{5}\right)^n\right)} = 5\,\sqrt[n]{1+\left(\frac{2}{5}\right)^n}.$$</div>
+<h3>2. Evaluate the limit</h3>
+<p>As $n\to\infty$, since $0&lt;\dfrac{2}{5}&lt;1$, we know from Exercise 4 that $\left(\dfrac{2}{5}\right)^n\to0$. Moreover, for every $n\ge1$:</p>
+<div class="math-block">$$1 &lt; 1+\left(\frac{2}{5}\right)^n &lt; 2 \implies 1 &lt; \sqrt[n]{1+\left(\frac{2}{5}\right)^n} &lt; \sqrt[n]{2}.$$</div>
+<p>Since $\lim_{n\to\infty}\sqrt[n]{2}=1$, the Squeeze Theorem gives $\lim_{n\to\infty}\sqrt[n]{1+(2/5)^n}=1$, and therefore:</p>
+<div class="math-block">$$\lim_{n\to\infty}\sqrt[n]{5^n+2^n} = 5\cdot 1 = 5.$$</div>
+<h3>3. Which term dominates?</h3>
+<p>The term <strong>$5^n$ dominates</strong> because for exponential sequences $a^n$, the growth rate is governed by the <strong>base $a$</strong>. Their ratio is</p>
+<div class="math-block">$$\frac{2^n}{5^n} = \left(\frac{2}{5}\right)^n = 0.4^n \xrightarrow[n\to\infty]{} 0,$$</div>
+<p>which decays to zero exponentially fast.</p>
+<h3>4. Why the transformation differs from a quotient of polynomials</h3>
+<ul><li><strong>In a quotient of polynomials</strong> (like $\dfrac{4n^2-3n+1}{2n^2+5n-7}$), the exponent is fixed ($2$, $1$, $0$) and the base $n$ grows. We factor out the highest power $n^2$ and <strong>cancel</strong> $n^2$ between numerator and denominator.</li><li><strong>In an $n$-th root of exponentials</strong> ($\sqrt[n]{5^n+2^n}$), the bases ($5$ and $2$) are fixed while the exponent $n$ grows, and there is no denominator to cancel against. Instead, we factor out the largest-base exponential $5^n$, and the <strong>outer $n$-th root $\sqrt[n]{\,\cdot\,}$ undoes the $n$-th power</strong>, turning $\sqrt[n]{5^n}$ into the constant $5$.</li></ul>
+<h3>Quick verification</h3>
+<p>We can apply the <strong>Squeeze Theorem</strong> directly to $5^n+2^n$:</p>
+<div class="math-block">$$5^n &lt; 5^n+2^n &lt; 5^n+5^n = 2\cdot 5^n.$$</div>
+<p>Taking the $n$-th root across the inequality gives:</p>
+<div class="math-block">$$5 = \sqrt[n]{5^n} &lt; \sqrt[n]{5^n+2^n} &lt; \sqrt[n]{2\cdot 5^n} = 5\sqrt[n]{2}.$$</div>
+<p>Since $\lim_{n\to\infty}\sqrt[n]{2}=2^{1/n}=2^0=1$, both outer bounds converge to $5$, forcing $\lim_{n\to\infty}\sqrt[n]{5^n+2^n}=5$. ✓</p>
+<h3>A concrete example</h3>
+<p>Notice how fast $\sqrt[n]{5^n+2^n}$ approaches $5$ even for small $n$:</p>
+<ul><li>$n=1$: $\sqrt[1]{5^1+2^1} = 7$.</li><li>$n=2$: $\sqrt{25+4} = \sqrt{29} \approx 5.3852$.</li><li>$n=5$: $\sqrt[5]{3125+32} = \sqrt[5]{3157} \approx 5.0102$.</li><li>$n=10$: $\sqrt[10]{9\,765\,625 + 1024} = \sqrt[10]{9\,766\,649} \approx 5.000052$.</li></ul>
+<p>Already at $n=10$, $2^{10}=1024$ is ten thousand times smaller than $5^{10}=9\,765\,625$!</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Between $5^n$ and $2^n$, $5^n$ completely dominates because its base is larger. Instead of canceling a power of $n$ between top and bottom like we do for polynomials, we factor $5^n$ out from under the $n$-th root: $\sqrt[n]{5^n(1+(2/5)^n)} = 5\sqrt[n]{1+(2/5)^n}$. Or even faster: sandwich $5^n+2^n$ between $5^n$ and $2\cdot 5^n$, take the $n$-th root to get $5 &lt; \sqrt[n]{5^n+2^n} &lt; 5\sqrt[n]{2}$, and since $\sqrt[n]{2}\to 1$, the limit is $5$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: Dominant terms in a sequence</a></li><li><a href="#exercise-4">Exercise 4: Powers and oscillation</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-12">
+<h2 class="exercise-title">Exercise 12. Exponential Function Limit</h2>
+<h3>The question</h3>
+<p>Compute</p>
+<div class="math-block">$$\lim_{x\to0}(1+3x)^{1/x}.$$</div>
+<p>Connect the result with the limit from Exercise 5 and show the appropriate transformation.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>As $x\to0$, the base $1+3x\to 1$ while the exponent $\dfrac{1}{x}\to\pm\infty$, giving the indeterminate form $1^\infty$—the exact same type we saw in Exercise 5!</p>
+<p>The continuous version of Euler's limit states that whenever a quantity $u\to0$,</p>
+<div class="math-block">$$\lim_{u\to0}(1+u)^{1/u} = e\qquad \left(\text{equivalently, setting } t=\frac{1}{u},\; \lim_{t\to\pm\infty}\left(1+\frac{1}{t}\right)^t = e\right).$$</div>
+<p>To match this pattern, the exponent must be the exact <strong>reciprocal</strong> of the small term added to $1$. Since our base has $+3x$, we need $\dfrac{1}{3x}$ in the exponent.</p>
+<h3>1. Rewrite the exponent to match the inner term $3x$</h3>
+<p>Inside the parentheses we have $1+3x$. To create the matching exponent $\dfrac{1}{3x}$, we multiply and divide the exponent $\dfrac{1}{x}$ by $3$:</p>
+<div class="math-block">$$\frac{1}{x} = \frac{3}{3x} = \frac{1}{3x}\cdot 3.$$</div>
+<p>Using the exponent law $a^{bc}=\left(a^b\right)^c$:</p>
+<div class="math-block">$$(1+3x)^{1/x} = (1+3x)^{\frac{1}{3x}\cdot 3} = \left[(1+3x)^{\frac{1}{3x}}\right]^3.$$</div>
+<h3>2. Substitute and apply the fundamental limit for $e$</h3>
+<p>Let $u=3x$ (or $t=\dfrac{1}{3x}$). As $x\to0$, we have $u=3x\to0$ (and $t\to\pm\infty$). Therefore, the expression inside the brackets reduces to the classical limit for $e$:</p>
+<div class="math-block">$$\lim_{x\to0}(1+3x)^{\frac{1}{3x}} = \lim_{u\to0}(1+u)^{1/u} = \lim_{t\to\pm\infty}\left(1+\frac{1}{t}\right)^t = e.$$</div>
+<h3>3. Raise to the outer power $3$</h3>
+<p>Because the cubing function $z\mapsto z^3$ is continuous everywhere, we can pass the limit inside the outer exponent:</p>
+<div class="math-block">$$\lim_{x\to0}(1+3x)^{1/x} = \left(\lim_{x\to0}(1+3x)^{\frac{1}{3x}}\right)^3 = e^3.$$</div>
+<h3>4. Connection with Exercise 5</h3>
+<p>In Exercise 5, we studied $\lim_{n\to\infty}\left(1+\dfrac{1}{n}\right)^n=e$. If we set $x=\dfrac{1}{3n}$, then as $n\to\infty$ we have $x\to0^+$ and $\dfrac{1}{x}=3n$, turning our expression into:</p>
+<div class="math-block">$$(1+3x)^{1/x} = \left(1+\frac{1}{n}\right)^{3n} = \left[\left(1+\frac{1}{n}\right)^n\right]^3 \xrightarrow[n\to\infty]{} e^3.$$</div>
+<p>More generally, for any constant $k\in\mathbb{R}$, $\lim_{x\to0}(1+kx)^{1/x} = e^k$.</p>
+<h3>Quick verification</h3>
+<p>We can also verify the limit using the natural logarithm and exponential $(1+3x)^{1/x} = e^{\frac{\ln(1+3x)}{x}}$:</p>
+<div class="math-block">$$\lim_{x\to0}\frac{\ln(1+3x)}{x} = 3\lim_{x\to0}\frac{\ln(1+3x)}{3x} = 3\cdot 1 = 3.$$</div>
+<p>By continuity of the exponential function, $\lim_{x\to0}(1+3x)^{1/x} = e^3$. ✓</p>
+<h3>A concrete example</h3>
+<p>Let us compare $(1+3x)^{1/x}$ for small $x$ around $0$ with $e^3\approx 20.0855$:</p>
+<ul><li>For $x=0.01$: $(1+0.03)^{100} = (1.03)^{100} \approx 19.2186$.</li><li>For $x=0.001$: $(1+0.003)^{1000} = (1.003)^{1000} \approx 19.9955$.</li><li>For $x=-0.001$: $(1-0.003)^{-1000} = (0.997)^{-1000} \approx 20.1764$.</li></ul>
+<p>Both from the left and from the right, the values squeeze toward $e^3\approx 20.0855$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>As $x\to0$, $(1+3x)^{1/x}$ has the form $1^\infty$, which is the signature of the number $e$. To use the fundamental limit $\lim_{u\to0}(1+u)^{1/u}=e$, the exponent needs to be the reciprocal of $3x$, namely $\dfrac{1}{3x}$. So I rewrite the exponent $\dfrac{1}{x}$ as $\dfrac{1}{3x}\cdot 3$: then $\left[(1+3x)^{1/(3x)}\right]^3$ has an inside that goes to $e$, and the outer power $3$ gives $e^3$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-5">Exercise 5: The classical limit leading to the number e</a></li><li><a href="#exercise-13">Exercise 13: Fundamental trigonometric limit</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-13">
+<h2 class="exercise-title">Exercise 13. Fundamental Trigonometric Limit</h2>
+<h3>The question</h3>
+<p>Using</p>
+<div class="math-block">$$\lim_{x\to0}\frac{\sin x}{x}=1,$$</div>
+<p>compute</p>
+<div class="math-block">$$\lim_{x\to0}\frac{\sin5x}{x},\qquad \lim_{x\to0}\frac{\sin2x}{\sin3x}.$$</div>
+<p>In each case, show how you reduce the expression to the fundamental limit.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>The fundamental trigonometric limit tells us that for any nonzero expression $u(x)$ that approaches $0$,</p>
+<div class="math-block">$$\lim_{u\to0}\frac{\sin u}{u} = 1\qquad\text{and equivalently}\qquad \lim_{u\to0}\frac{u}{\sin u} = 1.$$</div>
+<p>Wait: we <strong>cannot</strong> pull constants out of $\sin(kx)$ as if sine were multiplication ($\sin 5x \neq 5\sin x$)! Instead, since we cannot change the argument $kx$ inside the sine, we <strong>adjust the denominator</strong> by multiplying and dividing by $k$ so that the denominator matches the exact angle inside $\sin(\,\cdot\,)$.</p>
+<h3>1. First limit: $\lim_{x\to0}\dfrac{\sin 5x}{x}$</h3>
+<p>The angle inside the sine is $5x$, so we want $5x$ in the denominator. Multiplying numerator and denominator by $5$:</p>
+<div class="math-block">$$\frac{\sin 5x}{x} = 5\cdot\frac{\sin 5x}{5x}.$$</div>
+<p>Let $u=5x$. As $x\to0$, we also have $u\to0$, so $\lim_{x\to0}\dfrac{\sin 5x}{5x} = \lim_{u\to0}\dfrac{\sin u}{u} = 1$. Therefore:</p>
+<div class="math-block">$$\lim_{x\to0}\frac{\sin 5x}{x} = 5\cdot\lim_{x\to0}\frac{\sin 5x}{5x} = 5\cdot 1 = 5.$$</div>
+<h3>2. Second limit: setting up the reduction for $\lim_{x\to0}\dfrac{\sin 2x}{\sin 3x}$</h3>
+<p>Here we have two sine expressions, $\sin 2x$ and $\sin 3x$. To pair each sine with its matching angle, we multiply and divide by $2x$ and $3x$:</p>
+<div class="math-block">$$\frac{\sin 2x}{\sin 3x} = \frac{\sin 2x}{2x}\cdot\frac{3x}{\sin 3x}\cdot\frac{2x}{3x} = \frac{2}{3}\cdot\frac{\sin 2x}{2x}\cdot\frac{3x}{\sin 3x}.$$</div>
+<h3>3. Evaluating the second limit</h3>
+<p>As $x\to0$, both $2x\to0$ and $3x\to0$. Using the fundamental trigonometric limit on each factor:</p>
+<div class="math-block">$$\lim_{x\to0}\frac{\sin 2x}{2x} = 1,\qquad \lim_{x\to0}\frac{3x}{\sin 3x} = \frac{1}{\lim_{x\to0}\dfrac{\sin 3x}{3x}} = \frac{1}{1} = 1.$$</div>
+<p>Multiplying the limits of the factors together gives:</p>
+<div class="math-block">$$\lim_{x\to0}\frac{\sin 2x}{\sin 3x} = \frac{2}{3}\cdot 1\cdot 1 = \frac{2}{3}.$$</div>
+<h3>4. Geometric meaning of the reduction</h3>
+<p>Why does $\lim_{u\to0}\dfrac{\sin u}{u}=1$ hold in the first place (when $u$ is measured in radians)? Because near $u=0$, the graph of $y=\sin u$ is tangent to the line $y=u$, so for tiny angles <strong>$\sin u \approx u$</strong>.</p>
+<ul><li>Replacing $\sin 5x \approx 5x$ immediately suggests $\dfrac{\sin 5x}{x}\approx \dfrac{5x}{x}=5$.</li><li>Replacing $\sin 2x \approx 2x$ and $\sin 3x \approx 3x$ suggests $\dfrac{\sin 2x}{\sin 3x}\approx \dfrac{2x}{3x}=\dfrac{2}{3}$.</li></ul>
+<p>Multiplying and dividing by $5x$, $2x$, and $3x$ is simply the algebraic way to make the approximation $\sin u\approx u$ into a rigorous proof.</p>
+<h3>Quick verification</h3>
+<p>Alternatively, divide both numerator and denominator of $\dfrac{\sin 2x}{\sin 3x}$ by $x$:</p>
+<div class="math-block">$$\lim_{x\to0}\frac{\sin 2x}{\sin 3x} = \lim_{x\to0}\frac{\dfrac{\sin 2x}{x}}{\dfrac{\sin 3x}{x}} = \frac{\lim_{x\to0}2\dfrac{\sin 2x}{2x}}{\lim_{x\to0}3\dfrac{\sin 3x}{3x}} = \frac{2\cdot 1}{3\cdot 1} = \frac{2}{3}. \quad \checkmark$$</div>
+<h3>A concrete example</h3>
+<p>Let us test both expressions for a small angle $x=0.01$ radians:</p>
+<ul><li>First expression: $\dfrac{\sin(0.05)}{0.01} \approx \dfrac{0.049979}{0.01} \approx 4.9979$ (very close to $5$).</li><li>Second expression: $\dfrac{\sin(0.02)}{\sin(0.03)} \approx \dfrac{0.0199987}{0.0299955} \approx 0.66672$ (very close to $\dfrac{2}{3}\approx 0.66667$).</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>The rule $\lim_{u\to0}\dfrac{\sin u}{u}=1$ works whenever the denominator matches the exact argument inside $\sin u$. Since you can never pull the $5$ out of $\sin 5x$, you instead create a $5x$ on the bottom: $\dfrac{\sin 5x}{x} = 5\cdot\dfrac{\sin 5x}{5x}\to 5\cdot 1=5$. For $\dfrac{\sin 2x}{\sin 3x}$, you give $\sin 2x$ a $2x$ and $\sin 3x$ a $3x$, leaving $\dfrac{2x}{3x}=\dfrac{2}{3}$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-12">Exercise 12: Exponential function limit</a></li><li><a href="#exercise-14">Exercise 14: A 0/0 limit with trigonometry</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-14">
+<h2 class="exercise-title">Exercise 14. A $0/0$ Limit with Trigonometry</h2>
+<h3>The question</h3>
+<p>Compute</p>
+<div class="math-block">$$\lim_{x\to0}\frac{1-\cos x}{x^2}.$$</div>
+<p>Justify the result without using l'Hôpital's rule, using a trigonometric identity and the fundamental limit.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>When $x\to0$, $\cos x\to \cos 0 = 1$, so both the numerator $1-\cos x$ and the denominator $x^2$ approach $0$, giving the indeterminate form $\dfrac{0}{0}$.</p>
+<p>Notice the $x^2$ in the denominator: this is a clue that $1-\cos x$ vanishes like the <strong>square</strong> of a sine! We have two classic trigonometric identities to turn $1-\cos x$ into a square of sine:</p>
+<ol><li><strong>Half-angle identity:</strong> $1-\cos x = 2\sin^2\left(\dfrac{x}{2}\right)$, or</li><li><strong>Pythagorean conjugate:</strong> multiplying top and bottom by $1+\cos x$ gives $(1-\cos x)(1+\cos x)=1-\cos^2 x=\sin^2 x$.</li></ol>
+<p>Let us carry out the half-angle method step by step, and then use the conjugate method as our verification!</p>
+<h3>1. Apply the half-angle trigonometric identity</h3>
+<p>Recall the double-angle formula $\cos x = 1 - 2\sin^2\left(\dfrac{x}{2}\right)$, which rearranges to:</p>
+<div class="math-block">$$1-\cos x = 2\sin^2\left(\frac{x}{2}\right).$$</div>
+<p>Substituting this into the quotient gives:</p>
+<div class="math-block">$$\frac{1-\cos x}{x^2} = \frac{2\sin^2\left(\dfrac{x}{2}\right)}{x^2}.$$</div>
+<h3>2. Match the argument $\dfrac{x}{2}$ in the denominator</h3>
+<p>Because $\sin\left(\dfrac{x}{2}\right)$ is squared, we need $\left(\dfrac{x}{2}\right)^2 = \dfrac{x^2}{4}$ in the denominator. Writing $x^2 = 4\left(\dfrac{x}{2}\right)^2$:</p>
+<div class="math-block">$$\frac{2\sin^2\left(\dfrac{x}{2}\right)}{x^2} = \frac{2\sin^2\left(\dfrac{x}{2}\right)}{4\left(\dfrac{x}{2}\right)^2} = \frac{1}{2}\left(\frac{\sin\left(\dfrac{x}{2}\right)}{\dfrac{x}{2}}\right)^2.$$</div>
+<h3>3. Apply the fundamental trigonometric limit</h3>
+<p>Let $u=\dfrac{x}{2}$. As $x\to0$, $u\to0$, so by the fundamental trigonometric limit:</p>
+<div class="math-block">$$\lim_{x\to0}\frac{\sin\left(\dfrac{x}{2}\right)}{\dfrac{x}{2}} = \lim_{u\to0}\frac{\sin u}{u} = 1.$$</div>
+<p>Therefore, using the limit laws for products and powers:</p>
+<div class="math-block">$$\lim_{x\to0}\frac{1-\cos x}{x^2} = \frac{1}{2}\cdot 1^2 = \frac{1}{2}.$$</div>
+<h3>4. Why the denominator had to be $x^2$ (and not $x$)</h3>
+<p>Geometrically, on the unit circle at angle $x$, $\sin x$ is the vertical leg (which grows linearly with $x$), whereas $1-\cos x$ is the tiny horizontal gap between $(1,0)$ and $(\cos x, 0)$, which grows quadratically like $\dfrac{1}{2}x^2$. That is why $\lim_{x\to0}\dfrac{1-\cos x}{x^2}=\dfrac{1}{2}$ is finite and nonzero, whereas $\lim_{x\to0}\dfrac{1-\cos x}{x} = \lim_{x\to0}x\cdot\dfrac{1-\cos x}{x^2} = 0\cdot\dfrac{1}{2}=0$.</p>
+<h3>Quick verification</h3>
+<p>Let us check the result using the <strong>conjugate method</strong> by multiplying top and bottom by $1+\cos x$:</p>
+<div class="math-block">$$\frac{1-\cos x}{x^2} = \frac{(1-\cos x)(1+\cos x)}{x^2(1+\cos x)} = \frac{1-\cos^2 x}{x^2(1+\cos x)} = \left(\frac{\sin x}{x}\right)^2\cdot\frac{1}{1+\cos x}.$$</div>
+<p>Taking the limit as $x\to0$ gives $1^2\cdot\dfrac{1}{1+\cos 0} = 1\cdot\dfrac{1}{1+1} = \dfrac{1}{2}$. ✓</p>
+<h3>A concrete example</h3>
+<p>Evaluate $\dfrac{1-\cos x}{x^2}$ for $x=0.1$ and $x=0.01$ radians:</p>
+<ul><li>For $x=0.1$: $\cos(0.1)\approx 0.99500417$, so $\dfrac{1-0.99500417}{0.01} = \dfrac{0.00499583}{0.01} \approx 0.49958$.</li><li>For $x=0.01$: $\cos(0.01)\approx 0.9999500004$, so $\dfrac{1-0.9999500004}{0.0001} \approx 0.499996$.</li></ul>
+<p>Both values are just below $\dfrac{1}{2}=0.5$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Plugging in $x=0$ gives $0/0$. There are two great ways to turn $1-\cos x$ into $\sin^2$ so we can use $\dfrac{\sin u}{u}\to 1$. Either use the half-angle identity $1-\cos x = 2\sin^2(x/2)$ to get $\dfrac{2\sin^2(x/2)}{4(x/2)^2}\to\dfrac{2}{4}=\dfrac{1}{2}$, or multiply top and bottom by $1+\cos x$ to get $\left(\dfrac{\sin x}{x}\right)^2\dfrac{1}{1+\cos x}\to 1^2\cdot\dfrac{1}{1+1}=\dfrac{1}{2}$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-8">Exercise 8: A square root in a function limit</a></li><li><a href="#exercise-13">Exercise 13: Fundamental trigonometric limit</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-15">
+<h2 class="exercise-title">Exercise 15. Observation Versus Proof</h2>
+<h3>The question</h3>
+<p>Choose one sequence and one function from this set. For the sequence, compute several values for increasingly large $n$. For the function, prepare a table of values with arguments approaching the limit point from the left and right. Sketch the behavior of both objects.</p>
+<p>Compare the observation with the analytical result and explain why a finite number of calculations or a sketch does not constitute a proof that the limit exists.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Numerical tables and graphs are indispensable <strong>discovery tools</strong>: they give us a conjecture for what a limit might be and help us catch algebra mistakes.</p>
+<p>However, a limit is a statement about <strong>infinitely many arguments</strong>—either all $n$ beyond any threshold $N$ (for $n\to\infty$), or all $x$ in an arbitrarily small punctured neighborhood $(x_0-\delta, x_0+\delta)\setminus\{x_0\}$ (for $x\to x_0$). No finite table of numbers or finite-resolution drawing can check infinitely many inputs.</p>
+<h3>1. Chosen sequence: numerical table and sketch</h3>
+<p>We choose the sequence from Exercise 1:</p>
+<div class="math-block">$$a_n = \frac{4n^2-3n+1}{2n^2+5n-7},\qquad \text{with analytical limit } \lim_{n\to\infty}a_n = 2.$$</div>
+<table><thead><tr><th>$n$</th><th>Numerator $4n^2-3n+1$</th><th>Denominator $2n^2+5n-7$</th><th>Value $a_n$ (rounded)</th><th>Distance $2-a_n$</th></tr></thead><tbody><tr><td>$2$</td><td>$11$</td><td>$11$</td><td>$1.00000$</td><td>$1.00000$</td></tr><tr><td>$5$</td><td>$86$</td><td>$68$</td><td>$1.26471$</td><td>$0.73529$</td></tr><tr><td>$10$</td><td>$371$</td><td>$243$</td><td>$1.52675$</td><td>$0.47325$</td></tr><tr><td>$50$</td><td>$9\,851$</td><td>$5\,243$</td><td>$1.87889$</td><td>$0.12111$</td></tr><tr><td>$100$</td><td>$39\,701$</td><td>$20\,493$</td><td>$1.93729$</td><td>$0.06271$</td></tr><tr><td>$1000$</td><td>$3\,997\,001$</td><td>$2\,004\,993$</td><td>$1.99352$</td><td>$0.00648$</td></tr></tbody></table>
+<p>Sketch of the discrete points $(n, a_n)$ approaching the horizontal level $y=2$:</p>
+<pre><code>  a_n ^
+  2.0 + - - - - - - - - - - - - - - - - - - - - - (limit L = 2)
+      |                             *     *     *
+  1.5 +                 *     *
+      |           *
+  1.0 +     *
+      +-----+-----+-----+-----+-----+-----+-----&gt; n
+            2     5    10    50   100  1000</code></pre>
+<h3>2. Chosen function: two-sided table and sketch</h3>
+<p>We choose the function from Exercise 8 as $x\to4$:</p>
+<div class="math-block">$$f(x) = \frac{\sqrt{x}-2}{x-4},\qquad \text{with analytical limit } \lim_{x\to4}f(x) = \frac{1}{4} = 0.25.$$</div>
+<table><thead><tr><th>Left approach ($x\to4^-$)</th><th>$f(x)$ (rounded)</th><th>Right approach ($x\to4^+$)</th><th>$f(x)$ (rounded)</th></tr></thead><tbody><tr><td>$x=3.5$</td><td>$0.25834$</td><td>$x=4.5$</td><td>$0.24264$</td></tr><tr><td>$x=3.9$</td><td>$0.25158$</td><td>$x=4.1$</td><td>$0.24846$</td></tr><tr><td>$x=3.99$</td><td>$0.25016$</td><td>$x=4.01$</td><td>$0.24984$</td></tr><tr><td>$x=3.999$</td><td>$0.25002$</td><td>$x=4.001$</td><td>$0.24998$</td></tr></tbody></table>
+<p>Sketch of the continuous curve $y=f(x)$ with a puncture (hole) at $(4, 0.25)$:</p>
+<pre><code>  y ^
+0.5 + *
+    |   \
+0.25+ - - \ - - o - - - - - - - (limit L = 0.25 at hole x = 4)
+    |             \       *
+    +-----------+---+-----------+---&gt; x
+                0   4</code></pre>
+<h3>3. Comparing observations with the analytical results</h3>
+<ul><li>For the sequence $a_n$, the table shows $a_n$ increasing toward $2$, with the gap $2-a_n\approx \dfrac{6.5}{n}$ shrinking by a factor of $10$ each time $n$ is multiplied by $10$. This matches our analytical result $\lim_{n\to\infty}a_n=2$ from factoring out $n^2$.</li><li>For the function $f(x)$, the left-hand values decrease toward $0.25$ and the right-hand values increase toward $0.25$, pinching together at height $0.25$. This matches our analytical result $\lim_{x\to4}\dfrac{1}{\sqrt{x}+2}=\dfrac{1}{4}$.</li></ul>
+<h3>4. Why finite calculations or a sketch never constitute a proof</h3>
+<ol><li><strong>Delayed behavior beyond the table:</strong> A sequence can match $2$ for the first $1000$ terms and still diverge—for instance, $b_n = 2 + 10^{-100}n$ is indistinguishable from $2$ at $n=1000$, yet $\lim_{n\to\infty}b_n=+\infty$.</li><li><strong>Hidden behavior closer to the limit point:</strong> A function like $g(x)=\cos\left(\dfrac{2\pi}{x-4}\right)$ equals $1$ at every sample point $x = 4 \pm 10^{-k}$ ($k=1,2,3,\dots$), so a standard table of decimal steps would show $1.00000$ everywhere, even though $\lim_{x\to4}g(x)$ does not exist!</li><li><strong>Catastrophic cancellation and finite precision:</strong> On a calculator or computer, evaluating $\dfrac{\sqrt{x}-2}{x-4}$ at $x=4+10^{-16}$ actually outputs $0$ instead of $0.25$ because floating-point arithmetic rounds $\sqrt{4+10^{-16}}$ to $2$.</li><li><strong>Finite resolution of a sketch:</strong> A drawn line has positive thickness and is plotted through finitely many sample points, so it cannot reveal tiny jumps, rapid oscillations (like $\sin(1/x)$ near $0$), or distinguish $0.25$ from $0.2500001$.</li></ol>
+<h3>Quick verification</h3>
+<p>Let us verify the exact error formulas analytically:</p>
+<ul><li>For $a_n$: $2 - a_n = \dfrac{13n-15}{2n^2+5n-7}$. At $n=1000$, this is $\dfrac{12\,985}{2\,004\,993}\approx 0.006476$, matching the table's $2-1.99352=0.00648$. ✓</li><li>For $f(x)$: $f(x)-\dfrac{1}{4} = \dfrac{1}{\sqrt{x}+2}-\dfrac{1}{4} = \dfrac{2-\sqrt{x}}{4(\sqrt{x}+2)}$. At $x=3.99$, this is $\approx \dfrac{0.0025016}{15.99}\approx 0.000156$, matching $0.25016-0.25=0.00016$. ✓</li></ul>
+<h3>A concrete example</h3>
+<p>Consider the "deceptive" sequence</p>
+<div class="math-block">$$c_n = \frac{4n^2-3n+1}{2n^2+5n-7} + \left(\frac{n}{10\,000}\right)^{10}.$$</div>
+<p>For $n=2, 5, 10, 50, 100, 1000$, the extra term $(n/10\,000)^{10}$ is at most $10^{-10}$, so $c_n$ produces the <strong>exact same 5-decimal-place table</strong> as $a_n$ above! Yet $\lim_{n\to\infty}c_n = +\infty$, proving that our finite table alone could never distinguish convergence to $2$ from divergence to $+\infty$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Tables and sketches are awesome for building intuition and double-checking our work—we can literally watch $a_n$ climb toward $2$ and $f(x)$ pinch toward $0.25$ from both sides of $x=4$. But a table only tests a handful of numbers. A sequence could blow up after $n=10^9$, a function could oscillate wildly between our chosen sample points, and calculators even lose accuracy when you divide two tiny numbers. Only an algebraic proof covers all infinitely many values.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: Dominant terms in a sequence</a></li><li><a href="#exercise-8">Exercise 8: A square root in a function limit</a></li></ul>
+</section>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>01. Matrices and Operations — Complete Solutions</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false}
+      ],
+      throwOnError: false
+    });"></script>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --muted: #475569;
+      --accent: #2563eb;
+      --accent-soft: #eff6ff;
+      --quote-bg: #f1f5f9;
+      --quote-border: #3b82f6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 310px 1fr;
+      min-height: 100vh;
+    }
+    aside.sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 1.5rem 1.25rem;
+    }
+    .brand {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    .brand-sub {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .toc-group-title {
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin: 1rem 0 0.35rem 0.5rem;
+    }
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .toc-list li { margin-bottom: 0.2rem; }
+    .toc-list a {
+      display: block;
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.86rem;
+      transition: background 0.15s, color 0.15s;
+    }
+    .toc-list a:hover {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+    main.content {
+      max-width: 940px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    header.page-header {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    }
+    header.page-header h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.85rem;
+      color: var(--text);
+    }
+    header.page-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+    .section-banner {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: #ffffff;
+      border-radius: 12px;
+      padding: 1.5rem 2rem;
+      margin: 2.5rem 0 1.5rem;
+      scroll-margin-top: 1.5rem;
+    }
+    .section-banner h2 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    .section-banner p {
+      margin: 0.25rem 0 0;
+      opacity: 0.9;
+      font-size: 0.92rem;
+    }
+    section.exercise-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem 2.25rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+      scroll-margin-top: 1.5rem;
+    }
+    section.exercise-card h2.exercise-title {
+      margin-top: 0;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--accent-soft);
+      color: var(--accent);
+      font-size: 1.4rem;
+    }
+    section.exercise-card h3 {
+      margin-top: 1.5rem;
+      margin-bottom: 0.55rem;
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+    section.exercise-card h4 {
+      margin-top: 1.15rem;
+      margin-bottom: 0.45rem;
+      font-size: 1rem;
+      color: var(--muted);
+    }
+    p { margin: 0.65rem 0; }
+    ul, ol { margin: 0.65rem 0; padding-left: 1.5rem; }
+    li { margin-bottom: 0.35rem; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.85rem;
+      text-align: left;
+    }
+    th { background: var(--bg); font-weight: 600; }
+    blockquote {
+      margin: 1rem 0;
+      padding: 0.9rem 1.2rem;
+      background: var(--quote-bg);
+      border-left: 4px solid var(--quote-border);
+      border-radius: 0 8px 8px 0;
+      color: var(--text);
+    }
+    blockquote p { margin: 0; }
+    pre {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 1rem 1.25rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+    code {
+      font-family: Consolas, Monaco, "Courier New", monospace;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .katex-display {
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 0.25rem 0;
+    }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      aside.sidebar {
+        position: static;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      main.content { padding: 1.5rem 1rem 3rem; }
+      section.exercise-card { padding: 1.5rem; }
+    }
+    @media print {
+      aside.sidebar { display: none; }
+      .layout { display: block; }
+      body { background: #fff; }
+      section.exercise-card { box-shadow: none; break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">1. Algebra</div>
+      <div class="brand-sub">01. Matrices and Operations (Exercises 1–15)</div>
+      <ul class="toc-list">
+<li><a href="#exercise-1">1. Matrix Size and Entries</a></li>
+<li><a href="#exercise-2">2. Addition and Scalar Multiplication</a></li>
+<li><a href="#exercise-3">3. When Can Matrices Be Multiplied?</a></li>
+<li><a href="#exercise-4">4. Matrix Multiplication and Noncommutativity</a></li>
+<li><a href="#exercise-5">5. Matrix Times Vector</a></li>
+<li><a href="#exercise-6">6. Transpose</a></li>
+<li><a href="#exercise-7">7. Identity Matrix, Zero Matrix, and Powers</a></li>
+<li><a href="#exercise-8">8. Row Operations and Their Reversibility</a></li>
+<li><a href="#exercise-9">9. Composing Transformations</a></li>
+<li><a href="#exercise-10">10. Columns of a Matrix Product</a></li>
+<li><a href="#exercise-11">11. When Do Matrices Commute?</a></li>
+<li><a href="#exercise-12">12. Formula for a Matrix Power</a></li>
+<li><a href="#exercise-13">13. A Recurrence Written in Matrix Form</a></li>
+<li><a href="#exercise-14">14. Rotation Matrices</a></li>
+<li><a href="#exercise-15">15. Associativity of Multiplication and Different Calculation Paths</a></li>
+</ul>
+    </aside>
+    <main class="content">
+      <header class="page-header">
+        <h1>01. Matrices and Operations — Complete Solutions</h1>
+        <p>Basics of Mathematics Student Workbook (2026) · 1. Algebra · All 15 Exercises with Detailed Explanations</p>
+      </header>
+      <section class="exercise-card" id="exercise-1">
+<h2 class="exercise-title">Exercise 1. Matrix Size and Entries</h2>
+<h3>The question</h3>
+<p>We are given</p>
+<div class="math-block">$$A=\begin{pmatrix}2&amp;-1&amp;3\\0&amp;4&amp;5\end{pmatrix},\qquad B=\begin{pmatrix}1&amp;0\\-2&amp;3\\4&amp;1\end{pmatrix}.$$</div>
+<p>We want to:</p>
+<ol><li>State the sizes of $A$ and $B$.</li><li>Read off the entries $a_{12}$, $a_{23}$, $b_{21}$, $b_{32}$.</li><li>Write the second row of $A$ and the first column of $B$ as vectors.</li></ol>
+<h3>Before calculating: what idea do we need?</h3>
+<p>A matrix is a rectangular table of numbers. Everything about it is described by <strong>rows</strong> (horizontal) and <strong>columns</strong> (vertical).</p>
+<ul><li>The <strong>size</strong> $m\times n$ means $m$ rows and $n$ columns, always in the order <em>rows first, columns second</em>.</li><li>The entry $a_{ij}$ is in <strong>row $i$</strong> and <strong>column $j$</strong>. Again: row first, column second.</li></ul>
+<p>This convention is used for every later operation (multiplication, transpose, etc.), so it is worth being precise.</p>
+<h3>1. Sizes of the matrices</h3>
+<p>$A$ has 2 rows and 3 columns, and $B$ has 3 rows and 2 columns:</p>
+<div class="math-block">$$A \in \mathbb{R}^{2\times 3},\qquad B\in\mathbb{R}^{3\times 2}.$$</div>
+<p>The two matrices have "swapped" shapes. They are <strong>not</strong> the same size, even though both contain 6 numbers.</p>
+<h3>2. Reading off entries</h3>
+<p>We go to the row given by the first index, then to the column given by the second index.</p>
+<table><thead><tr><th>Entry</th><th>Row</th><th>Column</th><th>Value</th></tr></thead><tbody><tr><td>$a_{12}$</td><td>1</td><td>2</td><td>$-1$</td></tr><tr><td>$a_{23}$</td><td>2</td><td>3</td><td>$5$</td></tr><tr><td>$b_{21}$</td><td>2</td><td>1</td><td>$-2$</td></tr><tr><td>$b_{32}$</td><td>3</td><td>2</td><td>$1$</td></tr></tbody></table>
+<h3>3. Rows and columns as vectors</h3>
+<p>The second row of $A$ is a <strong>row vector</strong> with 3 entries:</p>
+<div class="math-block">$$r_2(A)=\begin{pmatrix}0&amp;4&amp;5\end{pmatrix}.$$</div>
+<p>The first column of $B$ is a <strong>column vector</strong> with 3 entries:</p>
+<div class="math-block">$$c_1(B)=\begin{pmatrix}1\\-2\\4\end{pmatrix}.$$</div>
+<p>Both have length 3. This is not a coincidence: the number of columns of $A$ equals the number of rows of $B$, which is exactly what makes the product $AB$ possible (see Exercise 3).</p>
+<h3>4. Common mistake</h3>
+<p>Reading $a_{12}$ as "row 2, column 1" would give $0$ instead of $-1$. The order of the indices matters. $a_{12}\neq a_{21}$ in general.</p>
+<h3>5. Quick verification</h3>
+<ul><li>Counting entries: $2\cdot 3=6$ numbers in $A$ and $3\cdot 2=6$ numbers in $B$. ✓</li><li>$a_{23}$ must exist only if $A$ has at least 2 rows and 3 columns, which it does. ✓</li><li>$b_{32}$ must exist only if $B$ has at least 3 rows and 2 columns, which it does. ✓</li><li>There is no $b_{23}$, because $B$ has only 2 columns. This confirms we did not confuse the order.</li></ul>
+<h3>6. A concrete example</h3>
+<p>The second row of $A$ times the first column of $B$ (entry by entry, then summed) is</p>
+<div class="math-block">$$0\cdot 1+4\cdot(-2)+5\cdot 4=0-8+20=12.$$</div>
+<p>This number is exactly the entry $(AB)_{21}$. So reading rows and columns correctly is the first step of matrix multiplication.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>A matrix is described by rows and columns, and we always say rows first. $A$ is $2\times 3$ and $B$ is $3\times 2$. To read $a_{ij}$ I go to row $i$ and then column $j$, so $a_{12}=-1$, $a_{23}=5$, $b_{21}=-2$, $b_{32}=1$. The second row of $A$ is $(0,4,5)$ and the first column of $B$ is $(1,-2,4)^T$. They have the same length, which is why we can multiply them.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-3">Exercise 3: When can matrices be multiplied?</a></li><li><a href="#exercise-6">Exercise 6: Transpose</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-2">
+<h2 class="exercise-title">Exercise 2. Addition and Scalar Multiplication</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$A=\begin{pmatrix}1&amp;2\\-1&amp;3\end{pmatrix},\qquad B=\begin{pmatrix}4&amp;-2\\0&amp;5\end{pmatrix}$$</div>
+<p>compute</p>
+<div class="math-block">$$A+B,\qquad A-B,\qquad 3A-2B,$$</div>
+<p>and explain why matrix addition is possible only for matrices of the same size.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Addition and scalar multiplication are <strong>entry-by-entry</strong> operations:</p>
+<ul><li>$(A+B)_{ij}=a_{ij}+b_{ij}$: add the numbers that sit in the same position.</li><li>$(cA)_{ij}=c\,a_{ij}$: multiply every entry by the number $c$.</li></ul>
+<p>So we just need to work position by position. No rows-times-columns is involved here.</p>
+<h3>1. Sum $A+B$</h3>
+<div class="math-block">$$A+B=\begin{pmatrix}1+4&amp;2+(-2)\\-1+0&amp;3+5\end{pmatrix}=\begin{pmatrix}5&amp;0\\-1&amp;8\end{pmatrix}.$$</div>
+<h3>2. Difference $A-B$</h3>
+<div class="math-block">$$A-B=\begin{pmatrix}1-4&amp;2-(-2)\\-1-0&amp;3-5\end{pmatrix}=\begin{pmatrix}-3&amp;4\\-1&amp;-2\end{pmatrix}.$$</div>
+<h3>3. Linear combination $3A-2B$</h3>
+<p>First scale each matrix:</p>
+<div class="math-block">$$3A=\begin{pmatrix}3&amp;6\\-3&amp;9\end{pmatrix},\qquad 2B=\begin{pmatrix}8&amp;-4\\0&amp;10\end{pmatrix}.$$</div>
+<p>Then subtract entry by entry:</p>
+<div class="math-block">$$3A-2B=\begin{pmatrix}3-8&amp;6-(-4)\\-3-0&amp;9-10\end{pmatrix}=\begin{pmatrix}-5&amp;10\\-3&amp;-1\end{pmatrix}.$$</div>
+<h3>4. Why must the sizes be equal?</h3>
+<p>Addition pairs each entry of $A$ with the entry of $B$ <strong>in the same position</strong>. If the sizes differ, some positions exist in one matrix but not in the other. For example, with</p>
+<div class="math-block">$$\begin{pmatrix}1&amp;2\\3&amp;4\end{pmatrix}+\begin{pmatrix}1&amp;2&amp;3\\4&amp;5&amp;6\end{pmatrix},$$</div>
+<p>the entry in row 1, column 3 has no partner in the first matrix. There is no sensible way to fill it in, so the sum is <strong>undefined</strong>.</p>
+<h3>5. Quick verification</h3>
+<ul><li>$(A+B)+(A-B)$ should equal $2A$: $$\begin{pmatrix}5&amp;0\\-1&amp;8\end{pmatrix}+\begin{pmatrix}-3&amp;4\\-1&amp;-2\end{pmatrix}=\begin{pmatrix}2&amp;4\\-2&amp;6\end{pmatrix}=2A.\ ✓$$</li><li>Check $3A-2B$ another way, using the results already found. Since $\tfrac12(A+B)+\tfrac52(A-B)=3A-2B$: $$\tfrac12\begin{pmatrix}5&amp;0\\-1&amp;8\end{pmatrix}+\tfrac52\begin{pmatrix}-3&amp;4\\-1&amp;-2\end{pmatrix}=\begin{pmatrix}2.5-7.5&amp;0+10\\-0.5-2.5&amp;4-5\end{pmatrix}=\begin{pmatrix}-5&amp;10\\-3&amp;-1\end{pmatrix}.\ ✓$$</li></ul>
+<h3>6. A concrete example</h3>
+<p>Think of $A$ and $B$ as tables of scores in two rounds of a game (rows = players, columns = games). $A+B$ is the total score table. Adding a $2\times2$ table to a $2\times3$ table would mean adding a score for a game that one round never had, which makes no sense.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Addition and scalar multiplication work position by position. I add matching entries and get $A+B=\begin{pmatrix}5&amp;0\\-1&amp;8\end{pmatrix}$, $A-B=\begin{pmatrix}-3&amp;4\\-1&amp;-2\end{pmatrix}$, and after scaling, $3A-2B=\begin{pmatrix}-5&amp;10\\-3&amp;-1\end{pmatrix}$. Because each entry needs a partner in the same position, both matrices must have exactly the same size.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: Matrix size and entries</a></li><li><a href="#exercise-3">Exercise 3: When can matrices be multiplied?</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-3">
+<h2 class="exercise-title">Exercise 3. When Can Matrices Be Multiplied?</h2>
+<h3>The question</h3>
+<p>The matrix sizes are</p>
+<div class="math-block">$$A_{2\times3},\qquad B_{3\times4},\qquad C_{4\times2},\qquad D_{2\times2}.$$</div>
+<p>For the products</p>
+<div class="math-block">$$AB,\ BA,\ BC,\ CB,\ AC,\ CA,\ AD,\ DA$$</div>
+<p>decide whether each is defined and, if so, state the size of the result.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Each entry of $PQ$ is a <strong>row of $P$ times a column of $Q$</strong>: multiply matching entries and add. That only works if a row of $P$ and a column of $Q$ have the same length.</p>
+<ul><li>A row of $P_{m\times n}$ has $n$ entries.</li><li>A column of $Q_{p\times q}$ has $p$ entries.</li></ul>
+<p><strong>Compatibility rule:</strong></p>
+<div class="math-block">$$P_{m\times n}\,Q_{p\times q}\ \text{is defined}\iff n=p,\qquad\text{and then } PQ \text{ is } m\times q.$$</div>
+<p>A handy picture: write the sizes next to each other. The <strong>inner</strong> numbers must match, and the <strong>outer</strong> numbers give the result:</p>
+<div class="math-block">$$(m\times \underbrace{n)\,(p}_{\text{must match}}\times q)\ \longrightarrow\ m\times q.$$</div>
+<h3>1. Checking each product</h3>
+<table><thead><tr><th>Product</th><th>Sizes</th><th>Inner numbers</th><th>Defined?</th><th>Result size</th></tr></thead><tbody><tr><td>$AB$</td><td>$(2\times3)(3\times4)$</td><td>$3=3$</td><td>yes</td><td>$2\times4$</td></tr><tr><td>$BA$</td><td>$(3\times4)(2\times3)$</td><td>$4\neq2$</td><td>no</td><td>—</td></tr><tr><td>$BC$</td><td>$(3\times4)(4\times2)$</td><td>$4=4$</td><td>yes</td><td>$3\times2$</td></tr><tr><td>$CB$</td><td>$(4\times2)(3\times4)$</td><td>$2\neq3$</td><td>no</td><td>—</td></tr><tr><td>$AC$</td><td>$(2\times3)(4\times2)$</td><td>$3\neq4$</td><td>no</td><td>—</td></tr><tr><td>$CA$</td><td>$(4\times2)(2\times3)$</td><td>$2=2$</td><td>yes</td><td>$4\times3$</td></tr><tr><td>$AD$</td><td>$(2\times3)(2\times2)$</td><td>$3\neq2$</td><td>no</td><td>—</td></tr><tr><td>$DA$</td><td>$(2\times2)(2\times3)$</td><td>$2=2$</td><td>yes</td><td>$2\times3$</td></tr></tbody></table>
+<h3>2. What the table tells us</h3>
+<ul><li>$AB$ exists but $BA$ does not. The <strong>order of factors matters</strong> even for whether a product exists, before we compute anything.</li><li>$DA$ exists but $AD$ does not. Multiplying by a square matrix $D$ from the left keeps the shape of $A$ ($2\times3$), but $D$ cannot be placed on the right.</li><li>Products can be chained when consecutive inner sizes match: $ABC$ is $(2\times3)(3\times4)(4\times2)$, which gives a $2\times2$ matrix.</li></ul>
+<h3>3. Why the failed cases fail</h3>
+<p>Take $BA$. A row of $B$ has 4 entries, and a column of $A$ has 2 entries. Pairing them up leaves 2 entries of the row without partners, so a "row times column" cannot be formed. The same reasoning applies to every "no" in the table.</p>
+<h3>4. Quick verification</h3>
+<p>The result size can be checked by counting: $AB$ has one entry for every (row of $A$, column of $B$) pair. $A$ has 2 rows and $B$ has 4 columns, so $AB$ has $2\cdot4=8$ entries arranged as $2\times4$. ✓ Similarly $CA$ has $4$ rows (from $C$) and $3$ columns (from $A$). ✓</p>
+<h3>5. A concrete example</h3>
+<p>Let $A=\begin{pmatrix}1&amp;0&amp;2\\0&amp;1&amp;1\end{pmatrix}$ ($2\times3$) and $D=\begin{pmatrix}1&amp;1\\0&amp;1\end{pmatrix}$ ($2\times2$). Then</p>
+<div class="math-block">$$DA=\begin{pmatrix}1&amp;1&amp;3\\0&amp;1&amp;1\end{pmatrix}\quad(2\times3),$$</div>
+<p>while $AD$ would need a row of $A$ (3 entries) times a column of $D$ (2 entries), which is impossible.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Before multiplying, I write the sizes side by side. The inner numbers must be equal, because a row of the first matrix is paired with a column of the second. The outer numbers give the size of the result. So $AB$ is $2\times4$, $BC$ is $3\times2$, $CA$ is $4\times3$ and $DA$ is $2\times3$, while $BA$, $CB$, $AC$ and $AD$ are undefined. This already shows that the order of multiplication matters.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-4">Exercise 4: Noncommutativity</a></li><li><a href="#exercise-15">Exercise 15: Associativity</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-4">
+<h2 class="exercise-title">Exercise 4. Matrix Multiplication and Noncommutativity</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$A=\begin{pmatrix}1&amp;2\\0&amp;1\end{pmatrix},\qquad B=\begin{pmatrix}2&amp;0\\3&amp;1\end{pmatrix}$$</div>
+<p>compute $AB$ and $BA$. Is $AB=BA$? Use the example to explain noncommutativity.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>The entry in row $i$, column $j$ of a product is</p>
+<div class="math-block">$$(AB)_{ij}=\sum_k a_{ik}b_{kj}=(\text{row } i \text{ of } A)\cdot(\text{column } j \text{ of } B).$$</div>
+<p>For numbers we know $xy=yx$. For matrices, $AB$ uses rows of $A$ and columns of $B$, while $BA$ uses rows of $B$ and columns of $A$. These are different pairs of numbers, so there is no reason to expect the same result.</p>
+<h3>1. Compute $AB$</h3>
+<div class="math-block">$$AB=\begin{pmatrix}1\cdot2+2\cdot3 &amp; 1\cdot0+2\cdot1\\ 0\cdot2+1\cdot3 &amp; 0\cdot0+1\cdot1\end{pmatrix}=\begin{pmatrix}8&amp;2\\3&amp;1\end{pmatrix}.$$</div>
+<h3>2. Compute $BA$</h3>
+<div class="math-block">$$BA=\begin{pmatrix}2\cdot1+0\cdot0 &amp; 2\cdot2+0\cdot1\\ 3\cdot1+1\cdot0 &amp; 3\cdot2+1\cdot1\end{pmatrix}=\begin{pmatrix}2&amp;4\\3&amp;7\end{pmatrix}.$$</div>
+<h3>3. Compare</h3>
+<div class="math-block">$$AB=\begin{pmatrix}8&amp;2\\3&amp;1\end{pmatrix}\neq\begin{pmatrix}2&amp;4\\3&amp;7\end{pmatrix}=BA.$$</div>
+<p>So <strong>matrix multiplication is not commutative</strong>: in general $AB\neq BA$, even when both products exist and have the same size.</p>
+<h3>4. What this means</h3>
+<ul><li><strong>Algebraically:</strong> we cannot swap factors. For example $(A+B)^2=A^2+AB+BA+B^2$, and in general this is <strong>not</strong> $A^2+2AB+B^2$.</li><li><strong>Geometrically:</strong> a matrix is a transformation. $AB$ means "first apply $B$, then $A$". Here $A$ is a horizontal shear and $B$ mixes coordinates differently, and doing them in different orders moves points to different places (see Exercise 9).</li></ul>
+<p>Note that some pairs <em>do</em> commute (e.g. any matrix with $I$). Noncommutativity means "not always", not "never" (see Exercise 11).</p>
+<h3>5. Quick verification</h3>
+<p>Two invariants must agree for $AB$ and $BA$ even though the matrices differ:</p>
+<ul><li><strong>Determinant:</strong> $\det(AB)=8\cdot1-2\cdot3=2$, $\det(BA)=2\cdot7-4\cdot3=2$, and $\det A\cdot\det B=1\cdot2=2$. ✓</li><li><strong>Trace</strong> (sum of diagonal): $\operatorname{tr}(AB)=8+1=9$, $\operatorname{tr}(BA)=2+7=9$. ✓</li></ul>
+<p>These agreements give us confidence that both products were computed correctly.</p>
+<h3>6. A concrete example</h3>
+<p>Apply both products to $x=\begin{pmatrix}1\\0\end{pmatrix}$:</p>
+<div class="math-block">$$ABx=\begin{pmatrix}8\\3\end{pmatrix},\qquad BAx=\begin{pmatrix}2\\3\end{pmatrix}.$$</div>
+<p>The same starting vector lands in different places depending on the order of the transformations.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>I compute each entry as a row times a column. $AB=\begin{pmatrix}8&amp;2\\3&amp;1\end{pmatrix}$ but $BA=\begin{pmatrix}2&amp;4\\3&amp;7\end{pmatrix}$, so $AB\neq BA$. The reason is that the two products pair different rows with different columns. Geometrically, doing transformation $B$ then $A$ is not the same as $A$ then $B$. That is what noncommutativity means.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-9">Exercise 9: Composing transformations</a></li><li><a href="#exercise-11">Exercise 11: When do matrices commute?</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-5">
+<h2 class="exercise-title">Exercise 5. Matrix Times Vector</h2>
+<h3>The question</h3>
+<p>Let</p>
+<div class="math-block">$$A=\begin{pmatrix}2&amp;-1\\1&amp;3\end{pmatrix},\qquad x=\begin{pmatrix}4\\2\end{pmatrix}.$$</div>
+<p>Compute $Ax$, then express $Ax$ as a linear combination of the columns of $A$ with coefficients from $x$.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>There are two equivalent ways to see $Ax$:</p>
+<ol><li><strong>Row view:</strong> each entry of $Ax$ is a row of $A$ dotted with $x$.</li><li><strong>Column view:</strong> $Ax$ is a combination of the columns of $A$, weighted by the entries of $x$: $$A\begin{pmatrix}x_1\\x_2\end{pmatrix}=x_1\,a_1+x_2\,a_2,$$ where $a_1,a_2$ are the columns of $A$.</li></ol>
+<p>The row view is good for computing. The column view explains what the result <em>means</em>: $Ax$ always lies in the set of combinations of the columns of $A$.</p>
+<h3>1. Row view: compute $Ax$</h3>
+<div class="math-block">$$Ax=\begin{pmatrix}2\cdot4+(-1)\cdot2\\1\cdot4+3\cdot2\end{pmatrix}=\begin{pmatrix}8-2\\4+6\end{pmatrix}=\begin{pmatrix}6\\10\end{pmatrix}.$$</div>
+<h3>2. Column view: linear combination of columns</h3>
+<p>The columns of $A$ are</p>
+<div class="math-block">$$a_1=\begin{pmatrix}2\\1\end{pmatrix},\qquad a_2=\begin{pmatrix}-1\\3\end{pmatrix}.$$</div>
+<p>Using the coefficients $x_1=4$, $x_2=2$:</p>
+<div class="math-block">$$Ax=4\begin{pmatrix}2\\1\end{pmatrix}+2\begin{pmatrix}-1\\3\end{pmatrix}=\begin{pmatrix}8\\4\end{pmatrix}+\begin{pmatrix}-2\\6\end{pmatrix}=\begin{pmatrix}6\\10\end{pmatrix}.$$</div>
+<h3>3. Why the two views agree</h3>
+<p>Write out the row view symbolically:</p>
+<div class="math-block">$$Ax=\begin{pmatrix}a_{11}x_1+a_{12}x_2\\a_{21}x_1+a_{22}x_2\end{pmatrix}=x_1\begin{pmatrix}a_{11}\\a_{21}\end{pmatrix}+x_2\begin{pmatrix}a_{12}\\a_{22}\end{pmatrix}.$$</div>
+<p>It is the same sum of products, only grouped differently: by rows in the first view, by columns in the second.</p>
+<h3>4. Meaning</h3>
+<p>The vector $x$ is a "recipe": take 4 copies of the first column and 2 copies of the second column. A matrix therefore sends the standard basis vectors to its columns:</p>
+<div class="math-block">$$Ae_1=a_1,\qquad Ae_2=a_2,$$</div>
+<p>and every other vector is sent to the matching combination of these columns.</p>
+<h3>5. Quick verification</h3>
+<p>Both methods gave $\begin{pmatrix}6\\10\end{pmatrix}$. ✓</p>
+<p>Also, by linearity, $Ax=A(4e_1+2e_2)=4Ae_1+2Ae_2=4a_1+2a_2$, which is exactly the column view.</p>
+<h3>6. A concrete example</h3>
+<p>If $x=\begin{pmatrix}1\\0\end{pmatrix}$, then $Ax=\begin{pmatrix}2\\1\end{pmatrix}=a_1$, just the first column. If $x=\begin{pmatrix}1\\1\end{pmatrix}$, then $Ax=a_1+a_2=\begin{pmatrix}1\\4\end{pmatrix}$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>I can compute $Ax$ row by row: $(2\cdot4-1\cdot2,\ 1\cdot4+3\cdot2)=(6,10)$. But a better way to think about it is that $x$ tells me how much of each column to take: 4 times the first column plus 2 times the second column, which again gives $(6,10)$. So $Ax$ is always a linear combination of the columns of $A$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-10">Exercise 10: Columns of a matrix product</a></li><li><a href="#exercise-9">Exercise 9: Composing transformations</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-6">
+<h2 class="exercise-title">Exercise 6. Transpose</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$A=\begin{pmatrix}1&amp;2&amp;3\\4&amp;5&amp;6\end{pmatrix},\qquad B=\begin{pmatrix}1&amp;0\\2&amp;1\\-1&amp;3\end{pmatrix}$$</div>
+<p>compute $A^T$, $B^T$, and $AB$. Then verify that</p>
+<div class="math-block">$$(AB)^T=B^TA^T.$$</div>
+<h3>Before calculating: what idea do we need?</h3>
+<p>The <strong>transpose</strong> turns rows into columns:</p>
+<div class="math-block">$$(A^T)_{ij}=a_{ji}.$$</div>
+<p>So an $m\times n$ matrix becomes $n\times m$.</p>
+<p>Why does the order reverse in $(AB)^T=B^TA^T$? Look at sizes: $A$ is $2\times3$ and $B$ is $3\times2$. Then $B^T$ is $2\times3$ and $A^T$ is $3\times2$. The product $A^TB^T$ would be $(3\times2)(2\times3)=3\times3$, which cannot equal the $2\times2$ matrix $(AB)^T$. Only $B^TA^T$ has the right size. The computation will confirm it also has the right entries.</p>
+<h3>1. Transposes</h3>
+<div class="math-block">$$A^T=\begin{pmatrix}1&amp;4\\2&amp;5\\3&amp;6\end{pmatrix}\ (3\times2),\qquad B^T=\begin{pmatrix}1&amp;2&amp;-1\\0&amp;1&amp;3\end{pmatrix}\ (2\times3).$$</div>
+<h3>2. The product $AB$</h3>
+<p>$A$ is $2\times3$ and $B$ is $3\times2$, so $AB$ is $2\times2$:</p>
+<div class="math-block">$$AB=\begin{pmatrix}1\cdot1+2\cdot2+3\cdot(-1) &amp; 1\cdot0+2\cdot1+3\cdot3\\ 4\cdot1+5\cdot2+6\cdot(-1) &amp; 4\cdot0+5\cdot1+6\cdot3\end{pmatrix}=\begin{pmatrix}2&amp;11\\8&amp;23\end{pmatrix}.$$</div>
+<p>Therefore</p>
+<div class="math-block">$$(AB)^T=\begin{pmatrix}2&amp;8\\11&amp;23\end{pmatrix}.$$</div>
+<h3>3. The product $B^TA^T$</h3>
+<p>$B^T$ is $2\times3$ and $A^T$ is $3\times2$, so $B^TA^T$ is $2\times2$:</p>
+<div class="math-block">$$B^TA^T=\begin{pmatrix}1\cdot1+2\cdot2+(-1)\cdot3 &amp; 1\cdot4+2\cdot5+(-1)\cdot6\\ 0\cdot1+1\cdot2+3\cdot3 &amp; 0\cdot4+1\cdot5+3\cdot6\end{pmatrix}=\begin{pmatrix}2&amp;8\\11&amp;23\end{pmatrix}.$$</div>
+<h3>4. Comparison</h3>
+<div class="math-block">$$(AB)^T=\begin{pmatrix}2&amp;8\\11&amp;23\end{pmatrix}=B^TA^T.\ ✓$$</div>
+<h3>5. Why this works in general</h3>
+<div class="math-block">$$\big((AB)^T\big)_{ij}=(AB)_{ji}=\sum_k a_{jk}b_{ki}=\sum_k (B^T)_{ik}(A^T)_{kj}=(B^TA^T)_{ij}.$$</div>
+<p>The same products appear, but to write them as "row times column" we must put $B^T$ first. This is like taking off socks and shoes: the last thing put on comes off first.</p>
+<h3>6. Quick verification</h3>
+<ul><li>Entry $(1,2)$ of $B^TA^T$ uses row 1 of $B^T$ = column 1 of $B$, and column 2 of $A^T$ = row 2 of $A$. That is exactly entry $(2,1)$ of $AB$, which is $8$. ✓</li><li>Sizes: $(AB)^T$ is $2\times2$ and $B^TA^T$ is $2\times2$. ✓</li></ul>
+<h3>7. A concrete example</h3>
+<p>$A^TB^T$ <em>is</em> defined here, but it is $3\times3$:</p>
+<div class="math-block">$$A^TB^T=\begin{pmatrix}1&amp;6&amp;11\\2&amp;9&amp;13\\3&amp;12&amp;15\end{pmatrix},$$</div>
+<p>which clearly cannot equal the $2\times2$ matrix $(AB)^T$. So the order reversal is not optional.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Transposing swaps rows and columns, so $A^T$ is $3\times2$ and $B^T$ is $2\times3$. I computed $AB=\begin{pmatrix}2&amp;11\\8&amp;23\end{pmatrix}$, so $(AB)^T=\begin{pmatrix}2&amp;8\\11&amp;23\end{pmatrix}$, and $B^TA^T$ gives exactly the same matrix. The order must reverse because a row of $AB$ comes from a row of $A$, and after transposing it becomes a column, which must sit on the right.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: Matrix size and entries</a></li><li><a href="#exercise-3">Exercise 3: When can matrices be multiplied?</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-7">
+<h2 class="exercise-title">Exercise 7. Identity Matrix, Zero Matrix, and Powers</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$A=\begin{pmatrix}2&amp;1\\0&amp;2\end{pmatrix}$$</div>
+<p>compute</p>
+<div class="math-block">$$AI,\qquad IA,\qquad A+0,\qquad A^2,\qquad A^3.$$</div>
+<p>Explain the roles of $I$ and $0$, and describe the pattern in successive powers of $A$.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>For numbers, $1$ is neutral for multiplication ($1\cdot x=x$) and $0$ is neutral for addition ($x+0=x$). Matrices have the same two neutral elements:</p>
+<div class="math-block">$$I=\begin{pmatrix}1&amp;0\\0&amp;1\end{pmatrix},\qquad 0=\begin{pmatrix}0&amp;0\\0&amp;0\end{pmatrix}.$$</div>
+<p>Powers are repeated multiplication: $A^2=AA$, $A^3=A^2A$. A good trick here is to split $A$ into simple parts:</p>
+<div class="math-block">$$A=2I+N,\qquad N=\begin{pmatrix}0&amp;1\\0&amp;0\end{pmatrix},\qquad N^2=0.$$</div>
+<h3>1. Multiplying by $I$</h3>
+<div class="math-block">$$AI=\begin{pmatrix}2\cdot1+1\cdot0&amp;2\cdot0+1\cdot1\\0\cdot1+2\cdot0&amp;0\cdot0+2\cdot1\end{pmatrix}=\begin{pmatrix}2&amp;1\\0&amp;2\end{pmatrix}=A,$$</div>
+<div class="math-block">$$IA=\begin{pmatrix}1\cdot2+0\cdot0&amp;1\cdot1+0\cdot2\\0\cdot2+1\cdot0&amp;0\cdot1+1\cdot2\end{pmatrix}=\begin{pmatrix}2&amp;1\\0&amp;2\end{pmatrix}=A.$$</div>
+<p>$I$ leaves $A$ unchanged from <strong>both</strong> sides. As a transformation, $I$ does nothing to any vector.</p>
+<h3>2. Adding $0$</h3>
+<div class="math-block">$$A+0=\begin{pmatrix}2+0&amp;1+0\\0+0&amp;2+0\end{pmatrix}=A.$$</div>
+<p>$0$ is neutral for addition. (Note that $A\cdot0=0$: as a transformation, $0$ sends every vector to the origin.)</p>
+<h3>3. Powers</h3>
+<div class="math-block">$$A^2=\begin{pmatrix}2&amp;1\\0&amp;2\end{pmatrix}\begin{pmatrix}2&amp;1\\0&amp;2\end{pmatrix}=\begin{pmatrix}4&amp;2+2\\0&amp;4\end{pmatrix}=\begin{pmatrix}4&amp;4\\0&amp;4\end{pmatrix},$$</div>
+<div class="math-block">$$A^3=A^2A=\begin{pmatrix}4&amp;4\\0&amp;4\end{pmatrix}\begin{pmatrix}2&amp;1\\0&amp;2\end{pmatrix}=\begin{pmatrix}8&amp;4+8\\0&amp;8\end{pmatrix}=\begin{pmatrix}8&amp;12\\0&amp;8\end{pmatrix}.$$</div>
+<h3>4. The pattern</h3>
+<table><thead><tr><th>$n$</th><th>$A^n$</th><th>diagonal</th><th>top-right</th></tr></thead><tbody><tr><td>1</td><td>$\begin{pmatrix}2&amp;1\\0&amp;2\end{pmatrix}$</td><td>$2^1$</td><td>$1=1\cdot2^0$</td></tr><tr><td>2</td><td>$\begin{pmatrix}4&amp;4\\0&amp;4\end{pmatrix}$</td><td>$2^2$</td><td>$4=2\cdot2^1$</td></tr><tr><td>3</td><td>$\begin{pmatrix}8&amp;12\\0&amp;8\end{pmatrix}$</td><td>$2^3$</td><td>$12=3\cdot2^2$</td></tr></tbody></table>
+<p>Conjecture:</p>
+<div class="math-block">$$A^n=\begin{pmatrix}2^n&amp;n\,2^{n-1}\\0&amp;2^n\end{pmatrix}.$$</div>
+<p>The diagonal simply doubles, while the top-right entry grows faster than $2^n$ because of the extra factor $n$.</p>
+<h3>5. Why the pattern holds</h3>
+<p>$2I$ commutes with every matrix, so the binomial formula may be used. Since $N^2=0$, all terms with $N^2$ or higher vanish:</p>
+<div class="math-block">$$A^n=(2I+N)^n=(2I)^n+n(2I)^{n-1}N=2^nI+n\,2^{n-1}N=\begin{pmatrix}2^n&amp;n\,2^{n-1}\\0&amp;2^n\end{pmatrix}.$$</div>
+<h3>6. Quick verification</h3>
+<ul><li>$n=1$: $\begin{pmatrix}2&amp;1\\0&amp;2\end{pmatrix}$. ✓ $n=2$: $\begin{pmatrix}4&amp;4\\0&amp;4\end{pmatrix}$. ✓ $n=3$: $\begin{pmatrix}8&amp;12\\0&amp;8\end{pmatrix}$. ✓</li><li>Determinant: $\det A^3=64=(\det A)^3=4^3$. ✓</li></ul>
+<h3>7. A concrete example</h3>
+<p>The formula predicts</p>
+<div class="math-block">$$A^4=\begin{pmatrix}16&amp;32\\0&amp;16\end{pmatrix}.$$</div>
+<p>Direct check: $A^3A=\begin{pmatrix}8&amp;12\\0&amp;8\end{pmatrix}\begin{pmatrix}2&amp;1\\0&amp;2\end{pmatrix}=\begin{pmatrix}16&amp;8+24\\0&amp;16\end{pmatrix}=\begin{pmatrix}16&amp;32\\0&amp;16\end{pmatrix}$. ✓</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>$I$ plays the role of the number 1: $AI=IA=A$. The zero matrix plays the role of 0 in addition: $A+0=A$. For powers, I got $A^2=\begin{pmatrix}4&amp;4\\0&amp;4\end{pmatrix}$ and $A^3=\begin{pmatrix}8&amp;12\\0&amp;8\end{pmatrix}$. The diagonal is $2^n$ and the corner is $n\,2^{n-1}$. This comes from writing $A=2I+N$ with $N^2=0$, so only two terms of the binomial expansion survive.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-12">Exercise 12: Formula for a matrix power</a></li><li><a href="#exercise-13">Exercise 13: A recurrence in matrix form</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-8">
+<h2 class="exercise-title">Exercise 8. Row Operations and Their Reversibility</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$A=\begin{pmatrix}1&amp;2&amp;-1\\2&amp;4&amp;1\\-1&amp;1&amp;3\end{pmatrix}$$</div>
+<p>perform, in order:</p>
+<ol><li>$R_2\leftarrow R_2-2R_1$,</li><li>$R_3\leftarrow R_3+R_1$,</li><li>interchange $R_2$ and $R_3$.</li></ol>
+<p>Write the matrix after each step, and for each operation state an operation that reverses it.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>There are three <strong>elementary row operations</strong>:</p>
+<ul><li>add a multiple of one row to another row,</li><li>swap two rows,</li><li>multiply a row by a non-zero number.</li></ul>
+<p>They are the tools of Gaussian elimination. Their key property is that each one is <strong>reversible</strong>, so no information is lost. That is why a system of equations keeps the same solutions after row operations.</p>
+<p>The goal of these particular steps is to create zeros below the first entry (the pivot) and bring the matrix to an upper-triangular (echelon) form.</p>
+<h3>1. Step 1: $R_2\leftarrow R_2-2R_1$</h3>
+<div class="math-block">$$R_2-2R_1=(2,4,1)-2(1,2,-1)=(2-2,\ 4-4,\ 1+2)=(0,0,3).$$</div>
+<div class="math-block">$$A_1=\begin{pmatrix}1&amp;2&amp;-1\\0&amp;0&amp;3\\-1&amp;1&amp;3\end{pmatrix}.$$</div>
+<h3>2. Step 2: $R_3\leftarrow R_3+R_1$</h3>
+<div class="math-block">$$R_3+R_1=(-1,1,3)+(1,2,-1)=(0,3,2).$$</div>
+<div class="math-block">$$A_2=\begin{pmatrix}1&amp;2&amp;-1\\0&amp;0&amp;3\\0&amp;3&amp;2\end{pmatrix}.$$</div>
+<p>The first column now has zeros below the pivot $1$.</p>
+<h3>3. Step 3: $R_2\leftrightarrow R_3$</h3>
+<p>Row 2 starts with two zeros, so it should go below row 3. Swapping gives</p>
+<div class="math-block">$$A_3=\begin{pmatrix}1&amp;2&amp;-1\\0&amp;3&amp;2\\0&amp;0&amp;3\end{pmatrix}.$$</div>
+<p>This matrix is upper triangular, which is the target form of elimination.</p>
+<h3>4. Reverse operations</h3>
+<table><thead><tr><th>Operation</th><th>Reverse operation</th><th>Why it works</th></tr></thead><tbody><tr><td>$R_2\leftarrow R_2-2R_1$</td><td>$R_2\leftarrow R_2+2R_1$</td><td>$R_1$ was not changed, so we can add back exactly what we subtracted.</td></tr><tr><td>$R_3\leftarrow R_3+R_1$</td><td>$R_3\leftarrow R_3-R_1$</td><td>Again $R_1$ is unchanged, so we subtract what we added.</td></tr><tr><td>$R_2\leftrightarrow R_3$</td><td>$R_2\leftrightarrow R_3$</td><td>Swapping twice returns the original order.</td></tr></tbody></table>
+<p>To get back from $A_3$ to $A$ we undo the steps in <strong>reverse order</strong>: first swap, then $R_3\leftarrow R_3-R_1$, then $R_2\leftarrow R_2+2R_1$.</p>
+<h3>5. Quick verification</h3>
+<p>Undo from $A_3$:</p>
+<ul><li>Swap $R_2,R_3$: back to $A_2$.</li><li>$R_3\leftarrow R_3-R_1$: $(0,3,2)-(1,2,-1)=(-1,1,3)$. Back to $A_1$. ✓</li><li>$R_2\leftarrow R_2+2R_1$: $(0,0,3)+(2,4,-2)=(2,4,1)$. Back to $A$. ✓</li></ul>
+<p>Determinant check: adding a multiple of a row does not change the determinant, and a swap changes the sign. So $\det A=-\det A_3=-(1\cdot3\cdot3)=-9$. Directly:</p>
+<div class="math-block">$$\det A=1(12-1)-2(6+1)+(-1)(2+4)=11-14-6=-9.\ ✓$$</div>
+<h3>6. A concrete example</h3>
+<p>Each row operation is multiplication by an <strong>elementary matrix</strong> from the left. Step 1 is</p>
+<div class="math-block">$$E_1=\begin{pmatrix}1&amp;0&amp;0\\-2&amp;1&amp;0\\0&amp;0&amp;1\end{pmatrix},\qquad E_1^{-1}=\begin{pmatrix}1&amp;0&amp;0\\2&amp;1&amp;0\\0&amp;0&amp;1\end{pmatrix}.$$</div>
+<p>$E_1^{-1}$ is exactly the matrix of the reverse operation $R_2\leftarrow R_2+2R_1$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>I first subtract twice row 1 from row 2, then add row 1 to row 3, so the first column has zeros under the pivot. Then I swap rows 2 and 3 to get the upper-triangular matrix $\begin{pmatrix}1&amp;2&amp;-1\\0&amp;3&amp;2\\0&amp;0&amp;3\end{pmatrix}$. Each step can be undone: add back $2R_1$, subtract $R_1$, and swap again, in reverse order. Because every step is reversible, elimination never loses information.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-15">Exercise 15: Associativity of multiplication</a></li><li><a href="#exercise-3">Exercise 3: When can matrices be multiplied?</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-9">
+<h2 class="exercise-title">Exercise 9. Composing Transformations</h2>
+<h3>The question</h3>
+<p>Let</p>
+<div class="math-block">$$S=\begin{pmatrix}2&amp;0\\0&amp;1\end{pmatrix},\qquad R=\begin{pmatrix}0&amp;-1\\1&amp;0\end{pmatrix},\qquad x=\begin{pmatrix}1\\2\end{pmatrix}.$$</div>
+<p>$S$ stretches horizontally by a factor of 2, and $R$ rotates by $90^\circ$ counterclockwise. Compute $RSx$ and $SRx$, compare them, and explain geometrically why the order matters.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>A product of matrices is applied to a vector <strong>from right to left</strong>:</p>
+<div class="math-block">$$RSx=R(Sx)\quad\text{means "first } S\text{, then } R\text{"},$$</div>
+<div class="math-block">$$SRx=S(Rx)\quad\text{means "first } R\text{, then } S\text{"}.$$</div>
+<p>So matrix multiplication = <strong>composition of transformations</strong>. If the order of the actions matters geometrically, the products will differ.</p>
+<p>What the two matrices do:</p>
+<ul><li>$S\begin{pmatrix}u\\v\end{pmatrix}=\begin{pmatrix}2u\\v\end{pmatrix}$: double the $x$-coordinate.</li><li>$R\begin{pmatrix}u\\v\end{pmatrix}=\begin{pmatrix}-v\\u\end{pmatrix}$: rotate by $90^\circ$.</li></ul>
+<h3>1. Compute $RSx$ (stretch, then rotate)</h3>
+<div class="math-block">$$Sx=\begin{pmatrix}2\\2\end{pmatrix},\qquad RSx=R\begin{pmatrix}2\\2\end{pmatrix}=\begin{pmatrix}-2\\2\end{pmatrix}.$$</div>
+<h3>2. Compute $SRx$ (rotate, then stretch)</h3>
+<div class="math-block">$$Rx=\begin{pmatrix}-2\\1\end{pmatrix},\qquad SRx=S\begin{pmatrix}-2\\1\end{pmatrix}=\begin{pmatrix}-4\\1\end{pmatrix}.$$</div>
+<h3>3. Compare</h3>
+<div class="math-block">$$RSx=\begin{pmatrix}-2\\2\end{pmatrix}\neq\begin{pmatrix}-4\\1\end{pmatrix}=SRx.$$</div>
+<p>The matrices themselves also differ:</p>
+<div class="math-block">$$RS=\begin{pmatrix}0&amp;-1\\2&amp;0\end{pmatrix},\qquad SR=\begin{pmatrix}0&amp;-2\\1&amp;0\end{pmatrix}.$$</div>
+<h3>4. Geometric explanation</h3>
+<p>The stretch $S$ treats the two axes differently: it stretches only the horizontal direction.</p>
+<ul><li>In $RS$, we stretch <strong>first</strong>, so the original $x$-coordinate ($1$) is doubled, and then the rotation moves it into the vertical direction.</li><li>In $SR$, we rotate <strong>first</strong>, so the original $y$-coordinate ($2$) is moved into the horizontal direction, and <em>that</em> gets doubled.</li></ul>
+<p>Different parts of the vector get stretched, so the results differ. If the scaling were the same in every direction (e.g. $2I$), the order would not matter, because a uniform scaling has no preferred direction.</p>
+<h3>5. Quick verification</h3>
+<ul><li>Lengths: $\|x\|=\sqrt5$. Rotation keeps length, so $\|Rx\|=\sqrt5$. ✓</li><li>$RSx=(RS)x=\begin{pmatrix}0\cdot1-1\cdot2\\2\cdot1+0\cdot2\end{pmatrix}=\begin{pmatrix}-2\\2\end{pmatrix}$. ✓</li><li>$SRx=(SR)x=\begin{pmatrix}0\cdot1-2\cdot2\\1\cdot1+0\cdot2\end{pmatrix}=\begin{pmatrix}-4\\1\end{pmatrix}$. ✓</li></ul>
+<h3>6. A concrete example</h3>
+<p>Take the unit square. Under $RS$ it is first stretched into a $2\times1$ rectangle lying flat, then rotated so it stands upright ($1$ wide, $2$ tall). Under $SR$ it is first rotated (still a unit square), then stretched into a flat $2\times1$ rectangle. Same area $2$ in both cases ($|\det|=2$), but different shapes and orientations.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>A product acts from right to left, so $RSx$ means stretch first, then rotate, and $SRx$ means rotate first, then stretch. I get $RSx=(-2,2)$ and $SRx=(-4,1)$. They differ because the stretch only affects the horizontal direction: depending on the order, a different coordinate of $x$ ends up being doubled. This is the geometric reason why matrix multiplication is not commutative.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-4">Exercise 4: Noncommutativity</a></li><li><a href="#exercise-14">Exercise 14: Rotation matrices</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-10">
+<h2 class="exercise-title">Exercise 10. Columns of a Matrix Product</h2>
+<h3>The question</h3>
+<p>Given</p>
+<div class="math-block">$$A=\begin{pmatrix}1&amp;2&amp;0\\0&amp;1&amp;1\end{pmatrix},\qquad B=\begin{pmatrix}1&amp;2\\-1&amp;0\\3&amp;1\end{pmatrix},$$</div>
+<p>with columns of $B$ denoted $b_1,b_2$:</p>
+<ol><li>Compute $Ab_1$ and $Ab_2$.</li><li>Compute $AB$.</li><li>Explain why the columns of $AB$ are exactly $Ab_1$ and $Ab_2$.</li></ol>
+<h3>Before calculating: what idea do we need?</h3>
+<p>From Exercise 5 we know how a matrix acts on <strong>one</strong> vector. A matrix $B$ is just several column vectors placed side by side:</p>
+<div class="math-block">$$B=\begin{pmatrix}|&amp;|\\b_1&amp;b_2\\|&amp;|\end{pmatrix}.$$</div>
+<p>The entry $(AB)_{ij}$ uses only row $i$ of $A$ and <strong>column $j$ of $B$</strong>. So column $j$ of $AB$ depends only on $b_j$. This suggests the <strong>column rule</strong>:</p>
+<div class="math-block">$$AB=\begin{pmatrix}|&amp;|\\Ab_1&amp;Ab_2\\|&amp;|\end{pmatrix}.$$</div>
+<h3>1. Matrix-vector products</h3>
+<div class="math-block">$$b_1=\begin{pmatrix}1\\-1\\3\end{pmatrix},\qquad Ab_1=\begin{pmatrix}1\cdot1+2\cdot(-1)+0\cdot3\\0\cdot1+1\cdot(-1)+1\cdot3\end{pmatrix}=\begin{pmatrix}-1\\2\end{pmatrix}.$$</div>
+<div class="math-block">$$b_2=\begin{pmatrix}2\\0\\1\end{pmatrix},\qquad Ab_2=\begin{pmatrix}1\cdot2+2\cdot0+0\cdot1\\0\cdot2+1\cdot0+1\cdot1\end{pmatrix}=\begin{pmatrix}2\\1\end{pmatrix}.$$</div>
+<h3>2. The full product $AB$</h3>
+<p>$A$ is $2\times3$ and $B$ is $3\times2$, so $AB$ is $2\times2$. Computing each entry as row times column:</p>
+<div class="math-block">$$AB=\begin{pmatrix}1-2+0 &amp; 2+0+0\\ 0-1+3 &amp; 0+0+1\end{pmatrix}=\begin{pmatrix}-1&amp;2\\2&amp;1\end{pmatrix}.$$</div>
+<h3>3. Comparison</h3>
+<div class="math-block">$$\text{column 1 of }AB=\begin{pmatrix}-1\\2\end{pmatrix}=Ab_1,\qquad \text{column 2 of }AB=\begin{pmatrix}2\\1\end{pmatrix}=Ab_2.\ ✓$$</div>
+<h3>4. Why this always happens</h3>
+<p>The first column of $AB$ consists of the entries $(AB)_{11}$ and $(AB)_{21}$:</p>
+<div class="math-block">$$(AB)_{11}=(\text{row 1 of }A)\cdot b_1,\qquad (AB)_{21}=(\text{row 2 of }A)\cdot b_1.$$</div>
+<p>That is exactly the row-by-row computation of $Ab_1$. The same holds for every column. So</p>
+<blockquote><p><strong>multiplying $A$ by a matrix $B$ = multiplying $A$ by each column of $B$ separately.</strong></p></blockquote>
+<p>Combining with Exercise 5: each column of $AB$ is a linear combination of the columns of $A$, with weights taken from the matching column of $B$.</p>
+<h3>5. Quick verification</h3>
+<p>Column view of $Ab_1$, using the columns of $A$, $a_1=(1,0)^T$, $a_2=(2,1)^T$, $a_3=(0,1)^T$:</p>
+<div class="math-block">$$Ab_1=1\,a_1-1\,a_2+3\,a_3=\begin{pmatrix}1-2+0\\0-1+3\end{pmatrix}=\begin{pmatrix}-1\\2\end{pmatrix}.\ ✓$$</div>
+<h3>6. A concrete example</h3>
+<p>If we only need the second column of $AB$, we don't have to compute the whole product: $Ab_2=(2,1)^T$ is enough. This saves work in large computations, and it is how computers often organise matrix multiplication.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>A matrix $B$ is a list of columns. Column $j$ of $AB$ only uses column $j$ of $B$, so it must be $Ab_j$. I computed $Ab_1=(-1,2)$ and $Ab_2=(2,1)$, and the full product is $AB=\begin{pmatrix}-1&amp;2\\2&amp;1\end{pmatrix}$, whose columns are exactly these two vectors. So multiplying by a matrix means multiplying by each of its columns.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-5">Exercise 5: Matrix times vector</a></li><li><a href="#exercise-15">Exercise 15: Associativity</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-11">
+<h2 class="exercise-title">Exercise 11. When Do Matrices Commute?</h2>
+<h3>The question</h3>
+<p>Given</p>
+<div class="math-block">$$A=\begin{pmatrix}1&amp;1\\0&amp;1\end{pmatrix},\qquad B=\begin{pmatrix}a&amp;b\\c&amp;d\end{pmatrix},$$</div>
+<p>find the conditions on $a,b,c,d$ under which $AB=BA$, and describe the general form of all such $B$.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>In Exercise 4 we saw that usually $AB\neq BA$. Here we turn the question around: <strong>which</strong> matrices $B$ do commute with this particular $A$?</p>
+<p>Strategy: compute both products with unknown entries, then require that they are equal <strong>entry by entry</strong>. Two matrices are equal exactly when all corresponding entries are equal, so we get a system of equations.</p>
+<h3>1. Compute $AB$</h3>
+<div class="math-block">$$AB=\begin{pmatrix}1&amp;1\\0&amp;1\end{pmatrix}\begin{pmatrix}a&amp;b\\c&amp;d\end{pmatrix}=\begin{pmatrix}a+c&amp;b+d\\c&amp;d\end{pmatrix}.$$</div>
+<p>Multiplying by $A$ from the <strong>left</strong> adds row 2 of $B$ to row 1.</p>
+<h3>2. Compute $BA$</h3>
+<div class="math-block">$$BA=\begin{pmatrix}a&amp;b\\c&amp;d\end{pmatrix}\begin{pmatrix}1&amp;1\\0&amp;1\end{pmatrix}=\begin{pmatrix}a&amp;a+b\\c&amp;c+d\end{pmatrix}.$$</div>
+<p>Multiplying by $A$ from the <strong>right</strong> adds column 1 of $B$ to column 2.</p>
+<h3>3. Set them equal entry by entry</h3>
+<table><thead><tr><th>Position</th><th>Equation</th><th>Simplified</th></tr></thead><tbody><tr><td>$(1,1)$</td><td>$a+c=a$</td><td>$c=0$</td></tr><tr><td>$(1,2)$</td><td>$b+d=a+b$</td><td>$d=a$</td></tr><tr><td>$(2,1)$</td><td>$c=c$</td><td>no condition</td></tr><tr><td>$(2,2)$</td><td>$d=c+d$</td><td>$c=0$</td></tr></tbody></table>
+<p>So the conditions are</p>
+<div class="math-block">$$c=0\qquad\text{and}\qquad d=a,$$</div>
+<p>while $a$ and $b$ can be any real numbers.</p>
+<h3>4. General form</h3>
+<div class="math-block">$$B=\begin{pmatrix}a&amp;b\\0&amp;a\end{pmatrix}=a\begin{pmatrix}1&amp;0\\0&amp;1\end{pmatrix}+b\begin{pmatrix}0&amp;1\\0&amp;0\end{pmatrix}=aI+bN,\qquad a,b\in\mathbb{R}.$$</div>
+<p><strong>Meaning:</strong> note that $A=I+N$. So the matrices that commute with $A$ are exactly the combinations of $I$ and $N$, i.e. "polynomials in $A$". This makes sense: $I$ commutes with everything, and $N$ commutes with itself, so any combination of them commutes with $A$. The calculation shows there are <strong>no other</strong> such matrices. Out of a 4-dimensional space of $2\times2$ matrices, only a 2-dimensional family commutes with $A$.</p>
+<h3>5. Quick verification</h3>
+<p>Take $B=aI+bN$. Then</p>
+<div class="math-block">$$AB=(I+N)(aI+bN)=aI+(a+b)N+bN^2=aI+(a+b)N,$$</div>
+<div class="math-block">$$BA=(aI+bN)(I+N)=aI+(a+b)N+bN^2=aI+(a+b)N,$$</div>
+<p>using $N^2=0$. They are equal. ✓</p>
+<p>A counter-check with $c\neq0$: $B=\begin{pmatrix}0&amp;0\\1&amp;0\end{pmatrix}$ gives $AB=\begin{pmatrix}1&amp;0\\1&amp;0\end{pmatrix}$ but $BA=\begin{pmatrix}0&amp;0\\1&amp;1\end{pmatrix}$. Not equal, as predicted.</p>
+<h3>6. A concrete example</h3>
+<p>With $a=3$, $b=-2$:</p>
+<div class="math-block">$$B=\begin{pmatrix}3&amp;-2\\0&amp;3\end{pmatrix},\qquad AB=\begin{pmatrix}3&amp;1\\0&amp;3\end{pmatrix}=BA.$$</div>
+<h3>How I would explain this in class</h3>
+<blockquote><p>I compute $AB$ and $BA$ with unknown entries and compare them entry by entry. The equations give $c=0$ and $d=a$, and $b$ is free. So the matrices commuting with $A$ are exactly $\begin{pmatrix}a&amp;b\\0&amp;a\end{pmatrix}=aI+bN$. Since $A=I+N$ itself, these are just combinations of $I$ and $A$. That explains why they commute, and the computation shows no other matrices do.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-4">Exercise 4: Noncommutativity</a></li><li><a href="#exercise-12">Exercise 12: Formula for a matrix power</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-12">
+<h2 class="exercise-title">Exercise 12. Formula for a Matrix Power</h2>
+<h3>The question</h3>
+<p>Let</p>
+<div class="math-block">$$A=\begin{pmatrix}1&amp;1\\0&amp;1\end{pmatrix}.$$</div>
+<p>Compute $A^2$, $A^3$, $A^4$, formulate a conjecture for $A^n$, and then prove it: assume the formula holds for $n$, multiply by $A$, and show that it gives the formula for $n+1$.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Two tools:</p>
+<ol><li><strong>Pattern recognition:</strong> compute a few powers and look for what changes.</li><li><strong>Mathematical induction:</strong> checking more cases never proves a formula for <em>all</em> $n$. Induction does:</li></ol>
+<ul><li><strong>Base case:</strong> the formula is true for $n=1$.</li><li><strong>Induction step:</strong> <em>if</em> it is true for some $n$, <em>then</em> it is true for $n+1$.</li></ul>
+<p>Together these give a chain $1\Rightarrow2\Rightarrow3\Rightarrow\dots$ that reaches every natural number.</p>
+<h3>1. Compute the first powers</h3>
+<div class="math-block">$$A^2=\begin{pmatrix}1&amp;1\\0&amp;1\end{pmatrix}\begin{pmatrix}1&amp;1\\0&amp;1\end{pmatrix}=\begin{pmatrix}1&amp;2\\0&amp;1\end{pmatrix},$$</div>
+<div class="math-block">$$A^3=A^2A=\begin{pmatrix}1&amp;2\\0&amp;1\end{pmatrix}\begin{pmatrix}1&amp;1\\0&amp;1\end{pmatrix}=\begin{pmatrix}1&amp;3\\0&amp;1\end{pmatrix},$$</div>
+<div class="math-block">$$A^4=A^3A=\begin{pmatrix}1&amp;3\\0&amp;1\end{pmatrix}\begin{pmatrix}1&amp;1\\0&amp;1\end{pmatrix}=\begin{pmatrix}1&amp;4\\0&amp;1\end{pmatrix}.$$</div>
+<h3>2. Conjecture</h3>
+<p>Only the top-right entry changes, and it equals the exponent:</p>
+<div class="math-block">$$\boxed{A^n=\begin{pmatrix}1&amp;n\\0&amp;1\end{pmatrix}}\qquad(n\geq1).$$</div>
+<h3>3. Proof by induction</h3>
+<p><strong>Base case</strong> $n=1$: $\begin{pmatrix}1&amp;1\\0&amp;1\end{pmatrix}=A$. ✓</p>
+<p><strong>Induction step.</strong> Assume $A^n=\begin{pmatrix}1&amp;n\\0&amp;1\end{pmatrix}$ for some $n$. Then</p>
+<div class="math-block">$$A^{n+1}=A^nA=\begin{pmatrix}1&amp;n\\0&amp;1\end{pmatrix}\begin{pmatrix}1&amp;1\\0&amp;1\end{pmatrix}=\begin{pmatrix}1\cdot1+n\cdot0 &amp; 1\cdot1+n\cdot1\\ 0\cdot1+1\cdot0 &amp; 0\cdot1+1\cdot1\end{pmatrix}=\begin{pmatrix}1&amp;n+1\\0&amp;1\end{pmatrix}.$$</div>
+<p>This is exactly the formula with $n$ replaced by $n+1$. By induction, the formula holds for all $n\geq1$. $\blacksquare$</p>
+<h3>4. Meaning</h3>
+<p>$A$ is a <strong>horizontal shear</strong>:</p>
+<div class="math-block">$$A\begin{pmatrix}x\\y\end{pmatrix}=\begin{pmatrix}x+y\\y\end{pmatrix}.$$</div>
+<p>Each application pushes a point to the right by its height $y$. Applying it $n$ times pushes it by $ny$, which is exactly what $\begin{pmatrix}1&amp;n\\0&amp;1\end{pmatrix}$ does. So the entries grow <strong>linearly</strong> in $n$ (not exponentially), because each shear just adds the same amount again.</p>
+<p>The formula also works for $n=0$ (giving $I$) and $n=-1$: $\begin{pmatrix}1&amp;-1\\0&amp;1\end{pmatrix}$ is indeed $A^{-1}$, since it undoes the shear.</p>
+<h3>5. Quick verification</h3>
+<ul><li>The formula reproduces $A^2,A^3,A^4$ computed above. ✓</li><li>Alternative argument: $A=I+N$ with $N=\begin{pmatrix}0&amp;1\\0&amp;0\end{pmatrix}$, $N^2=0$, so $A^n=I+nN$. ✓</li><li>$\det A^n=1=(\det A)^n$. ✓</li></ul>
+<h3>6. A concrete example</h3>
+<div class="math-block">$$A^{10}=\begin{pmatrix}1&amp;10\\0&amp;1\end{pmatrix},\qquad A^{10}\begin{pmatrix}0\\1\end{pmatrix}=\begin{pmatrix}10\\1\end{pmatrix}.$$</div>
+<p>The point $(0,1)$ is shifted 10 units to the right after 10 shears.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>I computed $A^2$, $A^3$, $A^4$ and saw that only the corner changes: it is $2,3,4$. So I conjecture $A^n=\begin{pmatrix}1&amp;n\\0&amp;1\end{pmatrix}$. To prove it, I assume it for $n$ and multiply by $A$. The corner becomes $n+1$, which is the formula for $n+1$. Together with the case $n=1$, induction proves it for all $n$. Geometrically, $A$ is a shear, and $n$ shears shift by $n$ times as much.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-7">Exercise 7: Identity, zero matrix, and powers</a></li><li><a href="#exercise-11">Exercise 11: When do matrices commute?</a></li><li><a href="#exercise-13">Exercise 13: A recurrence in matrix form</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-13">
+<h2 class="exercise-title">Exercise 13. A Recurrence Written in Matrix Form</h2>
+<h3>The question</h3>
+<p>Let</p>
+<div class="math-block">$$F=\begin{pmatrix}1&amp;1\\1&amp;0\end{pmatrix}.$$</div>
+<p>Compute $F^2$, $F^3$, $F^4$, $F^5$ and compare the entries with the sequence</p>
+<div class="math-block">$$0,1,1,2,3,5,8,\ldots$$</div>
+<p>Then compute $F\begin{pmatrix}a\\b\end{pmatrix}$ and explain how this performs one step of the recurrence.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>The sequence above is the <strong>Fibonacci sequence</strong>:</p>
+<div class="math-block">$$F_0=0,\quad F_1=1,\quad F_{n+1}=F_n+F_{n-1}.$$</div>
+<p>Each new term needs the <strong>two</strong> previous terms. A single number cannot store that information, but a <strong>vector</strong> of two numbers can. If a matrix turns $(F_n,F_{n-1})$ into $(F_{n+1},F_n)$, then repeating the step is just taking powers of that matrix.</p>
+<h3>1. Compute the powers</h3>
+<div class="math-block">$$F^2=\begin{pmatrix}1&amp;1\\1&amp;0\end{pmatrix}\begin{pmatrix}1&amp;1\\1&amp;0\end{pmatrix}=\begin{pmatrix}2&amp;1\\1&amp;1\end{pmatrix},$$</div>
+<div class="math-block">$$F^3=F^2F=\begin{pmatrix}2&amp;1\\1&amp;1\end{pmatrix}\begin{pmatrix}1&amp;1\\1&amp;0\end{pmatrix}=\begin{pmatrix}3&amp;2\\2&amp;1\end{pmatrix},$$</div>
+<div class="math-block">$$F^4=F^3F=\begin{pmatrix}3&amp;2\\2&amp;1\end{pmatrix}\begin{pmatrix}1&amp;1\\1&amp;0\end{pmatrix}=\begin{pmatrix}5&amp;3\\3&amp;2\end{pmatrix},$$</div>
+<div class="math-block">$$F^5=F^4F=\begin{pmatrix}5&amp;3\\3&amp;2\end{pmatrix}\begin{pmatrix}1&amp;1\\1&amp;0\end{pmatrix}=\begin{pmatrix}8&amp;5\\5&amp;3\end{pmatrix}.$$</div>
+<h3>2. Relationship with the sequence</h3>
+<table><thead><tr><th>$n$</th><th>$F^n$</th><th>$F_{n+1}$</th><th>$F_n$</th><th>$F_{n-1}$</th></tr></thead><tbody><tr><td>1</td><td>$\begin{pmatrix}1&amp;1\\1&amp;0\end{pmatrix}$</td><td>1</td><td>1</td><td>0</td></tr><tr><td>2</td><td>$\begin{pmatrix}2&amp;1\\1&amp;1\end{pmatrix}$</td><td>2</td><td>1</td><td>1</td></tr><tr><td>3</td><td>$\begin{pmatrix}3&amp;2\\2&amp;1\end{pmatrix}$</td><td>3</td><td>2</td><td>1</td></tr><tr><td>4</td><td>$\begin{pmatrix}5&amp;3\\3&amp;2\end{pmatrix}$</td><td>5</td><td>3</td><td>2</td></tr><tr><td>5</td><td>$\begin{pmatrix}8&amp;5\\5&amp;3\end{pmatrix}$</td><td>8</td><td>5</td><td>3</td></tr></tbody></table>
+<p>The entries are always three consecutive Fibonacci numbers:</p>
+<div class="math-block">$$F^n=\begin{pmatrix}F_{n+1}&amp;F_n\\F_n&amp;F_{n-1}\end{pmatrix}.$$</div>
+<h3>3. One recurrence step</h3>
+<div class="math-block">$$F\begin{pmatrix}a\\b\end{pmatrix}=\begin{pmatrix}1\cdot a+1\cdot b\\1\cdot a+0\cdot b\end{pmatrix}=\begin{pmatrix}a+b\\a\end{pmatrix}.$$</div>
+<ul><li>The <strong>first row</strong> $(1,1)$ creates the <strong>sum</strong> of the two terms: the new Fibonacci number.</li><li>The <strong>second row</strong> $(1,0)$ <strong>keeps</strong> the previous top term $a$, so it is available for the next step.</li></ul>
+<p>With $a=F_n$, $b=F_{n-1}$:</p>
+<div class="math-block">$$F\begin{pmatrix}F_n\\F_{n-1}\end{pmatrix}=\begin{pmatrix}F_{n+1}\\F_n\end{pmatrix}.$$</div>
+<p>Starting from $\begin{pmatrix}F_1\\F_0\end{pmatrix}=\begin{pmatrix}1\\0\end{pmatrix}$ and applying $F$ repeatedly:</p>
+<div class="math-block">$$F^n\begin{pmatrix}1\\0\end{pmatrix}=\begin{pmatrix}F_{n+1}\\F_n\end{pmatrix},$$</div>
+<p>which is the first column of $F^n$. That explains the pattern in the table.</p>
+<h3>4. Why the pattern holds for all $n$ (induction)</h3>
+<p>Base: $F^1=\begin{pmatrix}F_2&amp;F_1\\F_1&amp;F_0\end{pmatrix}=\begin{pmatrix}1&amp;1\\1&amp;0\end{pmatrix}$. ✓</p>
+<p>Step: if $F^n=\begin{pmatrix}F_{n+1}&amp;F_n\\F_n&amp;F_{n-1}\end{pmatrix}$, then</p>
+<div class="math-block">$$F^{n+1}=F^nF=\begin{pmatrix}F_{n+1}+F_n&amp;F_{n+1}\\F_n+F_{n-1}&amp;F_n\end{pmatrix}=\begin{pmatrix}F_{n+2}&amp;F_{n+1}\\F_{n+1}&amp;F_n\end{pmatrix}.\ ✓$$</div>
+<h3>5. Quick verification</h3>
+<p>Determinant: $\det F=-1$, so $\det F^n=(-1)^n$. For $n=5$: $8\cdot3-5\cdot5=24-25=-1=(-1)^5$. ✓ (This is Cassini's identity $F_{n+1}F_{n-1}-F_n^2=(-1)^n$.)</p>
+<h3>6. A concrete example</h3>
+<p>From $\begin{pmatrix}5\\3\end{pmatrix}$, one step gives $\begin{pmatrix}8\\5\end{pmatrix}$, and the next gives $\begin{pmatrix}13\\8\end{pmatrix}$. So we can predict</p>
+<div class="math-block">$$F^6=\begin{pmatrix}13&amp;8\\8&amp;5\end{pmatrix}.$$</div>
+<h3>How I would explain this in class</h3>
+<blockquote><p>The powers of $F$ contain Fibonacci numbers: $F^5=\begin{pmatrix}8&amp;5\\5&amp;3\end{pmatrix}$, and in general $F^n=\begin{pmatrix}F_{n+1}&amp;F_n\\F_n&amp;F_{n-1}\end{pmatrix}$. The reason is that $F(a,b)=(a+b,a)$: the first row makes the new term as a sum, and the second row remembers the old one. So one multiplication by $F$ is one step of the recurrence, and $F^n$ is $n$ steps.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-12">Exercise 12: Formula for a matrix power</a></li><li><a href="#exercise-5">Exercise 5: Matrix times vector</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-14">
+<h2 class="exercise-title">Exercise 14. Rotation Matrices</h2>
+<h3>The question</h3>
+<p>The matrix of a rotation through angle $\theta$ is</p>
+<div class="math-block">$$R(\theta)=\begin{pmatrix}\cos\theta&amp;-\sin\theta\\\sin\theta&amp;\cos\theta\end{pmatrix}.$$</div>
+<p>Compute $R(\alpha)R(\beta)$ and, using the angle-sum formulas, show that</p>
+<div class="math-block">$$R(\alpha)R(\beta)=R(\alpha+\beta).$$</div>
+<p>Explain the result geometrically.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<ol><li><strong>Where the matrix comes from:</strong> the columns of a matrix are the images of $e_1$ and $e_2$ (Exercise 5). Rotating $e_1=(1,0)$ by $\theta$ gives $(\cos\theta,\sin\theta)$, and rotating $e_2=(0,1)$ gives $(-\sin\theta,\cos\theta)$. These are exactly the columns of $R(\theta)$.</li><li><strong>Product = composition:</strong> $R(\alpha)R(\beta)$ means "rotate by $\beta$, then by $\alpha$" (Exercise 9).</li><li><strong>Angle-sum formulas:</strong> $$\cos(\alpha+\beta)=\cos\alpha\cos\beta-\sin\alpha\sin\beta,$$ $$\sin(\alpha+\beta)=\sin\alpha\cos\beta+\cos\alpha\sin\beta.$$</li></ol>
+<h3>1. Multiply the matrices</h3>
+<div class="math-block">$$R(\alpha)R(\beta)=\begin{pmatrix}\cos\alpha&amp;-\sin\alpha\\\sin\alpha&amp;\cos\alpha\end{pmatrix}\begin{pmatrix}\cos\beta&amp;-\sin\beta\\\sin\beta&amp;\cos\beta\end{pmatrix}$$</div>
+<div class="math-block">$$=\begin{pmatrix}\cos\alpha\cos\beta-\sin\alpha\sin\beta &amp; -\cos\alpha\sin\beta-\sin\alpha\cos\beta\\ \sin\alpha\cos\beta+\cos\alpha\sin\beta &amp; -\sin\alpha\sin\beta+\cos\alpha\cos\beta\end{pmatrix}.$$</div>
+<h3>2. Apply the angle-sum formulas</h3>
+<p>Entry by entry:</p>
+<ul><li>$(1,1)$: $\cos\alpha\cos\beta-\sin\alpha\sin\beta=\cos(\alpha+\beta)$,</li><li>$(1,2)$: $-(\sin\alpha\cos\beta+\cos\alpha\sin\beta)=-\sin(\alpha+\beta)$,</li><li>$(2,1)$: $\sin\alpha\cos\beta+\cos\alpha\sin\beta=\sin(\alpha+\beta)$,</li><li>$(2,2)$: $\cos\alpha\cos\beta-\sin\alpha\sin\beta=\cos(\alpha+\beta)$.</li></ul>
+<p>Therefore</p>
+<div class="math-block">$$R(\alpha)R(\beta)=\begin{pmatrix}\cos(\alpha+\beta)&amp;-\sin(\alpha+\beta)\\\sin(\alpha+\beta)&amp;\cos(\alpha+\beta)\end{pmatrix}=R(\alpha+\beta).\ \blacksquare$$</div>
+<h3>3. Geometric meaning</h3>
+<p>Rotating by $\beta$ and then by $\alpha$ is the same as rotating once by $\alpha+\beta$. The matrix algebra agrees with what we expect geometrically.</p>
+<p>Consequences:</p>
+<ul><li><strong>Rotations commute:</strong> $R(\alpha)R(\beta)=R(\alpha+\beta)=R(\beta+\alpha)=R(\beta)R(\alpha)$. This is a special family where order does <em>not</em> matter (unlike Exercise 9, where a stretch was involved).</li><li><strong>Inverse:</strong> $R(\theta)R(-\theta)=R(0)=I$, so $R(\theta)^{-1}=R(-\theta)$: undo a rotation by rotating back.</li><li><strong>Powers:</strong> $R(\theta)^n=R(n\theta)$.</li></ul>
+<p>The result can also be read the other way round: if we trust the geometry, multiplying the matrices <strong>proves</strong> the angle-sum formulas.</p>
+<h3>4. Quick verification</h3>
+<ul><li>$\alpha=\beta=90^\circ$: $R(90^\circ)=\begin{pmatrix}0&amp;-1\\1&amp;0\end{pmatrix}$, and $$R(90^\circ)^2=\begin{pmatrix}-1&amp;0\\0&amp;-1\end{pmatrix}=R(180^\circ).\ ✓$$</li><li>Determinant: $\det R(\theta)=\cos^2\theta+\sin^2\theta=1$, and $1\cdot1=1=\det R(\alpha+\beta)$. ✓</li></ul>
+<h3>5. A concrete example</h3>
+<p>$\alpha=30^\circ$, $\beta=60^\circ$:</p>
+<div class="math-block">$$R(30^\circ)R(60^\circ)=\begin{pmatrix}\tfrac{\sqrt3}{2}&amp;-\tfrac12\\\tfrac12&amp;\tfrac{\sqrt3}{2}\end{pmatrix}\begin{pmatrix}\tfrac12&amp;-\tfrac{\sqrt3}{2}\\\tfrac{\sqrt3}{2}&amp;\tfrac12\end{pmatrix}=\begin{pmatrix}\tfrac{\sqrt3}{4}-\tfrac{\sqrt3}{4}&amp;-\tfrac34-\tfrac14\\\tfrac14+\tfrac34&amp;-\tfrac{\sqrt3}{4}+\tfrac{\sqrt3}{4}\end{pmatrix}=\begin{pmatrix}0&amp;-1\\1&amp;0\end{pmatrix}=R(90^\circ).\ ✓$$</div>
+<h3>How I would explain this in class</h3>
+<blockquote><p>I multiply the two rotation matrices and get entries like $\cos\alpha\cos\beta-\sin\alpha\sin\beta$. By the angle-sum formulas these are exactly $\cos(\alpha+\beta)$ and $\sin(\alpha+\beta)$, so $R(\alpha)R(\beta)=R(\alpha+\beta)$. Geometrically, two rotations in a row are one rotation by the total angle. That's why rotations commute and why $R(-\theta)$ is the inverse of $R(\theta)$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-9">Exercise 9: Composing transformations</a></li><li><a href="#exercise-5">Exercise 5: Matrix times vector</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-15">
+<h2 class="exercise-title">Exercise 15. Associativity of Multiplication and Different Calculation Paths</h2>
+<h3>The question</h3>
+<p>Given</p>
+<div class="math-block">$$A=\begin{pmatrix}1&amp;2&amp;0\\0&amp;1&amp;1\end{pmatrix},\quad B=\begin{pmatrix}1&amp;0\\2&amp;1\\-1&amp;3\end{pmatrix},\quad C=\begin{pmatrix}2&amp;1\\0&amp;-1\end{pmatrix},$$</div>
+<p>compute $(AB)C$ and $A(BC)$, compare the results and the number of intermediate operations, and explain what associativity means here.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p><strong>Associativity</strong> says</p>
+<div class="math-block">$$(AB)C=A(BC)$$</div>
+<p>whenever the products are defined. We may choose where to put the brackets, but <strong>not</strong> the order of the factors (Exercise 4).</p>
+<p>Why it should be true: as transformations, both sides mean "apply $C$, then $B$, then $A$". Brackets only say which two steps we combine first.</p>
+<p>Sizes: $A$ is $2\times3$, $B$ is $3\times2$, $C$ is $2\times2$. The final result is $2\times2$.</p>
+<p>To compare the cost, we count <strong>scalar multiplications</strong>: a $(m\times n)(n\times q)$ product needs $m\cdot n\cdot q$ of them.</p>
+<h3>1. Path 1: $(AB)C$</h3>
+<p>First $AB$ ($2\times3$ times $3\times2$):</p>
+<div class="math-block">$$AB=\begin{pmatrix}1+4+0&amp;0+2+0\\0+2-1&amp;0+1+3\end{pmatrix}=\begin{pmatrix}5&amp;2\\1&amp;4\end{pmatrix}.$$</div>
+<p>Then multiply by $C$:</p>
+<div class="math-block">$$(AB)C=\begin{pmatrix}5\cdot2+2\cdot0&amp;5\cdot1+2\cdot(-1)\\1\cdot2+4\cdot0&amp;1\cdot1+4\cdot(-1)\end{pmatrix}=\begin{pmatrix}10&amp;3\\2&amp;-3\end{pmatrix}.$$</div>
+<h3>2. Path 2: $A(BC)$</h3>
+<p>First $BC$ ($3\times2$ times $2\times2$):</p>
+<div class="math-block">$$BC=\begin{pmatrix}1\cdot2+0\cdot0&amp;1\cdot1+0\cdot(-1)\\2\cdot2+1\cdot0&amp;2\cdot1+1\cdot(-1)\\-1\cdot2+3\cdot0&amp;-1\cdot1+3\cdot(-1)\end{pmatrix}=\begin{pmatrix}2&amp;1\\4&amp;1\\-2&amp;-4\end{pmatrix}.$$</div>
+<p>Then multiply $A$ by it:</p>
+<div class="math-block">$$A(BC)=\begin{pmatrix}2+8+0&amp;1+2+0\\0+4-2&amp;0+1-4\end{pmatrix}=\begin{pmatrix}10&amp;3\\2&amp;-3\end{pmatrix}.$$</div>
+<h3>3. Compare results</h3>
+<div class="math-block">$$(AB)C=\begin{pmatrix}10&amp;3\\2&amp;-3\end{pmatrix}=A(BC).\ ✓$$</div>
+<h3>4. Compare the work</h3>
+<table><thead><tr><th>Path</th><th>First product</th><th>Second product</th><th>Total multiplications</th><th>Intermediate size</th></tr></thead><tbody><tr><td>$(AB)C$</td><td>$AB$: $2\cdot3\cdot2=12$</td><td>$(AB)C$: $2\cdot2\cdot2=8$</td><td><strong>20</strong></td><td>$2\times2$ (4 entries)</td></tr><tr><td>$A(BC)$</td><td>$BC$: $3\cdot2\cdot2=12$</td><td>$A(BC)$: $2\cdot3\cdot2=12$</td><td><strong>24</strong></td><td>$3\times2$ (6 entries)</td></tr></tbody></table>
+<p>Same answer, but $(AB)C$ is cheaper here because its intermediate matrix is smaller. For large matrices (e.g. in computer graphics or machine learning) a good choice of brackets can save a huge amount of computation.</p>
+<h3>5. Why associativity holds in general</h3>
+<div class="math-block">$$\big((AB)C\big)_{ij}=\sum_l\Big(\sum_k a_{ik}b_{kl}\Big)c_{lj}=\sum_k\sum_l a_{ik}b_{kl}c_{lj}=\sum_k a_{ik}\Big(\sum_l b_{kl}c_{lj}\Big)=\big(A(BC)\big)_{ij}.$$</div>
+<p>Both sides are the same double sum; only the order of adding is different.</p>
+<h3>6. Quick verification</h3>
+<p>Apply both to $e_1=(1,0)^T$:</p>
+<ul><li>$Ce_1=(2,0)^T$, $B(2,0)^T=(2,4,-2)^T$, $A(2,4,-2)^T=(2+8,\ 4-2)^T=(10,2)^T$.</li><li>First column of the result: $(10,2)^T$. ✓</li></ul>
+<h3>7. A concrete example</h3>
+<p>If we only need $ABCx$ for one vector $x$, the cheapest path is $A(B(Cx))$: three matrix-vector products, $4+6+6=16$ multiplications, with no matrix-matrix products at all. Associativity guarantees the same answer.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>I computed the product in two ways. First $AB=\begin{pmatrix}5&amp;2\\1&amp;4\end{pmatrix}$ and then times $C$. Second $BC$, which is $3\times2$, and then $A$ times it. Both give $\begin{pmatrix}10&amp;3\\2&amp;-3\end{pmatrix}$. That's associativity: the brackets don't change the result, as long as the order $A,B,C$ stays the same. But the work differs: 20 multiplications versus 24, because $(AB)C$ goes through a smaller intermediate matrix.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-3">Exercise 3: When can matrices be multiplied?</a></li><li><a href="#exercise-10">Exercise 10: Columns of a matrix product</a></li></ul>
+</section>
+    </main>
+  </div>
+</body>
+</html>

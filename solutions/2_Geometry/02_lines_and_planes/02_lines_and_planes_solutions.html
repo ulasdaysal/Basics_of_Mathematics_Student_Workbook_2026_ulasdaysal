@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>02. Lines and Planes — Complete Solutions</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false}
+      ],
+      throwOnError: false
+    });"></script>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --muted: #475569;
+      --accent: #2563eb;
+      --accent-soft: #eff6ff;
+      --quote-bg: #f1f5f9;
+      --quote-border: #3b82f6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 310px 1fr;
+      min-height: 100vh;
+    }
+    aside.sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 1.5rem 1.25rem;
+    }
+    .brand {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    .brand-sub {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .toc-group-title {
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin: 1rem 0 0.35rem 0.5rem;
+    }
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .toc-list li { margin-bottom: 0.2rem; }
+    .toc-list a {
+      display: block;
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.86rem;
+      transition: background 0.15s, color 0.15s;
+    }
+    .toc-list a:hover {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+    main.content {
+      max-width: 940px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    header.page-header {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    }
+    header.page-header h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.85rem;
+      color: var(--text);
+    }
+    header.page-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+    .section-banner {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: #ffffff;
+      border-radius: 12px;
+      padding: 1.5rem 2rem;
+      margin: 2.5rem 0 1.5rem;
+      scroll-margin-top: 1.5rem;
+    }
+    .section-banner h2 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    .section-banner p {
+      margin: 0.25rem 0 0;
+      opacity: 0.9;
+      font-size: 0.92rem;
+    }
+    section.exercise-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem 2.25rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+      scroll-margin-top: 1.5rem;
+    }
+    section.exercise-card h2.exercise-title {
+      margin-top: 0;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--accent-soft);
+      color: var(--accent);
+      font-size: 1.4rem;
+    }
+    section.exercise-card h3 {
+      margin-top: 1.5rem;
+      margin-bottom: 0.55rem;
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+    section.exercise-card h4 {
+      margin-top: 1.15rem;
+      margin-bottom: 0.45rem;
+      font-size: 1rem;
+      color: var(--muted);
+    }
+    p { margin: 0.65rem 0; }
+    ul, ol { margin: 0.65rem 0; padding-left: 1.5rem; }
+    li { margin-bottom: 0.35rem; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.85rem;
+      text-align: left;
+    }
+    th { background: var(--bg); font-weight: 600; }
+    blockquote {
+      margin: 1rem 0;
+      padding: 0.9rem 1.2rem;
+      background: var(--quote-bg);
+      border-left: 4px solid var(--quote-border);
+      border-radius: 0 8px 8px 0;
+      color: var(--text);
+    }
+    blockquote p { margin: 0; }
+    pre {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 1rem 1.25rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+    code {
+      font-family: Consolas, Monaco, "Courier New", monospace;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .katex-display {
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 0.25rem 0;
+    }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      aside.sidebar {
+        position: static;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      main.content { padding: 1.5rem 1rem 3rem; }
+      section.exercise-card { padding: 1.5rem; }
+    }
+    @media print {
+      aside.sidebar { display: none; }
+      .layout { display: block; }
+      body { background: #fff; }
+      section.exercise-card { box-shadow: none; break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">2. Geometry</div>
+      <div class="brand-sub">02. Lines and Planes (Exercises 1–15)</div>
+      <ul class="toc-list">
+<li><a href="#exercise-1">1. Line Through Two Points</a></li>
+<li><a href="#exercise-2">2. A Line in Space</a></li>
+<li><a href="#exercise-3">3. Plane Through a Point with a Given Normal Vector</a></li>
+<li><a href="#exercise-4">4. Plane Through Three Points</a></li>
+<li><a href="#exercise-5">5. Relative Position of Two Lines</a></li>
+<li><a href="#exercise-6">6. Angle Between Planes</a></li>
+<li><a href="#exercise-7">7. A Line Relative to a Plane</a></li>
+<li><a href="#exercise-8">8. Intersection Point of a Line and a Plane</a></li>
+<li><a href="#exercise-9">9. Distances</a></li>
+<li><a href="#exercise-10">10. Projection of a Point onto a Plane</a></li>
+<li><a href="#exercise-11">11. Plane Containing a Line and a Point</a></li>
+<li><a href="#exercise-12">12. Intersection Line of Two Planes</a></li>
+<li><a href="#exercise-13">13. Closest Point on a Plane</a></li>
+<li><a href="#exercise-14">14. Contrast: Intersection and Parallelism</a></li>
+<li><a href="#exercise-15">15. Complete Classification of a Line Relative to a Plane</a></li>
+</ul>
+    </aside>
+    <main class="content">
+      <header class="page-header">
+        <h1>02. Lines and Planes — Complete Solutions</h1>
+        <p>Basics of Mathematics Student Workbook (2026) · 2. Geometry · All 15 Exercises with Detailed Explanations</p>
+      </header>
+      <section class="exercise-card" id="exercise-1">
+<h2 class="exercise-title">Exercise 1. Line Through Two Points</h2>
+<h3>The question</h3>
+<p>Find the equation of the line through $A=(1,2)$ and $B=(4,-1)$ in parametric and general form. Identify a direction vector and an example of a normal vector. Check that both points satisfy the equation you obtain.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>A line in the plane can be described in two complementary ways:</p>
+<ul><li><strong>Parametric form</strong> starts at one known point $A$ and moves along a <strong>direction vector</strong> $v=\overrightarrow{AB}=B-A$: $$(x,y)=A+tv,\qquad t\in\mathbb{R}.$$</li><li><strong>General (implicit) form</strong> describes the line as the set of points whose displacement from $A$ is perpendicular to a <strong>normal vector</strong> $n=(a,b)$: $$ax+by+c=0.$$</li></ul>
+<p>If $v=(v_x,v_y)$ is a direction vector in $\mathbb{R}^2$, rotating it by $90^\circ$ gives a normal vector $n=(-v_y,v_x)$ (or any non-zero multiple of it), because their dot product is zero.</p>
+<h3>1. Direction vector and parametric form</h3>
+<p>The vector from $A=(1,2)$ to $B=(4,-1)$ is</p>
+<div class="math-block">$$v=\overrightarrow{AB}=B-A=(4-1,-1-2)=(3,-3).$$</div>
+<p>Any non-zero scalar multiple of $v$ defines the same direction. Dividing by $3$ gives a simpler direction vector:</p>
+<div class="math-block">$$v_0=(1,-1).$$</div>
+<p>Using $A=(1,2)$ as the base point and $v=(3,-3)$, the parametric form is</p>
+<div class="math-block">$$(x,y)=(1,2)+t(3,-3),\qquad t\in\mathbb{R},$$</div>
+<p>or in coordinates:</p>
+<div class="math-block">$$\begin{cases}x=1+3t,\\y=2-3t,\end{cases}\qquad t\in\mathbb{R}.$$</div>
+<p>(With the simplified direction vector $v_0=(1,-1)$, we can equally write $(x,y)=(1,2)+s(1,-1)$.)</p>
+<h3>2. Normal vector and general form</h3>
+<p>We need a vector $n=(a,b)$ perpendicular to $v_0=(1,-1)$, so $n\cdot v_0=0$. Choosing</p>
+<div class="math-block">$$n=(1,1)$$</div>
+<p>gives $n\cdot v_0=1\cdot1+1\cdot(-1)=0$.</p>
+<p>The general equation of a line with normal $n=(1,1)$ passing through $A=(1,2)$ is</p>
+<div class="math-block">$$1(x-1)+1(y-2)=0\implies x+y-3=0\quad(\text{or }x+y=3).$$</div>
+<p>We can also get this directly from the parametric equations by eliminating $t$: adding $x=1+3t$ and $y=2-3t$ cancels $3t$ and gives $x+y=3$.</p>
+<h3>3. Summary of vectors and equations</h3>
+<ul><li><strong>Direction vector:</strong> $v=(3,-3)$, or simplified $v_0=(1,-1)$.</li><li><strong>Normal vector:</strong> $n=(1,1)$ (or any non-zero multiple such as $(3,3)$).</li><li><strong>Parametric equation:</strong> $(x,y)=(1,2)+t(3,-3)$ (or $(1,2)+s(1,-1)$).</li><li><strong>General equation:</strong> $x+y-3=0$.</li></ul>
+<h3>Quick verification</h3>
+<p>Let us check both points in both equations:</p>
+<ul><li>In the general equation $x+y-3=0$:</li><li>For $A=(1,2)$: $1+2-3=0$. ✓</li><li>For $B=(4,-1)$: $4+(-1)-3=0$. ✓</li><li>In the parametric equation $(x,y)=(1,2)+t(3,-3)$:</li><li>$t=0$ gives $(1,2)=A$. ✓</li><li>$t=1$ gives $(1+3,2-3)=(4,-1)=B$. ✓</li><li>Orthogonality check between direction and normal: $$v\cdot n=(3,-3)\cdot(1,1)=3-3=0.\text{ ✓}$$</li></ul>
+<h3>A concrete example</h3>
+<p>What point sits halfway between $A$ and $B$? In the parametric equation $(x,y)=(1,2)+t(3,-3)$, the parameter $t$ measures progress from $A$ ($t=0$) to $B$ ($t=1$). Setting $t=\frac{1}{2}$ gives the midpoint</p>
+<div class="math-block">$$M=\left(1+\frac{3}{2},\,2-\frac{3}{2}\right)=\left(\frac{5}{2},\,\frac{1}{2}\right).$$</div>
+<p>Checking $M$ in the general equation: $\frac{5}{2}+\frac{1}{2}-3=3-3=0$, confirming that $M$ lies on the line.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>To write the line through $A=(1,2)$ and $B=(4,-1)$, I first subtract the points to get the direction vector $v=B-A=(3,-3)$, which simplifies to $(1,-1)$. Starting at $A$ and stepping along $v$ gives the parametric form $(x,y)=(1,2)+t(3,-3)$. To switch to general form, I swap the components of $(1,-1)$ and change one sign to get a perpendicular normal vector $n=(1,1)$. That immediately gives the coefficients of $x$ and $y$ in $x+y+c=0$, and plugging in $(1,2)$ tells me $x+y-3=0$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-2">Exercise 2: A Line in Space</a></li><li><a href="#exercise-3">Exercise 3: Plane Through a Point with a Given Normal Vector</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-2">
+<h2 class="exercise-title">Exercise 2. A Line in Space</h2>
+<h3>The question</h3>
+<p>Given</p>
+<div class="math-block">$$L:(x,y,z)=(2,-1,3)+t(1,2,-2).$$</div>
+<p>State a point on the line and its direction vector, check whether $P=(4,3,-1)$ lies on $L$, and find the point corresponding to $t=-1$.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>A line in $\mathbb{R}^3$ in vector parametric form is written as</p>
+<div class="math-block">$$(x,y,z)=p_0+tv,\qquad t\in\mathbb{R},$$</div>
+<p>where:</p>
+<ul><li>$p_0=(x_0,y_0,z_0)$ is the <strong>starting point</strong> (reached at $t=0$),</li><li>$v=(v_x,v_y,v_z)$ is the <strong>direction vector</strong> (how much $(x,y,z)$ changes when $t$ increases by $1$).</li></ul>
+<p>A point $P$ lies on the line $L$ if and only if there is a <strong>single</strong> parameter value $t$ that produces all three coordinates of $P$ simultaneously.</p>
+<h3>1. Point on the line and direction vector</h3>
+<p>Reading directly from $(x,y,z)=(2,-1,3)+t(1,2,-2)$:</p>
+<ul><li><strong>A point on the line (for $t=0$):</strong> $P_0=(2,-1,3)$.</li><li><strong>Direction vector:</strong> $v=(1,2,-2)$.</li></ul>
+<p>Written component by component, the parametric equations are</p>
+<div class="math-block">$$\begin{cases}x=2+t,\\y=-1+2t,\\z=3-2t,\end{cases}\qquad t\in\mathbb{R}.$$</div>
+<h3>2. Checking whether $P=(4,3,-1)$ lies on $L$</h3>
+<p>We set $(x,y,z)=(4,3,-1)$ and check whether all three equations yield the same $t$:</p>
+<div class="math-block">$$\begin{cases}2+t=4\implies t=2,\\-1+2t=3\implies 2t=4\implies t=2,\\3-2t=-1\implies -2t=-4\implies t=2.\end{cases}$$</div>
+<p>Since the same value $t=2$ satisfies all three coordinate equations, the point $P=(4,3,-1)$ <strong>does lie on the line $L$</strong>.</p>
+<h3>3. Finding the point for $t=-1$</h3>
+<p>Substitute $t=-1$ into the parametric equation:</p>
+<div class="math-block">$$(x,y,z)=(2,-1,3)+(-1)(1,2,-2)=(2-1,\,-1-2,\,3+2)=(1,-3,5).$$</div>
+<p>So the point corresponding to $t=-1$ is $Q=(1,-3,5)$.</p>
+<h3>4. Geometric meaning of the parameter $t$</h3>
+<p>The length of the direction vector is $\|v\|=\sqrt{1^2+2^2+(-2)^2}=\sqrt{9}=3$. Therefore:</p>
+<ul><li>$P=(4,3,-1)$ at $t=2$ lies $2\|v\|=6$ units from $P_0$ in the direction of $v$,</li><li>$Q=(1,-3,5)$ at $t=-1$ lies $1\cdot\|v\|=3$ units from $P_0$ in the opposite direction.</li></ul>
+<h3>Quick verification</h3>
+<ul><li>Check that the vector $\overrightarrow{P_0P}$ is a multiple of $v$: $$\overrightarrow{P_0P}=(4-2,\,3-(-1),\,-1-3)=(2,4,-4)=2(1,2,-2)=2v.\text{ ✓}$$</li><li>Check that the vector $\overrightarrow{P_0Q}$ is $-v$: $$\overrightarrow{P_0Q}=(1-2,\,-3-(-1),\,5-3)=(-1,-2,2)=-1\cdot(1,2,-2)=-v.\text{ ✓}$$</li></ul>
+<h3>A concrete example</h3>
+<p>What happens when a point does <strong>not</strong> lie on $L$? Take $R=(4,3,0)$. Solving for $t$ coordinate by coordinate gives:</p>
+<ul><li>from $x$: $2+t=4\implies t=2$,</li><li>from $y$: $-1+2t=3\implies t=2$,</li><li>from $z$: $3-2t=0\implies t=\frac{3}{2}$.</li></ul>
+<p>Because the third coordinate demands $t=\frac{3}{2}\neq 2$, the point $R=(4,3,0)$ misses the line (it is $1$ unit above the point $P=(4,3,-1)$).</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Think of $(2,-1,3)+t(1,2,-2)$ as a motion recipe: at time $t=0$ you start at $(2,-1,3)$, and every second your velocity is $(1,2,-2)$. To test if $(4,3,-1)$ is on the path, I solve $2+t=4$ to get $t=2$, and then verify that at $t=2$ the other two coordinates also match: $-1+2(2)=3$ and $3-2(2)=-1$. They do, so the point is on the line. For $t=-1$, I just step one unit backward from $(2,-1,3)$ by subtracting $(1,2,-2)$, landing at $(1,-3,5)$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: Line Through Two Points</a></li><li><a href="#exercise-5">Exercise 5: Relative Position of Two Lines</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-3">
+<h2 class="exercise-title">Exercise 3. Plane Through a Point with a Given Normal Vector</h2>
+<h3>The question</h3>
+<p>Find the equation of the plane through $P=(1,-2,3)$ and perpendicular to $n=(2,1,-1)$. Check the result by substituting the point $P$ and explain the role of the normal vector.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>In three-dimensional space, a single direction perpendicular to a plane determines the plane's tilt completely. That perpendicular vector is called the <strong>normal vector</strong> $n=(a,b,c)$.</p>
+<p>A point $X=(x,y,z)$ lies on the plane through $P=(x_0,y_0,z_0)$ if and only if the displacement vector $\overrightarrow{PX}=X-P$ lies flat in the plane—which means it is perpendicular to $n$:</p>
+<div class="math-block">$$n\cdot(X-P)=0\iff a(x-x_0)+b(y-y_0)+c(z-z_0)=0.$$</div>
+<h3>1. Point-normal form of the plane</h3>
+<p>Given $P=(1,-2,3)$ and $n=(2,1,-1)$, for any point $X=(x,y,z)$ on the plane we have</p>
+<div class="math-block">$$\overrightarrow{PX}=(x-1,\,y+2,\,z-3).$$</div>
+<p>Imposing orthogonality $n\cdot\overrightarrow{PX}=0$ gives</p>
+<div class="math-block">$$2(x-1)+1(y+2)-1(z-3)=0.$$</div>
+<h3>2. Expanding to the general equation</h3>
+<p>Expanding the parentheses and collecting the constant terms:</p>
+<div class="math-block">$$2x-2+y+2-z+3=0\implies 2x+y-z+3=0,$$</div>
+<p>or equivalently</p>
+<div class="math-block">$$2x+y-z=-3.$$</div>
+<h3>3. The role of the normal vector</h3>
+<p>The normal vector $n=(2,1,-1)$ plays two key roles:</p>
+<ol><li><strong>Algebraically</strong>, its components $(2,1,-1)$ are the exact coefficients of $x$, $y$, and $z$ in the linear equation $2x+y-z=-3$. Whenever we see a plane equation $ax+by+cz=d$, we can immediately read off its normal vector as $n=(a,b,c)$.</li><li><strong>Geometrically</strong>, $n$ controls the orientation of the plane in $\mathbb{R}^3$: every vector lying inside the plane is perpendicular to $n$, and moving along $n$ moves directly away from the plane at a $90^\circ$ angle. The constant term $d=-3$ only shifts the plane parallel to itself so that it passes through $P$.</li></ol>
+<h3>Quick verification</h3>
+<p>Substitute $P=(1,-2,3)$ into the equation $2x+y-z=-3$:</p>
+<div class="math-block">$$2(1)+(-2)-(3)=2-2-3=-3.\text{ ✓}$$</div>
+<p>Let us also find another point on the plane, say by setting $x=0$ and $y=0$, which gives $-z=-3\implies z=3$, so $Q=(0,0,3)$. The vector in the plane is $\overrightarrow{PQ}=(-1,2,0)$, and its dot product with $n$ is</p>
+<div class="math-block">$$n\cdot\overrightarrow{PQ}=(2,1,-1)\cdot(-1,2,0)=-2+2+0=0.\text{ ✓}$$</div>
+<h3>A concrete example</h3>
+<p>What if we kept the same normal vector $n=(2,1,-1)$ but required the plane to pass through the origin $O=(0,0,0)$ instead of $P$? Then the equation would be</p>
+<div class="math-block">$$2x+y-z=0.$$</div>
+<p>Our plane $2x+y-z=-3$ is simply this origin-plane shifted parallel to itself until it hits $P=(1,-2,3)$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>A plane in 3D is easiest to describe not by the directions inside it, but by the single direction perpendicular to it—the normal vector $n=(2,1,-1)$. Any vector from our anchor point $P=(1,-2,3)$ to another point $(x,y,z)$ on the plane must be perpendicular to $n$, so their dot product is zero: $2(x-1)+1(y+2)-1(z-3)=0$. Simplifying gives $2x+y-z=-3$. Notice how the normal vector $(2,1,-1)$ shows up directly as the coefficients of $x,y,z$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-4">Exercise 4: Plane Through Three Points</a></li><li><a href="#exercise-6">Exercise 6: Angle Between Planes</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-4">
+<h2 class="exercise-title">Exercise 4. Plane Through Three Points</h2>
+<h3>The question</h3>
+<p>Find the equation of the plane through</p>
+<div class="math-block">$$A=(1,0,0),\quad B=(0,1,0),\quad C=(0,0,1).$$</div>
+<p>First construct two vectors lying in the plane, and then use the cross product. Check the resulting equation on all three points.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>To write the equation of a plane, we need a point on the plane and a <strong>normal vector</strong> $n$ perpendicular to it. When we are given three non-collinear points $A,B,C$ instead of a normal vector:</p>
+<ol><li>We form two displacement vectors starting from one point, say $u=\overrightarrow{AB}=B-A$ and $v=\overrightarrow{AC}=C-A$. Both $u$ and $v$ lie flat inside the plane.</li><li>Because the cross product $u\times v$ is perpendicular to both $u$ and $v$, the vector $n=u\times v$ is perpendicular to the entire plane!</li><li>Once we have $n$, we use $n\cdot(X-A)=0$ to write the plane's equation.</li></ol>
+<h3>1. Constructing two vectors in the plane</h3>
+<p>Using $A=(1,0,0)$ as our anchor point, we compute the vectors to $B=(0,1,0)$ and $C=(0,0,1)$:</p>
+<div class="math-block">$$u=\overrightarrow{AB}=B-A=(0-1,\,1-0,\,0-0)=(-1,1,0),$$</div>
+<div class="math-block">$$v=\overrightarrow{AC}=C-A=(0-1,\,0-0,\,1-0)=(-1,0,1).$$</div>
+<p>Since $u$ and $v$ are not scalar multiples of each other, the three points $A,B,C$ are not collinear and define a unique plane.</p>
+<h3>2. Finding the normal vector via the cross product</h3>
+<p>We compute $n=u\times v$:</p>
+<div class="math-block">$$n=u\times v=\det\begin{pmatrix}\mathbf{i}&amp;\mathbf{j}&amp;\mathbf{k}\\-1&amp;1&amp;0\\-1&amp;0&amp;1\end{pmatrix}=\mathbf{i}(1\cdot1-0\cdot0)-\mathbf{j}((-1)\cdot1-0\cdot(-1))+\mathbf{k}((-1)\cdot0-1\cdot(-1)).$$</div>
+<p>Simplifying each component:</p>
+<div class="math-block">$$n=(1,\,-(-1),\,1)=(1,1,1).$$</div>
+<h3>3. Writing the equation of the plane</h3>
+<p>Using the normal vector $n=(1,1,1)$ and the point $A=(1,0,0)$:</p>
+<div class="math-block">$$1(x-1)+1(y-0)+1(z-0)=0\implies x+y+z=1.$$</div>
+<h3>Quick verification</h3>
+<p>Let us check that all three given points satisfy $x+y+z=1$, and that $n$ is orthogonal to $u$ and $v$:</p>
+<ul><li>Point $A=(1,0,0)$: $1+0+0=1$. ✓</li><li>Point $B=(0,1,0)$: $0+1+0=1$. ✓</li><li>Point $C=(0,0,1)$: $0+0+1=1$. ✓</li><li>Orthogonality with $u$: $n\cdot u=(1,1,1)\cdot(-1,1,0)=-1+1+0=0$. ✓</li><li>Orthogonality with $v$: $n\cdot v=(1,1,1)\cdot(-1,0,1)=-1+0+1=0$. ✓</li></ul>
+<h3>A concrete example</h3>
+<p>The three points $A=(1,0,0)$, $B=(0,1,0)$, and $C=(0,0,1)$ are the unit intercepts on the $x$-, $y$-, and $z$-axes. Their centroid (average) is</p>
+<div class="math-block">$$G=\frac{A+B+C}{3}=\left(\frac{1}{3},\frac{1}{3},\frac{1}{3}\right).$$</div>
+<p>Substituting $G$ into $x+y+z=1$ gives $\frac{1}{3}+\frac{1}{3}+\frac{1}{3}=1$, and notice that the position vector $\overrightarrow{OG}=\left(\frac{1}{3},\frac{1}{3},\frac{1}{3}\right)$ is parallel to the normal $n=(1,1,1)$—the plane faces the first octant symmetrically.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>We have three points on the plane, $A,B,C$, so we first create two vectors inside the plane: $\overrightarrow{AB}=(-1,1,0)$ and $\overrightarrow{AC}=(-1,0,1)$. To get a normal vector perpendicular to both of them, we take their cross product, which gives $n=(1,1,1)$. That tells us the plane has the form $x+y+z=d$, and plugging in $(1,0,0)$ immediately gives $d=1$, so the equation is $x+y+z=1$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-3">Exercise 3: Plane Through a Point with a Given Normal Vector</a></li><li><a href="#exercise-11">Exercise 11: Plane Containing a Line and a Point</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-5">
+<h2 class="exercise-title">Exercise 5. Relative Position of Two Lines</h2>
+<h3>The question</h3>
+<p>Analyze the position of</p>
+<div class="math-block">$$L_1:(x,y,z)=(1,1,0)+t(1,2,1),$$</div>
+<div class="math-block">$$L_2:(x,y,z)=(2,0,1)+s(0,1,-1).$$</div>
+<p>If they intersect, give the intersection point. If not, determine whether they are parallel or skew. Justify the classification.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Two lines in three-dimensional space can be in one of four states:</p>
+<ol><li><strong>Identical</strong> (parallel direction vectors and share a point),</li><li><strong>Strictly parallel</strong> (parallel direction vectors, no common point),</li><li><strong>Intersecting</strong> (non-parallel direction vectors, and the system $L_1(t)=L_2(s)$ has a solution),</li><li><strong>Skew</strong> (non-parallel direction vectors, and the system $L_1(t)=L_2(s)$ has no solution—the lines pass by each other in different planes).</li></ol>
+<p>So we first compare the direction vectors $v_1$ and $v_2$, and then test whether the three coordinate equations $x_1(t)=x_2(s)$, $y_1(t)=y_2(s)$, $z_1(t)=z_2(s)$ have a common solution $(t,s)$.</p>
+<h3>1. Comparing the direction vectors</h3>
+<p>The direction vectors of $L_1$ and $L_2$ are</p>
+<div class="math-block">$$v_1=(1,2,1),\qquad v_2=(0,1,-1).$$</div>
+<p>If $v_1$ were a scalar multiple of $v_2$, say $(1,2,1)=k(0,1,-1)$, the first coordinate would require $1=0$, which is impossible. Thus $v_1$ and $v_2$ are <strong>not parallel</strong>, which rules out parallel or identical lines. The lines must either <strong>intersect</strong> or be <strong>skew</strong>.</p>
+<h3>2. Setting up the system for an intersection point</h3>
+<p>An intersection point occurs if there exist parameters $t,s\in\mathbb{R}$ that yield the same $(x,y,z)$:</p>
+<div class="math-block">$$(1,1,0)+t(1,2,1)=(2,0,1)+s(0,1,-1).$$</div>
+<p>Writing this coordinate by coordinate gives three equations in two unknowns:</p>
+<div class="math-block">$$\begin{cases}(1)\quad 1+t=2,\\(2)\quad 1+2t=s,\\(3)\quad t=1-s.\end{cases}$$</div>
+<h3>3. Solving the first two equations and checking the third</h3>
+<p>From equation $(1)$:</p>
+<div class="math-block">$$1+t=2\implies t=1.$$</div>
+<p>Substitute $t=1$ into equation $(2)$:</p>
+<div class="math-block">$$s=1+2(1)=3.$$</div>
+<p>Now test $(t,s)=(1,3)$ in equation $(3)$:</p>
+<div class="math-block">$$\text{Left side: }t=1,\qquad \text{Right side: }1-s=1-3=-2.$$</div>
+<p>Since $1\neq -2$, the third equation is violated! The system has <strong>no solution</strong>.</p>
+<h3>4. Classification</h3>
+<p>Because the direction vectors $v_1$ and $v_2$ are not parallel and the lines have no common point, the lines $L_1$ and $L_2$ are <strong>skew</strong>.</p>
+<h3>Quick verification</h3>
+<p>We can independently verify skewness using the scalar triple product (determinant) of $\overrightarrow{P_1P_2}=P_2-P_1=(1,-1,1)$, $v_1=(1,2,1)$, and $v_2=(0,1,-1)$:</p>
+<div class="math-block">$$\det\begin{pmatrix}1&amp;-1&amp;1\\1&amp;2&amp;1\\0&amp;1&amp;-1\end{pmatrix}=1(-2-1)-(-1)(-1-0)+1(1-0)=-3-1+1=-3\neq 0.\text{ ✓}$$</div>
+<p>A non-zero determinant means the three vectors do not lie in a single plane, so the two lines cannot be coplanar—hence they are skew. ✓</p>
+<h3>A concrete example</h3>
+<p>At the parameters $t=1$ and $s=3$ where the $x$- and $y$-coordinates match, the points on the two lines are:</p>
+<ul><li>on $L_1$ ($t=1$): $(1,1,0)+1(1,2,1)=(2,3,1)$,</li><li>on $L_2$ ($s=3$): $(2,0,1)+3(0,1,-1)=(2,3,-2)$.</li></ul>
+<p>Looking down from above along the $z$-axis, the two lines appear to cross over the point $(x,y)=(2,3)$, but in 3D $L_1$ passes at height $z=1$ while $L_2$ passes underneath at height $z=-2$, missing each other by $3$ vertical units.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>First I check if the direction vectors $(1,2,1)$ and $(0,1,-1)$ are multiples of each other; they aren't, so the lines are not parallel. Next I try to make their coordinates equal: the $x$-equation $1+t=2$ forces $t=1$, and the $y$-equation $1+2t=s$ then forces $s=3$. But when I plug $t=1$ and $s=3$ into the $z$-coordinates, $L_1$ is at $z=1$ while $L_2$ is at $z=-2$. Since they aren't parallel and don't intersect, they pass over and under each other—they are skew lines.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-2">Exercise 2: A Line in Space</a></li><li><a href="#exercise-12">Exercise 12: Intersection Line of Two Planes</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-6">
+<h2 class="exercise-title">Exercise 6. Angle Between Planes</h2>
+<h3>The question</h3>
+<p>Given</p>
+<div class="math-block">$$\Pi_1:x+y+z=1,\qquad \Pi_2:x-y=2.$$</div>
+<p>First use the normal vectors to decide whether the planes are parallel. If not, compute the angle between them and explain why the normal vectors alone are enough for this calculation.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Every plane $\Pi:ax+by+cz=d$ has a normal vector $n=(a,b,c)$ perpendicular to it. When two planes tilt in space, their normal vectors tilt by the exact same amount: rotating two planes together with their normals in a cross-section perpendicular to their intersection line shows that the dihedral angle $\theta\in[0,\frac{\pi}{2}]$ between $\Pi_1$ and $\Pi_2$ satisfies</p>
+<div class="math-block">$$\cos\theta=\frac{|n_1\cdot n_2|}{\|n_1\|\,\|n_2\|}.$$</div>
+<p>In particular:</p>
+<ul><li>Two planes are <strong>parallel</strong> if and only if $n_1$ and $n_2$ are scalar multiples of each other.</li><li>Two planes are <strong>perpendicular</strong> ($\theta=90^\circ$) if and only if $n_1\cdot n_2=0$.</li></ul>
+<h3>1. Reading the normal vectors and testing parallelism</h3>
+<p>From the equations $\Pi_1:1x+1y+1z=1$ and $\Pi_2:1x-1y+0z=2$, the normal vectors are</p>
+<div class="math-block">$$n_1=(1,1,1),\qquad n_2=(1,-1,0).$$</div>
+<p>Are $n_1$ and $n_2$ parallel? For $n_1=k\,n_2$ we would need $1=k\cdot0$ in the third coordinate, which is impossible. Therefore, the normal vectors are <strong>not parallel</strong>, so the planes $\Pi_1$ and $\Pi_2$ <strong>are not parallel</strong> and must intersect along a line.</p>
+<h3>2. Computing the dot product and the angle</h3>
+<p>Now we compute the dot product of $n_1$ and $n_2$:</p>
+<div class="math-block">$$n_1\cdot n_2=1\cdot1+1\cdot(-1)+1\cdot0=1-1+0=0.$$</div>
+<p>Since $n_1\cdot n_2=0$, we have</p>
+<div class="math-block">$$\cos\theta=\frac{|n_1\cdot n_2|}{\|n_1\|\,\|n_2\|}=\frac{0}{\sqrt{3}\,\sqrt{2}}=0\implies \theta=\frac{\pi}{2}=90^\circ.$$</div>
+<p>The two planes are <strong>perpendicular</strong> (orthogonal).</p>
+<h3>3. Why the normal vectors alone are enough</h3>
+<p>Notice that we never needed the right-hand constants $1$ and $2$, nor did we need to find the line of intersection:</p>
+<ol><li>Changing the constant $d$ in $ax+by+cz=d$ only translates a plane parallel to itself without changing its tilt.</li><li>In a plane perpendicular to the intersection line of $\Pi_1$ and $\Pi_2$, the two planes appear as two rays, and $n_1,n_2$ are obtained by rotating those rays by $90^\circ$. Rotating two lines by $90^\circ$ preserves the angle between them.</li></ol>
+<h3>Quick verification</h3>
+<p>Let us verify that the normal vector of $\Pi_2$, namely $n_2=(1,-1,0)$, is actually a direction vector <strong>inside</strong> $\Pi_1$:</p>
+<ul><li>Take the point $A=(1,0,0)$ on $\Pi_1$ (since $1+0+0=1$).</li><li>Move from $A$ along $n_2=(1,-1,0)$ to $B=A+n_2=(2,-1,0)$.</li><li>Check whether $B$ lies on $\Pi_1$: $2+(-1)+0=1$. ✓</li></ul>
+<p>Because $\Pi_1$ contains the line in the direction of $n_2$ (which is perpendicular to $\Pi_2$), the plane $\Pi_1$ stands at a right angle to $\Pi_2$. ✓</p>
+<h3>A concrete example</h3>
+<p>What if the second plane were $\Pi_3:x+y=2$ with normal $n_3=(1,1,0)$ instead? Then:</p>
+<div class="math-block">$$n_1\cdot n_3=(1,1,1)\cdot(1,1,0)=2,\qquad \|n_1\|=\sqrt{3},\qquad \|n_3\|=\sqrt{2},$$</div>
+<p>so the acute angle between $\Pi_1$ and $\Pi_3$ would satisfy</p>
+<div class="math-block">$$\cos\theta=\frac{2}{\sqrt{6}}=\sqrt{\frac{2}{3}}\implies \theta=\arccos\sqrt{\frac{2}{3}}\approx 35.26^\circ.$$</div>
+<p>By flipping the sign of $y$ in $\Pi_2:x-y=2$, the two terms in the dot product cancel ($1-1=0$), making $\Pi_1$ and $\Pi_2$ exactly perpendicular.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>To find how two planes meet, I just look at their normal vectors: $n_1=(1,1,1)$ for the first plane and $n_2=(1,-1,0)$ for the second. They aren't multiples of each other, so the planes aren't parallel. Next, I take their dot product to find the angle between the normals—and since $(1,1,1)\cdot(1,-1,0)=1-1+0=0$, the normals are perpendicular! Because the angle between two planes equals the angle between their normals, the two planes meet at a $90^\circ$ angle.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-3">Exercise 3: Plane Through a Point with a Given Normal Vector</a></li><li><a href="#exercise-12">Exercise 12: Intersection Line of Two Planes</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-7">
+<h2 class="exercise-title">Exercise 7. A Line Relative to a Plane</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$L:(x,y,z)=(1,1,0)+t(1,-1,0),\qquad \Pi:x+y+z=2,$$</div>
+<p>determine whether the line intersects the plane at one point, is parallel to it, or lies in it. Explain the role of the dot product of the direction vector and the normal vector.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>A line $L$ has a <strong>direction vector</strong> $v$ pointing along the line, whereas a plane $\Pi$ has a <strong>normal vector</strong> $n$ pointing <strong>perpendicular</strong> to the plane. Because $n$ is already rotated by $90^\circ$ relative to $\Pi$:</p>
+<ul><li>The line is parallel to the plane (or lies in it) if and only if $v$ is <strong>perpendicular</strong> to $n$, which means $$v\cdot n=0.$$</li><li>If $v\cdot n\neq 0$, the line is not parallel to the plane and therefore pierces it at <strong>exactly one point</strong>.</li></ul>
+<p>When $v\cdot n=0$, we distinguish between "strictly parallel" and "lies in the plane" by checking whether the starting point $P_0$ of the line satisfies the plane's equation.</p>
+<h3>1. Extracting the vectors and computing their dot product</h3>
+<p>From the given equations:</p>
+<ul><li>Starting point of $L$: $P_0=(1,1,0)$,</li><li>Direction vector of $L$: $v=(1,-1,0)$,</li><li>Normal vector of $\Pi$: $n=(1,1,1)$.</li></ul>
+<p>Their dot product is</p>
+<div class="math-block">$$v\cdot n=(1,-1,0)\cdot(1,1,1)=1\cdot1+(-1)\cdot1+0\cdot1=1-1+0=0.$$</div>
+<p>Because $v\cdot n=0$, the direction of $L$ is perpendicular to the normal of $\Pi$, so $L$ moves parallel to $\Pi$ (it either misses $\Pi$ completely or lies entirely inside $\Pi$).</p>
+<h3>2. Testing the starting point $P_0$ in the plane</h3>
+<p>We substitute $P_0=(1,1,0)$ into the plane equation $x+y+z=2$:</p>
+<div class="math-block">$$1+1+0=2.$$</div>
+<p>Since $P_0$ lies on $\Pi$ and the line moves in a direction parallel to $\Pi$, <strong>every point of $L$ stays in $\Pi$</strong>. Thus, the line $L$ <strong>lies in the plane $\Pi$</strong>.</p>
+<h3>3. Algebraic view: substituting the general point of $L$ into $\Pi$</h3>
+<p>If we substitute $(x,y,z)=(1+t,\,1-t,\,0)$ directly into $x+y+z=2$, we get</p>
+<div class="math-block">$$(1+t)+(1-t)+0=2\implies 2+0\cdot t=2\implies 2=2.$$</div>
+<p>Notice that the coefficient of $t$ is $1-1+0=v\cdot n=0$, and the constant term is $1+1+0=2$. Because $2=2$ holds for <strong>every</strong> $t\in\mathbb{R}$, the entire line lies in $\Pi$.</p>
+<h3>Quick verification</h3>
+<p>Let us pick two other values of $t$ on $L$ and check that those points also satisfy $x+y+z=2$:</p>
+<ul><li>For $t=1$: $P_1=(1+1,\,1-1,\,0)=(2,0,0)$, and $2+0+0=2$. ✓</li><li>For $t=-3$: $P_{-3}=(1-3,\,1+3,\,0)=(-2,4,0)$, and $-2+4+0=2$. ✓</li></ul>
+<h3>A concrete example</h3>
+<p>What if the plane were $\Pi':x+y+z=5$ instead, with the same normal vector $n=(1,1,1)$?</p>
+<ul><li>We would still have $v\cdot n=0$, so the line moves parallel to $\Pi'$.</li><li>However, plugging in $P_0=(1,1,0)$ gives $1+1+0=2\neq 5$ (the equation for $t$ becomes $2+0\cdot t=5$, which has no solution).</li></ul>
+<p>In that case, $L$ would be <strong>strictly parallel</strong> to $\Pi'$ with no common points.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>To see how the line $L$ and plane $\Pi$ relate, I take the dot product of the line's direction vector $v=(1,-1,0)$ and the plane's normal vector $n=(1,1,1)$. Since $v\cdot n=1-1+0=0$, the line's direction is perpendicular to the plane's normal, which means the line runs parallel to the plane. To decide whether it hovers outside the plane or sits inside it, I plug the line's starting point $(1,1,0)$ into $x+y+z=2$. Since $1+1+0=2$ works, the entire line lies inside the plane.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-8">Exercise 8: Intersection Point of a Line and a Plane</a></li><li><a href="#exercise-15">Exercise 15: Complete Classification of a Line Relative to a Plane</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-8">
+<h2 class="exercise-title">Exercise 8. Intersection Point of a Line and a Plane</h2>
+<h3>The question</h3>
+<p>Find the intersection point of</p>
+<div class="math-block">$$(x,y,z)=(1,0,2)+t(1,2,-1)$$</div>
+<p>with the plane $x+y+z=4$. Check the result by substituting it into both descriptions.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>The parametric equation of the line expresses all three coordinates $(x,y,z)$ in terms of a <strong>single parameter</strong> $t$. When we substitute those expressions for $x$, $y$, and $z$ into the plane's equation $ax+by+cz=d$, the three-variable problem collapses into one linear equation in one unknown $t$.</p>
+<ul><li>First, note that $v\cdot n=(1,2,-1)\cdot(1,1,1)=1+2-1=2\neq0$, so the line is not parallel to the plane and must intersect it at a unique point.</li><li>Solving for $t$ tells us the exact "time" at which the line crosses the plane, and plugging that $t$ back into the line gives the coordinates of the intersection point.</li></ul>
+<h3>1. Writing the parametric coordinates of the line</h3>
+<p>From $(x,y,z)=(1,0,2)+t(1,2,-1)$, any point on the line has coordinates</p>
+<div class="math-block">$$\begin{cases}x=1+t,\\y=2t,\\z=2-t,\end{cases}\qquad t\in\mathbb{R}.$$</div>
+<h3>2. Substituting into the plane equation to find $t$</h3>
+<p>Substitute $x=1+t$, $y=2t$, and $z=2-t$ into $x+y+z=4$:</p>
+<div class="math-block">$$(1+t)+(2t)+(2-t)=4.$$</div>
+<p>Combine like terms:</p>
+<div class="math-block">$$3+2t=4\implies 2t=1\implies t=\frac{1}{2}.$$</div>
+<h3>3. Finding the coordinates of the intersection point</h3>
+<p>Now substitute $t=\frac{1}{2}$ back into the parametric form of the line:</p>
+<div class="math-block">$$(x,y,z)=(1,0,2)+\frac{1}{2}(1,2,-1)=\left(1+\frac{1}{2},\,0+1,\,2-\frac{1}{2}\right)=\left(\frac{3}{2},\,1,\,\frac{3}{2}\right).$$</div>
+<p>Thus, the intersection point is</p>
+<div class="math-block">$$P=\left(\frac{3}{2},\,1,\,\frac{3}{2}\right).$$</div>
+<h3>Quick verification</h3>
+<p>We check that $P=\left(\frac{3}{2},1,\frac{3}{2}\right)$ satisfies both descriptions:</p>
+<ol><li><strong>Plane check:</strong> Substitute $P$ into $x+y+z=4$: $$\frac{3}{2}+1+\frac{3}{2}=3+1=4.\text{ ✓}$$</li><li><strong>Line check:</strong> The displacement from $P_0=(1,0,2)$ to $P=\left(\frac{3}{2},1,\frac{3}{2}\right)$ is $$P-P_0=\left(\frac{3}{2}-1,\,1-0,\,\frac{3}{2}-2\right)=\left(\frac{1}{2},\,1,\,-\frac{1}{2}\right)=\frac{1}{2}(1,2,-1)=\frac{1}{2}v,$$ confirming $P$ lies on the line at $t=\frac{1}{2}$. ✓</li></ol>
+<h3>A concrete example</h3>
+<p>At $t=0$, the point $P_0=(1,0,2)$ has $x+y+z=1+0+2=3&lt;4$ (it is on one side of the plane). At $t=1$, the point $P_1=(2,2,1)$ has $x+y+z=2+2+1=5&gt;4$ (it is on the opposite side of the plane). Since $x+y+z$ increases linearly from $3$ to $5$ as $t$ goes from $0$ to $1$, it hits the plane value $4$ right at the midpoint $t=\frac{1}{2}$, which is $P=\frac{P_0+P_1}{2}=\left(\frac{3}{2},1,\frac{3}{2}\right)$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Every point on the line can be written as $(1+t,\,2t,\,2-t)$. To find where the line hits the plane $x+y+z=4$, I substitute those three expressions into the plane equation: $(1+t)+2t+(2-t)=4$. That simplifies to $3+2t=4$, so $t=\frac{1}{2}$. Plugging $t=\frac{1}{2}$ back into the line equation gives the intersection point $\left(\frac{3}{2},1,\frac{3}{2}\right)$, and a quick check confirms $\frac{3}{2}+1+\frac{3}{2}=4$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-7">Exercise 7: A Line Relative to a Plane</a></li><li><a href="#exercise-10">Exercise 10: Projection of a Point onto a Plane</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-9">
+<h2 class="exercise-title">Exercise 9. Distances</h2>
+<h3>The question</h3>
+<p>Compute:</p>
+<ol><li>the distance from $P=(2,3)$ to the line $3x+4y-10=0$,</li><li>the distance from $Q=(2,-1,3)$ to the plane $2x-2y+z-4=0$.</li></ol>
+<p>Compare the two formulas and explain their common connection with the normal direction.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Whether we measure the distance from a point to a <strong>line in $\mathbb{R}^2$</strong> or from a point to a <strong>plane in $\mathbb{R}^3$</strong>, the shortest path always runs perpendicular to the object—that is, <strong>along the normal vector</strong> $n$.</p>
+<p>If the object has the equation $n\cdot x+c=0$ and $X_0$ is any point on the object (so $n\cdot X_0=-c$), the distance from an external point $P$ is the length of the orthogonal projection of $\overrightarrow{X_0P}=P-X_0$ onto the unit normal vector $\frac{n}{\|n\|}$:</p>
+<div class="math-block">$$\text{dist}=\frac{|n\cdot(P-X_0)|}{\|n\|}=\frac{|n\cdot P+c|}{\|n\|}.$$</div>
+<h3>1. Distance from $P=(2,3)$ to the line $3x+4y-10=0$</h3>
+<p>For the line $3x+4y-10=0$ in $\mathbb{R}^2$:</p>
+<ul><li>The normal vector is $n=(3,4)$, with length $\|n\|=\sqrt{3^2+4^2}=\sqrt{9+16}=\sqrt{25}=5$.</li><li>Evaluating $|3x+4y-10|$ at $P=(2,3)$ gives $|3(2)+4(3)-10|=|6+12-10|=8$.</li></ul>
+<p>Dividing by $\|n\|=5$:</p>
+<div class="math-block">$$d(P,L)=\frac{|3(2)+4(3)-10|}{\sqrt{3^2+4^2}}=\frac{8}{5}=1.6.$$</div>
+<h3>2. Distance from $Q=(2,-1,3)$ to the plane $2x-2y+z-4=0$</h3>
+<p>For the plane $2x-2y+z-4=0$ in $\mathbb{R}^3$:</p>
+<ul><li>The normal vector is $n=(2,-2,1)$, with length $\|n\|=\sqrt{2^2+(-2)^2+1^2}=\sqrt{4+4+1}=\sqrt{9}=3$.</li><li>Evaluating $|2x-2y+z-4|$ at $Q=(2,-1,3)$ gives $|2(2)-2(-1)+1(3)-4|=|4+2+3-4|=5$.</li></ul>
+<p>Dividing by $\|n\|=3$:</p>
+<div class="math-block">$$d(Q,\Pi)=\frac{|2(2)-2(-1)+3-4|}{\sqrt{2^2+(-2)^2+1^2}}=\frac{5}{3}.$$</div>
+<h3>3. Comparing the two formulas and their connection to the normal direction</h3>
+<p>Compare the two expressions side by side:</p>
+<div class="math-block">$$\text{In }\mathbb{R}^2:\quad d=\frac{|ax_0+by_0+c|}{\sqrt{a^2+b^2}},\qquad\qquad \text{In }\mathbb{R}^3:\quad d=\frac{|ax_0+by_0+cz_0+d|}{\sqrt{a^2+b^2+c^2}}.$$</div>
+<p>Both are instances of the exact same vector formula $\dfrac{|n\cdot P+c|}{\|n\|}$:</p>
+<ul><li>The <strong>numerator</strong> $|n\cdot P+c|=|n\cdot(P-X_0)|$ measures how far $P$ is displaced along the normal direction, scaled by $\|n\|$.</li><li>The <strong>denominator</strong> $\|n\|$ divides out the length of the normal vector so that the result is measured in true geometric unit lengths (it projects $P-X_0$ onto the unit normal $\hat{n}=n/\|n\|$).</li></ul>
+<h3>Quick verification</h3>
+<p>Let us verify both distances by finding the actual closest point (orthogonal projection) in each case:</p>
+<ol><li><strong>For the line in $\mathbb{R}^2$:</strong> Moving from $P=(2,3)$ along $n=(3,4)$ gives $(2+3t,3+4t)$. Plugging into $3x+4y-10=0$: $$3(2+3t)+4(3+4t)-10=0\implies 8+25t=0\implies t=-\frac{8}{25}.$$ The displacement vector has length $|t|\,\|n\|=\frac{8}{25}\cdot 5=\frac{8}{5}$. ✓</li><li><strong>For the plane in $\mathbb{R}^3$:</strong> Moving from $Q=(2,-1,3)$ along $n=(2,-2,1)$ gives $(2+2t,-1-2t,3+t)$. Plugging into $2x-2y+z-4=0$: $$2(2+2t)-2(-1-2t)+(3+t)-4=0\implies 5+9t=0\implies t=-\frac{5}{9}.$$ The displacement vector has length $|t|\,\|n\|=\frac{5}{9}\cdot 3=\frac{5}{3}$. ✓</li></ol>
+<h3>A concrete example</h3>
+<p>Notice why dividing by $\|n\|$ is essential: if we multiply the line equation $3x+4y-10=0$ by $2$, we get the exact same line $6x+8y-20=0$. At $P=(2,3)$, the numerator doubles from $8$ to $|6(2)+8(3)-20|=16$, and the denominator $\|n\|=\sqrt{6^2+8^2}=10$ also doubles from $5$ to $10$, leaving the geometric distance $\frac{16}{10}=\frac{8}{5}$ unchanged.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>A line in 2D and a plane in 3D are both defined by a single normal vector $n$, so their distance formulas work the exact same way: plug the point into the equation's left-hand side, take the absolute value, and divide by the length of the normal vector $\|n\|$. For $P=(2,3)$ and $3x+4y-10=0$, $\|n\|=\sqrt{3^2+4^2}=5$ and the numerator is $|6+12-10|=8$, giving $\frac{8}{5}$. For $Q=(2,-1,3)$ and $2x-2y+z-4=0$, $\|n\|=\sqrt{4+4+1}=3$ and the numerator is $|4+2+3-4|=5$, giving $\frac{5}{3}$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-10">Exercise 10: Projection of a Point onto a Plane</a></li><li><a href="#exercise-13">Exercise 13: Closest Point on a Plane</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-10">
+<h2 class="exercise-title">Exercise 10. Projection of a Point onto a Plane</h2>
+<h3>The question</h3>
+<p>Find the orthogonal projection of $P=(2,1,3)$ onto the plane $x+y+z=3$, and then find the reflection of $P$ across this plane. Check that the midpoint of the segment joining the point and its reflection lies on the plane.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Imagine dropping a plumb line from $P$ straight down onto the plane $\Pi$ at a $90^\circ$ angle:</p>
+<ol><li>Because the line is perpendicular to $\Pi$, its direction vector is the plane's <strong>normal vector</strong> $n$.</li><li>Where this normal line $P+tn$ intersects $\Pi$ is the <strong>orthogonal projection</strong> $P'$ (the foot of the perpendicular).</li><li>If it takes a step $t_0n$ to go from $P$ to the mirror $\Pi$, then continuing by another identical step $t_0n$ on the other side of the mirror lands at the <strong>reflection</strong> $P''=P+2t_0n=2P'-P$.</li></ol>
+<h3>1. Constructing the normal line through $P$</h3>
+<p>The plane $\Pi:x+y+z=3$ has normal vector</p>
+<div class="math-block">$$n=(1,1,1).$$</div>
+<p>The line passing through $P=(2,1,3)$ perpendicular to $\Pi$ has parametric equation</p>
+<div class="math-block">$$(x,y,z)=(2,1,3)+t(1,1,1)=(2+t,\,1+t,\,3+t),\qquad t\in\mathbb{R}.$$</div>
+<h3>2. Finding the orthogonal projection $P'$</h3>
+<p>We find where the normal line hits the plane $x+y+z=3$ by substituting its coordinates:</p>
+<div class="math-block">$$(2+t)+(1+t)+(3+t)=3\implies 6+3t=3\implies 3t=-3\implies t=-1.$$</div>
+<p>Substituting $t=-1$ into the line gives the orthogonal projection:</p>
+<div class="math-block">$$P'=(2-1,\,1-1,\,3-1)=(1,0,2).$$</div>
+<h3>3. Finding the reflection $P''$ across the plane</h3>
+<p>To go from $P$ to the plane $\Pi$, we added the displacement $\overrightarrow{PP'}=(-1)n=(-1,-1,-1)$. To reflect across the plane, we take <strong>twice</strong> this step from $P$ (or one more step from $P'$):</p>
+<div class="math-block">$$P''=P+2(-1)n=(2,1,3)+(-2,-2,-2)=(0,-1,1).$$</div>
+<p>Equivalently, using $P'=\frac{P+P''}{2}\implies P''=2P'-P=2(1,0,2)-(2,1,3)=(0,-1,1)$.</p>
+<h3>Quick verification</h3>
+<ol><li><strong>Midpoint check:</strong> The midpoint $M$ of $P=(2,1,3)$ and $P''=(0,-1,1)$ is $$M=\frac{P+P''}{2}=\left(\frac{2+0}{2},\,\frac{1+(-1)}{2},\,\frac{3+1}{2}\right)=(1,0,2)=P'.$$ Substituting $M=(1,0,2)$ into the plane equation $x+y+z=3$: $$1+0+2=3.\text{ ✓}$$</li><li><strong>Perpendicularity check:</strong> The vector $\overrightarrow{PP''}=P''-P=(-2,-2,-2)=-2(1,1,1)=-2n$ is parallel to the normal vector $n$, so the segment $PP''$ is indeed perpendicular to the plane. ✓</li></ol>
+<h3>A concrete example</h3>
+<p>How far are $P$ and $P''$ from the plane?</p>
+<ul><li>The distance from $P=(2,1,3)$ to $P'=(1,0,2)$ is $\|\overrightarrow{PP'}\|=\|(-1,-1,-1)\|=\sqrt{3}$.</li><li>The distance from $P''=(0,-1,1)$ to $P'=(1,0,2)$ is $\|\overrightarrow{P''P'}\|=\|(1,1,1)\|=\sqrt{3}$.</li></ul>
+<p>Both points lie at the exact same distance $\sqrt{3}$ on opposite sides of the mirror plane $x+y+z=3$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>To project $P=(2,1,3)$ onto the plane $x+y+z=3$, I shoot a line from $P$ in the direction of the plane's normal vector $n=(1,1,1)$, which gives $(2+t,1+t,3+t)$. Plugging this into $x+y+z=3$ gives $6+3t=3$, so $t=-1$. At $t=-1$, we hit the plane at the projection $P'=(1,0,2)$. To get the reflection $P''$, we just keep walking the same step $(-1,-1,-1)$ one more time past the mirror, landing at $t=-2$, which is $P''=(0,-1,1)$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-8">Exercise 8: Intersection Point of a Line and a Plane</a></li><li><a href="#exercise-13">Exercise 13: Closest Point on a Plane</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-11">
+<h2 class="exercise-title">Exercise 11. Plane Containing a Line and a Point</h2>
+<h3>The question</h3>
+<p>Find the equation of the plane containing</p>
+<div class="math-block">$$(x,y,z)=(1,0,2)+t(1,1,-1)$$</div>
+<p>and the point $P=(0,2,1)$. Check that both the entire line and the point lie in the plane you obtain.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>To determine a plane, we need a point on it and two linearly independent direction vectors lying inside it (whose cross product gives the plane's normal vector $n$):</p>
+<ol><li>Since the entire line $L:P_0+tv$ lies in the plane, the line's <strong>direction vector</strong> $v=(1,1,-1)$ is automatically our first direction vector in the plane, and $P_0=(1,0,2)$ is a point in the plane.</li><li>To get a second direction in the plane, we connect the point $P_0$ on the line to the external point $P=(0,2,1)$, forming $u=\overrightarrow{P_0P}=P-P_0$.</li><li>The cross product $n=v\times u$ is then perpendicular to both $v$ and $u$, giving the normal vector of the plane.</li></ol>
+<h3>1. Constructing two independent directions in the plane</h3>
+<p>From the line $(x,y,z)=(1,0,2)+t(1,1,-1)$, we read off:</p>
+<ul><li>A point on the line: $P_0=(1,0,2)$,</li><li>First direction vector in the plane: $v=(1,1,-1)$.</li></ul>
+<p>Connecting $P_0=(1,0,2)$ to $P=(0,2,1)$ gives our second vector in the plane:</p>
+<div class="math-block">$$u=\overrightarrow{P_0P}=P-P_0=(0-1,\,2-0,\,1-2)=(-1,2,-1).$$</div>
+<p>Since $v$ and $u$ are not scalar multiples of each other, $P$ does not lie on $L$, so $L$ and $P$ span a unique plane.</p>
+<h3>2. Computing the normal vector via the cross product</h3>
+<p>We take the cross product $n=v\times u$:</p>
+<div class="math-block">$$n=v\times u=\det\begin{pmatrix}\mathbf{i}&amp;\mathbf{j}&amp;\mathbf{k}\\1&amp;1&amp;-1\\-1&amp;2&amp;-1\end{pmatrix}=\mathbf{i}(1(-1)-(-1)(2))-\mathbf{j}(1(-1)-(-1)(-1))+\mathbf{k}(1(2)-1(-1)).$$</div>
+<p>Evaluating each component:</p>
+<div class="math-block">$$n=(-1+2,\,-(-1-1),\,2+1)=(1,2,3).$$</div>
+<h3>3. Writing the equation of the plane</h3>
+<p>Using the normal vector $n=(1,2,3)$ and the point $P_0=(1,0,2)$:</p>
+<div class="math-block">$$1(x-1)+2(y-0)+3(z-2)=0\implies x-1+2y+3z-6=0,$$</div>
+<p>which simplifies to</p>
+<div class="math-block">$$x+2y+3z=7.$$</div>
+<h3>Quick verification</h3>
+<p>Let us verify that both the external point $P$ and every point of the line $L$ satisfy $x+2y+3z=7$:</p>
+<ol><li><strong>Check the point $P=(0,2,1)$:</strong> $$0+2(2)+3(1)=0+4+3=7.\text{ ✓}$$</li><li><strong>Check the entire line $L:(1+t,\,t,\,2-t)$ for all $t\in\mathbb{R}$:</strong> $$(1+t)+2(t)+3(2-t)=1+t+2t+6-3t=7+0\cdot t=7.\text{ ✓}$$ Because $t$ cancels out completely and leaves the identity $7=7$, every point of the line lies in the plane.</li></ol>
+<h3>A concrete example</h3>
+<p>Another way to view this problem is as a "plane through three points": we already have $P=(0,2,1)$, and we can pick any two points on the line $L$, say</p>
+<ul><li>at $t=0$: $P_0=(1,0,2)$,</li><li>at $t=1$: $P_1=(2,1,1)$.</li></ul>
+<p>Notice that $\overrightarrow{P_0P_1}=P_1-P_0=(1,1,-1)$ is just the direction vector $v$, so finding the plane through $P_0,P_1,P$ leads to the exact same cross product $v\times\overrightarrow{P_0P}=(1,2,3)$ and the same plane $x+2y+3z=7$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>A plane needs two independent directions inside it so we can cross them to get a normal vector. The line immediately gives us one direction vector, $v=(1,1,-1)$, and a starting point $P_0=(1,0,2)$. To get a second direction in the plane, I form the vector from $P_0$ to the given point $P=(0,2,1)$, which is $u=(-1,2,-1)$. Crossing $v$ and $u$ gives the normal $n=(1,2,3)$, so the plane is $x+2y+3z=d$. Plugging in $P=(0,2,1)$ gives $d=7$, and substituting the line $(1+t,t,2-t)$ confirms that $t$ cancels out and gives $7$ for every $t$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-4">Exercise 4: Plane Through Three Points</a></li><li><a href="#exercise-7">Exercise 7: A Line Relative to a Plane</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-12">
+<h2 class="exercise-title">Exercise 12. Intersection Line of Two Planes</h2>
+<h3>The question</h3>
+<p>Find a parametric equation of the line that is the intersection of</p>
+<div class="math-block">$$x+y+z=3,\qquad x-y+z=1.$$</div>
+<p>Find its direction vector in two ways: from the system of equations and from the cross product of the normal vectors. Compare the results.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>When two non-parallel planes $\Pi_1$ and $\Pi_2$ intersect, their common points form a line $L$. We can find the direction vector $v$ of this line from two perspectives:</p>
+<ol><li><strong>Algebraically (from the system of equations):</strong> Solving the two linear equations in three unknowns leaves one free parameter $t$. The vector of coefficients of $t$ in $(x(t),y(t),z(t))$ is a direction vector of the line.</li><li><strong>Geometrically (from the normal vectors):</strong> Because the intersection line $L$ lies in <strong>both</strong> planes simultaneously, its direction vector $v$ must be perpendicular to both normal vectors $n_1$ and $n_2$. Therefore, $v$ is parallel to the cross product $n_1\times n_2$.</li></ol>
+<h3>1. Method 1: Solving the system of equations</h3>
+<p>We solve the system</p>
+<div class="math-block">$$\begin{cases}x+y+z=3,\\x-y+z=1.\end{cases}$$</div>
+<p>Subtracting the second equation from the first eliminates $x$ and $z$:</p>
+<div class="math-block">$$(x+y+z)-(x-y+z)=3-1\implies 2y=2\implies y=1.$$</div>
+<p>Substituting $y=1$ back into the first equation gives</p>
+<div class="math-block">$$x+1+z=3\implies x+z=2.$$</div>
+<p>Choosing $z=t\in\mathbb{R}$ as our free parameter gives $x=2-t$. Thus, the parametric equation of the intersection line is</p>
+<div class="math-block">$$(x,y,z)=(2-t,\,1,\,t)=(2,1,0)+t(-1,0,1),\qquad t\in\mathbb{R}.$$</div>
+<p>From this parametric form, we read off:</p>
+<ul><li>A point on the line: $P_0=(2,1,0)$,</li><li>Direction vector (Method 1): $v_1=(-1,0,1)$.</li></ul>
+<h3>2. Method 2: Cross product of the normal vectors</h3>
+<p>The normal vectors of the two planes are</p>
+<div class="math-block">$$n_1=(1,1,1),\qquad n_2=(1,-1,1).$$</div>
+<p>Taking their cross product gives a vector perpendicular to both normals:</p>
+<div class="math-block">$$v_2=n_1\times n_2=\det\begin{pmatrix}\mathbf{i}&amp;\mathbf{j}&amp;\mathbf{k}\\1&amp;1&amp;1\\1&amp;-1&amp;1\end{pmatrix}=\mathbf{i}(1-(-1))-\mathbf{j}(1-1)+\mathbf{k}(-1-1)=(2,0,-2).$$</div>
+<h3>3. Comparing the two results</h3>
+<p>Comparing the direction vector $v_1=(-1,0,1)$ from Method 1 and $v_2=(2,0,-2)$ from Method 2:</p>
+<div class="math-block">$$v_2=(2,0,-2)=-2(-1,0,1)=-2v_1.$$</div>
+<p>The two vectors are non-zero scalar multiples of each other, so they define the <strong>exact same line direction</strong>! (Moving along $v_2$ simply traverses the same line twice as fast in the opposite orientation as $v_1$.)</p>
+<h3>Quick verification</h3>
+<p>Let us check that the general point $(x,y,z)=(2-t,\,1,\,t)$ satisfies both plane equations for all $t\in\mathbb{R}$:</p>
+<ol><li><strong>First plane $x+y+z=3$:</strong> $$(2-t)+1+t=3.\text{ ✓}$$</li><li><strong>Second plane $x-y+z=1$:</strong> $$(2-t)-1+t=1.\text{ ✓}$$</li><li><strong>Orthogonality of $v_1=(-1,0,1)$ with both normals:</strong> $$v_1\cdot n_1=(-1,0,1)\cdot(1,1,1)=0,\qquad v_1\cdot n_2=(-1,0,1)\cdot(1,-1,1)=0.\text{ ✓}$$</li></ol>
+<h3>A concrete example</h3>
+<p>What if we had chosen $x=s$ as our free parameter in Method 1 instead of $z=t$? From $x+z=2$ we would get $z=2-s$, giving</p>
+<div class="math-block">$$(x,y,z)=(s,\,1,\,2-s)=(0,1,2)+s(1,0,-1).$$</div>
+<p>Here the starting point is $(0,1,2)$ (which corresponds to $t=2$ in our first parameterization) and the direction vector is $(1,0,-1)=-v_1=\frac{1}{2}v_2$. All of these parameterizations describe the exact same geometric line in $\mathbb{R}^3$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>To find the intersection line of $x+y+z=3$ and $x-y+z=1$, I first subtract the equations to get $2y=2$, so $y=1$ is fixed, which leaves $x+z=2$. Setting $z=t$ gives $x=2-t$, so the line is $(2,1,0)+t(-1,0,1)$ with direction vector $(-1,0,1)$. Geometrically, since the intersection line lies in both planes, its direction must be perpendicular to both normal vectors $n_1=(1,1,1)$ and $n_2=(1,-1,1)$. Their cross product is $n_1\times n_2=(2,0,-2)$, which is just $-2$ times $(-1,0,1)$—both methods give the exact same direction.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-5">Exercise 5: Relative Position of Two Lines</a></li><li><a href="#exercise-6">Exercise 6: Angle Between Planes</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-13">
+<h2 class="exercise-title">Exercise 13. Closest Point on a Plane</h2>
+<h3>The question</h3>
+<p>Find the point on the plane $x+2y+2z=4$ closest to $P=(3,0,0)$. Give the distance and check that the segment joining the two points is perpendicular to the plane.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>By the Pythagorean theorem, for any point $X$ on the plane $\Pi$ and the orthogonal projection $Q$ of $P$ onto $\Pi$, the triangle $\triangle PQX$ has a right angle at $Q$, so</p>
+<div class="math-block">$$\|P-X\|^2=\|P-Q\|^2+\|Q-X\|^2\ge \|P-Q\|^2.$$</div>
+<p>Therefore, the <strong>closest point</strong> $Q$ on the plane to $P$ is the <strong>orthogonal projection</strong> of $P$ onto $\Pi$, obtained by following the normal vector $n$ from $P$ until we hit the plane. The distance from $P$ to the plane is then the length $\|P-Q\|$.</p>
+<h3>1. Finding the closest point $Q$ via the normal line</h3>
+<p>The plane $x+2y+2z=4$ has normal vector</p>
+<div class="math-block">$$n=(1,2,2).$$</div>
+<p>The line through $P=(3,0,0)$ in the normal direction $n=(1,2,2)$ is</p>
+<div class="math-block">$$(x,y,z)=(3,0,0)+t(1,2,2)=(3+t,\,2t,\,2t),\qquad t\in\mathbb{R}.$$</div>
+<p>Substitute these coordinates into the plane equation $x+2y+2z=4$:</p>
+<div class="math-block">$$(3+t)+2(2t)+2(2t)=4\implies 3+9t=4\implies 9t=1\implies t=\frac{1}{9}.$$</div>
+<p>Plugging $t=\frac{1}{9}$ back into the normal line gives the closest point on the plane:</p>
+<div class="math-block">$$Q=\left(3+\frac{1}{9},\,\frac{2}{9},\,\frac{2}{9}\right)=\left(\frac{28}{9},\,\frac{2}{9},\,\frac{2}{9}\right).$$</div>
+<h3>2. Computing the distance from $P$ to the plane</h3>
+<p>The displacement vector from $P$ to $Q$ is</p>
+<div class="math-block">$$\overrightarrow{PQ}=Q-P=\left(\frac{1}{9},\,\frac{2}{9},\,\frac{2}{9}\right)=\frac{1}{9}(1,2,2).$$</div>
+<p>Its length is the distance from $P$ to the plane:</p>
+<div class="math-block">$$d(P,\Pi)=\|\overrightarrow{PQ}\|=\frac{1}{9}\sqrt{1^2+2^2+2^2}=\frac{1}{9}\sqrt{9}=\frac{3}{9}=\frac{1}{3}.$$</div>
+<h3>3. Checking perpendicularity of the segment $PQ$ to the plane</h3>
+<p>The segment joining $P$ and $Q$ has direction vector $\overrightarrow{PQ}=\frac{1}{9}(1,2,2)=\frac{1}{9}n$. Because $\overrightarrow{PQ}$ is a scalar multiple of the plane's normal vector $n=(1,2,2)$, it is perpendicular to every vector $w$ lying in the plane ($w\cdot\overrightarrow{PQ}=\frac{1}{9}(w\cdot n)=0$).</p>
+<h3>Quick verification</h3>
+<ol><li><strong>Check that $Q$ lies on the plane $x+2y+2z=4$:</strong> $$\frac{28}{9}+2\left(\frac{2}{9}\right)+2\left(\frac{2}{9}\right)=\frac{28+4+4}{9}=\frac{36}{9}=4.\text{ ✓}$$</li><li><strong>Check the distance using the point-to-plane distance formula:</strong> $$d(P,\Pi)=\frac{|1(3)+2(0)+2(0)-4|}{\sqrt{1^2+2^2+2^2}}=\frac{|3-4|}{\sqrt{9}}=\frac{1}{3}.\text{ ✓}$$</li><li><strong>Check perpendicularity with a specific vector in the plane:</strong> The point $A=(4,0,0)$ lies on the plane ($4+0+0=4$). The vector in the plane from $A$ to $Q$ is $\overrightarrow{AQ}=\left(-\frac{8}{9},\frac{2}{9},\frac{2}{9}\right)$, and $$\overrightarrow{PQ}\cdot\overrightarrow{AQ}=\frac{1}{9}\left(-\frac{8}{9}\right)+\frac{2}{9}\left(\frac{2}{9}\right)+\frac{2}{9}\left(\frac{2}{9}\right)=\frac{-8+4+4}{81}=0.\text{ ✓}$$</li></ol>
+<h3>A concrete example</h3>
+<p>Compare our closest point $Q=\left(\frac{28}{9},\frac{2}{9},\frac{2}{9}\right)$ with the $x$-intercept of the plane, $A=(4,0,0)$:</p>
+<ul><li>Moving horizontally from $P=(3,0,0)$ along the $x$-axis to $A=(4,0,0)$ stays on the $x$-axis and gives distance $\|A-P\|=1$.</li><li>Moving diagonally along the normal vector to $Q=\left(\frac{28}{9},\frac{2}{9},\frac{2}{9}\right)$ reaches the plane in just $\frac{1}{3}$ of a unit—three times closer!</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>The shortest path from $P=(3,0,0)$ to the plane $x+2y+2z=4$ goes straight along the normal vector $n=(1,2,2)$. That normal line is $(3+t,2t,2t)$. Plugging it into the plane gives $(3+t)+4t+4t=4$, so $9t=1$ and $t=\frac{1}{9}$. That puts the closest point at $Q=\left(\frac{28}{9},\frac{2}{9},\frac{2}{9}\right)$. The vector $\overrightarrow{PQ}=\frac{1}{9}(1,2,2)$ is a multiple of the normal $n$, so $PQ$ is perpendicular to the plane, and its length is $\frac{1}{9}\sqrt{1^2+2^2+2^2}=\frac{1}{3}$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-9">Exercise 9: Distances</a></li><li><a href="#exercise-10">Exercise 10: Projection of a Point onto a Plane</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-14">
+<h2 class="exercise-title">Exercise 14. Contrast: Intersection and Parallelism</h2>
+<h3>The question</h3>
+<p>From the point $P=(0,0,1)$, two lines are drawn with direction vectors</p>
+<div class="math-block">$$v_1=(2,1,-1),\qquad v_2=(2,1,0).$$</div>
+<p>For each line, analyze its position relative to the plane $z=0$.</p>
+<p>For the line that intersects the plane, find the intersection point. For the other line, explain how you can recognize parallelism without solving an equation.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>The plane $z=0$ is the horizontal $xy$-plane, whose normal vector points straight up along the $z$-axis:</p>
+<div class="math-block">$$n=(0,0,1).$$</div>
+<p>For any line starting at $P=(0,0,1)$ with direction vector $v=(v_x,v_y,v_z)$, the dot product $v\cdot n=v_z$ is simply the <strong>vertical ($z$) component</strong> of the direction vector:</p>
+<ul><li>If $v_z\neq 0$, the line changes height as $t$ varies, so it must cross the floor $z=0$ at a unique point.</li><li>If $v_z=0$, the line has zero vertical velocity—it moves purely horizontally at constant height $z=1$ and never touches $z=0$.</li></ul>
+<h3>1. First line $L_1$: intersecting the plane $z=0$</h3>
+<p>The first line has parametric equation</p>
+<div class="math-block">$$L_1:(x,y,z)=(0,0,1)+t(2,1,-1)=(2t,\,t,\,1-t),\qquad t\in\mathbb{R}.$$</div>
+<p>Here $v_1\cdot n=(2,1,-1)\cdot(0,0,1)=-1\neq 0$, so $L_1$ intersects the plane $z=0$ at one point.</p>
+<p>Setting $z=0$ gives</p>
+<div class="math-block">$$1-t=0\implies t=1.$$</div>
+<p>Substituting $t=1$ into $L_1$ gives the intersection point:</p>
+<div class="math-block">$$Q=(2(1),\,1,\,1-1)=(2,1,0).$$</div>
+<h3>2. Second line $L_2$: recognizing parallelism without solving an equation</h3>
+<p>The second line has direction vector $v_2=(2,1,0)$ and starts at $P=(0,0,1)$:</p>
+<div class="math-block">$$L_2:(x,y,z)=(0,0,1)+t(2,1,0)=(2t,\,t,\,1),\qquad t\in\mathbb{R}.$$</div>
+<p>How can we recognize immediately—without solving an equation—that $L_2$ is parallel to $z=0$ and has no common points with it?</p>
+<ol><li><strong>Orthogonality with the normal (zero $z$-component):</strong> The third coordinate of $v_2=(2,1,0)$ is $0$, so $v_2\cdot n=(2,1,0)\cdot(0,0,1)=0$. Moving along $v_2$ never changes the $z$-coordinate.</li><li><strong>Constant non-zero height:</strong> Because $L_2$ starts at $P=(0,0,1)$ with $z=1$ and its direction vector adds $0$ to $z$, every point on $L_2$ has $z=1\neq 0$. Thus $L_2$ stays in the horizontal plane $z=1$, strictly parallel to $z=0$ at a constant distance of $1$ unit above it.</li></ol>
+<h3>Quick verification</h3>
+<ul><li><strong>For $L_1$ and $Q=(2,1,0)$:</strong></li><li>Does $Q$ lie in the plane $z=0$? Its third coordinate is $z=0$. ✓</li><li>Does $Q$ lie on $L_1$? At $t=1$, $(0,0,1)+1(2,1,-1)=(2,1,0)=Q$. ✓</li><li><strong>For $L_2$:</strong> For any $t\in\mathbb{R}$, the third coordinate of $(2t,t,1)$ is $z=1\neq 0$, confirming $L_2\cap\{z=0\}=\varnothing$. ✓</li></ul>
+<h3>A concrete example</h3>
+<p>Notice the geometric relationship between the two lines:</p>
+<ul><li>$L_2:(2t,t,1)$ is a horizontal ray of light shining at height $z=1$ in the direction $(2,1,0)$.</li><li>$L_1:(2t,t,1-t)$ has the exact same horizontal motion $(2t,t)$ in the $xy$-coordinates, but tilts downward with vertical rate $-1$, hitting the floor $z=0$ at $(2,1,0)$ right underneath the point $(2,1,1)$ on $L_2$.</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>The plane $z=0$ is the horizontal $xy$-floor, with normal vector $n=(0,0,1)$, and both lines start at $P=(0,0,1)$, one unit above the floor. For the second line, the direction vector $v_2=(2,1,0)$ has a $z$-component of $0$, so you can see at a glance without solving anything that the line moves purely horizontally at height $z=1$ and is parallel to $z=0$. For the first line, $v_1=(2,1,-1)$ drops by $1$ unit in $z$ for each unit of $t$, so starting from $z=1$ it hits the floor $z=0$ at $t=1$, landing at $(2,1,0)$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-7">Exercise 7: A Line Relative to a Plane</a></li><li><a href="#exercise-15">Exercise 15: Complete Classification of a Line Relative to a Plane</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-15">
+<h2 class="exercise-title">Exercise 15. Complete Classification of a Line Relative to a Plane</h2>
+<h3>The question</h3>
+<p>Let</p>
+<div class="math-block">$$L:p+tv,\qquad \Pi:n\cdot x=d.$$</div>
+<p>State the conditions distinguishing the three cases: one intersection point, parallel with no common points, and the line contained in the plane. Then illustrate each case with your own simple numerical example.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Every point on the line $L$ has the form $x=p+tv$ for $t\in\mathbb{R}$. Substituting $x=p+tv$ into the plane equation $n\cdot x=d$ and using the linearity of the dot product gives a single linear equation for the parameter $t$:</p>
+<div class="math-block">$$n\cdot(p+tv)=d\iff n\cdot p+t(n\cdot v)=d\iff (n\cdot v)\,t=d-n\cdot p.$$</div>
+<p>Everything depends on two numbers:</p>
+<ul><li>the <strong>slope coefficient</strong> $n\cdot v$ (whether the line's direction tilts across the plane or runs parallel to it), and</li><li>the <strong>right-hand side</strong> $d-n\cdot p$ (whether the starting point $p$ already lies on the plane).</li></ul>
+<h3>1. Complete classification of the three cases</h3>
+<p>For the linear equation $(n\cdot v)\,t=d-n\cdot p$ in the single real variable $t$:</p>
+<h4>Case 1: One intersection point</h4>
+<ul><li><strong>Condition:</strong> $n\cdot v\neq 0$.</li><li><strong>Explanation:</strong> Because $n\cdot v\neq 0$, we can divide by $n\cdot v$ to get a <strong>unique</strong> parameter value $$t_0=\frac{d-n\cdot p}{n\cdot v},$$ giving the unique intersection point $x_0=p+\frac{d-n\cdot p}{n\cdot v}v$. Geometrically, $v$ is not perpendicular to $n$, so the line pierces the plane.</li></ul>
+<h4>Case 2: Parallel with no common points (strictly parallel)</h4>
+<ul><li><strong>Condition:</strong> $n\cdot v=0\quad\text{and}\quad n\cdot p\neq d$.</li><li><strong>Explanation:</strong> The equation for $t$ becomes $0\cdot t=d-n\cdot p\neq 0$, which is a contradiction and has <strong>no solution</strong> $t\in\mathbb{R}$. Geometrically, $v\perp n$ (so the line runs parallel to the plane), and the starting point $p$ lies outside the plane.</li></ul>
+<h4>Case 3: The line is contained in the plane</h4>
+<ul><li><strong>Condition:</strong> $n\cdot v=0\quad\text{and}\quad n\cdot p=d$.</li><li><strong>Explanation:</strong> The equation for $t$ becomes $0\cdot t=0$, which holds for <strong>every</strong> $t\in\mathbb{R}$. Geometrically, the line starts at a point $p$ inside the plane and moves in a direction $v$ parallel to the plane, so it never leaves the plane.</li></ul>
+<table><thead><tr><th>Case</th><th>Condition on $n\cdot v$</th><th>Condition on $n\cdot p$</th><th>Equation $(n\cdot v)t=d-n\cdot p$</th><th>Common points</th></tr></thead><tbody><tr><td><strong>1. Intersects at one point</strong></td><td>$n\cdot v\neq 0$</td><td>any</td><td>unique solution $t$</td><td>$1$ point</td></tr><tr><td><strong>2. Strictly parallel</strong></td><td>$n\cdot v=0$</td><td>$n\cdot p\neq d$</td><td>$0\cdot t=\text{non-zero}$ (no solution)</td><td>$0$ points</td></tr><tr><td><strong>3. Contained in the plane</strong></td><td>$n\cdot v=0$</td><td>$n\cdot p=d$</td><td>$0\cdot t=0$ (all $t\in\mathbb{R}$)</td><td>infinitely many (whole line)</td></tr></tbody></table>
+<h3>2. Numerical examples of each case</h3>
+<p>Fix the horizontal plane $\Pi:z=0$, for which $n=(0,0,1)$ and $d=0$:</p>
+<ol><li><strong>Case 1 (One intersection point):</strong> Let $p=(0,0,1)$ and $v=(0,0,1)$, so $L:(0,0,1+t)$.</li></ol>
+<ul><li>Here $n\cdot v=(0,0,1)\cdot(0,0,1)=1\neq 0$.</li><li>The line is the $z$-axis and intersects $z=0$ at the single point $(0,0,0)$ (for $t=-1$).</li></ul>
+<ol><li><strong>Case 2 (Strictly parallel, no common points):</strong> Let $p=(0,0,1)$ and $v=(1,0,0)$, so $L:(t,0,1)$.</li></ol>
+<ul><li>Here $n\cdot v=(0,0,1)\cdot(1,0,0)=0$, while $n\cdot p=1\neq 0=d$.</li><li>Every point $(t,0,1)$ has $z=1\neq 0$, so the line is parallel to $z=0$ with no common points.</li></ul>
+<ol><li><strong>Case 3 (Line contained in the plane):</strong> Let $p=(0,0,0)$ and $v=(1,0,0)$, so $L:(t,0,0)$.</li></ol>
+<ul><li>Here $n\cdot v=(0,0,1)\cdot(1,0,0)=0$ and $n\cdot p=(0,0,1)\cdot(0,0,0)=0=d$.</li><li>This line is the $x$-axis, which lies completely inside the $xy$-plane $z=0$.</li></ul>
+<h3>Quick verification</h3>
+<p>Let us plug our three examples directly into $(n\cdot v)t=d-n\cdot p$ with $n=(0,0,1)$ and $d=0$:</p>
+<ul><li><strong>Example 1:</strong> $1\cdot t=0-1\implies t=-1$, giving $x=(0,0,1)+(-1)(0,0,1)=(0,0,0)\in\Pi$. ✓</li><li><strong>Example 2:</strong> $0\cdot t=0-1\implies 0=-1$ (impossible, $\varnothing$). ✓</li><li><strong>Example 3:</strong> $0\cdot t=0-0\implies 0=0$ (true for all $t\in\mathbb{R}$). ✓</li></ul>
+<h3>A concrete example</h3>
+<p>This classification shows why a line and a plane in $\mathbb{R}^3$ can have <strong>$0$, $1$, or infinitely many</strong> common points, but <strong>never</strong> exactly $2$ common points: if two distinct points $p+t_1v$ and $p+t_2v$ ($t_1\neq t_2$) both satisfy $(n\cdot v)t=d-n\cdot p$, subtracting gives $(n\cdot v)(t_1-t_2)=0\implies n\cdot v=0$, which forces $d-n\cdot p=0$ and puts us in Case 3 where the <strong>entire</strong> line lies in the plane.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>When you plug the line $x=p+tv$ into the plane $n\cdot x=d$, you always get the one-variable equation $(n\cdot v)t=d-n\cdot p$. That gives three clean cases: if $n\cdot v\neq 0$, you can divide by $n\cdot v$ and get one unique intersection point; if $n\cdot v=0$ and $n\cdot p\neq d$, you get $0\cdot t=\text{non-zero}$, so the line is parallel to the plane and never touches it; and if $n\cdot v=0$ and $n\cdot p=d$, you get $0\cdot t=0$, so every $t$ works and the whole line sits inside the plane.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-7">Exercise 7: A Line Relative to a Plane</a></li><li><a href="#exercise-14">Exercise 14: Contrast: Intersection and Parallelism</a></li></ul>
+</section>
+    </main>
+  </div>
+</body>
+</html>

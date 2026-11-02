@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>04. Systems of Linear Equations — Complete Solutions</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false}
+      ],
+      throwOnError: false
+    });"></script>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --muted: #475569;
+      --accent: #2563eb;
+      --accent-soft: #eff6ff;
+      --quote-bg: #f1f5f9;
+      --quote-border: #3b82f6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 310px 1fr;
+      min-height: 100vh;
+    }
+    aside.sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 1.5rem 1.25rem;
+    }
+    .brand {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    .brand-sub {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .toc-group-title {
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin: 1rem 0 0.35rem 0.5rem;
+    }
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .toc-list li { margin-bottom: 0.2rem; }
+    .toc-list a {
+      display: block;
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.86rem;
+      transition: background 0.15s, color 0.15s;
+    }
+    .toc-list a:hover {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+    main.content {
+      max-width: 940px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    header.page-header {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    }
+    header.page-header h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.85rem;
+      color: var(--text);
+    }
+    header.page-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+    .section-banner {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: #ffffff;
+      border-radius: 12px;
+      padding: 1.5rem 2rem;
+      margin: 2.5rem 0 1.5rem;
+      scroll-margin-top: 1.5rem;
+    }
+    .section-banner h2 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    .section-banner p {
+      margin: 0.25rem 0 0;
+      opacity: 0.9;
+      font-size: 0.92rem;
+    }
+    section.exercise-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem 2.25rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+      scroll-margin-top: 1.5rem;
+    }
+    section.exercise-card h2.exercise-title {
+      margin-top: 0;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--accent-soft);
+      color: var(--accent);
+      font-size: 1.4rem;
+    }
+    section.exercise-card h3 {
+      margin-top: 1.5rem;
+      margin-bottom: 0.55rem;
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+    section.exercise-card h4 {
+      margin-top: 1.15rem;
+      margin-bottom: 0.45rem;
+      font-size: 1rem;
+      color: var(--muted);
+    }
+    p { margin: 0.65rem 0; }
+    ul, ol { margin: 0.65rem 0; padding-left: 1.5rem; }
+    li { margin-bottom: 0.35rem; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.85rem;
+      text-align: left;
+    }
+    th { background: var(--bg); font-weight: 600; }
+    blockquote {
+      margin: 1rem 0;
+      padding: 0.9rem 1.2rem;
+      background: var(--quote-bg);
+      border-left: 4px solid var(--quote-border);
+      border-radius: 0 8px 8px 0;
+      color: var(--text);
+    }
+    blockquote p { margin: 0; }
+    pre {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 1rem 1.25rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+    code {
+      font-family: Consolas, Monaco, "Courier New", monospace;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .katex-display {
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 0.25rem 0;
+    }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      aside.sidebar {
+        position: static;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      main.content { padding: 1.5rem 1rem 3rem; }
+      section.exercise-card { padding: 1.5rem; }
+    }
+    @media print {
+      aside.sidebar { display: none; }
+      .layout { display: block; }
+      body { background: #fff; }
+      section.exercise-card { box-shadow: none; break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">1. Algebra</div>
+      <div class="brand-sub">04. Systems of Linear Equations (Exercises 1–15)</div>
+      <ul class="toc-list">
+<li><a href="#exercise-1">1. From a System to a Matrix</a></li>
+<li><a href="#exercise-2">2. Gaussian Elimination — One Solution</a></li>
+<li><a href="#exercise-3">3. Inconsistent System</a></li>
+<li><a href="#exercise-4">4. Infinitely Many Solutions</a></li>
+<li><a href="#exercise-5">5. Row Echelon Form and Number of Solutions</a></li>
+<li><a href="#exercise-6">6. A System with a Parameter — Which Cases Actually Occur?</a></li>
+<li><a href="#exercise-7">7. Choosing a Method Deliberately</a></li>
+<li><a href="#exercise-8">8. Two Systems with the Same Coefficient Matrix</a></li>
+<li><a href="#exercise-9">9. A System from a Sum Condition</a></li>
+<li><a href="#exercise-10">10. A Polynomial Through Three Points</a></li>
+<li><a href="#exercise-11">11. A Parameter in a System of Three Equations</a></li>
+<li><a href="#exercise-12">12. Homogeneous System</a></li>
+<li><a href="#exercise-13">13. Does Every Equation Add New Information?</a></li>
+<li><a href="#exercise-14">14. A Small Change in the Right-Hand Side</a></li>
+<li><a href="#exercise-15">15. Classifying Three Systems</a></li>
+</ul>
+    </aside>
+    <main class="content">
+      <header class="page-header">
+        <h1>04. Systems of Linear Equations — Complete Solutions</h1>
+        <p>Basics of Mathematics Student Workbook (2026) · 1. Algebra · All 15 Exercises with Detailed Explanations</p>
+      </header>
+      <section class="exercise-card" id="exercise-1">
+<h2 class="exercise-title">Exercise 1. From a System to a Matrix</h2>
+<h3>The question</h3>
+<p>Write the system</p>
+<div class="math-block">$$\begin{cases}2x-y+z=4,\\x+3y-2z=1,\\3x+y+z=7.\end{cases}$$</div>
+<p>in the form $Ax=b$. Identify the coefficient matrix, the vector of unknowns, and the right-hand side vector. Explain how each row of the matrix corresponds to one equation.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>A system of linear equations is a compact way of asking: <em>which vector of unknowns $x$, when multiplied by a grid of coefficients $A$, produces the target vector $b$?</em></p>
+<p>By the definition of matrix-vector multiplication, the $i$-th entry of the product $Ax$ is the dot product of the $i$-th row of $A$ with the column vector $x$. Therefore:</p>
+<ul><li>Each <strong>row</strong> of $A$ stores the coefficients of <strong>one equation</strong>.</li><li>Each <strong>column</strong> of $A$ corresponds to <strong>one variable</strong> ($x$, $y$, or $z$, kept in a fixed order).</li></ul>
+<h3>1. Identifying the three components</h3>
+<p>First, make sure the variables appear in the same order ($x$, then $y$, then $z$) in every equation, and write any implicit $\pm 1$ coefficients explicitly:</p>
+<div class="math-block">$$\begin{cases}
+2x + (-1)y + 1z = 4,\\
+1x + 3y + (-2)z = 1,\\
+3x + 1y + 1z = 7.
+\end{cases}$$</div>
+<p>From this aligned layout, we read off:</p>
+<ol><li><strong>The coefficient matrix $A$ ($3\times 3$):</strong> $$A = \begin{pmatrix} 2 &amp; -1 &amp; 1 \\ 1 &amp; 3 &amp; -2 \\ 3 &amp; 1 &amp; 1 \end{pmatrix}.$$</li></ol>
+<ol><li><strong>The vector of unknowns $x$ ($3\times 1$):</strong> $$\mathbf{x} = \begin{pmatrix} x \\ y \\ z \end{pmatrix}.$$</li></ol>
+<ol><li><strong>The right-hand side vector $b$ ($3\times 1$):</strong> $$b = \begin{pmatrix} 4 \\ 1 \\ 7 \end{pmatrix}.$$</li></ol>
+<h3>2. Writing the matrix equation $Ax=b$</h3>
+<p>Putting the three pieces together gives the matrix equation</p>
+<div class="math-block">$$\begin{pmatrix} 2 &amp; -1 &amp; 1 \\ 1 &amp; 3 &amp; -2 \\ 3 &amp; 1 &amp; 1 \end{pmatrix}\begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} 4 \\ 1 \\ 7 \end{pmatrix}.$$</div>
+<h3>3. How each row corresponds to one equation</h3>
+<p>When we multiply $A$ by $\mathbf{x}$, each row of $A$ pairs up term-by-term with the column $(x,y,z)^T$:</p>
+<ul><li><strong>Row 1:</strong> $(2, -1, 1)\cdot(x,y,z)^T = 2x - y + z$, which must equal the first entry of $b$, namely $4$.</li><li><strong>Row 2:</strong> $(1, 3, -2)\cdot(x,y,z)^T = x + 3y - 2z$, which must equal the second entry of $b$, namely $1$.</li><li><strong>Row 3:</strong> $(3, 1, 1)\cdot(x,y,z)^T = 3x + y + z$, which must equal the third entry of $b$, namely $7$.</li></ul>
+<p>Two vectors are equal if and only if all of their corresponding components are equal, so the single vector equation $Ax=b$ states all three scalar equations simultaneously.</p>
+<h3>Quick verification</h3>
+<p>Let us multiply out $A\mathbf{x}$ directly using the rules of matrix multiplication:</p>
+<div class="math-block">$$A\mathbf{x} = \begin{pmatrix} 2 &amp; -1 &amp; 1 \\ 1 &amp; 3 &amp; -2 \\ 3 &amp; 1 &amp; 1 \end{pmatrix}\begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} 2\cdot x + (-1)\cdot y + 1\cdot z \\ 1\cdot x + 3\cdot y + (-2)\cdot z \\ 3\cdot x + 1\cdot y + 1\cdot z \end{pmatrix} = \begin{pmatrix} 2x - y + z \\ x + 3y - 2z \\ 3x + y + z \end{pmatrix}.$$</div>
+<p>Setting this column vector equal to $b = (4, 1, 7)^T$ reproduces the exact original system line by line. ✓</p>
+<h3>A concrete example</h3>
+<p>Suppose we test whether the specific vector $\mathbf{x} = (2, 0, 0)^T$ is a solution. In the matrix form, we compute one matrix-vector product:</p>
+<div class="math-block">$$A\begin{pmatrix} 2 \\ 0 \\ 0 \end{pmatrix} = \begin{pmatrix} 2(2) - 1(0) + 1(0) \\ 1(2) + 3(0) - 2(0) \\ 3(2) + 1(0) + 1(0) \end{pmatrix} = \begin{pmatrix} 4 \\ 2 \\ 6 \end{pmatrix} \neq \begin{pmatrix} 4 \\ 1 \\ 7 \end{pmatrix}.$$</div>
+<p>Notice how the first component matches ($4=4$), meaning $(2,0,0)$ lies on the plane of the first equation, but it fails the second and third equations. On the other hand, testing the actual solution $\mathbf{x} = (2, 0, 0)^T$ vs. $\mathbf{x} = \left(\frac{36}{13}, -\frac{1}{13}, -\frac{19}{13}\right)^T$ (or checking $(1, 1, 3)^T$) gives</p>
+<div class="math-block">$$A\begin{pmatrix} 1 \\ 1 \\ 3 \end{pmatrix} = \begin{pmatrix} 2 - 1 + 3 \\ 1 + 3 - 6 \\ 3 + 1 + 3 \end{pmatrix} = \begin{pmatrix} 4 \\ -2 \\ 7 \end{pmatrix},$$</div>
+<p>which satisfies the first and third equations simultaneously.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Think of $Ax=b$ as separating the "wiring" of the system from the "variables." The matrix $A$ holds just the numbers in front of $x, y, z$—keep the columns strictly aligned by variable and the rows strictly aligned by equation. When you multiply a row of $A$ by the column $(x,y,z)^T$, you reconstruct the left-hand side of that equation, and setting the result equal to $b$ locks in the right-hand sides.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-2">Exercise 2: Gaussian Elimination — One Solution</a></li><li><a href="#exercise-8">Exercise 8: Two Systems with the Same Coefficient Matrix</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-2">
+<h2 class="exercise-title">Exercise 2. Gaussian Elimination — One Solution</h2>
+<h3>The question</h3>
+<p>Solve using Gaussian elimination:</p>
+<div class="math-block">$$\begin{cases}x+y+z=6,\\2x-y+z=3,\\x+2y-z=2.\end{cases}$$</div>
+<p>After solving, substitute the result into all equations and check consistency.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p><strong>Gaussian elimination</strong> transforms a coupled system into an <strong>upper triangular</strong> (staircase) system that is easy to solve from bottom to top. We are allowed to add a multiple of one equation (or row) to another without changing the set of solutions, because if two quantities are equal, adding the same thing to both sides keeps them equal.</p>
+<p>Our strategy has two phases:</p>
+<ol><li><strong>Forward elimination:</strong> Use the first row to eliminate $x$ from rows 2 and 3, then use the new second row to eliminate $y$ from row 3.</li><li><strong>Back-substitution:</strong> Read off $z$ from the bottom equation, substitute it upward to find $y$, and finally find $x$.</li></ol>
+<h3>1. Setting up the augmented matrix</h3>
+<p>We write the coefficients and the right-hand side in an augmented matrix $[A\mid b]$:</p>
+<div class="math-block">$$\left[\begin{array}{ccc|c}
+1 &amp; 1 &amp; 1 &amp; 6 \\
+2 &amp; -1 &amp; 1 &amp; 3 \\
+1 &amp; 2 &amp; -1 &amp; 2
+\end{array}\right].$$</div>
+<h3>2. Forward elimination to row echelon form</h3>
+<p><strong>Step 1:</strong> Eliminate $x$ (column 1) below the first pivot $1$ in position $(1,1)$. Perform $R_2 \leftarrow R_2 - 2R_1$ and $R_3 \leftarrow R_3 - R_1$:</p>
+<div class="math-block">$$\left[\begin{array}{ccc|c}
+1 &amp; 1 &amp; 1 &amp; 6 \\
+2-2(1) &amp; -1-2(1) &amp; 1-2(1) &amp; 3-2(6) \\
+1-1 &amp; 2-1 &amp; -1-1 &amp; 2-6
+\end{array}\right] = \left[\begin{array}{ccc|c}
+1 &amp; 1 &amp; 1 &amp; 6 \\
+0 &amp; -3 &amp; -1 &amp; -9 \\
+0 &amp; 1 &amp; -2 &amp; -4
+\end{array}\right].$$</div>
+<p><strong>Step 2:</strong> Swap $R_2$ and $R_3$ ($R_2 \leftrightarrow R_3$) so that the second pivot is $1$, avoiding fractions:</p>
+<div class="math-block">$$\left[\begin{array}{ccc|c}
+1 &amp; 1 &amp; 1 &amp; 6 \\
+0 &amp; 1 &amp; -2 &amp; -4 \\
+0 &amp; -3 &amp; -1 &amp; -9
+\end{array}\right].$$</div>
+<p><strong>Step 3:</strong> Eliminate $y$ (column 2) below the second pivot. Perform $R_3 \leftarrow R_3 + 3R_2$:</p>
+<div class="math-block">$$\left[\begin{array}{ccc|c}
+1 &amp; 1 &amp; 1 &amp; 6 \\
+0 &amp; 1 &amp; -2 &amp; -4 \\
+0 &amp; -3+3(1) &amp; -1+3(-2) &amp; -9+3(-4)
+\end{array}\right] = \left[\begin{array}{ccc|c}
+1 &amp; 1 &amp; 1 &amp; 6 \\
+0 &amp; 1 &amp; -2 &amp; -4 \\
+0 &amp; 0 &amp; -7 &amp; -21
+\end{array}\right].$$</div>
+<h3>3. Back-substitution</h3>
+<p>Translate the staircase matrix back into equations:</p>
+<div class="math-block">$$\begin{cases}
+x + y + z = 6,\\
+y - 2z = -4,\\
+-7z = -21.
+\end{cases}$$</div>
+<p>Now solve from the bottom up:</p>
+<ul><li>From the third equation: $$z = \frac{-21}{-7} = 3.$$</li><li>Substitute $z=3$ into the second equation: $$y - 2(3) = -4 \implies y - 6 = -4 \implies y = 2.$$</li><li>Substitute $y=2$ and $z=3$ into the first equation: $$x + 2 + 3 = 6 \implies x = 1.$$</li></ul>
+<p>So the unique solution is $(x, y, z) = (1, 2, 3)$.</p>
+<h3>Quick verification</h3>
+<p>Substitute $(x, y, z) = (1, 2, 3)$ into all three original equations:</p>
+<ul><li><strong>Equation 1:</strong> $x + y + z = 1 + 2 + 3 = 6$. ✓</li><li><strong>Equation 2:</strong> $2x - y + z = 2(1) - 2 + 3 = 2 - 2 + 3 = 3$. ✓</li><li><strong>Equation 3:</strong> $x + 2y - z = 1 + 2(2) - 3 = 1 + 4 - 3 = 2$. ✓</li></ul>
+<p>Every equation holds, confirming consistency and the accuracy of our arithmetic.</p>
+<h3>A concrete example</h3>
+<p>Geometrically, each equation in $x, y, z$ describes a flat plane in three-dimensional space $\mathbb{R}^3$:</p>
+<ul><li>Plane 1 ($x+y+z=6$) and Plane 2 ($2x-y+z=3$) are non-parallel, so they intersect along a line.</li><li>Plane 3 ($x+2y-z=2$) is not parallel to that line of intersection; it slices across the line at a single point, namely $(1,2,3)$.</li></ul>
+<p>In the row echelon matrix, this geometric fact shows up as <strong>three non-zero pivots</strong> ($1, 1, -7$) in all three variable columns—leaving zero free variables and no contradiction.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>We write the system as an augmented matrix and use the top-left $1$ to clear out the $x$-column below it. Next, we swap rows 2 and 3 to put a clean $1$ in the middle pivot spot, avoiding fractions, and clear out the $y$-entry below it. That leaves $-7z = -21$ at the bottom, giving $z=3$ immediately. Climbing back up the staircase gives $y=2$ and $x=1$, and plugging $(1,2,3)$ into the original three equations confirms that all three balance.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: From a System to a Matrix</a></li><li><a href="#exercise-5">Exercise 5: Row Echelon Form and Number of Solutions</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-3">
+<h2 class="exercise-title">Exercise 3. Inconsistent System</h2>
+<h3>The question</h3>
+<p>Solve or show that the system is inconsistent:</p>
+<div class="math-block">$$\begin{cases}x+2y=3,\\2x+4y=7.\end{cases}$$</div>
+<p>Show how the contradiction appears in the matrix after elimination and interpret it in terms of equations.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>A system of equations is <strong>inconsistent</strong> (has no solution) when its requirements contradict one another. Gaussian elimination detects this automatically without any guesswork: if elimination produces a row with <strong>all zeros on the left (coefficient) side</strong> and a <strong>non-zero number on the right-hand side</strong>,</p>
+<div class="math-block">$$\left[\begin{array}{cc|c} 0 &amp; 0 &amp; c \end{array}\right] \quad \text{with } c \neq 0,$$</div>
+<p>that row translates to the impossible equation $0 = c$. Since no choice of variables can make $0$ equal a non-zero number, no solution exists.</p>
+<h3>1. Elimination on the augmented matrix</h3>
+<p>Write the augmented matrix of the system:</p>
+<div class="math-block">$$\left[\begin{array}{cc|c}
+1 &amp; 2 &amp; 3 \\
+2 &amp; 4 &amp; 7
+\end{array}\right].$$</div>
+<p>To eliminate $x$ from the second row, subtract twice the first row from the second row ($R_2 \leftarrow R_2 - 2R_1$):</p>
+<div class="math-block">$$\left[\begin{array}{cc|c}
+1 &amp; 2 &amp; 3 \\
+2 - 2(1) &amp; 4 - 2(2) &amp; 7 - 2(3)
+\end{array}\right] = \left[\begin{array}{cc|c}
+1 &amp; 2 &amp; 3 \\
+0 &amp; 0 &amp; 1
+\end{array}\right].$$</div>
+<h3>2. How the contradiction appears and what it means</h3>
+<p>Look at the second row of the reduced matrix:</p>
+<div class="math-block">$$\left[\begin{array}{cc|c} 0 &amp; 0 &amp; 1 \end{array}\right].$$</div>
+<p>Rewriting this row as an equation in $x$ and $y$ gives:</p>
+<div class="math-block">$$0x + 0y = 1 \implies 0 = 1.$$</div>
+<p>This is a direct contradiction. Because row operations are reversible, the original system is logically equivalent to the reduced system</p>
+<div class="math-block">$$\begin{cases} x + 2y = 3, \\ 0 = 1. \end{cases}$$</div>
+<p>Since $0 = 1$ is false for every pair $(x,y) \in \mathbb{R}^2$, the system is <strong>inconsistent</strong> (it has <strong>no solution</strong>).</p>
+<h3>3. Interpretation in terms of the original equations</h3>
+<p>Why did both $x$ and $y$ vanish at the same time? Look at the left-hand sides of the two original equations:</p>
+<ul><li>The left-hand side of the second equation is $2x + 4y = 2(x + 2y)$, which is <strong>exact twice</strong> the left-hand side of the first equation.</li><li>If $x + 2y = 3$ is true, then doubling the expression must give $2(x+2y) = 2(3) = 6$.</li><li>However, the second equation demands that $2x + 4y = 7$.</li></ul>
+<p>The quantity $2x+4y$ cannot equal both $6$ and $7$ at the same time.</p>
+<h3>Quick verification</h3>
+<p>Let us verify the inconsistency geometrically by putting both equations in slope-intercept form ($y = mx + b$):</p>
+<ul><li>First line: $x + 2y = 3 \implies y = -\frac{1}{2}x + \frac{3}{2}$.</li><li>Second line: $2x + 4y = 7 \implies y = -\frac{1}{2}x + \frac{7}{4}$.</li></ul>
+<p>Both lines have the exact same slope $m = -\frac{1}{2}$, but different $y$-intercepts ($\frac{3}{2} = 1.5$ vs. $\frac{7}{4} = 1.75$). Distinct parallel lines in the plane never intersect, so there is no common point $(x,y)$. ✓</p>
+<h3>A concrete example</h3>
+<p>Imagine a store where:</p>
+<ul><li>Today, $1$ notebook and $2$ pens cost $\$3$ ($x + 2y = 3$).</li><li>Later the same day, with unchanged prices, someone claims that $2$ notebooks and $4$ pens cost $\$7$ ($2x + 4y = 7$).</li></ul>
+<p>Buying two identical bundles of $(1\text{ notebook} + 2\text{ pens})$ must cost $2 \times \$3 = \$6$, not $\$7$. The two receipts contradict each other, so no fixed unit prices $(x,y)$ can fit both statements.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>When we subtract twice the first row from the second row to eliminate $x$, the $y$-term disappears at the exact same moment because the coefficients $(2,4)$ are proportional to $(1,2)$. That leaves the row $[0\;\;0\mid 1]$, which says $0x + 0y = 1$, or $0=1$. In terms of the equations, if $x+2y$ is $3$, then $2x+4y$ has to be $6$, so asking it to be $7$ is impossible—geometrically, we have two parallel lines that never meet.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-6">Exercise 6: A System with a Parameter — Which Cases Actually Occur?</a></li><li><a href="#exercise-15">Exercise 15: Classifying Three Systems</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-4">
+<h2 class="exercise-title">Exercise 4. Infinitely Many Solutions</h2>
+<h3>The question</h3>
+<p>Solve</p>
+<div class="math-block">$$\begin{cases}x+y+z=2,\\2x+2y+2z=4,\\x-y+z=0.\end{cases}$$</div>
+<p>Give the solution in parametric form, identify a free variable, and for one chosen parameter value check that the resulting point really satisfies the system.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>When one equation in a system is a redundant copy (or combination) of the others, elimination produces an <strong>entirely zero row</strong> $[0\;\;0\;\;0\mid 0]$. Unlike $[0\;\;0\;\;0\mid 1]$, the equation $0 = 0$ is always true—it simply says we have fewer independent equations than variables.</p>
+<p>When a consistent system has fewer pivots than unknowns:</p>
+<ul><li>The variables in columns <strong>with pivots</strong> are <strong>leading (basic) variables</strong>.</li><li>The variables in columns <strong>without pivots</strong> are <strong>free variables</strong>: we can set them equal to arbitrary real parameters (like $t \in \mathbb{R}$) and express the basic variables in terms of those parameters.</li></ul>
+<h3>1. Gaussian elimination on the augmented matrix</h3>
+<p>Write the augmented matrix:</p>
+<div class="math-block">$$\left[\begin{array}{ccc|c}
+1 &amp; 1 &amp; 1 &amp; 2 \\
+2 &amp; 2 &amp; 2 &amp; 4 \\
+1 &amp; -1 &amp; 1 &amp; 0
+\end{array}\right].$$</div>
+<p>Eliminate $x$ below the first pivot by performing $R_2 \leftarrow R_2 - 2R_1$ and $R_3 \leftarrow R_3 - R_1$:</p>
+<div class="math-block">$$\left[\begin{array}{ccc|c}
+1 &amp; 1 &amp; 1 &amp; 2 \\
+0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; -2 &amp; 0 &amp; -2
+\end{array}\right].$$</div>
+<p>Swap row 2 and row 3 ($R_2 \leftrightarrow R_3$) so the zero row is at the bottom, and divide the new row 2 by $-2$ ($R_2 \leftarrow -\frac{1}{2}R_2$):</p>
+<div class="math-block">$$\left[\begin{array}{ccc|c}
+1 &amp; 1 &amp; 1 &amp; 2 \\
+0 &amp; 1 &amp; 0 &amp; 1 \\
+0 &amp; 0 &amp; 0 &amp; 0
+\end{array}\right].$$</div>
+<h3>2. Identifying pivots and the free variable</h3>
+<p>Looking at the row echelon matrix:</p>
+<ul><li><strong>Column 1 ($x$)</strong> has a pivot at $(1,1)$.</li><li><strong>Column 2 ($y$)</strong> has a pivot at $(2,2)$.</li><li><strong>Column 3 ($z$)</strong> has <strong>no pivot</strong>.</li></ul>
+<p>Therefore, $x$ and $y$ are the basic variables, and <strong>$z$ is the free variable</strong>. Since $z$ can take any real value without restriction, the system has <strong>infinitely many solutions</strong>.</p>
+<h3>3. Writing the solution in parametric form</h3>
+<p>Translate the two non-zero rows back into equations:</p>
+<div class="math-block">$$\begin{cases}
+x + y + z = 2,\\
+y = 1.
+\end{cases}$$</div>
+<p>Set the free variable to a parameter $z = t \in \mathbb{R}$. Now back-substitute:</p>
+<ul><li>From the second equation, $y = 1$ (it is fixed regardless of $t$).</li><li>From the first equation, $x = 2 - y - z = 2 - 1 - t = 1 - t$.</li></ul>
+<p>Thus, the general solution in parametric form is:</p>
+<div class="math-block">$$\begin{cases}
+x = 1 - t,\\
+y = 1,\\
+z = t,
+\end{cases} \quad t \in \mathbb{R},$$</div>
+<p>or in vector form:</p>
+<div class="math-block">$$\begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix} + t\begin{pmatrix} -1 \\ 0 \\ 1 \end{pmatrix}, \quad t \in \mathbb{R}.$$</div>
+<h3>Quick verification</h3>
+<p>Let us check the general parametric formula $(x,y,z) = (1-t, 1, t)$ directly in all three original equations:</p>
+<ul><li><strong>Equation 1:</strong> $(1-t) + 1 + t = 2$. ✓</li><li><strong>Equation 2:</strong> $2(1-t) + 2(1) + 2t = 2 - 2t + 2 + 2t = 4$. ✓</li><li><strong>Equation 3:</strong> $(1-t) - 1 + t = 0$. ✓</li></ul>
+<p>The parameter $t$ cancels out in every single equation, proving that every point on this line is a valid solution.</p>
+<h3>A concrete example</h3>
+<p>Let us choose a specific parameter value, say <strong>$t = 3$</strong>. Substituting $t = 3$ into our parametric formula gives the point:</p>
+<div class="math-block">$$(x, y, z) = (1 - 3, 1, 3) = (-2, 1, 3).$$</div>
+<p>Now let us check that $(-2, 1, 3)$ satisfies the original system:</p>
+<ul><li>First equation: $(-2) + 1 + 3 = 2$. ✓</li><li>Second equation: $2(-2) + 2(1) + 2(3) = -4 + 2 + 6 = 4$. ✓</li><li>Third equation: $(-2) - 1 + 3 = 0$. ✓</li></ul>
+<p>(If we instead chose $t = 0$, we would get the point $(1, 1, 0)$, which also satisfies $1+1+0=2$, $2+2+0=4$, and $1-1+0=0$.)</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Notice right away that the second equation $2x+2y+2z=4$ is just twice the first equation $x+y+z=2$, so it adds zero new information. During elimination, that duplicate equation turns into a row of all zeros, leaving us with only two real equations for three unknowns. Because the $z$-column has no pivot, $z$ is a free variable: we set $z=t$, find $y=1$ and $x=1-t$, and get an entire line of solutions in $\mathbb{R}^3$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-5">Exercise 5: Row Echelon Form and Number of Solutions</a></li><li><a href="#exercise-12">Exercise 12: Homogeneous System</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-5">
+<h2 class="exercise-title">Exercise 5. Row Echelon Form and Number of Solutions</h2>
+<h3>The question</h3>
+<p>For the augmented matrix</p>
+<div class="math-block">$$\left[\begin{array}{ccc|c}1&amp;2&amp;-1&amp;3\\0&amp;1&amp;2&amp;1\\0&amp;0&amp;0&amp;0\end{array}\right]$$</div>
+<p>determine the number of solutions and write them in parametric form. Explain how you know how many variables may be chosen freely.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>When an augmented matrix is already in <strong>row echelon form (REF)</strong>, all the heavy lifting of Gaussian elimination is done. We can immediately read off the structure of the solution set in two steps:</p>
+<ol><li><strong>Consistency check:</strong> Look for any contradiction row $[0\;\;0\;\;0\mid c]$ with $c \neq 0$. If none exists, the system is <strong>consistent</strong>.</li><li><strong>Counting free variables:</strong> Each non-zero row has a <strong>leading entry (pivot)</strong>—its first non-zero number from the left. Every variable column that contains a pivot is determined by back-substitution; every variable column <strong>without a pivot</strong> can be chosen freely.</li></ol>
+<div class="math-block">$$\text{Number of free variables} = (\text{total number of unknowns}) - (\text{number of pivots}).$$</div>
+<h3>1. Determining consistency and counting free variables</h3>
+<p>Let the three unknowns corresponding to the three columns on the left be $x_1, x_2, x_3$ (or $x, y, z$).</p>
+<ol><li><strong>Row 3</strong> is $[0\;\;0\;\;0\mid 0]$, which reads $0 = 0$. There is no contradictory row $[0\;\;0\;\;0\mid c]$ with $c \neq 0$, so the system is <strong>consistent</strong>.</li><li><strong>Pivots:</strong></li></ol>
+<ul><li>Row 1 has its leading non-zero entry $1$ in <strong>column 1</strong> ($x$).</li><li>Row 2 has its leading non-zero entry $1$ in <strong>column 2</strong> ($y$).</li><li>Row 3 has no pivot.</li></ul>
+<ol><li><strong>Free variables:</strong> There are $3$ unknowns in total and $2$ pivots. Therefore, $$3 - 2 = 1 \text{ variable may be chosen freely.}$$ Specifically, <strong>column 3 ($z$)</strong> has no pivot, so $z$ is the single free variable. Because $z$ can be any real number, the system has <strong>infinitely many solutions</strong>.</li></ol>
+<h3>2. Back-substitution to parametric form</h3>
+<p>Write the two non-zero rows as equations in $x, y, z$:</p>
+<div class="math-block">$$\begin{cases}
+x + 2y - z = 3,\\
+y + 2z = 1.
+\end{cases}$$</div>
+<p>Assign a real parameter $t \in \mathbb{R}$ to the free variable:</p>
+<div class="math-block">$$z = t.$$</div>
+<p>Now solve for the pivot variables from bottom to top:</p>
+<ul><li>From the second equation: $$y = 1 - 2z = 1 - 2t.$$</li><li>Substitute $y = 1 - 2t$ and $z = t$ into the first equation: $$x = 3 - 2y + z = 3 - 2(1 - 2t) + t = 3 - 2 + 4t + t = 1 + 5t.$$</li></ul>
+<h3>3. Writing the complete solution set</h3>
+<p>In parametric form, the solutions are:</p>
+<div class="math-block">$$\begin{cases}
+x = 1 + 5t,\\
+y = 1 - 2t,\\
+z = t,
+\end{cases} \quad t \in \mathbb{R},$$</div>
+<p>or as a vector equation of a line in $\mathbb{R}^3$:</p>
+<div class="math-block">$$\begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} 1 \\ 1 \\ 0 \end{pmatrix} + t\begin{pmatrix} 5 \\ -2 \\ 1 \end{pmatrix}, \quad t \in \mathbb{R}.$$</div>
+<h3>Quick verification</h3>
+<p>Substitute $(x, y, z) = (1+5t, 1-2t, t)$ back into the rows of the augmented matrix:</p>
+<ul><li><strong>Row 1:</strong> $1(1+5t) + 2(1-2t) - 1(t) = 1 + 5t + 2 - 4t - t = 3$. ✓</li><li><strong>Row 2:</strong> $0(1+5t) + 1(1-2t) + 2(t) = 1 - 2t + 2t = 1$. ✓</li><li><strong>Row 3:</strong> $0(1+5t) + 0(1-2t) + 0(t) = 0$. ✓</li></ul>
+<p>All three equations hold identically for every $t \in \mathbb{R}$.</p>
+<h3>A concrete example</h3>
+<p>By choosing different values for the free variable $z = t$, we generate specific points on the solution line:</p>
+<ul><li>For $t = 0$: $(x, y, z) = (1, 1, 0)$. Check: $1 + 2(1) - 0 = 3$ and $1 + 2(0) = 1$. ✓</li><li>For $t = 1$: $(x, y, z) = (6, -1, 1)$. Check: $6 + 2(-1) - 1 = 3$ and $-1 + 2(1) = 1$. ✓</li><li>For $t = -1$: $(x, y, z) = (-4, 3, -1)$. Check: $-4 + 2(3) - (-1) = 3$ and $3 + 2(-1) = 1$. ✓</li></ul>
+<p>Notice how each non-zero row only locks down <strong>one</strong> variable (its pivot variable) once the variables to its right have been chosen. Because the third column has no step of the staircase landing on it, $z$ is never locked down.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>To read a row echelon matrix, first check the bottom for any $0 = \text{non-zero}$ contradiction—here the bottom row is $0=0$, so we're safe. Next, circle the first non-zero number in each row: those are the pivots in columns 1 and 2. Since there are 3 variables and only 2 pivots, $3 - 2 = 1$ variable (column 3, $z$) has no pivot to pin it down. We set $z = t$, solve row 2 to get $y = 1 - 2t$, and plug both into row 1 to get $x = 1 + 5t$, giving infinitely many solutions.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-4">Exercise 4: Infinitely Many Solutions</a></li><li><a href="#exercise-13">Exercise 13: Does Every Equation Add New Information?</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-6">
+<h2 class="exercise-title">Exercise 6. A System with a Parameter — Which Cases Actually Occur?</h2>
+<h3>The question</h3>
+<p>Analyze, depending on the parameter $a$, the system</p>
+<div class="math-block">$$\begin{cases}x+y=2,\\ax+ay=4.\end{cases}$$</div>
+<p>Among the three possibilities — exactly one solution, infinitely many solutions, no solution — determine which actually occur and for which values of $a$. If one type cannot occur, explain why.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Students often assume that if a system contains a parameter $a$, there must be some value of $a$ that gives a unique solution, some value that gives infinitely many solutions, and some value that gives no solution. <strong>That is not always true!</strong></p>
+<p>Whether a system can have a unique solution depends on whether its coefficient matrix can have two independent rows (or a non-zero determinant). If the left-hand sides of the two equations are already proportional for <em>every</em> value of $a$, then elimination will always wipe out both variables in the second row at the same time.</p>
+<h3>1. Elimination on the augmented matrix</h3>
+<p>Write the augmented matrix of the system:</p>
+<div class="math-block">$$\left[\begin{array}{cc|c}
+1 &amp; 1 &amp; 2 \\
+a &amp; a &amp; 4
+\end{array}\right].$$</div>
+<p>Eliminate $x$ from the second row by subtracting $a$ times the first row ($R_2 \leftarrow R_2 - aR_1$):</p>
+<div class="math-block">$$\left[\begin{array}{cc|c}
+1 &amp; 1 &amp; 2 \\
+a - a(1) &amp; a - a(1) &amp; 4 - 2a
+\end{array}\right] = \left[\begin{array}{cc|c}
+1 &amp; 1 &amp; 2 \\
+0 &amp; 0 &amp; 4 - 2a
+\end{array}\right].$$</div>
+<h3>2. Analyzing the reduced second row</h3>
+<p>The second row translates to the equation</p>
+<div class="math-block">$$0x + 0y = 4 - 2a \iff 0 = 4 - 2a.$$</div>
+<p>Now we examine when this equation is true and when it is false:</p>
+<ul><li><strong>Case 1: $4 - 2a = 0 \iff a = 2$.</strong> When $a = 2$, the second row becomes $[0\;\;0\mid 0]$, so the system reduces to the single equation $x + y = 2$. Here $y = t \in \mathbb{R}$ is a free variable and $x = 2 - t$. Thus, for <strong>$a = 2$</strong>, the system has <strong>infinitely many solutions</strong>.</li></ul>
+<ul><li><strong>Case 2: $4 - 2a \neq 0 \iff a \neq 2$.</strong> When $a \neq 2$, the second row is $[0\;\;0\mid c]$ with $c = 4 - 2a \neq 0$, which is the contradiction $0 = 4 - 2a$. Thus, for <strong>$a \neq 2$</strong>, the system has <strong>no solution</strong> (it is inconsistent).</li></ul>
+<h3>3. Why "exactly one solution" can never occur</h3>
+<p>The case of <strong>exactly one solution never occurs</strong> for any real number $a$.</p>
+<p><strong>Algebraic reason:</strong> For a $2\times 2$ system to have a unique solution, the coefficient matrix $A = \begin{pmatrix} 1 &amp; 1 \\ a &amp; a \end{pmatrix}$ would need two pivots (or equivalently, $\det(A) \neq 0$). However,</p>
+<div class="math-block">$$\det\begin{pmatrix} 1 &amp; 1 \\ a &amp; a \end{pmatrix} = 1\cdot a - 1\cdot a = 0 \quad \text{for every } a \in \mathbb{R}.$$</div>
+<p>Because $x$ and $y$ appear only in the combination $(x+y)$ in both equations ($x+y=2$ and $a(x+y)=4$), no equation in the system can ever distinguish between $x$ and $y$ individually.</p>
+<p><strong>Geometric reason:</strong> For $a \neq 0$, both equations describe lines with slope $-1$. Changing $a$ shifts the second line parallel to itself, so the two lines are either <strong>parallel and distinct</strong> ($a \neq 2$, no intersection) or <strong>the exact same line</strong> ($a = 2$, infinitely many intersections). Two lines of identical slope can never cross at a single point. (Even for $a = 0$, the second equation $0 = 4$ is immediately inconsistent.)</p>
+<h3>Quick verification</h3>
+<p>Let us plug $x + y = 2$ from the first equation directly into the left-hand side of the second equation:</p>
+<div class="math-block">$$ax + ay = a(x + y) = a(2) = 2a.$$</div>
+<p>For the second equation $ax + ay = 4$ to hold, we must have $2a = 4$, which forces $a = 2$.</p>
+<ul><li>If $a \neq 2$, then $2a \neq 4$, so no pair $(x,y)$ satisfying the first equation can ever satisfy the second. ✓</li><li>If $a = 2$, every pair $(x,y)$ satisfying $x + y = 2$ automatically satisfies $2x + 2y = 4$. ✓</li></ul>
+<h3>A concrete example</h3>
+<p>Let us test two specific values of $a$:</p>
+<ol><li><strong>Suppose $a = 2$:</strong> The system is $\begin{cases} x+y=2, \\ 2x+2y=4. \end{cases}$ Every point of the form $(2-t, t)$, such as $(2,0)$, $(1,1)$, or $(0,2)$, satisfies both equations.</li><li><strong>Suppose $a = 3$:</strong> The system is $\begin{cases} x+y=2, \\ 3x+3y=4. \end{cases}$ Dividing the second equation by $3$ asks for $x+y = \frac{4}{3}$, which directly clashes with $x+y = 2$.</li></ol>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Don't assume a parameter automatically gives all three cases! Here the second equation can be factored as $a(x+y) = 4$. Since the first equation already tells us $x+y=2$, the second equation really just says $2a = 4$. If $a \neq 2$, that's a contradiction, so there is no solution. If $a = 2$, the second equation is just twice the first, leaving one equation $x+y=2$ with two unknowns—infinitely many solutions. A unique solution is impossible because both equations only depend on the sum $x+y$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-3">Exercise 3: Inconsistent System</a></li><li><a href="#exercise-11">Exercise 11: A Parameter in a System of Three Equations</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-7">
+<h2 class="exercise-title">Exercise 7. Choosing a Method Deliberately</h2>
+<h3>The question</h3>
+<p>Do not solve all of the following systems completely. For each situation, choose the method that best uses its structure and justify your choice:</p>
+<ol><li>one system with a triangular coefficient matrix $$\begin{cases}2x-y=3,\\4y=8;\end{cases}$$</li><li>three systems $Ax=b_i$ with the same invertible matrix $A$, when $A^{-1}$ is already known;</li><li>one $3\times3$ system for which the inverse matrix is not given and the goal is only to find one solution vector.</li></ol>
+<p>For case 1, carry out the chosen method completely. For cases 2 and 3, describe the plan and indicate which part of the computation would be reusable or unnecessary. Do not judge a method by its name alone — refer to the number of right-hand sides and the structure of the matrix.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Different algebraic methods solve $Ax=b$, but their computational effort depends heavily on <strong>what structure we already have</strong> and <strong>how many right-hand sides $b_i$ we need to process</strong>:</p>
+<ul><li><strong>Back-substitution</strong> works immediately when the matrix is already triangular—doing elimination or finding an inverse would repeat work that is already finished.</li><li><strong>Multiplying by $A^{-1}$</strong> ($x_i = A^{-1}b_i$) is fast <em>if $A^{-1}$ has already been computed</em>, because each new right-hand side only costs one matrix-vector multiplication.</li><li><strong>Gaussian elimination</strong> on $[A\mid b]$ is the most efficient general method for a single system when $A^{-1}$ is not given, because computing all of $A^{-1}$ is equivalent to solving three separate systems when we only care about one.</li></ul>
+<h3>1. Case 1: Triangular coefficient matrix</h3>
+<p>The system is</p>
+<div class="math-block">$$\begin{cases} 2x - y = 3, \\ 4y = 8. \end{cases}$$</div>
+<ul><li><strong>Chosen method:</strong> <strong>Direct back-substitution</strong> (from bottom to top).</li><li><strong>Justification:</strong> The coefficient matrix $\begin{pmatrix} 2 &amp; -1 \\ 0 &amp; 4 \end{pmatrix}$ is already in upper triangular (row echelon) form—the forward elimination phase is already complete! Computing $A^{-1}$ or applying row operations would be completely unnecessary.</li><li><strong>Complete calculation:</strong></li></ul>
+<ol><li>From the second equation: $$4y = 8 \implies y = 2.$$</li><li>Substitute $y = 2$ into the first equation: $$2x - 2 = 3 \implies 2x = 5 \implies x = \frac{5}{2}.$$ So the unique solution is $(x, y) = \left(\frac{5}{2}, 2\right)$.</li></ol>
+<h3>2. Case 2: Three systems $Ax=b_i$ when $A^{-1}$ is already known</h3>
+<ul><li><strong>Chosen method:</strong> <strong>Matrix multiplication by the known inverse</strong>, computing $x_i = A^{-1}b_i$ for $i = 1, 2, 3$.</li><li><strong>Justification and plan:</strong> Since $A^{-1}$ is already provided, we do not need to perform Gaussian elimination three times. For each right-hand side $b_i$, we simply multiply the given matrix $A^{-1}$ by the column vector $b_i$: $$x_1 = A^{-1}b_1, \qquad x_2 = A^{-1}b_2, \qquad x_3 = A^{-1}b_3.$$</li><li><strong>What is reusable or unnecessary:</strong> The inverse matrix $A^{-1}$ itself is the <strong>reusable</strong> object—it encodes the inverted structure of $A$ once and for all, so we reuse it across all three right-hand sides $b_1, b_2, b_3$. Running row reduction on $A$ from scratch for each system would be <strong>unnecessary</strong> duplicate work.</li></ul>
+<h3>3. Case 3: One $3\times 3$ system without $A^{-1}$ given</h3>
+<ul><li><strong>Chosen method:</strong> <strong>Gaussian elimination with back-substitution</strong> on the single augmented matrix $[A\mid b]$.</li><li><strong>Justification and plan:</strong> We only have <strong>one</strong> right-hand side $b$, and $A^{-1}$ is not known. Our plan is to use elementary row operations to reduce $[A\mid b]$ to upper triangular form $[U\mid c]$, and then solve for $x_3$, $x_2$, and $x_1$ by back-substitution.</li><li><strong>What is reusable or unnecessary:</strong> Computing the full inverse matrix $A^{-1}$ (or using Cramer's rule with four $3\times 3$ determinants) is <strong>unnecessary</strong>. Finding $A^{-1}$ by Gauss–Jordan elimination on $[A\mid I_3]$ requires reducing to reduced row echelon form with <strong>three</strong> right-hand side columns $(e_1, e_2, e_3)$, which takes roughly three times as much work on the right-hand side as solving for the single vector $b$.</li></ul>
+<h3>Quick verification</h3>
+<p>Let us verify the solution $(x, y) = \left(\frac{5}{2}, 2\right)$ for Case 1 in the original system:</p>
+<ul><li>First equation: $2\left(\frac{5}{2}\right) - 2 = 5 - 2 = 3$. ✓</li><li>Second equation: $4(2) = 8$. ✓</li></ul>
+<p>Both equations are satisfied.</p>
+<h3>A concrete example</h3>
+<p>To see the work difference between Cases 2 and 3 concretely for a $3\times 3$ matrix:</p>
+<ul><li>Multiplying a known $3\times 3$ matrix $A^{-1}$ by one vector $b_i$ takes just $3 \times 3 = 9$ multiplications and $6$ additions. Doing this for three vectors $b_1, b_2, b_3$ takes $27$ multiplications total.</li><li>By contrast, finding $A^{-1}$ from scratch first (when you only have a single vector $b$) forces you to solve $Ax_1 = (1,0,0)^T$, $Ax_2 = (0,1,0)^T$, and $Ax_3 = (0,0,1)^T$ even though you never needed those three columns separately!</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Always look at what work is already done and how many right-hand sides you have. In Case 1, the matrix is already a staircase, so just read $y=2$ from the bottom and plug it into the top to get $x=5/2$. In Case 2, someone already did the hard work of finding $A^{-1}$, so we reuse $A^{-1}$ and just multiply $A^{-1}b_1, A^{-1}b_2, A^{-1}b_3$. In Case 3, we have only one right-hand side and no inverse, so ordinary Gaussian elimination on $[A\mid b]$ goes straight to the answer without wasting time inverting the whole matrix.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-2">Exercise 2: Gaussian Elimination — One Solution</a></li><li><a href="#exercise-8">Exercise 8: Two Systems with the Same Coefficient Matrix</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-8">
+<h2 class="exercise-title">Exercise 8. Two Systems with the Same Coefficient Matrix</h2>
+<h3>The question</h3>
+<p>Solve by elimination the two systems</p>
+<div class="math-block">$$\begin{cases}2x+y=5,\\x-y=1,\end{cases} \qquad \begin{cases}2x+y=1,\\x-y=4.\end{cases}$$</div>
+<p>Compare the successive elimination steps. Which part of the calculation is the same in both cases, and why?</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>In Gaussian elimination, <strong>which row operations we perform</strong> (which rows we swap, and what multiples we subtract) is dictated entirely by the <strong>coefficient matrix $A$</strong>, because our goal is to create zeros in the columns of $A$. The right-hand side vector $b$ is just a passenger that gets carried along by those exact same row operations.</p>
+<h3>1. Solving the first system by elimination</h3>
+<p>Write the augmented matrix for the first system:</p>
+<div class="math-block">$$\left[\begin{array}{cc|c}
+2 &amp; 1 &amp; 5 \\
+1 &amp; -1 &amp; 1
+\end{array}\right].$$</div>
+<p><strong>Step 1:</strong> Swap row 1 and row 2 ($R_1 \leftrightarrow R_2$) to put a pivot of $1$ in the top-left corner:</p>
+<div class="math-block">$$\left[\begin{array}{cc|c}
+1 &amp; -1 &amp; 1 \\
+2 &amp; 1 &amp; 5
+\end{array}\right].$$</div>
+<p><strong>Step 2:</strong> Eliminate $x$ from the second row by performing $R_2 \leftarrow R_2 - 2R_1$:</p>
+<div class="math-block">$$\left[\begin{array}{cc|c}
+1 &amp; -1 &amp; 1 \\
+0 &amp; 3 &amp; 3
+\end{array}\right].$$</div>
+<p><strong>Step 3:</strong> Back-substitution:</p>
+<ul><li>From row 2: $3y = 3 \implies y = 1$.</li><li>From row 1: $x - y = 1 \implies x = 1 + y = 1 + 1 = 2$.</li></ul>
+<p>So the solution to the first system is $(x, y) = (2, 1)$.</p>
+<h3>2. Solving the second system by elimination</h3>
+<p>Write the augmented matrix for the second system:</p>
+<div class="math-block">$$\left[\begin{array}{cc|c}
+2 &amp; 1 &amp; 1 \\
+1 &amp; -1 &amp; 4
+\end{array}\right].$$</div>
+<p><strong>Step 1:</strong> Swap row 1 and row 2 ($R_1 \leftrightarrow R_2$):</p>
+<div class="math-block">$$\left[\begin{array}{cc|c}
+1 &amp; -1 &amp; 4 \\
+2 &amp; 1 &amp; 1
+\end{array}\right].$$</div>
+<p><strong>Step 2:</strong> Eliminate $x$ from the second row by performing $R_2 \leftarrow R_2 - 2R_1$:</p>
+<div class="math-block">$$\left[\begin{array}{cc|c}
+1 &amp; -1 &amp; 4 \\
+0 &amp; 3 &amp; 1 - 2(4)
+\end{array}\right] = \left[\begin{array}{cc|c}
+1 &amp; -1 &amp; 4 \\
+0 &amp; 3 &amp; -7
+\end{array}\right].$$</div>
+<p><strong>Step 3:</strong> Back-substitution:</p>
+<ul><li>From row 2: $3y = -7 \implies y = -\frac{7}{3}$.</li><li>From row 1: $x - y = 4 \implies x = 4 + y = 4 - \frac{7}{3} = \frac{5}{3}$.</li></ul>
+<p>So the solution to the second system is $(x, y) = \left(\frac{5}{3}, -\frac{7}{3}\right)$.</p>
+<h3>3. Comparing the elimination steps: what is the same and why?</h3>
+<p>Comparing the two calculations side by side:</p>
+<ol><li><strong>The sequence of row operations</strong> ($R_1 \leftrightarrow R_2$, followed by $R_2 \leftarrow R_2 - 2R_1$) is <strong>100% identical</strong> in both systems.</li><li><strong>The left-hand side of the augmented matrix</strong> transforms in the exact same way in both cases: $$\begin{pmatrix} 2 &amp; 1 \\ 1 &amp; -1 \end{pmatrix} \xrightarrow{R_1 \leftrightarrow R_2} \begin{pmatrix} 1 &amp; -1 \\ 2 &amp; 1 \end{pmatrix} \xrightarrow{R_2 \leftarrow R_2 - 2R_1} \begin{pmatrix} 1 &amp; -1 \\ 0 &amp; 3 \end{pmatrix}.$$</li></ol>
+<p><strong>Why?</strong> Because the row operations are chosen solely to eliminate entries in the coefficient matrix $A = \begin{pmatrix} 2 &amp; 1 \\ 1 &amp; -1 \end{pmatrix}$. The numbers on the right-hand side never influence which multiple of row 1 is subtracted from row 2; only the final arithmetic in the last column changes.</p>
+<h3>Quick verification</h3>
+<p>Let us check both solutions in their original equations:</p>
+<ul><li><strong>First system with $(x,y) = (2,1)$:</strong> $$2(2) + 1 = 5 \quad \text{✓}, \qquad 2 - 1 = 1 \quad \text{✓}.$$</li><li><strong>Second system with $(x,y) = \left(\frac{5}{3}, -\frac{7}{3}\right)$:</strong> $$2\left(\frac{5}{3}\right) + \left(-\frac{7}{3}\right) = \frac{10 - 7}{3} = 1 \quad \text{✓}, \qquad \frac{5}{3} - \left(-\frac{7}{3}\right) = \frac{12}{3} = 4 \quad \text{✓}.$$</li></ul>
+<h3>A concrete example</h3>
+<p>Because the operations on $A$ are identical, mathematicians often solve both systems <strong>simultaneously</strong> in a single doubly-augmented matrix $[A \mid b_1 \;\; b_2]$:</p>
+<div class="math-block">$$\left[\begin{array}{cc|cc}
+2 &amp; 1 &amp; 5 &amp; 1 \\
+1 &amp; -1 &amp; 1 &amp; 4
+\end{array}\right] \xrightarrow{R_1 \leftrightarrow R_2}
+\left[\begin{array}{cc|cc}
+1 &amp; -1 &amp; 1 &amp; 4 \\
+2 &amp; 1 &amp; 5 &amp; 1
+\end{array}\right] \xrightarrow{R_2 - 2R_1}
+\left[\begin{array}{cc|cc}
+1 &amp; -1 &amp; 1 &amp; 4 \\
+0 &amp; 3 &amp; 3 &amp; -7
+\end{array}\right].$$</div>
+<p>This avoids reducing the coefficient matrix twice and shows clearly how $A$ governs the elimination process.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Both systems share the same coefficient matrix $A = \begin{pmatrix} 2 &amp; 1 \\ 1 &amp; -1 \end{pmatrix}$. Since row operations are picked to make zeros in $A$, we do the exact same steps—swap rows 1 and 2, then subtract twice row 1 from row 2—and get the exact same upper triangular matrix $\begin{pmatrix} 1 &amp; -1 \\ 0 &amp; 3 \end{pmatrix}$ on the left. Only the right-hand column changes, which is why we can even tack both right-hand sides onto $A$ at once and reduce them together.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: From a System to a Matrix</a></li><li><a href="#exercise-7">Exercise 7: Choosing a Method Deliberately</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-9">
+<h2 class="exercise-title">Exercise 9. A System from a Sum Condition</h2>
+<h3>The question</h3>
+<p>Find numbers $x,y$ satisfying</p>
+<div class="math-block">$$x+y=10,\qquad 2x+5y=32.$$</div>
+<p>Solve the system and explain geometrically why the solution is unique.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Each linear equation in two variables $x$ and $y$ represents a <strong>straight line</strong> in the Cartesian plane $\mathbb{R}^2$: every point $(x,y)$ on that line satisfies the equation, and every point off the line does not.</p>
+<p>Therefore, solving a system of two linear equations in $x$ and $y$ means finding all points $(x,y)$ that lie on <strong>both lines simultaneously</strong>—that is, finding the <strong>intersection</strong> of the two lines. Two lines in a plane intersect in <strong>exactly one point</strong> if and only if they are <strong>not parallel</strong> (they have different slopes).</p>
+<h3>1. Solving the system by elimination</h3>
+<p>Write the system as an augmented matrix:</p>
+<div class="math-block">$$\left[\begin{array}{cc|c}
+1 &amp; 1 &amp; 10 \\
+2 &amp; 5 &amp; 32
+\end{array}\right].$$</div>
+<p>Subtract twice the first row from the second row ($R_2 \leftarrow R_2 - 2R_1$) to eliminate $x$:</p>
+<div class="math-block">$$\left[\begin{array}{cc|c}
+1 &amp; 1 &amp; 10 \\
+2 - 2(1) &amp; 5 - 2(1) &amp; 32 - 2(10)
+\end{array}\right] = \left[\begin{array}{cc|c}
+1 &amp; 1 &amp; 10 \\
+0 &amp; 3 &amp; 12
+\end{array}\right].$$</div>
+<p>Now solve from bottom to top:</p>
+<ul><li>From the second row: $$3y = 12 \implies y = 4.$$</li><li>Substitute $y = 4$ into the first equation: $$x + 4 = 10 \implies x = 6.$$</li></ul>
+<p>Thus, the solution is $(x, y) = (6, 4)$.</p>
+<h3>2. Geometric explanation of uniqueness</h3>
+<p>Let us write each equation in slope-intercept form $y = mx + b$:</p>
+<ul><li><strong>Line 1:</strong> $x + y = 10 \implies y = -x + 10$, which has slope $m_1 = -1$.</li><li><strong>Line 2:</strong> $2x + 5y = 32 \implies y = -\frac{2}{5}x + \frac{32}{5}$, which has slope $m_2 = -\frac{2}{5}$.</li></ul>
+<p>Because the slopes are different ($m_1 = -1 \neq -\frac{2}{5} = m_2$), the two lines are <strong>not parallel</strong>. In Euclidean plane geometry, two non-parallel straight lines cross each other at <strong>one and only one point</strong>—here, the point $(6,4)$. Once two straight lines cross, they move steadily apart and can never meet a second time.</p>
+<h3>Quick verification</h3>
+<p>Substitute $(x, y) = (6, 4)$ into both original conditions:</p>
+<ul><li><strong>First condition (the sum):</strong> $x + y = 6 + 4 = 10$. ✓</li><li><strong>Second condition (the weighted sum):</strong> $2x + 5y = 2(6) + 5(4) = 12 + 20 = 32$. ✓</li></ul>
+<p>Both conditions are satisfied.</p>
+<h3>A concrete example</h3>
+<p>We can also interpret this problem as a classic mixture/coin problem: Suppose you have <strong>$10$ bills in total</strong> ($x+y=10$), consisting of $\$2$ bills ($x$) and $\$5$ bills ($y$), and their **total value is $\$32$** ($2x+5y=32$).</p>
+<ul><li>If all $10$ bills were $\$2$ bills, you would have $10 \times \$2 = \$20$ (which is $\$12$ short of $\$32$).</li><li>Every time you swap one $\$2$ bill for one $\$5$ bill, the total count stays at $10$, and the total value increases by $\$5 - \$2 = \$3$.</li><li>To gain the missing $\$12$, you must make exactly $\$12 / \$3 = 4$ swaps, giving $y = 4$ five-dollar bills and $x = 10 - 4 = 6$ two-dollar bills. Notice how the calculation $3y = 32 - 20 = 12$ in our elimination step is the exact algebraic version of this swap reasoning!</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Subtracting twice the first equation ($2x+2y=20$) from the second ($2x+5y=32$) immediately cancels $x$ and leaves $3y = 12$, so $y = 4$ and then $x = 10 - 4 = 6$. Geometrically, the first equation is a line with slope $-1$ and the second is a line with slope $-2/5$. Because their slopes are different, the lines aren't parallel, so they must cross at a single unique point $(6,4)$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-3">Exercise 3: Inconsistent System</a></li><li><a href="#exercise-15">Exercise 15: Classifying Three Systems</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-10">
+<h2 class="exercise-title">Exercise 10. A Polynomial Through Three Points</h2>
+<h3>The question</h3>
+<p>Find a polynomial $p(x)=ax^2+bx+c$ whose graph passes through $(0,1)$, $(1,3)$, and $(2,9)$. Reduce the problem to a system of equations and check the result by substituting all three points.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>At first glance, $p(x) = ax^2 + bx + c$ looks non-linear because of the $x^2$ term. However, here <strong>$x$ is not the unknown</strong>—we are <em>given</em> the values of $x$ at three points ($x = 0, 1, 2$), and <strong>the unknowns are the coefficients $a, b, c$</strong>!</p>
+<p>When we plug a known point $(x_0, y_0)$ into $p(x_0) = y_0$, the numbers $x_0^2$ and $x_0$ become plain numerical coefficients in front of $a, b, c$. Thus, three points give a system of three <strong>linear</strong> equations in the three unknowns $(a, b, c)$.</p>
+<h3>1. Reducing the problem to a linear system in $a, b, c$</h3>
+<p>Saying that the graph of $p(x) = ax^2 + bx + c$ passes through $(x_0, y_0)$ means $p(x_0) = y_0$. Substituting each of the three given points produces one linear equation in $a, b, c$:</p>
+<ol><li><strong>Point $(0,1)$:</strong> $p(0) = 1 \implies a(0)^2 + b(0) + c = 1 \implies c = 1$.</li><li><strong>Point $(1,3)$:</strong> $p(1) = 3 \implies a(1)^2 + b(1) + c = 3 \implies a + b + c = 3$.</li><li><strong>Point $(2,9)$:</strong> $p(2) = 9 \implies a(2)^2 + b(2) + c = 9 \implies 4a + 2b + c = 9$.</li></ol>
+<p>Putting these together gives the $3\times 3$ linear system:</p>
+<div class="math-block">$$\begin{cases}
+c = 1,\\
+a + b + c = 3,\\
+4a + 2b + c = 9.
+\end{cases}$$</div>
+<h3>2. Solving the system for $a, b, c$</h3>
+<p>Since the first equation already gives $c = 1$ directly (thanks to $x=0$), we substitute $c = 1$ into the remaining two equations:</p>
+<div class="math-block">$$\begin{cases}
+a + b + 1 = 3,\\
+4a + 2b + 1 = 9
+\end{cases} \implies \begin{cases}
+a + b = 2,\\
+4a + 2b = 8.
+\end{cases}$$</div>
+<p>Divide the second equation by $2$ (or subtract twice the first equation from the second, $R_2 \leftarrow R_2 - 2R_1$):</p>
+<div class="math-block">$$(4a + 2b) - 2(a + b) = 8 - 2(2) \implies 2a = 4 \implies a = 2.$$</div>
+<p>Now substitute $a = 2$ into $a + b = 2$:</p>
+<div class="math-block">$$2 + b = 2 \implies b = 0.$$</div>
+<h3>3. Writing the polynomial</h3>
+<p>Substituting the solved coefficients $a = 2$, $b = 0$, and $c = 1$ back into $p(x) = ax^2 + bx + c$, we obtain the unique quadratic polynomial:</p>
+<div class="math-block">$$p(x) = 2x^2 + 1.$$</div>
+<h3>Quick verification</h3>
+<p>Let us evaluate $p(x) = 2x^2 + 1$ at all three given $x$-coordinates to verify that the graph passes through each point:</p>
+<ul><li><strong>At $x = 0$:</strong> $p(0) = 2(0)^2 + 1 = 0 + 1 = 1 \implies (0,1)$. ✓</li><li><strong>At $x = 1$:</strong> $p(1) = 2(1)^2 + 1 = 2 + 1 = 3 \implies (1,3)$. ✓</li><li><strong>At $x = 2$:</strong> $p(2) = 2(2)^2 + 1 = 2(4) + 1 = 9 \implies (2,9)$. ✓</li></ul>
+<p>All three points lie on the parabola $y = 2x^2 + 1$.</p>
+<h3>A concrete example</h3>
+<p>In matrix form, our system for the unknown coefficient vector $(a, b, c)^T$ is</p>
+<div class="math-block">$$\begin{pmatrix}
+0^2 &amp; 0 &amp; 1 \\
+1^2 &amp; 1 &amp; 1 \\
+2^2 &amp; 2 &amp; 1
+\end{pmatrix}\begin{pmatrix} a \\ b \\ c \end{pmatrix} = \begin{pmatrix} 1 \\ 3 \\ 9 \end{pmatrix}
+\iff
+\begin{pmatrix}
+0 &amp; 0 &amp; 1 \\
+1 &amp; 1 &amp; 1 \\
+4 &amp; 2 &amp; 1
+\end{pmatrix}\begin{pmatrix} a \\ b \\ c \end{pmatrix} = \begin{pmatrix} 1 \\ 3 \\ 9 \end{pmatrix}.$$</div>
+<p>This coefficient matrix is called a <strong>Vandermonde matrix</strong>. As long as the three $x$-coordinates $x_1, x_2, x_3$ are distinct, this matrix is always invertible, guaranteeing that <strong>any</strong> three points with distinct $x$-coordinates determine a unique polynomial of degree at most $2$. For our polynomial $p(x) = 2x^2 + 1$, we can now predict the height at any new point, such as $x = 3$, where $p(3) = 2(3)^2 + 1 = 19$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Even though the curve $p(x) = ax^2 + bx + c$ has an $x^2$ in it, the unknowns we are solving for are the coefficients $a, b,$ and $c$, which only appear to the first power. Plugging in $x=0, 1, 2$ turns each point into a simple linear equation in $a, b, c$. The point $(0,1)$ immediately gives $c=1$, which simplifies the other two equations to $a+b=2$ and $4a+2b=8$. Elimination gives $a=2$ and $b=0$, so the parabola is $p(x) = 2x^2 + 1$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: From a System to a Matrix</a></li><li><a href="#exercise-2">Exercise 2: Gaussian Elimination — One Solution</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-11">
+<h2 class="exercise-title">Exercise 11. A Parameter in a System of Three Equations</h2>
+<h3>The question</h3>
+<p>Analyze the number of solutions depending on $t$:</p>
+<div class="math-block">$$\begin{cases}x+y+z=1,\\x+ty+z=2,\\x+y+tz=3.\end{cases}$$</div>
+<p>Use elimination and separately analyze the parameter values for which a standard calculation step ceases to be valid.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>When we apply Gaussian elimination to a matrix containing a parameter $t$, the <strong>row addition steps</strong> ($R_i \leftarrow R_i + cR_j$) are valid for <strong>every</strong> real value of $t$. However, when we reach row echelon form and want to divide by a pivot entry containing $t$, that division <strong>ceases to be valid if the pivot equals zero</strong>!</p>
+<p>Therefore, the cleanest strategy is:</p>
+<ol><li>Use only row subtractions (which never divide by expressions in $t$) to bring the matrix into upper triangular form.</li><li>Inspect the diagonal pivots: any value of $t$ that makes a pivot zero must be analyzed separately.</li></ol>
+<h3>1. Elimination to upper triangular form</h3>
+<p>Write the augmented matrix of the system:</p>
+<div class="math-block">$$\left[\begin{array}{ccc|c}
+1 &amp; 1 &amp; 1 &amp; 1 \\
+1 &amp; t &amp; 1 &amp; 2 \\
+1 &amp; 1 &amp; t &amp; 3
+\end{array}\right].$$</div>
+<p>Subtract the first row from the second row ($R_2 \leftarrow R_2 - R_1$) and from the third row ($R_3 \leftarrow R_3 - R_1$) to eliminate $x$ from rows 2 and 3. Note that this step is valid for <strong>all</strong> $t \in \mathbb{R}$:</p>
+<div class="math-block">$$\left[\begin{array}{ccc|c}
+1 &amp; 1 &amp; 1 &amp; 1 \\
+1 - 1 &amp; t - 1 &amp; 1 - 1 &amp; 2 - 1 \\
+1 - 1 &amp; 1 - 1 &amp; t - 1 &amp; 3 - 1
+\end{array}\right] = \left[\begin{array}{ccc|c}
+1 &amp; 1 &amp; 1 &amp; 1 \\
+0 &amp; t - 1 &amp; 0 &amp; 1 \\
+0 &amp; 0 &amp; t - 1 &amp; 2
+\end{array}\right].$$</div>
+<p>Remarkably, the matrix is <strong>already in upper triangular (row echelon) form</strong>! The three diagonal entries are $1$, $t-1$, and $t-1$, corresponding to the decoupled equations:</p>
+<div class="math-block">$$\begin{cases}
+x + y + z = 1,\\
+(t - 1)y = 1,\\
+(t - 1)z = 2.
+\end{cases}$$</div>
+<h3>2. Identifying when the standard step ceases to be valid</h3>
+<p>To solve for $y$ and $z$ from the second and third equations, the standard back-substitution step divides by $t - 1$:</p>
+<div class="math-block">$$y = \frac{1}{t-1}, \qquad z = \frac{2}{t-1}.$$</div>
+<p>Dividing by $t - 1$ <strong>ceases to be valid when $t - 1 = 0$, that is, when $t = 1$</strong>. Thus, we split our analysis into two cases: $t \neq 1$ and $t = 1$.</p>
+<h3>3. Case-by-case classification of the number of solutions</h3>
+<h4>Case 1: $t \neq 1$</h4>
+<p>When $t \neq 1$, the factor $t - 1$ is non-zero, so all three columns have non-zero pivots ($1$, $t-1$, and $t-1$). We can legally divide by $t-1$:</p>
+<ul><li>From row 3: $z = \dfrac{2}{t-1}$.</li><li>From row 2: $y = \dfrac{1}{t-1}$.</li><li>From row 1: $x = 1 - y - z = 1 - \dfrac{1}{t-1} - \dfrac{2}{t-1} = 1 - \dfrac{3}{t-1} = \dfrac{t - 4}{t - 1}$.</li></ul>
+<p>Thus, for every <strong>$t \neq 1$</strong>, the system has <strong>exactly one solution</strong>:</p>
+<div class="math-block">$$(x, y, z) = \left(\frac{t-4}{t-1},\; \frac{1}{t-1},\; \frac{2}{t-1}\right).$$</div>
+<h4>Case 2: $t = 1$</h4>
+<p>Substitute $t = 1$ directly into the reduced augmented matrix:</p>
+<div class="math-block">$$\left[\begin{array}{ccc|c}
+1 &amp; 1 &amp; 1 &amp; 1 \\
+0 &amp; 0 &amp; 0 &amp; 1 \\
+0 &amp; 0 &amp; 0 &amp; 2
+\end{array}\right].$$</div>
+<p>Both the second row ($0 = 1$) and the third row ($0 = 2$) are contradictions! (In terms of the original system, when $t = 1$, the three equations say $x+y+z=1$, $x+y+z=2$, and $x+y+z=3$ simultaneously.) Thus, for <strong>$t = 1$</strong>, the system is inconsistent and has <strong>no solution</strong>.</p>
+<p><em>(Note: There is <strong>no value of $t$</strong> for which this system has infinitely many solutions.)</em></p>
+<h3>Quick verification</h3>
+<p>Let us verify the general unique solution for $t \neq 1$ by substituting $x = \frac{t-4}{t-1}$, $y = \frac{1}{t-1}$, $z = \frac{2}{t-1}$ into the three original equations:</p>
+<ul><li><strong>Equation 1:</strong> $x + y + z = \frac{(t-4) + 1 + 2}{t-1} = \frac{t-1}{t-1} = 1$. ✓</li><li><strong>Equation 2:</strong> $x + ty + z = \frac{(t-4) + t(1) + 2}{t-1} = \frac{2t-2}{t-1} = 2$. ✓</li><li><strong>Equation 3:</strong> $x + y + tz = \frac{(t-4) + 1 + 2t}{t-1} = \frac{3t-3}{t-1} = 3$. ✓</li></ul>
+<h3>A concrete example</h3>
+<p>Let us pick a concrete value with $t \neq 1$, say <strong>$t = 2$</strong>:</p>
+<ul><li>Our formula gives $(x, y, z) = \left(\frac{2-4}{2-1}, \frac{1}{2-1}, \frac{2}{2-1}\right) = (-2, 1, 2)$.</li><li>Checking in the system for $t = 2$:</li><li>$-2 + 1 + 2 = 1$ ✓</li><li>$-2 + 2(1) + 2 = 2$ ✓</li><li>$-2 + 1 + 2(2) = 3$ ✓</li></ul>
+<p>On the other hand, if $t = 1$, the three planes $x+y+z=1$, $x+y+z=2$, and $x+y+z=3$ are three parallel planes at different heights, which never intersect.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Subtracting the first equation from the second and third immediately isolates the parameter: we get $(t-1)y = 1$ and $(t-1)z = 2$. Notice we didn't divide by anything yet, so this is valid for every $t$. Now, to solve for $y$ and $z$, we want to divide by $t-1$, which is only forbidden when $t = 1$. So if $t \neq 1$, we can divide and get a single unique solution. If $t = 1$, those equations become $0 = 1$ and $0 = 2$, which is a contradiction, giving no solution.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-6">Exercise 6: A System with a Parameter — Which Cases Actually Occur?</a></li><li><a href="#exercise-15">Exercise 15: Classifying Three Systems</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-12">
+<h2 class="exercise-title">Exercise 12. Homogeneous System</h2>
+<h3>The question</h3>
+<p>Solve</p>
+<div class="math-block">$$\begin{cases}x+2y-z=0,\\2x+4y-2z=0,\\x-y+2z=0.\end{cases}$$</div>
+<p>Give all solutions in parametric form and explain why $(0,0,0)$ always satisfies a homogeneous system.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>A linear system is called <strong>homogeneous</strong> when every constant term on the right-hand side is zero ($Ax = \mathbf{0}$).</p>
+<p>Unlike general systems $Ax = b$, a homogeneous system <strong>can never be inconsistent</strong>:</p>
+<ul><li>Every homogeneous system has at least the <strong>trivial solution</strong> $(x,y,z) = (0,0,0)$.</li><li>Therefore, there are only two possibilities for a homogeneous system: either $(0,0,0)$ is the <strong>only</strong> solution (when every column has a pivot), or there are <strong>infinitely many solutions</strong> (when at least one variable is free).</li></ul>
+<h3>1. Why $(0,0,0)$ always satisfies any homogeneous system</h3>
+<p>In any homogeneous equation</p>
+<div class="math-block">$$a_1 x_1 + a_2 x_2 + \dots + a_n x_n = 0,$$</div>
+<p>every term on the left-hand side is a coefficient multiplied by an unknown $x_i$. If we substitute $x_1 = 0, x_2 = 0, \dots, x_n = 0$, each product becomes $a_i \cdot 0 = 0$, and the sum of zeros is zero:</p>
+<div class="math-block">$$a_1(0) + a_2(0) + \dots + a_n(0) = 0 + 0 + \dots + 0 = 0.$$</div>
+<p>In matrix terms, $A\mathbf{0} = \mathbf{0}$ for every matrix $A$, so the zero vector $\mathbf{0} = (0,0,0)^T$ is guaranteed to satisfy $Ax = \mathbf{0}$ regardless of what the coefficients in $A$ are. Geometrically, every plane of the form $ax + by + cz = 0$ passes through the origin $(0,0,0)$.</p>
+<h3>2. Gaussian elimination on the homogeneous system</h3>
+<p>Write the augmented matrix:</p>
+<div class="math-block">$$\left[\begin{array}{ccc|c}
+1 &amp; 2 &amp; -1 &amp; 0 \\
+2 &amp; 4 &amp; -2 &amp; 0 \\
+1 &amp; -1 &amp; 2 &amp; 0
+\end{array}\right].$$</div>
+<p>Eliminate $x$ below the first pivot by performing $R_2 \leftarrow R_2 - 2R_1$ and $R_3 \leftarrow R_3 - R_1$:</p>
+<div class="math-block">$$\left[\begin{array}{ccc|c}
+1 &amp; 2 &amp; -1 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; -3 &amp; 3 &amp; 0
+\end{array}\right].$$</div>
+<p>Swap rows 2 and 3 ($R_2 \leftrightarrow R_3$), and divide the new second row by $-3$ ($R_2 \leftarrow -\frac{1}{3}R_2$):</p>
+<div class="math-block">$$\left[\begin{array}{ccc|c}
+1 &amp; 2 &amp; -1 &amp; 0 \\
+0 &amp; 1 &amp; -1 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 0
+\end{array}\right].$$</div>
+<h3>3. Finding all solutions in parametric form</h3>
+<p>The row echelon matrix has pivots in column 1 ($x$) and column 2 ($y$), while <strong>column 3 ($z$) has no pivot</strong>. Thus, $z$ is a free variable.</p>
+<p>Translate the non-zero rows back into equations:</p>
+<div class="math-block">$$\begin{cases}
+x + 2y - z = 0,\\
+y - z = 0.
+\end{cases}$$</div>
+<p>Set the free variable $z = t \in \mathbb{R}$:</p>
+<ul><li>From the second equation: $$y = z = t.$$</li><li>Substitute $y = t$ and $z = t$ into the first equation: $$x = -2y + z = -2t + t = -t.$$</li></ul>
+<p>Therefore, all solutions in parametric form are given by:</p>
+<div class="math-block">$$\begin{cases}
+x = -t,\\
+y = t,\\
+z = t,
+\end{cases} \quad t \in \mathbb{R},$$</div>
+<p>or in vector form as a line through the origin:</p>
+<div class="math-block">$$\begin{pmatrix} x \\ y \\ z \end{pmatrix} = t\begin{pmatrix} -1 \\ 1 \\ 1 \end{pmatrix}, \quad t \in \mathbb{R}.$$</div>
+<h3>Quick verification</h3>
+<p>Substitute $(x, y, z) = (-t, t, t)$ into all three original equations:</p>
+<ul><li><strong>Equation 1:</strong> $(-t) + 2(t) - (t) = (-1 + 2 - 1)t = 0$. ✓</li><li><strong>Equation 2:</strong> $2(-t) + 4(t) - 2(t) = (-2 + 4 - 2)t = 0$. ✓</li><li><strong>Equation 3:</strong> $(-t) - (t) + 2(t) = (-1 - 1 + 2)t = 0$. ✓</li></ul>
+<p>Every equation reduces to $0 = 0$ for all $t \in \mathbb{R}$.</p>
+<h3>A concrete example</h3>
+<p>Let us look at two specific parameter values on our solution line $(x,y,z) = (-t, t, t)$:</p>
+<ul><li>Setting <strong>$t = 0$</strong> gives the trivial solution $(0, 0, 0)$—the origin through which all three planes pass.</li><li>Setting <strong>$t = 1$</strong> gives a non-trivial solution $(-1, 1, 1)$. Checking $(-1, 1, 1)$ in the original system: $$-1 + 2(1) - 1 = 0, \qquad 2(-1) + 4(1) - 2(1) = 0, \qquad -1 - 1 + 2(1) = 0.$$</li><li>Because the system is homogeneous, any scalar multiple of $(-1, 1, 1)$—such as $(-5, 5, 5)$ or $(3, -3, -3)$—is automatically another solution!</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>A homogeneous system has $0$ on the right-hand side of every equation, so plugging in $(0,0,0)$ makes every left-hand side a sum of zeros, which always equals $0$. That means a homogeneous system is never inconsistent—the only question is whether there are <em>other</em> solutions besides $(0,0,0)$. Here, the second equation is twice the first, so elimination leaves a zero row and makes $z = t$ a free variable. Back-substituting gives $y = t$ and $x = -t$, a whole line of solutions passing through the origin.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-4">Exercise 4: Infinitely Many Solutions</a></li><li><a href="#exercise-5">Exercise 5: Row Echelon Form and Number of Solutions</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-13">
+<h2 class="exercise-title">Exercise 13. Does Every Equation Add New Information?</h2>
+<h3>The question</h3>
+<p>Consider the system</p>
+<div class="math-block">$$x_1+x_2=10,\qquad x_2+x_3=8,\qquad x_1-x_3=2.$$</div>
+<p>Solve it and check whether all three equations are independently necessary to describe the solution set. If one follows from the others, show this by calculation.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Having three equations in three unknowns does not automatically mean we have three independent pieces of information. An equation is <strong>redundant</strong> if it is a linear combination of the other equations in the system—meaning it is automatically satisfied whenever the other equations hold.</p>
+<p>During Gaussian elimination, a redundant equation reveals itself by collapsing into the identity $0 = 0$ (an all-zero row).</p>
+<h3>1. Showing directly that one equation follows from the others</h3>
+<p>Label the three equations:</p>
+<ul><li>$(E_1): \quad x_1 + x_2 = 10$</li><li>$(E_2): \quad x_2 + x_3 = 8$</li><li>$(E_3): \quad x_1 - x_3 = 2$</li></ul>
+<p>Subtract the second equation $(E_2)$ from the first equation $(E_1)$:</p>
+<div class="math-block">$$(E_1) - (E_2): \quad (x_1 + x_2) - (x_2 + x_3) = 10 - 8 \implies x_1 - x_3 = 2.$$</div>
+<p>This is <strong>precisely the third equation $(E_3)$</strong>! Equivalently, $(E_1) = (E_2) + (E_3)$. Therefore, the three equations are <strong>not independently necessary</strong>: any one of the three equations is a direct consequence of the other two and adds no new restriction on $(x_1, x_2, x_3)$.</p>
+<h3>2. Solving the system via Gaussian elimination</h3>
+<p>Let us also see how this redundancy appears in the augmented matrix:</p>
+<div class="math-block">$$\left[\begin{array}{ccc|c}
+1 &amp; 1 &amp; 0 &amp; 10 \\
+0 &amp; 1 &amp; 1 &amp; 8 \\
+1 &amp; 0 &amp; -1 &amp; 2
+\end{array}\right].$$</div>
+<p><strong>Step 1:</strong> Eliminate $x_1$ from row 3 by performing $R_3 \leftarrow R_3 - R_1$:</p>
+<div class="math-block">$$\left[\begin{array}{ccc|c}
+1 &amp; 1 &amp; 0 &amp; 10 \\
+0 &amp; 1 &amp; 1 &amp; 8 \\
+0 &amp; -1 &amp; -1 &amp; -8
+\end{array}\right].$$</div>
+<p><strong>Step 2:</strong> Eliminate $x_2$ from row 3 by performing $R_3 \leftarrow R_3 + R_2$:</p>
+<div class="math-block">$$\left[\begin{array}{ccc|c}
+1 &amp; 1 &amp; 0 &amp; 10 \\
+0 &amp; 1 &amp; 1 &amp; 8 \\
+0 &amp; 0 &amp; 0 &amp; 0
+\end{array}\right].$$</div>
+<p>Row 3 vanishes completely ($R_3 - R_1 + R_2 = 0$), confirming that the third equation is redundant.</p>
+<h3>3. Writing the parametric solution set</h3>
+<p>In the row echelon matrix, column 1 ($x_1$) and column 2 ($x_2$) have pivots, while <strong>column 3 ($x_3$) has no pivot</strong>. Thus, $x_3$ is a free variable.</p>
+<p>Set $x_3 = t \in \mathbb{R}$ and solve the two independent equations $x_1 + x_2 = 10$ and $x_2 + x_3 = 8$:</p>
+<ul><li>From the second row: $$x_2 = 8 - x_3 = 8 - t.$$</li><li>Substitute $x_2 = 8 - t$ into the first row: $$x_1 = 10 - x_2 = 10 - (8 - t) = 2 + t.$$</li></ul>
+<p>Thus, the complete solution set is:</p>
+<div class="math-block">$$\begin{cases}
+x_1 = 2 + t,\\
+x_2 = 8 - t,\\
+x_3 = t,
+\end{cases} \quad t \in \mathbb{R}.$$</div>
+<p>Because the third equation follows from the first two, the first two equations alone ($x_1 + x_2 = 10$ and $x_2 + x_3 = 8$) describe this exact same solution set.</p>
+<h3>Quick verification</h3>
+<p>Substitute $(x_1, x_2, x_3) = (2+t, 8-t, t)$ into all three original equations:</p>
+<ul><li><strong>Equation 1:</strong> $x_1 + x_2 = (2 + t) + (8 - t) = 10$. ✓</li><li><strong>Equation 2:</strong> $x_2 + x_3 = (8 - t) + t = 8$. ✓</li><li><strong>Equation 3:</strong> $x_1 - x_3 = (2 + t) - t = 2$. ✓</li></ul>
+<p>Notice that $(2+t, 8-t, t)$ was derived using <strong>only</strong> the first two equations, yet it automatically satisfies the third equation for every $t \in \mathbb{R}$.</p>
+<h3>A concrete example</h3>
+<p>Imagine three people—Alice ($x_1$), Bob ($x_2$), and Clara ($x_3$)—comparing how much money they have:</p>
+<ol><li>Alice and Bob together have $\$10$ ($x_1 + x_2 = 10$).</li><li>Bob and Clara together have $\$8$ ($x_2 + x_3 = 8$).</li><li>Alice has $\$2$ more than Clara ($x_1 - x_3 = 2$).</li></ol>
+<p>Statement 3 does not help you figure out how much money Clara has! Since Bob is the common partner in Statements 1 and 2, the $\$2$ difference between $(x_1 + x_2 = 10)$ and $(x_2 + x_3 = 8)$ *already* forces Alice to have $\$2$ more than Clara, whether Clara has $\$0$ ($t=0$, giving Alice $\$2$, Bob $\$8$, Clara $\$0$) or Clara has $\$3$ ($t=3$, giving Alice $\$5$, Bob $\$5$, Clara $\$3$).</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>If you know $x_1 + x_2 = 10$ and $x_2 + x_3 = 8$, and you subtract the second equation from the first, $x_2$ cancels out and you immediately get $x_1 - x_3 = 2$. That means the third equation is already baked into the first two—it adds zero new information! In Gaussian elimination, that third row turns into $[0\;\;0\;\;0\mid 0]$, leaving $x_3 = t$ free and giving the infinite family of solutions $(2+t, 8-t, t)$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-4">Exercise 4: Infinitely Many Solutions</a></li><li><a href="#exercise-14">Exercise 14: A Small Change in the Right-Hand Side</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-14">
+<h2 class="exercise-title">Exercise 14. A Small Change in the Right-Hand Side</h2>
+<h3>The question</h3>
+<p>Compare the systems</p>
+<div class="math-block">$$\begin{cases}x+y=2,\\2x-y=1,\\3x=3\end{cases} \quad \text{and} \quad \begin{cases}x+y=2,\\2x-y=1,\\3x=3.1.\end{cases}$$</div>
+<p>Check the consistency of each system and explain why a small change in one number can change the type of the system.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Here we have <strong>three equations in only two unknowns</strong> ($x$ and $y$)—an <strong>overdetermined</strong> system.</p>
+<ul><li>Usually, two independent equations are already enough to lock $(x,y)$ down to a single point in the plane.</li><li>Once $(x,y)$ is locked down by the first two equations, the third equation is a <strong>compatibility test</strong>: either the locked-down point happens to satisfy the third equation (making the system <strong>consistent</strong> with a unique solution), or it misses by even a tiny amount (making the system <strong>inconsistent</strong> with no solution).</li></ul>
+<h3>1. Checking the consistency of the first system</h3>
+<p>Look at the first two equations of both systems:</p>
+<div class="math-block">$$\begin{cases}
+x + y = 2,\\
+2x - y = 1.
+\end{cases}$$</div>
+<p>Adding the first equation and the second equation eliminates $y$:</p>
+<div class="math-block">$$(x + y) + (2x - y) = 2 + 1 \implies 3x = 3.$$</div>
+<p>In the <strong>first system</strong>, the third equation is literally $3x = 3$, which matches the sum of the first two equations! Let us also write the full elimination on the augmented matrix of the first system:</p>
+<div class="math-block">$$\left[\begin{array}{cc|c}
+1 &amp; 1 &amp; 2 \\
+2 &amp; -1 &amp; 1 \\
+3 &amp; 0 &amp; 3
+\end{array}\right]
+\xrightarrow{\substack{R_2 \leftarrow R_2 - 2R_1 \\ R_3 \leftarrow R_3 - 3R_1}}
+\left[\begin{array}{cc|c}
+1 &amp; 1 &amp; 2 \\
+0 &amp; -3 &amp; -3 \\
+0 &amp; -3 &amp; -3
+\end{array}\right]
+\xrightarrow{R_3 \leftarrow R_3 - R_2}
+\left[\begin{array}{cc|c}
+1 &amp; 1 &amp; 2 \\
+0 &amp; -3 &amp; -3 \\
+0 &amp; 0 &amp; 0
+\end{array}\right].$$</div>
+<p>Because the bottom row is $[0\;\;0\mid 0]$ ($0 = 0$), the <strong>first system is consistent</strong> and has the unique solution:</p>
+<ul><li>From row 2: $-3y = -3 \implies y = 1$.</li><li>From row 1: $x + 1 = 2 \implies x = 1$.</li></ul>
+<p>So $(x, y) = (1, 1)$ satisfies all three equations of the first system.</p>
+<h3>2. Checking the consistency of the second system</h3>
+<p>Now perform the exact same elimination steps on the <strong>second system</strong>, where $3$ is replaced by $3.1$:</p>
+<div class="math-block">$$\left[\begin{array}{cc|c}
+1 &amp; 1 &amp; 2 \\
+2 &amp; -1 &amp; 1 \\
+3 &amp; 0 &amp; 3.1
+\end{array}\right]
+\xrightarrow{\substack{R_2 \leftarrow R_2 - 2R_1 \\ R_3 \leftarrow R_3 - 3R_1}}
+\left[\begin{array}{cc|c}
+1 &amp; 1 &amp; 2 \\
+0 &amp; -3 &amp; -3 \\
+0 &amp; -3 &amp; -2.9
+\end{array}\right]
+\xrightarrow{R_3 \leftarrow R_3 - R_2}
+\left[\begin{array}{cc|c}
+1 &amp; 1 &amp; 2 \\
+0 &amp; -3 &amp; -3 \\
+0 &amp; 0 &amp; 0.1
+\end{array}\right].$$</div>
+<p>The bottom row is $[0\;\;0\mid 0.1]$, which translates to the contradiction</p>
+<div class="math-block">$$0x + 0y = 0.1 \iff 0 = 0.1.$$</div>
+<p>Therefore, the <strong>second system is inconsistent</strong> and has <strong>no solution</strong>.</p>
+<h3>3. Why a small change in one number changes the type of the system</h3>
+<ol><li><strong>Algebraic reason:</strong> The left-hand side of the third equation is an exact linear combination of the first two left-hand sides: $$3x = (x + y) + (2x - y).$$ Therefore, for <em>any</em> solution of the first two equations ($x+y=2$ and $2x-y=1$), the expression $3x$ is <strong>forced</strong> to equal $2 + 1 = 3$. Changing the right-hand side of the third equation from $3$ to $3.1$ (or to $3 + \varepsilon$ for any $\varepsilon \neq 0$, no matter how tiny) creates the impossible demand $3 = 3.1$.</li><li><strong>Geometric reason:</strong> Each equation describes a line in the plane $\mathbb{R}^2$. The first two lines $x+y=2$ and $2x-y=1$ cross at the single point $(1,1)$. For the three-line system to have a solution, the third line must pass through that exact intersection point $(1,1)$. In the first system, the vertical line $3x = 3$ ($x = 1$) passes right through $(1,1)$; in the second system, the vertical line $3x = 3.1$ ($x = 1.033\dots$) shifts slightly to the right and misses $(1,1)$, leaving no point common to all three lines.</li></ol>
+<h3>Quick verification</h3>
+<p>Since the first two equations uniquely force $(x,y) = (1,1)$, we can simply plug $(1,1)$ into the third equation of each system:</p>
+<ul><li><strong>First system:</strong> $3x = 3(1) = 3 = 3$. ✓ (Consistent)</li><li><strong>Second system:</strong> $3x = 3(1) = 3 \neq 3.1$. ✓ (Inconsistent by $0.1$)</li></ul>
+<h3>A concrete example</h3>
+<p>This sensitivity occurs constantly in real-world scientific measurements: Suppose $x = 1\text{ kg}$ and $y = 1\text{ kg}$ are the true masses of two weights.</p>
+<ul><li>Measurement 1 weighs $x + y = 2\text{ kg}$.</li><li>Measurement 2 weighs $2x - y = 1\text{ kg}$.</li><li>Measurement 3 weighs three copies of $x$, and due to a tiny sensor rounding error of $0.1\text{ kg}$, records $3x = 3.1\text{ kg}$.</li></ul>
+<p>Even though the measurement error is only $0.1\text{ kg}$, the exact algebraic system with $3.1$ becomes strictly inconsistent because two exact measurements already determined $x=1$ with zero degrees of freedom left over.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Notice that adding the first two equations $(x+y=2)$ and $(2x-y=1)$ gives $3x = 3$. That means the first two equations already lock the solution at $(x,y)=(1,1)$ and force $3x$ to be $3$. In the first system, the third equation agrees ($3x=3$), so all three lines meet at $(1,1)$. In the second system, changing $3$ to $3.1$ shifts the third line slightly to $x = 3.1/3$, so it misses the intersection point $(1,1)$ of the first two lines and the system has no solution.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-3">Exercise 3: Inconsistent System</a></li><li><a href="#exercise-13">Exercise 13: Does Every Equation Add New Information?</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-15">
+<h2 class="exercise-title">Exercise 15. Classifying Three Systems</h2>
+<h3>The question</h3>
+<p>For each of the following systems, perform only as much elimination as necessary to recognize its type:</p>
+<ol><li>$\begin{cases}x+y=2,\\x-y=0,\end{cases}$</li><li>$\begin{cases}x+y=2,\\2x+2y=4,\end{cases}$</li><li>$\begin{cases}x+y=2,\\2x+2y=5.\end{cases}$</li></ol>
+<p>For each, justify the classification: one solution, infinitely many solutions, or no solution.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>For a $2\times 2$ linear system, <strong>one single elimination step</strong> (eliminating $x$ from the second equation) brings the augmented matrix into row echelon form:</p>
+<div class="math-block">$$\left[\begin{array}{cc|c}
+1 &amp; 1 &amp; 2 \\
+0 &amp; b &amp; c
+\end{array}\right].$$</div>
+<p>We do not even need to back-substitute to classify the system! Everything is decided by the second row $[0\;\;b\mid c]$:</p>
+<ol><li><strong>$b \neq 0$:</strong> The second column also gets a pivot $\implies$ <strong>2 pivots for 2 variables (no free variables)</strong> $\implies$ <strong>exactly one solution</strong>.</li><li><strong>$b = 0$ and $c = 0$:</strong> The second row is $0 = 0$ $\implies$ <strong>1 pivot for 2 variables (1 free variable)</strong> $\implies$ <strong>infinitely many solutions</strong>.</li><li><strong>$b = 0$ and $c \neq 0$:</strong> The second row is the contradiction $0 = c$ $\implies$ <strong>inconsistent</strong> $\implies$ <strong>no solution</strong>.</li></ol>
+<h3>1. System 1: $\begin{cases}x+y=2,\\x-y=0\end{cases}$</h3>
+<p>Write the augmented matrix and subtract row 1 from row 2 ($R_2 \leftarrow R_2 - R_1$):</p>
+<div class="math-block">$$\left[\begin{array}{cc|c}
+1 &amp; 1 &amp; 2 \\
+1 &amp; -1 &amp; 0
+\end{array}\right] \xrightarrow{R_2 \leftarrow R_2 - R_1}
+\left[\begin{array}{cc|c}
+1 &amp; 1 &amp; 2 \\
+0 &amp; -2 &amp; -2
+\end{array}\right].$$</div>
+<ul><li><strong>Classification:</strong> <strong>Exactly one solution.</strong></li><li><strong>Justification:</strong> After eliminating $x$ from the second row, the coefficient of $y$ is $-2 \neq 0$. Thus, both columns have non-zero pivots ($1$ and $-2$), there is no contradiction row, and there are $2 - 2 = 0$ free variables.</li></ul>
+<h3>2. System 2: $\begin{cases}x+y=2,\\2x+2y=4\end{cases}$</h3>
+<p>Write the augmented matrix and subtract twice row 1 from row 2 ($R_2 \leftarrow R_2 - 2R_1$):</p>
+<div class="math-block">$$\left[\begin{array}{cc|c}
+1 &amp; 1 &amp; 2 \\
+2 &amp; 2 &amp; 4
+\end{array}\right] \xrightarrow{R_2 \leftarrow R_2 - 2R_1}
+\left[\begin{array}{cc|c}
+1 &amp; 1 &amp; 2 \\
+0 &amp; 0 &amp; 0
+\end{array}\right].$$</div>
+<ul><li><strong>Classification:</strong> <strong>Infinitely many solutions.</strong></li><li><strong>Justification:</strong> Elimination produces the zero row $[0\;\;0\mid 0]$ ($0 = 0$). There is no contradiction, so the system is consistent, and only column 1 ($x$) has a pivot while column 2 ($y$) has no pivot. Since $y$ is a free variable that can take any real value, there are infinitely many solutions.</li></ul>
+<h3>3. System 3: $\begin{cases}x+y=2,\\2x+2y=5\end{cases}$</h3>
+<p>Write the augmented matrix and subtract twice row 1 from row 2 ($R_2 \leftarrow R_2 - 2R_1$):</p>
+<div class="math-block">$$\left[\begin{array}{cc|c}
+1 &amp; 1 &amp; 2 \\
+2 &amp; 2 &amp; 5
+\end{array}\right] \xrightarrow{R_2 \leftarrow R_2 - 2R_1}
+\left[\begin{array}{cc|c}
+1 &amp; 1 &amp; 2 \\
+0 &amp; 0 &amp; 1
+\end{array}\right].$$</div>
+<ul><li><strong>Classification:</strong> <strong>No solution (inconsistent).</strong></li><li><strong>Justification:</strong> Elimination produces the row $[0\;\;0\mid 1]$, which represents the contradictory equation $0x + 0y = 1$ ($0 = 1$). Because no pair $(x,y)$ can satisfy $0 = 1$, the system has no solution.</li></ul>
+<h3>Quick verification</h3>
+<p>Let us verify the three classifications directly from the equations:</p>
+<ul><li><strong>System 1:</strong> From $-2y = -2$ we get $y = 1$ and $x = 1$, which is the unique point $(1,1)$ satisfying $1+1=2$ and $1-1=0$. ✓</li><li><strong>System 2:</strong> Dividing the second equation $2x+2y=4$ by $2$ gives $x+y=2$, which is identical to the first equation; every point $(2-t, t)$ for $t \in \mathbb{R}$ is a solution. ✓</li><li><strong>System 3:</strong> Dividing the second equation $2x+2y=5$ by $2$ gives $x+y=2.5$, which directly contradicts the first equation $x+y=2$. ✓</li></ul>
+<h3>A concrete example</h3>
+<p>Geometrically, all three systems start with the exact same first line $L_1: x + y = 2$ (which has slope $-1$) and pair it with three different second lines $L_2$:</p>
+<table><thead><tr><th>System</th><th>Second line $L_2$</th><th>Geometric relationship to $L_1$</th><th>Number of intersection points</th></tr></thead><tbody><tr><td><strong>1</strong></td><td>$x - y = 0$ (slope $+1$)</td><td><strong>Intersecting</strong> (perpendicular lines)</td><td><strong>1</strong> (at $(1,1)$)</td></tr><tr><td><strong>2</strong></td><td>$2x + 2y = 4$ (slope $-1$, same intercept)</td><td><strong>Coincident</strong> (the exact same line)</td><td><strong>Infinitely many</strong> (every point on $L_1$)</td></tr><tr><td><strong>3</strong></td><td>$2x + 2y = 5$ (slope $-1$, different intercept)</td><td><strong>Parallel and distinct</strong></td><td><strong>0</strong> (never meet)</td></tr></tbody></table>
+<h3>How I would explain this in class</h3>
+<blockquote><p>One single row operation tells the whole story for each $2\times 2$ system. After clearing $x$ from the second row, look at what is left in row 2: in System 1 we get $[0\;\;-2\mid -2]$, which has a non-zero pivot for $y$, so there is <strong>one solution</strong>. In System 2 we get $[0\;\;0\mid 0]$ ($0=0$), leaving $y$ as a free variable, so there are <strong>infinitely many solutions</strong>. In System 3 we get $[0\;\;0\mid 1]$ ($0=1$), an outright contradiction, so there is <strong>no solution</strong>.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-3">Exercise 3: Inconsistent System</a></li><li><a href="#exercise-5">Exercise 5: Row Echelon Form and Number of Solutions</a></li></ul>
+</section>
+    </main>
+  </div>
+</body>
+</html>

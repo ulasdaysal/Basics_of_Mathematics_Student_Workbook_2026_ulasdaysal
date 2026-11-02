@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>03. Function Analysis — Complete Solutions</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false}
+      ],
+      throwOnError: false
+    });"></script>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --muted: #475569;
+      --accent: #2563eb;
+      --accent-soft: #eff6ff;
+      --quote-bg: #f1f5f9;
+      --quote-border: #3b82f6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 310px 1fr;
+      min-height: 100vh;
+    }
+    aside.sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 1.5rem 1.25rem;
+    }
+    .brand {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    .brand-sub {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .toc-group-title {
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin: 1rem 0 0.35rem 0.5rem;
+    }
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .toc-list li { margin-bottom: 0.2rem; }
+    .toc-list a {
+      display: block;
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.86rem;
+      transition: background 0.15s, color 0.15s;
+    }
+    .toc-list a:hover {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+    main.content {
+      max-width: 940px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    header.page-header {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    }
+    header.page-header h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.85rem;
+      color: var(--text);
+    }
+    header.page-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+    .section-banner {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: #ffffff;
+      border-radius: 12px;
+      padding: 1.5rem 2rem;
+      margin: 2.5rem 0 1.5rem;
+      scroll-margin-top: 1.5rem;
+    }
+    .section-banner h2 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    .section-banner p {
+      margin: 0.25rem 0 0;
+      opacity: 0.9;
+      font-size: 0.92rem;
+    }
+    section.exercise-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem 2.25rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+      scroll-margin-top: 1.5rem;
+    }
+    section.exercise-card h2.exercise-title {
+      margin-top: 0;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--accent-soft);
+      color: var(--accent);
+      font-size: 1.4rem;
+    }
+    section.exercise-card h3 {
+      margin-top: 1.5rem;
+      margin-bottom: 0.55rem;
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+    section.exercise-card h4 {
+      margin-top: 1.15rem;
+      margin-bottom: 0.45rem;
+      font-size: 1rem;
+      color: var(--muted);
+    }
+    p { margin: 0.65rem 0; }
+    ul, ol { margin: 0.65rem 0; padding-left: 1.5rem; }
+    li { margin-bottom: 0.35rem; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.85rem;
+      text-align: left;
+    }
+    th { background: var(--bg); font-weight: 600; }
+    blockquote {
+      margin: 1rem 0;
+      padding: 0.9rem 1.2rem;
+      background: var(--quote-bg);
+      border-left: 4px solid var(--quote-border);
+      border-radius: 0 8px 8px 0;
+      color: var(--text);
+    }
+    blockquote p { margin: 0; }
+    pre {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 1rem 1.25rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+    code {
+      font-family: Consolas, Monaco, "Courier New", monospace;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .katex-display {
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 0.25rem 0;
+    }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      aside.sidebar {
+        position: static;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      main.content { padding: 1.5rem 1rem 3rem; }
+      section.exercise-card { padding: 1.5rem; }
+    }
+    @media print {
+      aside.sidebar { display: none; }
+      .layout { display: block; }
+      body { background: #fff; }
+      section.exercise-card { box-shadow: none; break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">3. Calculus</div>
+      <div class="brand-sub">03. Function Analysis (Exercises 1–15)</div>
+      <ul class="toc-list">
+<li><a href="#exercise-1">1. A Cubic Polynomial</a></li>
+<li><a href="#exercise-2">2. A Parabola from the Perspective of the Derivative</a></li>
+<li><a href="#exercise-3">3. A Rational Function</a></li>
+<li><a href="#exercise-4">4. A Function with Two Vertical Asymptotes</a></li>
+<li><a href="#exercise-5">5. An Exponential Function with a Maximum</a></li>
+<li><a href="#exercise-6">6. A Logarithmic Function</a></li>
+<li><a href="#exercise-7">7. A Trigonometric Function</a></li>
+<li><a href="#exercise-8">8. The Second Derivative</a></li>
+<li><a href="#exercise-9">9. An Oblique Asymptote</a></li>
+<li><a href="#exercise-10">10. Complete Function Analysis</a></li>
+<li><a href="#exercise-11">11. A Parameter and the Number of Extrema</a></li>
+<li><a href="#exercise-12">12. A Function with an Absolute Value</a></li>
+<li><a href="#exercise-13">13. A Logarithm and an Asymptote</a></li>
+<li><a href="#exercise-14">14. Reconstructing Information from the Derivative</a></li>
+<li><a href="#exercise-15">15. Find the Error in the Monotonicity Analysis</a></li>
+</ul>
+    </aside>
+    <main class="content">
+      <header class="page-header">
+        <h1>03. Function Analysis — Complete Solutions</h1>
+        <p>Basics of Mathematics Student Workbook (2026) · 3. Calculus · All 15 Exercises with Detailed Explanations</p>
+      </header>
+      <section class="exercise-card" id="exercise-1">
+<h2 class="exercise-title">Exercise 1. A Cubic Polynomial</h2>
+<h3>The question</h3>
+<p>Analyze the monotonicity and extrema of</p>
+<div class="math-block">$$f(x)=x^3-3x^2+2.$$</div>
+<p>Sketch the graph based on the results and mark the critical points.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>The first derivative $f'(x)$ gives the slope of the tangent line at each point:</p>
+<ul><li>$f'(x) &gt; 0$: the function is <strong>strictly increasing</strong> (rising from left to right),</li><li>$f'(x) &lt; 0$: the function is <strong>strictly decreasing</strong> (falling from left to right),</li><li>$f'(x) = 0$: the tangent is horizontal — a <strong>critical point</strong> and candidate for a local extremum.</li></ul>
+<p>When $f'(x)$ changes sign across a critical point, the graph turns around and forms a local maximum ($+$ to $-$) or a local minimum ($-$ to $+$).</p>
+<h3>1. Domain and derivative</h3>
+<p>Because $f$ is a polynomial, its domain is all real numbers: $D = \mathbb{R}$.</p>
+<p>Differentiating term by term and factoring gives</p>
+<div class="math-block">$$f'(x) = 3x^2 - 6x = 3x(x - 2).$$</div>
+<h3>2. Critical points and sign of the derivative</h3>
+<p>Solving $f'(x) = 0$:</p>
+<div class="math-block">$$3x(x - 2) = 0 \implies x = 0 \quad \text{or} \quad x = 2.$$</div>
+<p>Since $f'(x) = 3x(x-2)$ is a quadratic with positive leading coefficient ($a = 3 &gt; 0$), its parabola opens upward: it is positive outside the roots and negative between them.</p>
+<table><thead><tr><th>Interval / Point</th><th>$(-\infty, 0)$</th><th>$x = 0$</th><th>$(0, 2)$</th><th>$x = 2$</th><th>$(2, \infty)$</th></tr></thead><tbody><tr><td>Sign of $f'(x)$</td><td>$+$</td><td>$0$</td><td>$-$</td><td>$0$</td><td>$+$</td></tr><tr><td>Behavior of $f(x)$</td><td>$\nearrow$ increasing</td><td><strong>Local max</strong> ($2$)</td><td>$\searrow$ decreasing</td><td><strong>Local min</strong> ($-2$)</td><td>$\nearrow$ increasing</td></tr></tbody></table>
+<h3>3. Monotonicity and extrema</h3>
+<p>Evaluate $f$ at the critical points:</p>
+<div class="math-block">$$f(0) = 0^3 - 3\cdot 0^2 + 2 = 2,$$</div>
+<div class="math-block">$$f(2) = 2^3 - 3\cdot 2^2 + 2 = 8 - 12 + 2 = -2.$$</div>
+<ul><li><strong>Increasing</strong> on $(-\infty, 0]$ and $[2, \infty)$.</li><li><strong>Decreasing</strong> on $[0, 2]$.</li><li><strong>Local maximum</strong> at $x = 0$ with value $f(0) = 2$ (where $f'$ changes from $+$ to $-$).</li><li><strong>Local minimum</strong> at $x = 2$ with value $f(2) = -2$ (where $f'$ changes from $-$ to $+$).</li></ul>
+<h3>4. Sketching the graph</h3>
+<p>To anchor the sketch, note the limits at infinity and the zeros:</p>
+<ul><li>$\lim_{x\to-\infty} f(x) = -\infty$ and $\lim_{x\to\infty} f(x) = +\infty$.</li><li>By inspection, $f(1) = 1 - 3 + 2 = 0$, and factoring gives $x^3 - 3x^2 + 2 = (x-1)(x^2 - 2x - 2) = 0$, so the $x$-intercepts are $x = 1$ and $x = 1 \pm \sqrt{3} \approx -0.73, \, 2.73$.</li></ul>
+<p><strong>Graph description:</strong> Starting from $-\infty$ in the third quadrant, the curve rises through $(-0.73, 0)$ to a rounded peak at the critical point $(0, 2)$ on the $y$-axis. It then falls through $(1, 0)$ (which is also its inflection point) down to a trough at the critical point $(2, -2)$, before turning upward through $(2.73, 0)$ and climbing toward $+\infty$.</p>
+<h3>Quick verification</h3>
+<p>Using the second derivative test with $f''(x) = 6x - 6$:</p>
+<ul><li>At $x = 0$: $f''(0) = -6 &lt; 0 \implies$ local maximum. ✓</li><li>At $x = 2$: $f''(2) = 6 &gt; 0 \implies$ local minimum. ✓</li><li>Midpoint check: at $x = 1 \in (0, 2)$, $f(1) = 0$, which lies strictly between $f(0) = 2$ and $f(2) = -2$, confirming the downward transition. ✓</li></ul>
+<h3>A concrete example</h3>
+<p>Compare the slopes just before, between, and after the critical points:</p>
+<ul><li>At $x = -1$: $f'(-1) = 3(-1)(-3) = 9 &gt; 0$ (steeply rising).</li><li>At $x = 1$: $f'(1) = 3(1)(-1) = -3 &lt; 0$ (falling).</li><li>At $x = 3$: $f'(3) = 3(3)(1) = 9 &gt; 0$ (steeply rising again).</li></ul>
+<p>Also notice the symmetry around the inflection point $(1, 0)$: moving $1$ unit left to $x=0$ raises $y$ by $2$, while moving $1$ unit right to $x=2$ lowers $y$ by $2$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>To sketch $f(x) = x^3 - 3x^2 + 2$, we first differentiate to get $f'(x) = 3x(x-2)$. The slope is zero at $x = 0$ and $x = 2$. Because $f'(x)$ is an upward-opening parabola, the derivative is positive outside $[0, 2]$ and negative inside it. That tells us the cubic climbs to a local maximum at $(0, 2)$, drops to a local minimum at $(2, -2)$, and then climbs forever.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-8">Exercise 8: The Second Derivative</a></li><li><a href="#exercise-15">Exercise 15: Find the Error in the Monotonicity Analysis</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-2">
+<h2 class="exercise-title">Exercise 2. A Parabola from the Perspective of the Derivative</h2>
+<h3>The question</h3>
+<p>For $f(x)=x^2-4x+1$, find the minimum using the derivative. Compare the result with the vertex form and explain why both approaches lead to the same point.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>We have two complementary lenses for finding the lowest point of an upward-opening parabola:</p>
+<ul><li><strong>The calculus lens (derivative):</strong> At the bottom of the valley, the tangent line is horizontal, so the instantaneous rate of change is zero ($f'(x) = 0$).</li><li><strong>The algebraic lens (vertex form):</strong> Completing the square writes $f(x) = (x - p)^2 + q$. Since a square $(x - p)^2$ is never negative, the smallest value occurs precisely when the squared term vanishes ($x = p$).</li></ul>
+<h3>1. Finding the minimum using the derivative</h3>
+<p>The domain of $f(x) = x^2 - 4x + 1$ is $\mathbb{R}$. Differentiating gives</p>
+<div class="math-block">$$f'(x) = 2x - 4 = 2(x - 2).$$</div>
+<p>Setting $f'(x) = 0$ gives the single critical point $x = 2$:</p>
+<table><thead><tr><th>Interval / Point</th><th>$(-\infty, 2)$</th><th>$x = 2$</th><th>$(2, \infty)$</th></tr></thead><tbody><tr><td>Sign of $f'(x)$</td><td>$-$</td><td>$0$</td><td>$+$</td></tr><tr><td>Behavior of $f(x)$</td><td>$\searrow$ decreasing</td><td><strong>Global min</strong> ($-3$)</td><td>$\nearrow$ increasing</td></tr></tbody></table>
+<p>Because $f'(x)$ changes sign from negative to positive at $x = 2$, $f$ has a global minimum at $x = 2$ with value</p>
+<div class="math-block">$$f(2) = 2^2 - 4(2) + 1 = 4 - 8 + 1 = -3.$$</div>
+<h3>2. Finding the minimum using the vertex form</h3>
+<p>Complete the square for $x^2 - 4x + 1$:</p>
+<div class="math-block">$$f(x) = (x^2 - 4x + 4) - 4 + 1 = (x - 2)^2 - 3.$$</div>
+<p>Since $(x - 2)^2 \ge 0$ for every $x \in \mathbb{R}$, we have</p>
+<div class="math-block">$$f(x) = (x - 2)^2 - 3 \ge -3,$$</div>
+<p>with equality if and only if $x - 2 = 0$, that is, $x = 2$. Thus the vertex is $(2, -3)$.</p>
+<h3>3. Why both approaches lead to the same point</h3>
+<p>If we differentiate the vertex form $f(x) = (x - p)^2 + q$ directly by the chain rule, we get</p>
+<div class="math-block">$$f'(x) = 2(x - p).$$</div>
+<p>The condition $f'(x) = 0$ is literally $2(x - p) = 0$, which forces $x = p$ — the exact same condition that makes the non-negative square $(x - p)^2$ vanish! Geometrically, the parabola is symmetric across the vertical line $x = p$. Any non-zero slope at the vertex would break left-right symmetry, so the unique lowest point of a smooth symmetric curve must have slope zero.</p>
+<h3>Quick verification</h3>
+<p>Check the vertex formula for $ax^2 + bx + c$ with $a = 1, b = -4, c = 1$:</p>
+<div class="math-block">$$p = -\frac{b}{2a} = -\frac{-4}{2(1)} = 2, \qquad q = f(2) = -3. \quad \checkmark$$</div>
+<p>Also $f''(x) = 2 &gt; 0$ everywhere, confirming strict convexity and a unique global minimum. ✓</p>
+<h3>A concrete example</h3>
+<p>Step $h = 1$ unit to the left and right of $x = 2$:</p>
+<div class="math-block">$$f(1) = (1 - 2)^2 - 3 = 1 - 3 = -2, \qquad f(3) = (3 - 2)^2 - 3 = 1 - 3 = -2.$$</div>
+<p>The slopes at these symmetric points are equal in magnitude and opposite in sign:</p>
+<div class="math-block">$$f'(1) = 2(1 - 2) = -2, \qquad f'(3) = 2(3 - 2) = +2.$$</div>
+<p>Halfway between slope $-2$ and slope $+2$ sits the vertex $x = 2$ with slope $0$ and value $-3$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>With derivatives, we set $f'(x) = 2x - 4 = 0$ to find where the tangent is flat, giving $x = 2$ and $f(2) = -3$. With algebra, completing the square gives $f(x) = (x-2)^2 - 3$, which is smallest when the square $(x-2)^2$ is zero, again at $x = 2$. Both give the exact same point because differentiating $(x-p)^2 + q$ produces $2(x-p)$, so zero slope and zero squared-distance from the axis of symmetry are the same equation.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: A Cubic Polynomial</a></li><li><a href="#exercise-8">Exercise 8: The Second Derivative</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-3">
+<h2 class="exercise-title">Exercise 3. A Rational Function</h2>
+<h3>The question</h3>
+<p>Analyze the domain, zeros, asymptotes, and monotonicity of</p>
+<div class="math-block">$$f(x)=\frac{x+1}{x-2}.$$</div>
+<p>Finally, sketch a graph consistent with all the information obtained.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>A linear fractional function (homographic function) $f(x) = \frac{ax+b}{cx+d}$ splits its domain at the point where the denominator vanishes. Before differentiating, rewriting the numerator in terms of the denominator separates $f(x)$ into a constant plus a simple reciprocal $\frac{k}{x-2}$. That single algebraic step makes the asymptotes and derivative completely transparent.</p>
+<h3>1. Domain and zeros</h3>
+<ul><li><strong>Domain:</strong> The denominator cannot be zero: $x - 2 \neq 0 \implies x \neq 2$. Thus $$D = \mathbb{R} \setminus \{2\} = (-\infty, 2) \cup (2, \infty).$$</li><li><strong>Zero ($x$-intercept):</strong> A fraction equals zero when its numerator is zero and its denominator is non-zero: $$x + 1 = 0 \implies x = -1 \in D.$$</li><li><strong>$y$-intercept:</strong> $f(0) = \frac{0+1}{0-2} = -\frac{1}{2}$.</li></ul>
+<h3>2. Asymptotes</h3>
+<p>Rewrite the formula by splitting off the constant part:</p>
+<div class="math-block">$$f(x) = \frac{(x - 2) + 3}{x - 2} = 1 + \frac{3}{x - 2}.$$</div>
+<ul><li><strong>Vertical asymptote at $x = 2$:</strong></li><li>As $x \to 2^-$, $x - 2 \to 0^-$, so $\frac{3}{x-2} \to -\infty \implies \lim_{x \to 2^-} f(x) = -\infty$.</li><li>As $x \to 2^+$, $x - 2 \to 0^+$, so $\frac{3}{x-2} \to +\infty \implies \lim_{x \to 2^+} f(x) = +\infty$. Hence $x = 2$ is a two-sided vertical asymptote.</li><li><strong>Horizontal asymptote at $y = 1$:</strong> $$\lim_{x \to \pm\infty} \left(1 + \frac{3}{x - 2}\right) = 1 + 0 = 1.$$ Hence $y = 1$ is the horizontal asymptote at both $-\infty$ and $+\infty$ (and there are no oblique asymptotes).</li></ul>
+<h3>3. Derivative and monotonicity</h3>
+<p>Differentiate either by the quotient rule or directly from $f(x) = 1 + 3(x-2)^{-1}$:</p>
+<div class="math-block">$$f'(x) = \frac{1\cdot(x-2) - (x+1)\cdot 1}{(x-2)^2} = \frac{-3}{(x-2)^2}.$$</div>
+<p>Since $(x - 2)^2 &gt; 0$ for every $x \neq 2$ and the numerator is $-3 &lt; 0$, we have $f'(x) &lt; 0$ everywhere on the domain:</p>
+<table><thead><tr><th>Interval</th><th>$(-\infty, 2)$</th><th>$x = 2$</th><th>$(2, \infty)$</th></tr></thead><tbody><tr><td>Sign of $f'(x)$</td><td>$-$</td><td>undefined</td><td>$-$</td></tr><tr><td>Behavior of $f(x)$</td><td>$\searrow$ from $1$ to $-\infty$</td><td>Vertical asymptote</td><td>$\searrow$ from $+\infty$ to $1$</td></tr></tbody></table>
+<ul><li>$f$ is <strong>strictly decreasing on $(-\infty, 2)$</strong> and <strong>strictly decreasing on $(2, \infty)$</strong>.</li><li>Note: We do <strong>not</strong> say $f$ is decreasing on the union $(-\infty, 2) \cup (2, \infty)$, because for $0 &lt; 3$ we have $f(0) = -\frac{1}{2} &lt; f(3) = 4$.</li><li>There are <strong>no local extrema</strong> ($f'(x)$ never vanishes).</li></ul>
+<h3>4. Sketching the graph</h3>
+<p>Draw dashed guide lines for the vertical asymptote $x = 2$ and the horizontal asymptote $y = 1$:</p>
+<ul><li><strong>Left branch ($x &lt; 2$):</strong> Starts just below the horizontal line $y = 1$ as $x \to -\infty$, decreases smoothly through $(-1, 0)$ and $(0, -\frac{1}{2})$, and plunges toward $-\infty$ alongside the left side of $x = 2$.</li><li><strong>Right branch ($x &gt; 2$):</strong> Drops down from $+\infty$ alongside the right side of $x = 2$, passes through $(3, 4)$ and $(5, 2)$, and flattens out from above toward the horizontal line $y = 1$ as $x \to +\infty$.</li></ul>
+<h3>Quick verification</h3>
+<p>Check points on both sides of $x = 2$ using both forms $f(x) = \frac{x+1}{x-2}$ and $1 + \frac{3}{x-2}$:</p>
+<ul><li>At $x = -1$: $\frac{-1+1}{-1-2} = 0$ and $1 + \frac{3}{-3} = 0$. ✓</li><li>At $x = 1$: $f(1) = -2 &lt; f(0) = -0.5 &lt; f(-1) = 0$ (decreasing on the left branch). ✓</li><li>At $x = 3, 5$: $f(3) = 4 &gt; f(5) = 2 &gt; 1$ (decreasing on the right branch and staying above $y = 1$). ✓</li></ul>
+<h3>A concrete example</h3>
+<p>For very large inputs such as $x = 102$ and $x = -98$:</p>
+<div class="math-block">$$f(102) = 1 + \frac{3}{100} = 1.03, \qquad f(-98) = 1 + \frac{3}{-100} = 0.97.$$</div>
+<p>You can see immediately why $y = 1$ is the horizontal asymptote: the term $\frac{3}{x-2}$ is positive on the right (holding the graph slightly above $1$) and negative on the left (holding the graph slightly below $1$).</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Rewrite $\frac{x+1}{x-2}$ as $1 + \frac{3}{x-2}$. That shows the graph is just the hyperbola $y = \frac{3}{x}$ shifted $2$ units right and $1$ unit up. Its asymptotes are $x = 2$ and $y = 1$, its zero is at $x = -1$, and its derivative $f'(x) = \frac{-3}{(x-2)^2}$ is always negative, so each of the two hyperbola branches decreases across its entire interval.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-4">Exercise 4: A Function with Two Vertical Asymptotes</a></li><li><a href="#exercise-9">Exercise 9: An Oblique Asymptote</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-4">
+<h2 class="exercise-title">Exercise 4. A Function with Two Vertical Asymptotes</h2>
+<h3>The question</h3>
+<p>Analyze</p>
+<div class="math-block">$$f(x)=\frac{1}{x^2-1}.$$</div>
+<p>Determine the domain, asymptotes, sign, and monotonicity on the intervals of the domain. Explain why each interval must be analyzed separately.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>When the denominator vanishes at several points, those points slice the real line into disjoint open intervals. Across a vertical asymptote, a function can jump from $-\infty$ to $+\infty$ (or vice versa), so properties like sign and monotonicity only hold <strong>within each connected component</strong> of the domain, never across the breaks.</p>
+<h3>1. Domain, symmetry, and sign</h3>
+<p>Factor the denominator: $x^2 - 1 = (x - 1)(x + 1)$.</p>
+<ul><li><strong>Domain:</strong> $x^2 - 1 \neq 0 \implies x \neq -1$ and $x \neq 1$. Thus the domain consists of three disjoint intervals: $$D = (-\infty, -1) \cup (-1, 1) \cup (1, \infty).$$</li><li><strong>Symmetry:</strong> $f(-x) = \frac{1}{(-x)^2 - 1} = f(x)$, so $f$ is an <strong>even function</strong> (symmetric about the $y$-axis).</li><li><strong>Zeros and sign:</strong> The numerator is $1 \neq 0$, so $f$ has <strong>no zeros</strong>. Its sign is the sign of $x^2 - 1$:</li><li>$f(x) &gt; 0$ on $(-\infty, -1)$ and $(1, \infty)$ (above the $x$-axis),</li><li>$f(x) &lt; 0$ on $(-1, 1)$ (below the $x$-axis).</li></ul>
+<h3>2. Asymptotes</h3>
+<ul><li><strong>Vertical asymptotes at $x = -1$ and $x = 1$:</strong> $$\lim_{x\to -1^-} f(x) = +\infty, \qquad \lim_{x\to -1^+} f(x) = -\infty,$$ $$\lim_{x\to 1^-} f(x) = -\infty, \qquad \lim_{x\to 1^+} f(x) = +\infty.$$</li><li><strong>Horizontal asymptote at $y = 0$:</strong> $$\lim_{x\to \pm\infty} \frac{1}{x^2 - 1} = 0.$$</li></ul>
+<h3>3. Derivative and monotonicity on each interval</h3>
+<p>Differentiating $f(x) = (x^2 - 1)^{-1}$ by the chain rule:</p>
+<div class="math-block">$$f'(x) = -\frac{2x}{(x^2 - 1)^2}.$$</div>
+<p>Since $(x^2 - 1)^2 &gt; 0$ everywhere on $D$, the sign of $f'(x)$ is the sign of $-2x$:</p>
+<table><thead><tr><th>Interval / Point</th><th>$(-\infty, -1)$</th><th>$x = -1$</th><th>$(-1, 0)$</th><th>$x = 0$</th><th>$(0, 1)$</th><th>$x = 1$</th><th>$(1, \infty)$</th></tr></thead><tbody><tr><td>Sign of $f(x)$</td><td>$+$</td><td>undef.</td><td>$-$</td><td>$-1$</td><td>$-$</td><td>undef.</td><td>$+$</td></tr><tr><td>Sign of $f'(x)$</td><td>$+$</td><td>undef.</td><td>$+$</td><td>$0$</td><td>$-$</td><td>undef.</td><td>$-$</td></tr><tr><td>Behavior of $f(x)$</td><td>$\nearrow$ ($0$ to $+\infty$)</td><td>V.A.</td><td>$\nearrow$ ($-\infty$ to $-1$)</td><td><strong>Local max</strong> ($-1$)</td><td>$\searrow$ ($-1$ to $-\infty$)</td><td>V.A.</td><td>$\searrow$ ($+\infty$ to $0$)</td></tr></tbody></table>
+<ul><li><strong>Strictly increasing</strong> on $(-\infty, -1)$ and on $(-1, 0]$.</li><li><strong>Strictly decreasing</strong> on $[0, 1)$ and on $(1, \infty)$.</li><li><strong>Local maximum</strong> at $x = 0$ with value $f(0) = -1$.</li></ul>
+<h3>4. Why each interval must be analyzed separately</h3>
+<p>The Mean Value Theorem guarantees that $f' &gt; 0 \implies f$ is increasing <strong>only on an interval</strong> where $f$ is continuous and differentiable. Here, $f'(x) &gt; 0$ on both $(-\infty, -1)$ and $(-1, 0)$, yet $f$ is <strong>not</strong> increasing on their union $(-\infty, -1) \cup (-1, 0)$: at the asymptote $x = -1$, the function blows up to $+\infty$ on the left and restarts at $-\infty$ on the right! Every break in the domain resets the function's values.</p>
+<h3>Quick verification</h3>
+<ul><li>Even symmetry check: the increasing behavior on $(-\infty, -1)$ and $(-1, 0]$ mirrors the decreasing behavior on $[0, 1)$ and $(1, \infty)$. ✓</li><li>Second derivative at $x = 0$: $f''(x) = \frac{6x^2 + 2}{(x^2-1)^3} \implies f''(0) = -2 &lt; 0$, confirming a local maximum at $(0, -1)$. ✓</li></ul>
+<h3>A concrete example</h3>
+<p>Take $x_1 = -2 \in (-\infty, -1)$ and $x_2 = -0.5 \in (-1, 0)$. Even though $x_1 &lt; x_2$ and $f'(x) &gt; 0$ at both points, we get</p>
+<div class="math-block">$$f(-2) = \frac{1}{4 - 1} = \frac{1}{3} &gt; 0, \qquad f(-0.5) = \frac{1}{0.25 - 1} = -\frac{4}{3} &lt; 0.$$</div>
+<p>So $f(-2) &gt; f(-0.5)$ despite positive derivatives on both intervals — vivid proof that monotonicity cannot be merged across the vertical asymptote $x = -1$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>The denominator $x^2 - 1$ is zero at $x = \pm 1$, splitting the domain into three separate intervals. On the outer intervals $f$ is positive; on the middle interval $(-1, 1)$ it is negative and forms an upside-down arch with a local maximum at $(0, -1)$. Because the graph jumps between $+\infty$ and $-\infty$ at $x = \pm 1$, we have to state monotonicity on each interval individually rather than gluing intervals together.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-3">Exercise 3: A Rational Function</a></li><li><a href="#exercise-10">Exercise 10: Complete Function Analysis</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-5">
+<h2 class="exercise-title">Exercise 5. An Exponential Function with a Maximum</h2>
+<h3>The question</h3>
+<p>Analyze the monotonicity and extrema of</p>
+<div class="math-block">$$f(x)=xe^{-x}.$$</div>
+<p>Also examine the behavior as $x\to\infty$ and explain how the limit affects the shape of the graph on the right-hand side.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>The function $f(x) = xe^{-x} = \frac{x}{e^x}$ is a tug-of-war between two factors: the linear factor $x$ wants to grow, while the exponential decay factor $e^{-x}$ pulls the product toward zero. Near $x = 0$, linear growth wins and the function rises; for larger $x$, exponential decay overwhelms any polynomial, creating a peak and then pulling the graph back down toward the horizontal axis.</p>
+<h3>1. Domain and derivative</h3>
+<p>The domain is $D = \mathbb{R}$, and the only zero is $x = 0$ (since $e^{-x} &gt; 0$ for all $x$).</p>
+<p>Using the product rule with $(e^{-x})' = -e^{-x}$:</p>
+<div class="math-block">$$f'(x) = 1\cdot e^{-x} + x(-e^{-x}) = (1 - x)e^{-x}.$$</div>
+<h3>2. Monotonicity and extrema</h3>
+<p>Because $e^{-x} &gt; 0$ for every $x \in \mathbb{R}$, the sign of $f'(x)$ is determined entirely by the linear factor $1 - x$:</p>
+<ul><li>$f'(x) = 0 \iff 1 - x = 0 \iff x = 1$,</li><li>$f'(x) &gt; 0 \iff x &lt; 1$,</li><li>$f'(x) &lt; 0 \iff x &gt; 1$.</li></ul>
+<table><thead><tr><th>Interval / Point</th><th>$(-\infty, 1)$</th><th>$x = 1$</th><th>$(1, \infty)$</th></tr></thead><tbody><tr><td>Sign of $f'(x)$</td><td>$+$</td><td>$0$</td><td>$-$</td></tr><tr><td>Behavior of $f(x)$</td><td>$\nearrow$ increasing</td><td><strong>Global max</strong> ($e^{-1}$)</td><td>$\searrow$ decreasing</td></tr></tbody></table>
+<ul><li><strong>Strictly increasing</strong> on $(-\infty, 1]$.</li><li><strong>Strictly decreasing</strong> on $[1, \infty)$.</li><li><strong>Local and global maximum</strong> at $x = 1$ with value $f(1) = 1\cdot e^{-1} = \frac{1}{e} \approx 0.368$.</li></ul>
+<h3>3. Behavior as $x \to \infty$ (and $x \to -\infty$)</h3>
+<p>Rewrite $f(x) = \frac{x}{e^x}$ for $x \to \infty$ (an $\frac{\infty}{\infty}$ indeterminate form) and apply L'Hôpital's rule (or standard growth hierarchy):</p>
+<div class="math-block">$$\lim_{x\to\infty} xe^{-x} = \lim_{x\to\infty} \frac{x}{e^x} \stackrel{\text{H}}{=} \lim_{x\to\infty} \frac{1}{e^x} = 0.$$</div>
+<p>Thus $y = 0$ is a <strong>right horizontal asymptote</strong> (approached from above, since $f(x) &gt; 0$ for $x &gt; 0$).</p>
+<p>On the left, as $x \to -\infty$, we have $x \to -\infty$ and $e^{-x} \to +\infty$, so $\lim_{x\to-\infty} xe^{-x} = -\infty$ (no asymptote on the left).</p>
+<h3>4. How the limit affects the shape of the graph on the right-hand side</h3>
+<p>After reaching its peak at $(1, \frac{1}{e})$, the function is strictly decreasing ($f'(x) &lt; 0$) on $[1, \infty)$, yet it remains strictly positive ($f(x) &gt; 0$) and approaches $0$. To decrease forever while never crossing $y = 0$, the graph cannot keep curving downward — it must <strong>flatten out</strong>, switching from concave (cupping downward near the peak) to convex (cupping upward) at an inflection point ($x = 2$, where $f''(x) = (x-2)e^{-x} = 0$) and skimming asymptotically along the top of the positive $x$-axis.</p>
+<h3>Quick verification</h3>
+<ul><li>Check $f''(x) = (x - 2)e^{-x}$: at $x = 1$, $f''(1) = -e^{-1} &lt; 0$ (confirms the maximum), and for $x &gt; 2$, $f''(x) &gt; 0$ (confirms the convex tail approaching $y = 0$). ✓</li><li>Compare values around $x = 1$: $f(0) = 0 &lt; f(1) \approx 0.368 &gt; f(2) = \frac{2}{e^2} \approx 0.271 &gt; 0$. ✓</li></ul>
+<h3>A concrete example</h3>
+<p>Watch how quickly $e^x$ overtakes $x$ as $x$ grows:</p>
+<ul><li>$x = 1$: $f(1) = \frac{1}{e} \approx 0.3679$ (peak),</li><li>$x = 2$: $f(2) = \frac{2}{e^2} \approx 0.2707$ (inflection point),</li><li>$x = 5$: $f(5) = \frac{5}{e^5} \approx 0.0337$,</li><li>$x = 10$: $f(10) = \frac{10}{e^{10}} \approx 0.00045$.</li></ul>
+<p>By $x = 10$, the graph is less than half a thousandth of a unit above the $x$-axis.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Differentiating $f(x) = xe^{-x}$ gives $f'(x) = (1-x)e^{-x}$. Since $e^{-x}$ is always positive, the sign of the derivative comes purely from $1-x$: positive before $1$ and negative after $1$. So the function climbs from $-\infty$ through the origin to a single maximum of $\frac{1}{e}$ at $x = 1$. After $x = 1$, $e^{-x}$ dominates $x$, pulling the graph back down toward $\lim_{x\to\infty} xe^{-x} = 0$, which forces the right tail to bend smoothly and hug the positive $x$-axis from above.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-6">Exercise 6: A Logarithmic Function</a></li><li><a href="#exercise-13">Exercise 13: A Logarithm and an Asymptote</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-6">
+<h2 class="exercise-title">Exercise 6. A Logarithmic Function</h2>
+<h3>The question</h3>
+<p>Analyze the domain, zero, and monotonicity of</p>
+<div class="math-block">$$f(x)=\ln x-x+1.$$</div>
+<p>Explain why the analysis must begin with the domain.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Derivative formulas are purely algebraic, so they often look valid on a wider set of inputs than the original function! For instance, the derivative of $\ln x$ is $\frac{1}{x}$, which makes sense for negative $x$ even though $\ln x$ does not exist for $x \le 0$. Starting with the domain keeps us from inventing phantom intervals or false critical points where the function itself is undefined.</p>
+<h3>1. Why we must begin with the domain</h3>
+<p>The natural logarithm $\ln x$ is defined only for strictly positive real numbers, whereas $-x + 1$ is defined on all of $\mathbb{R}$. Therefore, the domain of $f$ is</p>
+<div class="math-block">$$D = (0, \infty).$$</div>
+<p>If we differentiated first without recording $D = (0, \infty)$, we would write $f'(x) = \frac{1}{x} - 1 = \frac{1-x}{x}$ and might mistakenly include the interval $(-\infty, 0)$ in our sign chart — an interval where $f(x)$ does not even exist.</p>
+<h3>2. Derivative and monotonicity</h3>
+<p>For $x \in (0, \infty)$, differentiate term by term:</p>
+<div class="math-block">$$f'(x) = \frac{1}{x} - 1 = \frac{1 - x}{x}.$$</div>
+<p>Since $x &gt; 0$ on the entire domain, the denominator is always positive, and the sign of $f'(x)$ is simply the sign of the numerator $1 - x$:</p>
+<table><thead><tr><th>Interval / Point</th><th>$(0, 1)$</th><th>$x = 1$</th><th>$(1, \infty)$</th></tr></thead><tbody><tr><td>Sign of $f'(x)$</td><td>$+$</td><td>$0$</td><td>$-$</td></tr><tr><td>Behavior of $f(x)$</td><td>$\nearrow$ increasing</td><td><strong>Global max</strong> ($0$)</td><td>$\searrow$ decreasing</td></tr></tbody></table>
+<ul><li><strong>Strictly increasing</strong> on $(0, 1]$.</li><li><strong>Strictly decreasing</strong> on $[1, \infty)$.</li><li><strong>Global maximum</strong> at $x = 1$ with value $f(1) = \ln 1 - 1 + 1 = 0$.</li></ul>
+<h3>3. Finding the zero of $f$</h3>
+<p>Notice what the global maximum tells us:</p>
+<div class="math-block">$$\max_{x \in (0, \infty)} f(x) = f(1) = 0.$$</div>
+<p>Because $f$ strictly increases up to $f(1) = 0$ on $(0, 1]$ and strictly decreases away from $f(1) = 0$ on $[1, \infty)$, we have $f(x) &lt; 0$ for every $x \neq 1$. Consequently, <strong>$x = 1$ is the unique zero of $f(x)$</strong> (the graph touches the $x$-axis at $(1, 0)$ from below and turns back down).</p>
+<h3>4. Boundary behavior and global picture</h3>
+<ul><li>As $x \to 0^+$, $\ln x \to -\infty$ and $-x + 1 \to 1$, so $\lim_{x\to 0^+} f(x) = -\infty$ (vertical asymptote $x = 0$).</li><li>As $x \to \infty$, linear growth beats logarithmic growth, so $\lim_{x\to\infty} (\ln x - x + 1) = -\infty$.</li><li>This proves the classical inequality $\ln x \le x - 1$ for all $x &gt; 0$, with equality only at $x = 1$.</li></ul>
+<h3>Quick verification</h3>
+<ul><li>Check $f''(x) = -\frac{1}{x^2} &lt; 0$ for all $x &gt; 0$: the function is strictly concave on $(0, \infty)$, so its tangent line at $x = 1$ (which is $y = 0$) lies above the graph everywhere else. ✓</li><li>Test points on either side of $x = 1$: $$f(e^{-1}) = -1 - e^{-1} + 1 = -e^{-1} \approx -0.368 &lt; 0, \qquad f(e) = 1 - e + 1 = 2 - e \approx -0.718 &lt; 0. \quad \checkmark$$</li></ul>
+<h3>A concrete example</h3>
+<p>At $x = 2$, $\ln 2 \approx 0.693$, so</p>
+<div class="math-block">$$f(2) = \ln 2 - 2 + 1 = \ln 2 - 1 \approx -0.307 &lt; 0.$$</div>
+<p>And if a student forgot the domain and plugged $x = -1$ into the derivative $f'(-1) = \frac{1}{ -1 } - 1 = -2$, they might claim "$f$ is decreasing at $x = -1$," even though $f(-1) = \ln(-1) + 2$ is undefined in $\mathbb{R}$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Always write down the domain $x &gt; 0$ first, because $\ln x$ doesn't exist for $x \le 0$ even though its derivative formula $\frac{1}{x}$ does. For $x &gt; 0$, $f'(x) = \frac{1-x}{x}$ has the same sign as $1-x$, so $f$ rises on $(0, 1]$ to a global maximum of $f(1) = 0$ and falls on $[1, \infty)$. Since the highest point on the entire graph is $y = 0$ at $x = 1$, $x = 1$ is the only zero of the function.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-5">Exercise 5: An Exponential Function with a Maximum</a></li><li><a href="#exercise-13">Exercise 13: A Logarithm and an Asymptote</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-7">
+<h2 class="exercise-title">Exercise 7. A Trigonometric Function</h2>
+<h3>The question</h3>
+<p>On $[0,2\pi]$, find the intervals of monotonicity and the extrema of</p>
+<div class="math-block">$$f(x)=\sin x+\cos x.$$</div>
+<p>Include the endpoints of the interval and compare the function values at the critical points and at the endpoints.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>When analyzing a continuous function on a <strong>closed, bounded interval</strong> $[a, b]$, local extrema inside the open interval $(a, b)$ occur at critical points where $f'(x) = 0$. However, the global (and interval-boundary) behavior also depends on the <strong>endpoints</strong> $x = a$ and $x = b$, so we must evaluate $f$ at both the interior critical points and the endpoints.</p>
+<h3>1. Derivative and critical points in $(0, 2\pi)$</h3>
+<p>Differentiating $f(x) = \sin x + \cos x$:</p>
+<div class="math-block">$$f'(x) = \cos x - \sin x.$$</div>
+<p>Set $f'(x) = 0$ on $(0, 2\pi)$:</p>
+<div class="math-block">$$\cos x - \sin x = 0 \iff \sin x = \cos x \iff \tan x = 1$$</div>
+<p>(noting that $\cos x = 0$ does not give a solution since $\sin x = \pm 1 \neq 0$ there). Within $[0, 2\pi]$, $\tan x = 1$ yields two critical points:</p>
+<div class="math-block">$$x_1 = \frac{\pi}{4} \quad (\text{first quadrant}), \qquad x_2 = \frac{5\pi}{4} \quad (\text{third quadrant}).$$</div>
+<h3>2. Sign of $f'(x)$ and intervals of monotonicity</h3>
+<p>We can see the sign of $f'(x) = \cos x - \sin x$ by comparing $\cos x$ and $\sin x$ (or writing $f'(x) = -\sqrt{2}\sin(x - \frac{\pi}{4})$):</p>
+<ul><li>On $[0, \frac{\pi}{4})$: $\cos x &gt; \sin x \implies f'(x) &gt; 0$,</li><li>On $(\frac{\pi}{4}, \frac{5\pi}{4})$: $\cos x &lt; \sin x \implies f'(x) &lt; 0$,</li><li>On $(\frac{5\pi}{4}, 2\pi]$: $\cos x &gt; \sin x \implies f'(x) &gt; 0$.</li></ul>
+<table><thead><tr><th>Interval / Point</th><th>$x = 0$</th><th>$(0, \frac{\pi}{4})$</th><th>$x = \frac{\pi}{4}$</th><th>$(\frac{\pi}{4}, \frac{5\pi}{4})$</th><th>$x = \frac{5\pi}{4}$</th><th>$(\frac{5\pi}{4}, 2\pi)$</th><th>$x = 2\pi$</th></tr></thead><tbody><tr><td>Sign of $f'(x)$</td><td>$+1$</td><td>$+$</td><td>$0$</td><td>$-$</td><td>$0$</td><td>$+$</td><td>$+1$</td></tr><tr><td>Behavior of $f(x)$</td><td>Endpoint ($1$)</td><td>$\nearrow$</td><td><strong>Max</strong> ($\sqrt{2}$)</td><td>$\searrow$</td><td><strong>Min</strong> ($-\sqrt{2}$)</td><td>$\nearrow$</td><td>Endpoint ($1$)</td></tr></tbody></table>
+<ul><li><strong>Strictly increasing</strong> on $\left[0, \frac{\pi}{4}\right]$ and on $\left[\frac{5\pi}{4}, 2\pi\right]$.</li><li><strong>Strictly decreasing</strong> on $\left[\frac{\pi}{4}, \frac{5\pi}{4}\right]$.</li></ul>
+<h3>3. Comparing values at the critical points and endpoints</h3>
+<p>Evaluate $f(x) = \sin x + \cos x$ at all four key points:</p>
+<ul><li>Left endpoint $x = 0$: $f(0) = \sin 0 + \cos 0 = 0 + 1 = 1$.</li><li>First critical point $x = \frac{\pi}{4}$: $f\left(\frac{\pi}{4}\right) = \frac{\sqrt{2}}{2} + \frac{\sqrt{2}}{2} = \sqrt{2} \approx 1.414$.</li><li>Second critical point $x = \frac{5\pi}{4}$: $f\left(\frac{5\pi}{4}\right) = -\frac{\sqrt{2}}{2} - \frac{\sqrt{2}}{2} = -\sqrt{2} \approx -1.414$.</li><li>Right endpoint $x = 2\pi$: $f(2\pi) = \sin 2\pi + \cos 2\pi = 0 + 1 = 1$.</li></ul>
+<p>Ordering these values gives $-\sqrt{2} &lt; 1 &lt; \sqrt{2}$:</p>
+<ul><li><strong>Global and local maximum:</strong> $f\left(\frac{\pi}{4}\right) = \sqrt{2}$.</li><li><strong>Global and local minimum:</strong> $f\left(\frac{5\pi}{4}\right) = -\sqrt{2}$.</li><li><strong>Endpoint values:</strong> $f(0) = f(2\pi) = 1$, which match because $f$ has period $2\pi$; starting at height $1$, the wave climbs to $\sqrt{2}$, drops to $-\sqrt{2}$, and climbs back to height $1$ at $2\pi$.</li></ul>
+<h3>Quick verification</h3>
+<p>Rewrite $f(x)$ using the auxiliary-angle identity:</p>
+<div class="math-block">$$f(x) = \sin x + \cos x = \sqrt{2}\left(\frac{1}{\sqrt{2}}\sin x + \frac{1}{\sqrt{2}}\cos x\right) = \sqrt{2}\sin\left(x + \frac{\pi}{4}\right).$$</div>
+<p>Since $\sin\theta$ attains its maximum $1$ at $\theta = \frac{\pi}{2}$ ($x = \frac{\pi}{4}$) and its minimum $-1$ at $\theta = \frac{3\pi}{2}$ ($x = \frac{5\pi}{4}$), the extreme values of $f$ are indeed $\pm\sqrt{2}$ at $x = \frac{\pi}{4}$ and $x = \frac{5\pi}{4}$. ✓</p>
+<h3>A concrete example</h3>
+<p>Check the intermediate quadrant angles to trace the wave between endpoints and extrema:</p>
+<ul><li>$x = 0$: $f(0) = 1$,</li><li>$x = \frac{\pi}{4}$: $f(\frac{\pi}{4}) = \sqrt{2} \approx 1.414$ (peak),</li><li>$x = \frac{\pi}{2}$: $f(\frac{\pi}{2}) = 1 + 0 = 1$,</li><li>$x = \pi$: $f(\pi) = 0 + (-1) = -1$,</li><li>$x = \frac{5\pi}{4}$: $f(\frac{5\pi}{4}) = -\sqrt{2} \approx -1.414$ (trough),</li><li>$x = \frac{3\pi}{2}$: $f(\frac{3\pi}{2}) = -1 + 0 = -1$,</li><li>$x = 2\pi$: $f(2\pi) = 1$.</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Setting $f'(x) = \cos x - \sin x = 0$ on $[0, 2\pi]$ gives $\tan x = 1$, so the critical points are $x = \frac{\pi}{4}$ and $x = \frac{5\pi}{4}$. The function starts at $f(0) = 1$, increases to its maximum $\sqrt{2}$ at $\frac{\pi}{4}$, decreases all the way to its minimum $-\sqrt{2}$ at $\frac{5\pi}{4}$, and then increases back to $f(2\pi) = 1$ at the right endpoint.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: A Cubic Polynomial</a></li><li><a href="#exercise-2">Exercise 2: A Parabola from the Perspective of the Derivative</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-8">
+<h2 class="exercise-title">Exercise 8. The Second Derivative</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$f(x)=x^4-4x^2$$</div>
+<p>find the local extrema, intervals of convexity and concavity, and inflection points. Sketch the graph and mark all the identified features on it.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>While the <strong>first derivative</strong> $f'(x)$ tells us whether the graph is rising or falling, the <strong>second derivative</strong> $f''(x) = (f'(x))'$ tells us how the slope itself is changing — that is, how the graph bends:</p>
+<ul><li>$f''(x) &gt; 0$: the slope is increasing, so the graph bends upward (<strong>convex</strong> / $\cup$-shaped),</li><li>$f''(x) &lt; 0$: the slope is decreasing, so the graph bends downward (<strong>concave</strong> / $\cap$-shaped),</li><li>$f''(x) = 0$ with a sign change: the graph switches curvature at an <strong>inflection point</strong>.</li></ul>
+<h3>1. Domain, symmetry, and zeros</h3>
+<ul><li><strong>Domain:</strong> $D = \mathbb{R}$.</li><li><strong>Symmetry:</strong> $f(-x) = (-x)^4 - 4(-x)^2 = f(x)$, so $f$ is an <strong>even function</strong> (symmetric across the $y$-axis).</li><li><strong>Zeros:</strong> $x^4 - 4x^2 = x^2(x - 2)(x + 2) = 0 \implies x = -2, \, 0, \, 2$.</li></ul>
+<h3>2. First derivative and local extrema</h3>
+<p>Differentiate $f(x)$ and factor:</p>
+<div class="math-block">$$f'(x) = 4x^3 - 8x = 4x(x^2 - 2) = 4x(x - \sqrt{2})(x + \sqrt{2}).$$</div>
+<p>The critical points are $x = -\sqrt{2}$, $x = 0$, and $x = \sqrt{2}$:</p>
+<table><thead><tr><th>Interval / Point</th><th>$(-\infty, -\sqrt{2})$</th><th>$x = -\sqrt{2}$</th><th>$(-\sqrt{2}, 0)$</th><th>$x = 0$</th><th>$(0, \sqrt{2})$</th><th>$x = \sqrt{2}$</th><th>$(\sqrt{2}, \infty)$</th></tr></thead><tbody><tr><td>Sign of $f'(x)$</td><td>$-$</td><td>$0$</td><td>$+$</td><td>$0$</td><td>$-$</td><td>$0$</td><td>$+$</td></tr><tr><td>Behavior of $f(x)$</td><td>$\searrow$</td><td><strong>Min</strong> ($-4$)</td><td>$\nearrow$</td><td><strong>Max</strong> ($0$)</td><td>$\searrow$</td><td><strong>Min</strong> ($-4$)</td><td>$\nearrow$</td></tr></tbody></table>
+<ul><li><strong>Local (and global) minima</strong> at $x = -\sqrt{2}$ and $x = \sqrt{2}$, with value $f(\pm\sqrt{2}) = (\pm\sqrt{2})^4 - 4(\pm\sqrt{2})^2 = 4 - 8 = -4$.</li><li><strong>Local maximum</strong> at $x = 0$, with value $f(0) = 0$.</li></ul>
+<h3>3. Second derivative, convexity, and inflection points</h3>
+<p>Differentiate $f'(x) = 4x^3 - 8x$:</p>
+<div class="math-block">$$f''(x) = 12x^2 - 8 = 4(3x^2 - 2).$$</div>
+<p>Set $f''(x) = 0$:</p>
+<div class="math-block">$$3x^2 - 2 = 0 \implies x^2 = \frac{2}{3} \implies x = -\sqrt{\frac{2}{3}} = -\frac{\sqrt{6}}{3} \approx -0.816 \quad \text{or} \quad x = \sqrt{\frac{2}{3}} = \frac{\sqrt{6}}{3} \approx 0.816.$$</div>
+<table><thead><tr><th>Interval / Point</th><th>$(-\infty, -\sqrt{\frac{2}{3}})$</th><th>$x = -\sqrt{\frac{2}{3}}$</th><th>$(-\sqrt{\frac{2}{3}}, \sqrt{\frac{2}{3}})$</th><th>$x = \sqrt{\frac{2}{3}}$</th><th>$(\sqrt{\frac{2}{3}}, \infty)$</th></tr></thead><tbody><tr><td>Sign of $f''(x)$</td><td>$+$</td><td>$0$</td><td>$-$</td><td>$0$</td><td>$+$</td></tr><tr><td>Curvature of $f(x)$</td><td>$\cup$ convex</td><td><strong>Inflection</strong> ($-\frac{20}{9}$)</td><td>$\cap$ concave</td><td><strong>Inflection</strong> ($-\frac{20}{9}$)</td><td>$\cup$ convex</td></tr></tbody></table>
+<p>Evaluate $f$ at $x = \pm\sqrt{\frac{2}{3}}$:</p>
+<div class="math-block">$$f\left(\pm\sqrt{\frac{2}{3}}\right) = \left(\frac{2}{3}\right)^2 - 4\left(\frac{2}{3}\right) = \frac{4}{9} - \frac{24}{9} = -\frac{20}{9} \approx -2.222.$$</div>
+<ul><li><strong>Convex ($\cup$)</strong> on $\left(-\infty, -\sqrt{\frac{2}{3}}\right]$ and $\left[\sqrt{\frac{2}{3}}, \infty\right)$.</li><li><strong>Concave ($\cap$)</strong> on $\left[-\sqrt{\frac{2}{3}}, \sqrt{\frac{2}{3}}\right]$.</li><li><strong>Inflection points</strong> at $\left(-\sqrt{\frac{2}{3}}, -\frac{20}{9}\right)$ and $\left(\sqrt{\frac{2}{3}}, -\frac{20}{9}\right)$.</li></ul>
+<h3>4. Sketching the graph</h3>
+<p>The graph has a classic symmetric <strong>"W" shape</strong>:</p>
+<ol><li>It descends from $+\infty$ in the second quadrant, crosses the $x$-axis at $(-2, 0)$, and reaches the left valley bottom at $(-\sqrt{2}, -4) \approx (-1.41, -4)$ while remaining convex ($\cup$).</li><li>Rising from $(-\sqrt{2}, -4)$, it passes through the left inflection point $(-\sqrt{\frac{2}{3}}, -\frac{20}{9}) \approx (-0.82, -2.22)$, where it switches to concave ($\cap$) and arches up to touch the origin $(0, 0)$ as a local maximum.</li><li>By even symmetry, it arches back down through the right inflection point $(\sqrt{\frac{2}{3}}, -\frac{20}{9})$ (switching back to convex $\cup$), hits the right valley bottom at $(\sqrt{2}, -4)$, crosses $(2, 0)$, and climbs to $+\infty$.</li></ol>
+<h3>Quick verification</h3>
+<ul><li>Second derivative test at the three critical points:</li><li>$f''(0) = -8 &lt; 0 \implies$ local maximum lies inside the concave region. ✓</li><li>$f''(\pm\sqrt{2}) = 12(2) - 8 = 16 &gt; 0 \implies$ both local minima lie inside the convex regions. ✓</li><li>Complete the square in $u = x^2$: $f(x) = (x^2 - 2)^2 - 4 \ge -4$, with equality at $x^2 = 2 \iff x = \pm\sqrt{2}$. ✓</li></ul>
+<h3>A concrete example</h3>
+<p>Notice where the inflection points sit relative to the extrema:</p>
+<ul><li>Horizontal position: $0 &lt; \sqrt{\frac{2}{3}} \approx 0.82 &lt; \sqrt{2} \approx 1.41$,</li><li>Vertical height: $f(0) = 0 &gt; f\left(\sqrt{\frac{2}{3}}\right) = -\frac{20}{9} \approx -2.22 &gt; f(\sqrt{2}) = -4$.</li></ul>
+<p>Every smooth transition from a local maximum ($\cap$) to a local minimum ($\cup$) must pass through an inflection point in between!</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>For $f(x) = x^4 - 4x^2$, the first derivative $f'(x) = 4x(x^2-2)$ gives a W-shaped graph with two symmetric minima at $(\pm\sqrt{2}, -4)$ and a central local maximum at $(0, 0)$. The second derivative $f''(x) = 4(3x^2-2)$ tells us how the W bends: it is concave ($\cap$) on the middle arch between $x = -\sqrt{2/3}$ and $x = \sqrt{2/3}$, convex ($\cup$) outside that interval, and changes curvature at the two inflection points $(\pm\sqrt{2/3}, -20/9)$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: A Cubic Polynomial</a></li><li><a href="#exercise-10">Exercise 10: Complete Function Analysis</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-9">
+<h2 class="exercise-title">Exercise 9. An Oblique Asymptote</h2>
+<h3>The question</h3>
+<p>Analyze the asymptotes of</p>
+<div class="math-block">$$f(x)=\frac{x^2+1}{x-1}.$$</div>
+<p>Perform polynomial division and explain why the remainder term vanishes for large $|x|$.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>When the degree of the numerator of a rational function is <strong>exactly $1$ greater</strong> than the degree of the denominator, polynomial division splits $f(x)$ into a linear polynomial plus a proper fraction:</p>
+<div class="math-block">$$f(x) = \underbrace{(mx + b)}_{\text{linear part}} + \underbrace{\frac{r}{x - c}}_{\text{remainder term}}.$$</div>
+<p>As $|x| \to \infty$, the remainder term shrinks to zero, meaning the graph of $f(x)$ becomes indistinguishable from the straight line $y = mx + b$ — an <strong>oblique (slant) asymptote</strong>.</p>
+<h3>1. Domain and polynomial division</h3>
+<ul><li><strong>Domain:</strong> $x - 1 \neq 0 \implies D = \mathbb{R} \setminus \{1\} = (-\infty, 1) \cup (1, \infty)$.</li><li><strong>Polynomial division:</strong> Write $x^2 + 1 = (x^2 - 1) + 2 = (x - 1)(x + 1) + 2$ and divide by $x - 1$:</li></ul>
+<div class="math-block">$$f(x) = \frac{x^2 + 1}{x - 1} = \frac{(x - 1)(x + 1) + 2}{x - 1} = x + 1 + \frac{2}{x - 1}.$$</div>
+<p>Here the quotient is the linear function $y = x + 1$ and the remainder term is $\frac{2}{x - 1}$.</p>
+<h3>2. Vertical asymptote</h3>
+<p>At the excluded point $x = 1$, the numerator $x^2 + 1$ approaches $1^2 + 1 = 2 &gt; 0$, while $x - 1 \to 0$:</p>
+<div class="math-block">$$\lim_{x\to 1^-} f(x) = \lim_{x\to 1^-} \left(x + 1 + \frac{2}{x - 1}\right) = 2 + (-\infty) = -\infty,$$</div>
+<div class="math-block">$$\lim_{x\to 1^+} f(x) = \lim_{x\to 1^+} \left(x + 1 + \frac{2}{x - 1}\right) = 2 + (+\infty) = +\infty.$$</div>
+<p>Therefore, <strong>$x = 1$ is a two-sided vertical asymptote</strong>.</p>
+<h3>3. Oblique asymptote and why the remainder vanishes</h3>
+<p>Consider the vertical distance between the graph of $f(x)$ and the line $y = x + 1$:</p>
+<div class="math-block">$$f(x) - (x + 1) = \frac{2}{x - 1}.$$</div>
+<p>Why does $\frac{2}{x - 1}$ vanish for large $|x|$? Because the numerator $2$ is fixed while the denominator $x - 1$ grows without bound in magnitude as $x \to +\infty$ or $x \to -\infty$. Dividing a fixed constant by an arbitrarily large number produces a result arbitrarily close to zero:</p>
+<div class="math-block">$$\lim_{x\to \pm\infty} \bigl(f(x) - (x + 1)\bigr) = \lim_{x\to \pm\infty} \frac{2}{x - 1} = 0.$$</div>
+<p>Hence <strong>$y = x + 1$ is a two-sided oblique asymptote</strong> (and there are no horizontal asymptotes). Moreover, the sign of $\frac{2}{x-1}$ tells us which side of the asymptote the graph is on:</p>
+<ul><li>For $x &gt; 1$: $\frac{2}{x-1} &gt; 0$, so the graph approaches $y = x + 1$ <strong>from above</strong>.</li><li>For $x &lt; 1$: $\frac{2}{x-1} &lt; 0$, so the graph approaches $y = x + 1$ <strong>from below</strong>.</li></ul>
+<h3>Quick verification</h3>
+<p>Use the general limit formulas for an oblique asymptote $y = mx + b$:</p>
+<div class="math-block">$$m = \lim_{x\to\pm\infty} \frac{f(x)}{x} = \lim_{x\to\pm\infty} \frac{x^2 + 1}{x^2 - x} = 1,$$</div>
+<div class="math-block">$$b = \lim_{x\to\pm\infty} \bigl(f(x) - mx\bigr) = \lim_{x\to\pm\infty} \left(\frac{x^2 + 1}{x - 1} - x\right) = \lim_{x\to\pm\infty} \frac{x + 1}{x - 1} = 1.$$</div>
+<p>This gives the exact same line $y = x + 1$. ✓</p>
+<h3>A concrete example</h3>
+<p>Compare $f(x)$ with the line $y = x + 1$ for increasing values of $x$:</p>
+<table><thead><tr><th>$x$</th><th>Line $y = x + 1$</th><th>Remainder $\frac{2}{x-1}$</th><th>Function $f(x)$</th></tr></thead><tbody><tr><td>$11$</td><td>$12$</td><td>$0.2$</td><td>$12.2$</td></tr><tr><td>$101$</td><td>$102$</td><td>$0.02$</td><td>$102.02$</td></tr><tr><td>$1001$</td><td>$1002$</td><td>$0.002$</td><td>$1002.002$</td></tr></tbody></table>
+<p>Each time $x - 1$ is multiplied by $10$, the gap between the curve $f(x)$ and the line $y = x + 1$ shrinks by a factor of $10$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>By dividing $x^2 + 1$ by $x - 1$, we rewrite $f(x)$ as $(x + 1) + \frac{2}{x - 1}$. Near $x = 1$, the fraction $\frac{2}{x-1}$ blows up, creating the vertical asymptote $x = 1$. Far away from the origin ($|x| \to \infty$), dividing $2$ by a huge number $x - 1$ gives almost zero, so the fraction $\frac{2}{x-1}$ disappears and the graph hugs the slant line $y = x + 1$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-3">Exercise 3: A Rational Function</a></li><li><a href="#exercise-4">Exercise 4: A Function with Two Vertical Asymptotes</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-10">
+<h2 class="exercise-title">Exercise 10. Complete Function Analysis</h2>
+<h3>The question</h3>
+<p>Perform a complete analysis of</p>
+<div class="math-block">$$f(x)=\frac{x}{x^2+1}.$$</div>
+<p>Include the domain, symmetry, zeros, limits, monotonicity, extrema, and convexity. Finally, produce a sketch based only on this information.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>A complete function analysis follows a systematic checklist so no geometric detail is missed:</p>
+<ol><li><strong>Algebraic structure</strong> (domain, symmetry, zeros, sign) gives the global frame.</li><li><strong>Limits and asymptotes</strong> show what happens at the edges of the domain.</li><li><strong>First derivative $f'(x)$</strong> determines rising/falling intervals and peaks/valleys.</li><li><strong>Second derivative $f''(x)$</strong> determines how the curve bends and where its curvature switches.</li></ol>
+<h3>1. Domain, symmetry, zeros, and limits</h3>
+<ul><li><strong>Domain:</strong> Since $x^2 + 1 \ge 1 &gt; 0$ for all $x \in \mathbb{R}$, the denominator never vanishes: $D = \mathbb{R}$ (no vertical asymptotes).</li><li><strong>Symmetry:</strong> $f(-x) = \frac{-x}{(-x)^2 + 1} = -\frac{x}{x^2 + 1} = -f(x)$, so $f$ is an <strong>odd function</strong> (symmetric with respect to the origin $(0,0)$).</li><li><strong>Zero and sign:</strong> $f(x) = 0 \iff x = 0$. Since $x^2 + 1 &gt; 0$, $f(x) &gt; 0$ on $(0, \infty)$ and $f(x) &lt; 0$ on $(-\infty, 0)$.</li><li><strong>Limits at infinity and horizontal asymptote:</strong> $$\lim_{x\to \pm\infty} \frac{x}{x^2 + 1} = \lim_{x\to \pm\infty} \frac{\frac{1}{x}}{1 + \frac{1}{x^2}} = 0.$$ Thus <strong>$y = 0$ is a two-sided horizontal asymptote</strong> (approached from above as $x \to +\infty$ and from below as $x \to -\infty$).</li></ul>
+<h3>2. First derivative, monotonicity, and extrema</h3>
+<p>Using the quotient rule:</p>
+<div class="math-block">$$f'(x) = \frac{1\cdot(x^2 + 1) - x\cdot(2x)}{(x^2 + 1)^2} = \frac{1 - x^2}{(x^2 + 1)^2} = \frac{(1 - x)(1 + x)}{(x^2 + 1)^2}.$$</div>
+<p>Since $(x^2 + 1)^2 &gt; 0$ everywhere, the sign of $f'(x)$ matches the sign of $1 - x^2$:</p>
+<table><thead><tr><th>Interval / Point</th><th>$(-\infty, -1)$</th><th>$x = -1$</th><th>$(-1, 1)$</th><th>$x = 1$</th><th>$(1, \infty)$</th></tr></thead><tbody><tr><td>Sign of $f'(x)$</td><td>$-$</td><td>$0$</td><td>$+$</td><td>$0$</td><td>$-$</td></tr><tr><td>Behavior of $f(x)$</td><td>$\searrow$ ($0$ to $-\frac{1}{2}$)</td><td><strong>Min</strong> ($-\frac{1}{2}$)</td><td>$\nearrow$ ($-\frac{1}{2}$ to $\frac{1}{2}$)</td><td><strong>Max</strong> ($\frac{1}{2}$)</td><td>$\searrow$ ($\frac{1}{2}$ to $0$)</td></tr></tbody></table>
+<ul><li><strong>Strictly increasing</strong> on $[-1, 1]$.</li><li><strong>Strictly decreasing</strong> on $(-\infty, -1]$ and $[1, \infty)$.</li><li><strong>Local and global minimum</strong> at $x = -1$ with value $f(-1) = -\frac{1}{2}$.</li><li><strong>Local and global maximum</strong> at $x = 1$ with value $f(1) = \frac{1}{2}$.</li></ul>
+<h3>3. Second derivative, convexity, and inflection points</h3>
+<p>Differentiate $f'(x) = (1 - x^2)(x^2 + 1)^{-2}$:</p>
+<div class="math-block">$$f''(x) = \frac{-2x(x^2 + 1)^2 - (1 - x^2)\cdot 2(x^2 + 1)(2x)}{(x^2 + 1)^4} = \frac{2x\bigl(-(x^2 + 1) - 2(1 - x^2)\bigr)}{(x^2 + 1)^3} = \frac{2x(x^2 - 3)}{(x^2 + 1)^3}.$$</div>
+<p>Factoring the numerator gives $2x(x - \sqrt{3})(x + \sqrt{3}) = 0$, so $f''(x) = 0$ at $x = -\sqrt{3}, \, 0, \, \sqrt{3}$:</p>
+<table><thead><tr><th>Interval / Point</th><th>$(-\infty, -\sqrt{3})$</th><th>$x = -\sqrt{3}$</th><th>$(-\sqrt{3}, 0)$</th><th>$x = 0$</th><th>$(0, \sqrt{3})$</th><th>$x = \sqrt{3}$</th><th>$(\sqrt{3}, \infty)$</th></tr></thead><tbody><tr><td>Sign of $f''(x)$</td><td>$-$</td><td>$0$</td><td>$+$</td><td>$0$</td><td>$-$</td><td>$0$</td><td>$+$</td></tr><tr><td>Curvature of $f(x)$</td><td>$\cap$ concave</td><td><strong>Infl.</strong> ($-\frac{\sqrt{3}}{4}$)</td><td>$\cup$ convex</td><td><strong>Infl.</strong> ($0$)</td><td>$\cap$ concave</td><td><strong>Infl.</strong> ($\frac{\sqrt{3}}{4}$)</td><td>$\cup$ convex</td></tr></tbody></table>
+<ul><li><strong>Convex ($\cup$)</strong> on $[-\sqrt{3}, 0]$ and $[\sqrt{3}, \infty)$.</li><li><strong>Concave ($\cap$)</strong> on $(-\infty, -\sqrt{3}]$ and $[0, \sqrt{3}]$.</li><li><strong>Three inflection points:</strong> $\left(-\sqrt{3}, -\frac{\sqrt{3}}{4}\right) \approx (-1.73, -0.43)$, $(0, 0)$, and $\left(\sqrt{3}, \frac{\sqrt{3}}{4}\right) \approx (1.73, 0.43)$.</li></ul>
+<h3>4. Sketching the graph</h3>
+<ol><li>Moving from $-\infty$, the graph starts just below the $x$-axis ($y = 0$), decreasing and concave ($\cap$) until the left inflection point $(-\sqrt{3}, -\frac{\sqrt{3}}{4})$.</li><li>It switches to convex ($\cup$), reaches its global minimum at $(-1, -\frac{1}{2})$, and turns upward toward the origin $(0, 0)$ (where it crosses with slope $f'(0) = 1$).</li><li>Passing through the inflection point $(0, 0)$, it becomes concave ($\cap$), climbs to its global maximum at $(1, \frac{1}{2})$, and begins descending.</li><li>At the right inflection point $(\sqrt{3}, \frac{\sqrt{3}}{4})$, it switches back to convex ($\cup$) so it can flatten out smoothly and approach $y = 0$ from above as $x \to +\infty$.</li></ol>
+<h3>Quick verification</h3>
+<ul><li>Algebraic bound: since $(x \mp 1)^2 \ge 0 \implies x^2 + 1 \ge \pm 2x$, dividing by $2(x^2 + 1) &gt; 0$ directly proves $-\frac{1}{2} \le \frac{x}{x^2+1} \le \frac{1}{2}$, with equality only at $x = \pm 1$. ✓</li><li>Odd symmetry check: if $f(x)$ is odd, $f'(x)$ must be even ($f'(-x) = f'(x)$) and $f''(x)$ must be odd ($f''(-x) = -f''(x)$), which matches $f'(x) = \frac{1-x^2}{(x^2+1)^2}$ and $f''(x) = \frac{2x(x^2-3)}{(x^2+1)^3}$. ✓</li></ul>
+<h3>A concrete example</h3>
+<p>Evaluating $f$ at $x = 0, \frac{1}{2}, 1, 2, 3$ shows the rise to $x = 1$ and the gentle decay afterward:</p>
+<div class="math-block">$$f(0) = 0, \quad f\left(\frac{1}{2}\right) = \frac{2}{5} = 0.4, \quad f(1) = \frac{1}{2} = 0.5, \quad f(2) = \frac{2}{5} = 0.4, \quad f(3) = \frac{3}{10} = 0.3.$$</div>
+<p>Notice that $f(2) = f\left(\frac{1}{2}\right) = 0.4$ because $f\left(\frac{1}{x}\right) = \frac{1/x}{1/x^2 + 1} = \frac{x}{1 + x^2} = f(x)$!</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>The function $f(x) = \frac{x}{x^2+1}$ is defined everywhere, odd, and approaches $y = 0$ at $\pm\infty$. Its first derivative $f'(x) = \frac{1-x^2}{(x^2+1)^2}$ shows that $f$ increases on $[-1, 1]$ from its minimum $( -1, -\frac{1}{2} )$ through the origin to its maximum $(1, \frac{1}{2})$, and decreases back toward zero outside $[-1, 1]$. The second derivative $f''(x) = \frac{2x(x^2-3)}{(x^2+1)^3}$ pinpoints the three inflection points at $x = 0$ and $x = \pm\sqrt{3}$ where the S-wave flips curvature.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-4">Exercise 4: A Function with Two Vertical Asymptotes</a></li><li><a href="#exercise-8">Exercise 8: The Second Derivative</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-11">
+<h2 class="exercise-title">Exercise 11. A Parameter and the Number of Extrema</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$f_a(x)=x^3-3ax$$</div>
+<p>depending on $a$, determine the number of critical points and their character. Separate the parameter cases and justify why the structure of the graph changes.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>When a function depends on a parameter $a \in \mathbb{R}$, its derivative $f_a'(x)$ is a family of quadratics whose discriminant depends on $a$. A critical point produces a local extremum <strong>only if $f_a'(x)$ changes sign</strong> across it:</p>
+<ul><li>Two simple roots of $f_a'(x)$ $\implies$ two sign changes $\implies$ two local extrema,</li><li>One double root of $f_a'(x)$ $\implies$ no sign change $\implies$ a horizontal inflection point (no extrema),</li><li>No real roots of $f_a'(x)$ $\implies$ no critical points $\implies$ strictly monotonic everywhere.</li></ul>
+<h3>1. Derivative of the family $f_a(x)$</h3>
+<p>For every $a \in \mathbb{R}$, the domain of $f_a(x) = x^3 - 3ax$ is $\mathbb{R}$, and its derivative is</p>
+<div class="math-block">$$f_a'(x) = 3x^2 - 3a = 3(x^2 - a).$$</div>
+<p>The equation for critical points is</p>
+<div class="math-block">$$f_a'(x) = 0 \iff x^2 = a.$$</div>
+<p>Since $x^2 \ge 0$ for all real $x$, the number of real solutions depends on the sign of $a$: $a &lt; 0$, $a = 0$, or $a &gt; 0$.</p>
+<h3>2. Case-by-case analysis of the parameter $a$</h3>
+<h4>Case 1: $a &lt; 0$ (no critical points, no extrema)</h4>
+<p>When $a &lt; 0$, $-a &gt; 0$, so $x^2 - a \ge -a &gt; 0$ for every $x \in \mathbb{R}$.</p>
+<ul><li><strong>Number of critical points:</strong> $0$.</li><li><strong>Monotonicity and extrema:</strong> $f_a'(x) = 3(x^2 - a) &gt; 0$ for all $x \in \mathbb{R}$, so $f_a$ is <strong>strictly increasing on all of $\mathbb{R}$</strong> and has <strong>no local extrema</strong>.</li></ul>
+<h4>Case 2: $a = 0$ (one critical point, no extrema)</h4>
+<p>When $a = 0$, $f_0(x) = x^3$ and $f_0'(x) = 3x^2$.</p>
+<ul><li><strong>Number of critical points:</strong> $1$, at $x = 0$.</li><li><strong>Character of $x = 0$:</strong> Since $3x^2 \ge 0$ on both sides of $x = 0$ ($+$ on $(-\infty, 0)$ and $+$ on $(0, \infty)$), $f_0'(x)$ <strong>does not change sign</strong>. Thus $f_0$ is strictly increasing on $\mathbb{R}$, and $x = 0$ is a <strong>saddle / horizontal inflection point</strong>, not a local extremum.</li></ul>
+<h4>Case 3: $a &gt; 0$ (two critical points, two local extrema)</h4>
+<p>When $a &gt; 0$, we can factor $f_a'(x) = 3(x - \sqrt{a})(x + \sqrt{a})$.</p>
+<ul><li><strong>Number of critical points:</strong> $2$, at $x = -\sqrt{a}$ and $x = \sqrt{a}$.</li></ul>
+<table><thead><tr><th>Interval / Point</th><th>$(-\infty, -\sqrt{a})$</th><th>$x = -\sqrt{a}$</th><th>$(-\sqrt{a}, \sqrt{a})$</th><th>$x = \sqrt{a}$</th><th>$(\sqrt{a}, \infty)$</th></tr></thead><tbody><tr><td>Sign of $f_a'(x)$</td><td>$+$</td><td>$0$</td><td>$-$</td><td>$0$</td><td>$+$</td></tr><tr><td>Behavior of $f_a(x)$</td><td>$\nearrow$</td><td><strong>Local max</strong> ($2a\sqrt{a}$)</td><td>$\searrow$</td><td><strong>Local min</strong> ($-2a\sqrt{a}$)</td><td>$\nearrow$</td></tr></tbody></table>
+<ul><li><strong>Local maximum</strong> at $x = -\sqrt{a}$ with value $f_a(-\sqrt{a}) = (-a\sqrt{a}) - 3a(-\sqrt{a}) = 2a\sqrt{a}$.</li><li><strong>Local minimum</strong> at $x = \sqrt{a}$ with value $f_a(\sqrt{a}) = a\sqrt{a} - 3a\sqrt{a} = -2a\sqrt{a}$.</li></ul>
+<h3>3. Why the structure of the graph changes</h3>
+<p>Write $f_a(x) = x^3 + (-3a)x$ as the sum of $x^3$ (which always pulls upward) and the linear term $-3ax$:</p>
+<ul><li>For <strong>$a &lt; 0$</strong>, the linear term $-3ax$ has a <strong>positive slope</strong> ($-3a &gt; 0$), so both $x^3$ and $-3ax$ pull upward together; the graph rises everywhere without ever flattening out.</li><li>For <strong>$a = 0$</strong>, the linear term disappears; the graph flattens momentarily at the origin ($f_0'(0) = 0$) before continuing upward.</li><li>For <strong>$a &gt; 0$</strong>, the linear term $-3ax$ has a <strong>negative slope</strong> ($-3a &lt; 0$). Near $x = 0$ where $|x|$ is small, $-3ax$ dominates $x^3$ and forces the graph downward on $[-\sqrt{a}, \sqrt{a}]$; for $|x| &gt; \sqrt{a}$, $x^3$ takes back control, creating a local maximum and a local minimum that coalesce and vanish as $a \to 0^+$.</li></ul>
+<h3>Quick verification</h3>
+<p>Check the second derivative $f_a''(x) = 6x$ for $a &gt; 0$:</p>
+<ul><li>$f_a''(-\sqrt{a}) = -6\sqrt{a} &lt; 0 \implies$ local maximum at $x = -\sqrt{a}$. ✓</li><li>$f_a''(\sqrt{a}) = 6\sqrt{a} &gt; 0 \implies$ local minimum at $x = \sqrt{a}$. ✓</li><li>For $a = 0$, $f_0''(0) = 0$ and $f_0'''(0) = 6 \neq 0$, confirming an inflection point at $x = 0$. ✓</li></ul>
+<h3>A concrete example</h3>
+<p>Compare three representative members of the family ($a = -1, \, 0, \, 1$):</p>
+<ul><li><strong>$a = -1$:</strong> $f_{-1}(x) = x^3 + 3x$, $f_{-1}'(x) = 3(x^2 + 1) \ge 3 &gt; 0$ (always rising, minimum slope is $3$).</li><li><strong>$a = 0$:</strong> $f_0(x) = x^3$, $f_0'(x) = 3x^2 \ge 0$ (always rising, pauses with slope $0$ at $x = 0$).</li><li><strong>$a = 1$:</strong> $f_1(x) = x^3 - 3x$, $f_1'(x) = 3(x - 1)(x + 1)$ (local max $2$ at $x = -1$, local min $-2$ at $x = 1$).</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Differentiating $f_a(x) = x^3 - 3ax$ gives $f_a'(x) = 3(x^2 - a)$, so critical points satisfy $x^2 = a$. When $a &lt; 0$, $x^2 = a$ has no real solutions and the cubic is strictly increasing. When $a = 0$, the two roots merge into a double root at $x = 0$, where $f_0'(x) = 3x^2$ doesn't change sign, giving a flat inflection point. When $a &gt; 0$, $x^2 = a$ splits into two simple roots $x = \pm\sqrt{a}$ where $f_a'$ changes sign, creating a local maximum at $-\sqrt{a}$ and a local minimum at $+\sqrt{a}$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: A Cubic Polynomial</a></li><li><a href="#exercise-15">Exercise 15: Find the Error in the Monotonicity Analysis</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-12">
+<h2 class="exercise-title">Exercise 12. A Function with an Absolute Value</h2>
+<h3>The question</h3>
+<p>Analyze</p>
+<div class="math-block">$$f(x)=|x^2-4|.$$</div>
+<p>First sketch $x^2-4$, then explain the effect of the absolute value. Indicate the points where the derivative does not exist and justify the reason geometrically.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>For any function $g(x)$, taking the absolute value $f(x) = |g(x)|$ leaves the graph unchanged wherever $g(x) \ge 0$, and <strong>reflects the negative parts across the $x$-axis</strong> wherever $g(x) &lt; 0$. Whenever the original graph $g(x)$ crosses the $x$-axis at a non-zero angle ($g(x_0) = 0$ with $g'(x_0) \neq 0$), reflecting that crossing creates a sharp corner (a V-shaped kink) where the left-hand and right-hand slopes are opposites, so the derivative fails to exist there.</p>
+<h3>1. Sketching $g(x) = x^2 - 4$ and applying the absolute value</h3>
+<ul><li><strong>The base parabola $g(x) = x^2 - 4$:</strong> Its domain is $\mathbb{R}$, it is even, has vertex $(0, -4)$, and crosses the $x$-axis at $x = -2$ and $x = 2$.</li><li>$x^2 - 4 \ge 0$ on $(-\infty, -2] \cup [2, \infty)$,</li><li>$x^2 - 4 &lt; 0$ on $(-2, 2)$.</li><li><strong>Effect of the absolute value:</strong> We write $f(x) = |x^2 - 4|$ piecewise: $$f(x) = \begin{cases} x^2 - 4, &amp; \text{if } x \in (-\infty, -2] \cup [2, \infty), \\ 4 - x^2, &amp; \text{if } x \in (-2, 2). \end{cases}$$ Geometrically, the outer arms for $|x| \ge 2$ stay untouched, while the U-shaped dip between $x = -2$ and $x = 2$ (with vertex $(0, -4)$) is flipped upside down across the $x$-axis into a dome with peak $(0, 4)$.</li></ul>
+<h3>2. Points where the derivative does not exist</h3>
+<p>On the open intervals away from $x = \pm 2$, we can differentiate each formula directly:</p>
+<div class="math-block">$$f'(x) = \begin{cases} 2x, &amp; \text{if } x \in (-\infty, -2) \cup (2, \infty), \\ -2x, &amp; \text{if } x \in (-2, 2). \end{cases}$$</div>
+<p>At the junction points $x = -2$ and $x = 2$, compare the one-sided derivatives:</p>
+<ul><li><strong>At $x = 2$:</strong> $$f'_-(2) = \lim_{x\to 2^-} (-2x) = -4, \qquad f'_+(2) = \lim_{x\to 2^+} (2x) = +4.$$ Since $-4 \neq +4$, <strong>$f'(2)$ does not exist</strong>.</li><li><strong>At $x = -2$:</strong> $$f'_-(-2) = \lim_{x\to -2^-} (2x) = -4, \qquad f'_+(-2) = \lim_{x\to -2^+} (-2x) = +4.$$ Since $-4 \neq +4$, <strong>$f'(-2)$ does not exist</strong>.</li></ul>
+<p><strong>Geometric justification:</strong> The parabola $y = x^2 - 4$ crosses the $x$-axis at $x = \pm 2$ with steep slopes $\pm 4$ rather than tangentially. Reflecting the underside across the $x$-axis folds the tangent line of slope $-4$ into a half-tangent of slope $+4$, producing two <strong>sharp corners (cusps/kinks)</strong> at $(-2, 0)$ and $(2, 0)$ where no single tangent line exists.</p>
+<h3>3. Complete monotonicity and extrema of $f(x) = |x^2 - 4|$</h3>
+<table><thead><tr><th>Interval / Point</th><th>$(-\infty, -2)$</th><th>$x = -2$</th><th>$(-2, 0)$</th><th>$x = 0$</th><th>$(0, 2)$</th><th>$x = 2$</th><th>$(2, \infty)$</th></tr></thead><tbody><tr><td>$f'(x)$</td><td>$2x &lt; 0$</td><td><strong>DNE</strong> (corner)</td><td>$-2x &gt; 0$</td><td>$0$</td><td>$-2x &lt; 0$</td><td><strong>DNE</strong> (corner)</td><td>$2x &gt; 0$</td></tr><tr><td>Behavior of $f(x)$</td><td>$\searrow$</td><td><strong>Min</strong> ($0$)</td><td>$\nearrow$</td><td><strong>Max</strong> ($4$)</td><td>$\searrow$</td><td><strong>Min</strong> ($0$)</td><td>$\nearrow$</td></tr></tbody></table>
+<ul><li><strong>Strictly decreasing</strong> on $(-\infty, -2]$ and $[0, 2]$.</li><li><strong>Strictly increasing</strong> on $[-2, 0]$ and $[2, \infty)$.</li><li><strong>Local (and global) minima</strong> at $x = -2$ and $x = 2$ with value $f(\pm 2) = 0$ — notice these occur at points where $f'(x)$ <strong>does not exist</strong>, not where $f'(x) = 0$!</li><li><strong>Local maximum</strong> at $x = 0$ with value $f(0) = 4$ (where $f'(0) = 0$).</li></ul>
+<h3>Quick verification</h3>
+<ul><li>Check non-negativity: since $|x^2 - 4| \ge 0$ for all $x \in \mathbb{R}$ and $f(\pm 2) = 0$, the points $x = \pm 2$ are guaranteed to be global minima even without derivatives. ✓</li><li>Check difference quotient directly at $x = 2$: $$\lim_{h\to 0^+} \frac{|(2+h)^2 - 4| - 0}{h} = \lim_{h\to 0^+} \frac{4h + h^2}{h} = 4, \qquad \lim_{h\to 0^-} \frac{|(2+h)^2 - 4| - 0}{h} = \lim_{h\to 0^-} \frac{-(4h + h^2)}{h} = -4. \quad \checkmark$$</li></ul>
+<h3>A concrete example</h3>
+<p>Look at the secant slopes over a tiny step of $0.1$ on either side of $x = 2$:</p>
+<ul><li>Just to the left ($x = 1.9$): $f(1.9) = |3.61 - 4| = 0.39$, so $\frac{f(2) - f(1.9)}{2 - 1.9} = \frac{0 - 0.39}{0.1} = -3.9 \approx -4$.</li><li>Just to the right ($x = 2.1$): $f(2.1) = |4.41 - 4| = 0.41$, so $\frac{f(2.1) - f(2)}{2.1 - 2} = \frac{0.41 - 0}{0.1} = +4.1 \approx +4$.</li></ul>
+<p>The graph plunges into $(2, 0)$ with slope $-4$ and immediately bounces up with slope $+4$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>To graph $f(x) = |x^2 - 4|$, start with the parabola $y = x^2 - 4$ and flip the part below the $x$-axis (on $(-2, 2)$) upward so the vertex $(0, -4)$ becomes a local maximum at $(0, 4)$. Because the original parabola crosses the $x$-axis at $x = \pm 2$ at a steep angle (slope $\pm 4$), folding the negative part up creates sharp V-shaped corners at $(-2, 0)$ and $(2, 0)$. At those two corners the left slope is $-4$ and the right slope is $+4$, so the derivative does not exist there — even though both points are global minima!</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-2">Exercise 2: A Parabola from the Perspective of the Derivative</a></li><li><a href="#exercise-8">Exercise 8: The Second Derivative</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-13">
+<h2 class="exercise-title">Exercise 13. A Logarithm and an Asymptote</h2>
+<h3>The question</h3>
+<p>Perform a complete analysis of</p>
+<div class="math-block">$$f(x)=\frac{\ln x}{x},\qquad x&gt;0.$$</div>
+<p>Find the maximum and the behavior at the ends of the domain. Explain which information is necessary for a correct sketch.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Just as $xe^{-x}$ pits linear growth against exponential decay, $f(x) = \frac{\ln x}{x}$ pits slow logarithmic growth in the numerator against faster linear growth in the denominator:</p>
+<ul><li>Near $x = 0^+$, $\ln x \to -\infty$ and dividing by a tiny positive $x$ makes it plunge to $-\infty$ even faster.</li><li>For large $x$, $\ln x$ grows much more slowly than $x$, so the ratio $\frac{\ln x}{x}$ peaks and then decays back toward $0$.</li></ul>
+<h3>1. Domain, zero, and sign</h3>
+<ul><li><strong>Domain:</strong> $D = (0, \infty)$ (since $\ln x$ requires $x &gt; 0$).</li><li><strong>Zero and sign:</strong> Since $x &gt; 0$, $f(x)$ has the same sign as $\ln x$:</li><li>$f(1) = \frac{\ln 1}{1} = 0$ is the unique zero ($x$-intercept at $(1, 0)$),</li><li>$f(x) &lt; 0$ on $(0, 1)$,</li><li>$f(x) &gt; 0$ on $(1, \infty)$.</li></ul>
+<h3>2. Limits at the ends of the domain and asymptotes</h3>
+<ul><li><strong>Right-hand limit at $x = 0^+$ (vertical asymptote):</strong> As $x \to 0^+$, $\ln x \to -\infty$ and $\frac{1}{x} \to +\infty$, so their product is not indeterminate: $$\lim_{x\to 0^+} \frac{\ln x}{x} = (-\infty)\cdot(+\infty) = -\infty.$$ Thus <strong>$x = 0$ (the $y$-axis) is a vertical asymptote</strong>.</li><li><strong>Limit as $x \to \infty$ (horizontal asymptote):</strong> This is of type $\frac{\infty}{\infty}$. By L'Hôpital's rule (or standard growth rates): $$\lim_{x\to\infty} \frac{\ln x}{x} \stackrel{\text{H}}{=} \lim_{x\to\infty} \frac{\frac{1}{x}}{1} = 0.$$ Thus <strong>$y = 0$ (the positive $x$-axis) is a horizontal asymptote</strong> as $x \to \infty$, approached from above.</li></ul>
+<h3>3. First and second derivatives: maximum, monotonicity, and convexity</h3>
+<p>Using the quotient rule on $(0, \infty)$:</p>
+<div class="math-block">$$f'(x) = \frac{\frac{1}{x}\cdot x - (\ln x)\cdot 1}{x^2} = \frac{1 - \ln x}{x^2}.$$</div>
+<p>Since $x^2 &gt; 0$, the sign of $f'(x)$ is the sign of $1 - \ln x$:</p>
+<div class="math-block">$$1 - \ln x = 0 \iff \ln x = 1 \iff x = e \approx 2.718.$$</div>
+<table><thead><tr><th>Interval / Point</th><th>$(0, e)$</th><th>$x = e$</th><th>$(e, \infty)$</th></tr></thead><tbody><tr><td>Sign of $f'(x)$</td><td>$+$</td><td>$0$</td><td>$-$</td></tr><tr><td>Behavior of $f(x)$</td><td>$\nearrow$ ($-\infty$ to $\frac{1}{e}$)</td><td><strong>Global max</strong> ($\frac{1}{e}$)</td><td>$\searrow$ ($\frac{1}{e}$ to $0$)</td></tr></tbody></table>
+<ul><li><strong>Strictly increasing</strong> on $(0, e]$ and <strong>strictly decreasing</strong> on $[e, \infty)$.</li><li><strong>Global and local maximum</strong> at $x = e$ with value $f(e) = \frac{\ln e}{e} = \frac{1}{e} \approx 0.368$.</li></ul>
+<p>Differentiating $f'(x) = (1 - \ln x)x^{-2}$ gives the second derivative:</p>
+<div class="math-block">$$f''(x) = \frac{-\frac{1}{x}\cdot x^2 - (1 - \ln x)\cdot 2x}{x^4} = \frac{2\ln x - 3}{x^3}.$$</div>
+<p>Setting $2\ln x - 3 = 0$ gives $\ln x = \frac{3}{2} \implies x = e^{3/2} = e\sqrt{e} \approx 4.482$:</p>
+<ul><li><strong>Concave ($\cap$)</strong> on $(0, e^{3/2}]$,</li><li><strong>Convex ($\cup$)</strong> on $[e^{3/2}, \infty)$,</li><li><strong>Inflection point</strong> at $\left(e^{3/2}, \frac{3}{2e^{3/2}}\right) \approx (4.48, 0.335)$.</li></ul>
+<h3>4. Which information is necessary for a correct sketch?</h3>
+<p>To avoid drawing a misleading graph, five pieces of information are indispensable:</p>
+<ol><li><strong>The domain $(0, \infty)$ and vertical asymptote $x = 0$</strong> ($\lim_{x\to 0^+} f(x) = -\infty$), which confines the graph to the right of the $y$-axis.</li><li><strong>The unique zero $(1, 0)$</strong>, where the curve crosses from below the $x$-axis to above it.</li><li><strong>The global maximum at $(e, \frac{1}{e})$</strong>, where the curve stops rising and turns downward.</li><li><strong>The horizontal asymptote $\lim_{x\to\infty} f(x) = 0$</strong>, which shows the curve does not dive back below the $x$-axis after $x = e$, but instead stays positive and approaches $y = 0$ from above.</li><li><strong>The inflection point at $x = e^{3/2}$</strong>, where the curve switches from concave ($\cap$) to convex ($\cup$) so it can flatten out along $y = 0$.</li></ol>
+<h3>Quick verification</h3>
+<ul><li>Substitute $t = \ln x$ (so $x = e^t$): then $f(e^t) = \frac{t}{e^t} = te^{-t}$, which is the exact function from Exercise 5! Since $te^{-t}$ attains its maximum $\frac{1}{e}$ at $t = 1$ and has an inflection point at $t = 2$ (for $t$ as the variable, whereas in $x$-coordinates $f''(x) = 0$ at $t = \frac{3}{2}$), the maximum $\frac{1}{e}$ at $\ln x = 1 \iff x = e$ is confirmed immediately. ✓</li></ul>
+<h3>A concrete example</h3>
+<p>A famous bonus of analyzing $f(x) = \frac{\ln x}{x}$ is that it compares $a^b$ vs. $b^a$ without a calculator! For instance, which is larger: $e^\pi$ or $\pi^e$?</p>
+<p>Since $\pi &gt; e$ and $f(x) = \frac{\ln x}{x}$ is strictly decreasing on $[e, \infty)$, we have</p>
+<div class="math-block">$$f(e) &gt; f(\pi) \implies \frac{\ln e}{e} &gt; \frac{\ln \pi}{\pi} \implies \pi \ln e &gt; e \ln \pi \implies \ln(e^\pi) &gt; \ln(\pi^e) \implies e^\pi &gt; \pi^e.$$</div>
+<h3>How I would explain this in class</h3>
+<blockquote><p>On $(0, \infty)$, the function $f(x) = \frac{\ln x}{x}$ starts at $-\infty$ along the vertical asymptote $x = 0$, crosses the $x$-axis at $(1, 0)$, and climbs to a single global maximum of $\frac{1}{e}$ at $x = e$ where $f'(x) = \frac{1 - \ln x}{x^2} = 0$. For $x &gt; e$, $\ln x &gt; 1$ makes the derivative negative, so the graph decreases, flips from concave to convex at $x = e^{3/2}$, and glides down toward the horizontal asymptote $y = 0$ from above.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-5">Exercise 5: An Exponential Function with a Maximum</a></li><li><a href="#exercise-6">Exercise 6: A Logarithmic Function</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-14">
+<h2 class="exercise-title">Exercise 14. Reconstructing Information from the Derivative</h2>
+<h3>The question</h3>
+<p>It is known that</p>
+<div class="math-block">$$f'(x)=(x-1)(x+2).$$</div>
+<p>Determine the monotonicity and the locations of the extrema, and sketch a possible qualitative shape of the function. Then, for</p>
+<div class="math-block">$$g(x)=\frac{x^3}{3}+\frac{x^2}{2}-2x$$</div>
+<p>verify that $g'(x)=(x-1)(x+2)$, and compare the specific graph with the earlier qualitative sketch.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>The derivative $f'(x)$ already contains the <strong>complete recipe for the shape</strong> of $f(x)$: where it rises, where it falls, where its peaks and valleys are located horizontally, and even where its inflection point sits (at the vertex of $f'(x)$). The only thing $f'(x)$ does not fix is the vertical height: adding a constant $C$ shifts the graph of $f(x)$ up or down without changing $f'(x)$ at all.</p>
+<h3>1. Monotonicity and locations of extrema from $f'(x)$</h3>
+<p>We are given $f'(x) = (x - 1)(x + 2)$ on $\mathbb{R}$.</p>
+<ul><li><strong>Critical points ($f'(x) = 0$):</strong> $x = -2$ and $x = 1$.</li><li><strong>Sign of $f'(x)$:</strong> Because $f'(x) = x^2 + x - 2$ is an upward-opening parabola (leading coefficient $+1 &gt; 0$), it is positive outside its roots and negative between them:</li></ul>
+<table><thead><tr><th>Interval / Point</th><th>$(-\infty, -2)$</th><th>$x = -2$</th><th>$(-2, 1)$</th><th>$x = 1$</th><th>$(1, \infty)$</th></tr></thead><tbody><tr><td>Sign of $f'(x)$</td><td>$+$</td><td>$0$</td><td>$-$</td><td>$0$</td><td>$+$</td></tr><tr><td>Behavior of $f(x)$</td><td>$\nearrow$ increasing</td><td><strong>Local max</strong></td><td>$\searrow$ decreasing</td><td><strong>Local min</strong></td><td>$\nearrow$ increasing</td></tr></tbody></table>
+<ul><li><strong>Strictly increasing</strong> on $(-\infty, -2]$ and $[1, \infty)$.</li><li><strong>Strictly decreasing</strong> on $[-2, 1]$.</li><li><strong>Local maximum</strong> at $x = -2$ ($f'$ changes from $+$ to $-$).</li><li><strong>Local minimum</strong> at $x = 1$ ($f'$ changes from $-$ to $+$).</li><li><strong>Inflection point location:</strong> Since $f''(x) = (x^2 + x - 2)' = 2x + 1 = 0$ at $x = -\frac{1}{2}$ (halfway between $-2$ and $1$), $f$ is concave ($\cap$) on $(-\infty, -\frac{1}{2}]$ and convex ($\cup$) on $[-\frac{1}{2}, \infty)$.</li></ul>
+<h3>2. Qualitative sketch of $f(x)$</h3>
+<p>Without knowing the constant of integration $C$, any valid sketch of $f(x)$ is an S-shaped cubic curve that:</p>
+<ol><li>Rises from $-\infty$ on the left to a rounded peak on the vertical line $x = -2$,</li><li>Falls across the interval $[-2, 1]$, passing through an inflection point at $x = -\frac{1}{2}$,</li><li>Bottoms out at a rounded valley on the vertical line $x = 1$, and then rises to $+\infty$ on the right.</li></ol>
+<h3>3. Verifying $g'(x)$ and comparing with the specific graph of $g(x)$</h3>
+<p>Differentiate $g(x) = \frac{x^3}{3} + \frac{x^2}{2} - 2x$ term by term and factor:</p>
+<div class="math-block">$$g'(x) = \frac{3x^2}{3} + \frac{2x}{2} - 2 = x^2 + x - 2 = (x - 1)(x + 2).$$</div>
+<p>Thus $g(x)$ is the specific antiderivative of $f'(x)$ satisfying $g(0) = 0$. Now we can pin down the exact vertical coordinates of the key points for $g(x)$:</p>
+<ul><li><strong>Local maximum at $x = -2$:</strong> $$g(-2) = \frac{(-2)^3}{3} + \frac{(-2)^2}{2} - 2(-2) = -\frac{8}{3} + 2 + 4 = \frac{10}{3} \approx 3.33.$$</li><li><strong>Inflection point at $x = -\frac{1}{2}$:</strong> $$g\left(-\frac{1}{2}\right) = \frac{-1/8}{3} + \frac{1/4}{2} - 2\left(-\frac{1}{2}\right) = -\frac{1}{24} + \frac{1}{8} + 1 = \frac{13}{12} \approx 1.08.$$</li><li><strong>Origin ($y$-intercept):</strong> $g(0) = 0$.</li><li><strong>Local minimum at $x = 1$:</strong> $$g(1) = \frac{1}{3} + \frac{1}{2} - 2 = -\frac{7}{6} \approx -1.17.$$</li></ul>
+<p><strong>Comparison:</strong> The graph of $g(x)$ has the <strong>exact same shape, monotonicity intervals, and horizontal extremum locations ($x = -2$ and $x = 1$)</strong> as our qualitative sketch; specifying $g(x)$ simply fixes the vertical position so the curve passes through $(0, 0)$, placing the peak at $(-2, \frac{10}{3})$ and the trough at $(1, -\frac{7}{6})$.</p>
+<h3>Quick verification</h3>
+<p>Notice that the vertical drop from the local maximum to the local minimum is</p>
+<div class="math-block">$$g(-2) - g(1) = \frac{10}{3} - \left(-\frac{7}{6}\right) = \frac{27}{6} = \frac{9}{2} = 4.5,$$</div>
+<p>and the inflection point height is the exact midpoint of the extremum heights:</p>
+<div class="math-block">$$\frac{g(-2) + g(1)}{2} = \frac{\frac{10}{3} - \frac{7}{6}}{2} = \frac{\frac{13}{6}}{2} = \frac{13}{12} = g\left(-\frac{1}{2}\right). \quad \checkmark$$</div>
+<h3>A concrete example</h3>
+<p>Compare $g(x)$ with $h(x) = g(x) + 5 = \frac{x^3}{3} + \frac{x^2}{2} - 2x + 5$:</p>
+<ul><li>Both have the exact same derivative $h'(x) = g'(x) = (x - 1)(x + 2)$.</li><li>Both have their local maximum at $x = -2$ and local minimum at $x = 1$.</li><li>For $g(x)$, the extrema are $(-2, \frac{10}{3})$ and $(1, -\frac{7}{6})$ (one above and one below the $x$-axis, so $g$ has $3$ real zeros).</li><li>For $h(x)$, the extrema are $(-2, \frac{25}{3})$ and $(1, \frac{23}{6})$ (both above the $x$-axis, so $h$ has only $1$ real zero!).</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>From $f'(x) = (x-1)(x+2)$ alone, we know the derivative is an upward-opening parabola with roots at $x = -2$ and $x = 1$. So any function $f$ with this derivative increases up to a local maximum at $x = -2$, decreases on $[-2, 1]$, and increases from a local minimum at $x = 1$. Checking $g(x) = \frac{x^3}{3} + \frac{x^2}{2} - 2x$ confirms $g'(x) = x^2 + x - 2 = (x-1)(x+2)$, which locks that qualitative cubic shape into place vertically with passing through $(0,0)$, peak $(-2, \frac{10}{3})$, and minimum $(1, -\frac{7}{6})$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: A Cubic Polynomial</a></li><li><a href="#exercise-15">Exercise 15: Find the Error in the Monotonicity Analysis</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-15">
+<h2 class="exercise-title">Exercise 15. Find the Error in the Monotonicity Analysis</h2>
+<h3>The question</h3>
+<p>For the function $f(x)=x^3-3x$, the derivative was correctly computed as</p>
+<div class="math-block">$$f'(x)=3(x-1)(x+1).$$</div>
+<p>However, a student wrote the following conclusion:</p>
+<blockquote><p>The derivative is positive between its zeros and negative outside them. Therefore, the function is decreasing on $(-\infty,-1)\cup(1,\infty)$, increasing on $(-1,1)$, has a local minimum at $x=-1$, and a local maximum at $x=1$.</p></blockquote>
+<ol><li>Without differentiating again, explain why merely identifying the zeros of the derivative does not justify the stated sign chart, and find the error in the student's reasoning.</li><li>Construct the correct sign chart for $f'(x)$.</li><li>Give the correct intervals of monotonicity and the character of the extrema.</li><li>In each of the three intervals, choose one simple test point and show that the sign of the derivative confirms your classification.</li></ol>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Knowing the roots of a factored polynomial $f'(x) = a(x - x_1)(x - x_2)$ only tells us <strong>where the sign can change</strong>; it does not tell us <strong>which intervals are positive and which are negative</strong> until we check the leading coefficient $a$ (or evaluate test points). Even worse, two functions with the exact same roots — such as $+3(x-1)(x+1)$ and $-3(x-1)(x+1)$ — have completely opposite signs everywhere else!</p>
+<h3>1. Finding the error in the student's reasoning</h3>
+<ul><li><strong>Why the zeros alone do not determine the sign chart:</strong> The roots $x = -1$ and $x = 1$ only partition the real line into the three intervals $(-\infty, -1)$, $(-1, 1)$, and $(1, \infty)$. Both $3(x-1)(x+1)$ and $-3(x-1)(x+1)$ share the exact same zeros, yet their signs are opposite on every interval.</li><li><strong>The student's specific error:</strong> In $f'(x) = 3(x-1)(x+1) = 3x^2 - 3$, the leading coefficient is <strong>$a = +3 &gt; 0$</strong>, so the parabola of $f'(x)$ opens <strong>upward</strong> ($\cup$). An upward-opening parabola is <strong>negative between its roots and positive outside them</strong> — the exact opposite of what the student wrote! (Moreover, as a secondary notation error, monotonicity intervals should be listed separately as $(-\infty, -1]$ and $[1, \infty)$ rather than joined with a union symbol $\cup$.)</li></ul>
+<h3>2. Correct sign chart for $f'(x) = 3(x - 1)(x + 1)$</h3>
+<p>Track the sign of each factor across $x = -1$ and $x = 1$:</p>
+<table><thead><tr><th>Interval / Point</th><th>$(-\infty, -1)$</th><th>$x = -1$</th><th>$(-1, 1)$</th><th>$x = 1$</th><th>$(1, \infty)$</th></tr></thead><tbody><tr><td>Factor $3$</td><td>$+$</td><td>$+$</td><td>$+$</td><td>$+$</td><td>$+$</td></tr><tr><td>Factor $x + 1$</td><td>$-$</td><td>$0$</td><td>$+$</td><td>$+$</td><td>$+$</td></tr><tr><td>Factor $x - 1$</td><td>$-$</td><td>$-$</td><td>$-$</td><td>$0$</td><td>$+$</td></tr><tr><td><strong>Sign of $f'(x)$</strong></td><td>$+$</td><td>$0$</td><td>$-$</td><td>$0$</td><td>$+$</td></tr><tr><td><strong>Behavior of $f(x)$</strong></td><td>$\nearrow$ increasing</td><td><strong>Local max</strong> ($2$)</td><td>$\searrow$ decreasing</td><td><strong>Local min</strong> ($-2$)</td><td>$\nearrow$ increasing</td></tr></tbody></table>
+<h3>3. Correct intervals of monotonicity and character of the extrema</h3>
+<ul><li><strong>Strictly increasing</strong> on $(-\infty, -1]$ and on $[1, \infty)$.</li><li><strong>Strictly decreasing</strong> on $[-1, 1]$.</li><li><strong>Local maximum</strong> at $x = -1$, because $f'(x)$ changes sign from $+$ to $-$, with value $$f(-1) = (-1)^3 - 3(-1) = -1 + 3 = 2.$$</li><li><strong>Local minimum</strong> at $x = 1$, because $f'(x)$ changes sign from $-$ to $+$, with value $$f(1) = 1^3 - 3(1) = 1 - 3 = -2.$$</li></ul>
+<h3>4. Confirming with a simple test point in each of the three intervals</h3>
+<ul><li><strong>Interval $(-\infty, -1)$ — test point $x = -2$:</strong> $$f'(-2) = 3(-2 - 1)(-2 + 1) = 3(-3)(-1) = +9 &gt; 0 \implies f \text{ is increasing on } (-\infty, -1).$$</li><li><strong>Interval $(-1, 1)$ — test point $x = 0$:</strong> $$f'(0) = 3(0 - 1)(0 + 1) = 3(-1)(1) = -3 &lt; 0 \implies f \text{ is decreasing on } (-1, 1).$$</li><li><strong>Interval $(1, \infty)$ — test point $x = 2$:</strong> $$f'(2) = 3(2 - 1)(2 + 1) = 3(1)(3) = +9 &gt; 0 \implies f \text{ is increasing on } (1, \infty).$$</li></ul>
+<h3>Quick verification</h3>
+<p>Compare the actual function values at the critical points:</p>
+<div class="math-block">$$f(-1) = 2 \quad \text{and} \quad f(1) = -2.$$</div>
+<p>In the student's flawed conclusion, the function was supposedly <em>increasing</em> on $(-1, 1)$ from a "local minimum" of $f(-1) = 2$ up to a "local maximum" of $f(1) = -2$ — which is impossible because $2 &gt; -2$! Checking $f(-1)$ and $f(1)$ immediately catches the reversed signs. ✓</p>
+<h3>A concrete example</h3>
+<p>Evaluate $f(x) = x^3 - 3x$ at $x = -2, -1, 0, 1, 2$ to watch the true trajectory of the function:</p>
+<table><thead><tr><th>$x$</th><th>$-2$</th><th>$-1$</th><th>$0$</th><th>$1$</th><th>$2$</th></tr></thead><tbody><tr><td>$f(x) = x^3 - 3x$</td><td>$-2$</td><td>$2$ (Max)</td><td>$0$</td><td>$-2$ (Min)</td><td>$2$</td></tr></tbody></table>
+<p>Going from left to right, the heights follow $-2 \nearrow 2 \searrow 0 \searrow -2 \nearrow 2$, matching our corrected table at every step.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>The student found the right roots of $f'(x) = 3(x-1)(x+1)$ at $x = \pm 1$, but flipped the entire sign chart upside down. Since the leading coefficient $+3$ is positive, the parabola of $f'(x)$ opens upward, meaning $f'(x)$ is negative between $-1$ and $1$ and positive outside — as a quick check at $x = 0$ shows ($f'(0) = -3 &lt; 0$). That reverses every conclusion: $f$ increases on $(-\infty, -1]$ to a local maximum of $2$ at $x = -1$, decreases on $[-1, 1]$ to a local minimum of $-2$ at $x = 1$, and increases on $[1, \infty)$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: A Cubic Polynomial</a></li><li><a href="#exercise-11">Exercise 11: A Parameter and the Number of Extrema</a></li></ul>
+</section>
+    </main>
+  </div>
+</body>
+</html>

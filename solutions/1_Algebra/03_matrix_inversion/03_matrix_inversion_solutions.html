@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>03. Matrix Inversion — Complete Solutions</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false}
+      ],
+      throwOnError: false
+    });"></script>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --muted: #475569;
+      --accent: #2563eb;
+      --accent-soft: #eff6ff;
+      --quote-bg: #f1f5f9;
+      --quote-border: #3b82f6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 310px 1fr;
+      min-height: 100vh;
+    }
+    aside.sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 1.5rem 1.25rem;
+    }
+    .brand {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    .brand-sub {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .toc-group-title {
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin: 1rem 0 0.35rem 0.5rem;
+    }
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .toc-list li { margin-bottom: 0.2rem; }
+    .toc-list a {
+      display: block;
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.86rem;
+      transition: background 0.15s, color 0.15s;
+    }
+    .toc-list a:hover {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+    main.content {
+      max-width: 940px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    header.page-header {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    }
+    header.page-header h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.85rem;
+      color: var(--text);
+    }
+    header.page-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+    .section-banner {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: #ffffff;
+      border-radius: 12px;
+      padding: 1.5rem 2rem;
+      margin: 2.5rem 0 1.5rem;
+      scroll-margin-top: 1.5rem;
+    }
+    .section-banner h2 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    .section-banner p {
+      margin: 0.25rem 0 0;
+      opacity: 0.9;
+      font-size: 0.92rem;
+    }
+    section.exercise-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem 2.25rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+      scroll-margin-top: 1.5rem;
+    }
+    section.exercise-card h2.exercise-title {
+      margin-top: 0;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--accent-soft);
+      color: var(--accent);
+      font-size: 1.4rem;
+    }
+    section.exercise-card h3 {
+      margin-top: 1.5rem;
+      margin-bottom: 0.55rem;
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+    section.exercise-card h4 {
+      margin-top: 1.15rem;
+      margin-bottom: 0.45rem;
+      font-size: 1rem;
+      color: var(--muted);
+    }
+    p { margin: 0.65rem 0; }
+    ul, ol { margin: 0.65rem 0; padding-left: 1.5rem; }
+    li { margin-bottom: 0.35rem; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.85rem;
+      text-align: left;
+    }
+    th { background: var(--bg); font-weight: 600; }
+    blockquote {
+      margin: 1rem 0;
+      padding: 0.9rem 1.2rem;
+      background: var(--quote-bg);
+      border-left: 4px solid var(--quote-border);
+      border-radius: 0 8px 8px 0;
+      color: var(--text);
+    }
+    blockquote p { margin: 0; }
+    pre {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 1rem 1.25rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+    code {
+      font-family: Consolas, Monaco, "Courier New", monospace;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .katex-display {
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 0.25rem 0;
+    }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      aside.sidebar {
+        position: static;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      main.content { padding: 1.5rem 1rem 3rem; }
+      section.exercise-card { padding: 1.5rem; }
+    }
+    @media print {
+      aside.sidebar { display: none; }
+      .layout { display: block; }
+      body { background: #fff; }
+      section.exercise-card { box-shadow: none; break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">1. Algebra</div>
+      <div class="brand-sub">03. Matrix Inversion (Exercises 1–15)</div>
+      <ul class="toc-list">
+<li><a href="#exercise-1">1. Definition of the Inverse</a></li>
+<li><a href="#exercise-2">2. Formula for a 2×2 Matrix</a></li>
+<li><a href="#exercise-3">3. When Does the Inverse Not Exist?</a></li>
+<li><a href="#exercise-4">4. Gauss–Jordan</a></li>
+<li><a href="#exercise-5">5. A 3×3 Matrix</a></li>
+<li><a href="#exercise-6">6. Solving a System Using the Inverse</a></li>
+<li><a href="#exercise-7">7. Inverse of a Product</a></li>
+<li><a href="#exercise-8">8. Inverse of a Transformation</a></li>
+<li><a href="#exercise-9">9. Matrix Equation</a></li>
+<li><a href="#exercise-10">10. Inverse of a Diagonal Matrix</a></li>
+<li><a href="#exercise-11">11. Parameter and Invertibility</a></li>
+<li><a href="#exercise-12">12. Finding Inverses Without Starting from Scratch</a></li>
+<li><a href="#exercise-13">13. Undoing a Composite Transformation</a></li>
+<li><a href="#exercise-14">14. A Matrix That Is Its Own Inverse</a></li>
+<li><a href="#exercise-15">15. Two Methods for Solving the Same System</a></li>
+</ul>
+    </aside>
+    <main class="content">
+      <header class="page-header">
+        <h1>03. Matrix Inversion — Complete Solutions</h1>
+        <p>Basics of Mathematics Student Workbook (2026) · 1. Algebra · All 15 Exercises with Detailed Explanations</p>
+      </header>
+      <section class="exercise-card" id="exercise-1">
+<h2 class="exercise-title">Exercise 1. Definition of the Inverse</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$A=\begin{pmatrix}2&amp;1\\1&amp;1\end{pmatrix},\qquad B=\begin{pmatrix}1&amp;-1\\-1&amp;2\end{pmatrix}$$</div>
+<p>check, without using a formula, whether $B=A^{-1}$. Compute $AB$ and $BA$ and relate the result to the definition of the inverse.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>A square matrix $B$ is the <strong>inverse</strong> of $A$ (written $B=A^{-1}$) if and only if multiplying them in either order produces the identity matrix $I$:</p>
+<div class="math-block">$$AB=I \quad\text{and}\quad BA=I,$$</div>
+<p>where for $2\times2$ matrices</p>
+<div class="math-block">$$I=\begin{pmatrix}1&amp;0\\0&amp;1\end{pmatrix}.$$</div>
+<p>In numbers, the multiplicative inverse of $5$ is $\frac{1}{5}$ because $5\cdot\frac{1}{5}=1$. For matrices, $I$ plays the role of $1$: it is the matrix that leaves every vector unchanged ($Iv=v$).</p>
+<h3>1. Compute the product $AB$</h3>
+<p>Multiply the rows of $A$ by the columns of $B$:</p>
+<div class="math-block">$$AB=\begin{pmatrix}2&amp;1\\1&amp;1\end{pmatrix}\begin{pmatrix}1&amp;-1\\-1&amp;2\end{pmatrix}=\begin{pmatrix}2\cdot1+1\cdot(-1) &amp; 2\cdot(-1)+1\cdot2\\1\cdot1+1\cdot(-1) &amp; 1\cdot(-1)+1\cdot2\end{pmatrix}.$$</div>
+<p>Simplifying each entry gives</p>
+<div class="math-block">$$AB=\begin{pmatrix}2-1 &amp; -2+2\\1-1 &amp; -1+2\end{pmatrix}=\begin{pmatrix}1&amp;0\\0&amp;1\end{pmatrix}=I.$$</div>
+<h3>2. Compute the product $BA$</h3>
+<p>Now multiply the rows of $B$ by the columns of $A$:</p>
+<div class="math-block">$$BA=\begin{pmatrix}1&amp;-1\\-1&amp;2\end{pmatrix}\begin{pmatrix}2&amp;1\\1&amp;1\end{pmatrix}=\begin{pmatrix}1\cdot2+(-1)\cdot1 &amp; 1\cdot1+(-1)\cdot1\\(-1)\cdot2+2\cdot1 &amp; (-1)\cdot1+2\cdot1\end{pmatrix}.$$</div>
+<p>Simplifying each entry gives</p>
+<div class="math-block">$$BA=\begin{pmatrix}2-1 &amp; 1-1\\-2+2 &amp; -1+2\end{pmatrix}=\begin{pmatrix}1&amp;0\\0&amp;1\end{pmatrix}=I.$$</div>
+<h3>3. Relate the result to the definition</h3>
+<p>Since both products equal the $2\times2$ identity matrix,</p>
+<div class="math-block">$$AB=BA=\begin{pmatrix}1&amp;0\\0&amp;1\end{pmatrix}=I,$$</div>
+<p>the definition of the inverse matrix is satisfied directly. Therefore,</p>
+<div class="math-block">$$B=A^{-1}.$$</div>
+<h3>4. Geometric meaning of $AB=I$ and $BA=I$</h3>
+<p>Matrix multiplication corresponds to applying one linear transformation after another:</p>
+<ul><li>$AB=I$ means: if we first apply $B$ to a vector and then apply $A$, the vector returns to its starting position.</li><li>$BA=I$ means: if we first apply $A$ to a vector and then apply $B$, the vector also returns to its starting position.</li></ul>
+<p>Each matrix completely undoes the action of the other.</p>
+<h3>Quick verification</h3>
+<p>We can independently verify using the $2\times2$ determinant and adjugate rule:</p>
+<div class="math-block">$$\det(A)=2\cdot1-1\cdot1=1,$$</div>
+<p>and swapping the diagonal entries while negating the off-diagonal entries of $A$ gives</p>
+<div class="math-block">$$A^{-1}=\frac{1}{1}\begin{pmatrix}1&amp;-1\\-1&amp;2\end{pmatrix}=B.$$</div>
+<p>This matches $B$ entry for entry. ✓</p>
+<h3>A concrete example</h3>
+<p>Take the vector $v=\begin{pmatrix}3\\4\end{pmatrix}$. First apply $A$:</p>
+<div class="math-block">$$Av=\begin{pmatrix}2&amp;1\\1&amp;1\end{pmatrix}\begin{pmatrix}3\\4\end{pmatrix}=\begin{pmatrix}10\\7\end{pmatrix}.$$</div>
+<p>Now apply $B$ to the output $\begin{pmatrix}10\\7\end{pmatrix}$:</p>
+<div class="math-block">$$B(Av)=\begin{pmatrix}1&amp;-1\\-1&amp;2\end{pmatrix}\begin{pmatrix}10\\7\end{pmatrix}=\begin{pmatrix}10-7\\-10+14\end{pmatrix}=\begin{pmatrix}3\\4\end{pmatrix}=v.$$</div>
+<p>The matrix $B$ reverses the effect of $A$ and recovers the original vector $(3,4)^T$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>To check whether $B$ is the inverse of $A$ without using any formula, we just multiply them together. When we compute $AB$ and $BA$, all off-diagonal terms cancel out to $0$ and the diagonal terms simplify to $1$, giving the identity matrix $I$ in both orders. By definition, that means $B$ is $A^{-1}$—it is the transformation that undoes $A$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-2">Exercise 2: Formula for a 2×2 Matrix</a></li><li><a href="#exercise-8">Exercise 8: Inverse of a Transformation</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-2">
+<h2 class="exercise-title">Exercise 2. Formula for a 2×2 Matrix</h2>
+<h3>The question</h3>
+<p>Find the inverse of</p>
+<div class="math-block">$$A=\begin{pmatrix}3&amp;2\\5&amp;4\end{pmatrix}$$</div>
+<p>using the formula for a $2\times2$ matrix. At the end, check the result by computing one product with $A$.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>For a $2\times2$ matrix</p>
+<div class="math-block">$$A=\begin{pmatrix}a&amp;b\\c&amp;d\end{pmatrix},$$</div>
+<p>the explicit formula for the inverse is</p>
+<div class="math-block">$$A^{-1}=\frac{1}{\det A}\begin{pmatrix}d&amp;-b\\-c&amp;a\end{pmatrix}=\frac{1}{ad-bc}\begin{pmatrix}d&amp;-b\\-c&amp;a\end{pmatrix},$$</div>
+<p>provided $\det A=ad-bc\neq0$.</p>
+<p>To remember the matrix part:</p>
+<ul><li><strong>swap</strong> the main diagonal entries ($a\leftrightarrow d$),</li><li><strong>change the signs</strong> of the off-diagonal entries ($b\to -b$, $c\to -c$),</li><li><strong>divide</strong> every entry by the determinant $ad-bc$.</li></ul>
+<h3>1. Compute the determinant</h3>
+<p>Identify the entries $a=3$, $b=2$, $c=5$, $d=4$:</p>
+<div class="math-block">$$\det A=3\cdot4-2\cdot5=12-10=2.$$</div>
+<p>Because $\det A=2\neq0$, the inverse $A^{-1}$ exists.</p>
+<h3>2. Rearrange the entries</h3>
+<p>Swap the diagonal entries ($3$ and $4$) and negate the off-diagonal entries ($2$ and $5$):</p>
+<div class="math-block">$$\begin{pmatrix}d&amp;-b\\-c&amp;a\end{pmatrix}=\begin{pmatrix}4&amp;-2\\-5&amp;3\end{pmatrix}.$$</div>
+<h3>3. Divide by the determinant</h3>
+<p>Multiply the rearranged matrix by $\dfrac{1}{\det A}=\dfrac{1}{2}$:</p>
+<div class="math-block">$$A^{-1}=\frac{1}{2}\begin{pmatrix}4&amp;-2\\-5&amp;3\end{pmatrix}=\begin{pmatrix}2&amp;-1\\-\frac{5}{2}&amp;\frac{3}{2}\end{pmatrix}.$$</div>
+<h3>4. Why this formula works</h3>
+<p>When we multiply $\begin{pmatrix}a&amp;b\\c&amp;d\end{pmatrix}$ by $\begin{pmatrix}d&amp;-b\\-c&amp;a\end{pmatrix}$:</p>
+<ul><li>the off-diagonal products become $a(-b)+b(a)=0$ and $c(d)+d(-c)=0$,</li><li>the diagonal products both become $ad-bc=\det A$.</li></ul>
+<p>Dividing by $\det A$ turns the diagonal entries into $1$, producing $I$.</p>
+<h3>Quick verification</h3>
+<p>Compute $AA^{-1}$ using the factored form $\frac{1}{2}\begin{pmatrix}4&amp;-2\\-5&amp;3\end{pmatrix}$:</p>
+<div class="math-block">$$AA^{-1}=\frac{1}{2}\begin{pmatrix}3&amp;2\\5&amp;4\end{pmatrix}\begin{pmatrix}4&amp;-2\\-5&amp;3\end{pmatrix}=\frac{1}{2}\begin{pmatrix}12-10 &amp; -6+6\\20-20 &amp; -10+12\end{pmatrix}=\frac{1}{2}\begin{pmatrix}2&amp;0\\0&amp;2\end{pmatrix}=\begin{pmatrix}1&amp;0\\0&amp;1\end{pmatrix}=I.$$</div>
+<p>The product is the identity matrix $I$. ✓</p>
+<h3>A concrete example</h3>
+<p>Let us see how $A$ and $A^{-1}$ act on the basis vector $e_1=\begin{pmatrix}1\\0\end{pmatrix}$:</p>
+<div class="math-block">$$Ae_1=\begin{pmatrix}3&amp;2\\5&amp;4\end{pmatrix}\begin{pmatrix}1\\0\end{pmatrix}=\begin{pmatrix}3\\5\end{pmatrix}.$$</div>
+<p>Now apply $A^{-1}$ to $\begin{pmatrix}3\\5\end{pmatrix}$:</p>
+<div class="math-block">$$A^{-1}\begin{pmatrix}3\\5\end{pmatrix}=\begin{pmatrix}2&amp;-1\\-\frac{5}{2}&amp;\frac{3}{2}\end{pmatrix}\begin{pmatrix}3\\5\end{pmatrix}=\begin{pmatrix}6-5\\-\frac{15}{2}+\frac{15}{2}\end{pmatrix}=\begin{pmatrix}1\\0\end{pmatrix}=e_1.$$</div>
+<h3>How I would explain this in class</h3>
+<blockquote><p>First, I calculate the determinant: $3\cdot4 - 2\cdot5 = 12 - 10 = 2$. Since it isn't zero, the matrix is invertible. Next, I swap $3$ and $4$ on the main diagonal, put minus signs on $2$ and $5$, and divide everything by $2$. Multiplying the original matrix by our result gives $\frac{1}{2}\begin{pmatrix}2&amp;0\\0&amp;2\end{pmatrix}=I$, which proves the inverse is correct.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: Definition of the Inverse</a></li><li><a href="#exercise-3">Exercise 3: When Does the Inverse Not Exist?</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-3">
+<h2 class="exercise-title">Exercise 3. When Does the Inverse Not Exist?</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$A=\begin{pmatrix}2&amp;4\\1&amp;2\end{pmatrix}$$</div>
+<p>explain in two ways why $A^{-1}$ does not exist: using the determinant and using dependence between the rows.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>A matrix fails to have an inverse (is <strong>singular</strong>) when it collapses space and loses information. We can see this collapse in two equivalent ways:</p>
+<ol><li><strong>Via the determinant:</strong> In the $2\times2$ inverse formula, we must divide by $\det A = ad-bc$. If $\det A=0$, division by zero is impossible, and the area scaling factor of the transformation is $0$.</li><li><strong>Via row dependence:</strong> If one row is a scalar multiple of another, the two equations in $Ax=b$ are redundant (or contradictory), and row reduction produces a row of zeros instead of the identity matrix $I$.</li></ol>
+<h3>1. First explanation: using the determinant</h3>
+<p>Compute the determinant of $A$:</p>
+<div class="math-block">$$\det A = 2\cdot2 - 4\cdot1 = 4 - 4 = 0.$$</div>
+<p>Because $\det A=0$:</p>
+<ul><li>the $2\times2$ inverse formula $\dfrac{1}{\det A}\begin{pmatrix}d&amp;-b\\-c&amp;a\end{pmatrix}$ would require dividing by $0$,</li><li>for any candidate matrix $B$, the multiplicative property of determinants gives $\det(AB)=(\det A)(\det B)=0\cdot\det B=0$, which can never equal $\det I=1$.</li></ul>
+<p>Thus $A^{-1}$ does not exist.</p>
+<h3>2. Second explanation: using row dependence</h3>
+<p>Compare the two rows of $A$:</p>
+<div class="math-block">$$R_1 = (2,\; 4), \qquad R_2 = (1,\; 2).$$</div>
+<p>Notice that the first row is exactly twice the second row:</p>
+<div class="math-block">$$R_1 = 2R_2 \quad\Longleftrightarrow\quad R_1 - 2R_2 = (0,\; 0).$$</div>
+<p>Because the rows are linearly dependent:</p>
+<ul><li>during elimination, subtracting $2R_2$ from $R_1$ creates a zero row $(0,0)$, so $A$ can never be row-reduced to the identity matrix $I$,</li><li>in a system $Ax=b$, the first equation $2x_1+4x_2=b_1$ is just $2(x_1+2x_2)=b_1$, so it gives no new information about $x_1$ and $x_2$ beyond the second equation $x_1+2x_2=b_2$.</li></ul>
+<h3>3. How the two explanations connect</h3>
+<p>The determinant and row dependence are two sides of the same coin:</p>
+<div class="math-block">$$\frac{a}{c}=\frac{b}{d} \quad\Longleftrightarrow\quad ad=bc \quad\Longleftrightarrow\quad ad-bc=0.$$</div>
+<p>Saying that the rows are proportional ($(2,4)=2\cdot(1,2)$) is algebraically identical to saying that the cross-products in the determinant cancel out ($2\cdot2-4\cdot1=0$).</p>
+<h3>Quick verification</h3>
+<p>Try to solve $Ax=\begin{pmatrix}0\\0\end{pmatrix}$:</p>
+<div class="math-block">$$\begin{pmatrix}2&amp;4\\1&amp;2\end{pmatrix}\begin{pmatrix}-2\\1\end{pmatrix}=\begin{pmatrix}2(-2)+4(1)\\1(-2)+2(1)\end{pmatrix}=\begin{pmatrix}0\\0\end{pmatrix}.$$</div>
+<p>If $A^{-1}$ existed, multiplying $Ax=0$ on the left by $A^{-1}$ would force $x=A^{-1}0=0$. Since the non-zero vector $x=(-2,1)^T$ is sent to $(0,0)^T$, $A$ cannot have an inverse. ✓</p>
+<h3>A concrete example</h3>
+<p>Take two different input vectors, $u=\begin{pmatrix}1\\0\end{pmatrix}$ and $v=\begin{pmatrix}-1\\1\end{pmatrix}$:</p>
+<div class="math-block">$$Au=\begin{pmatrix}2&amp;4\\1&amp;2\end{pmatrix}\begin{pmatrix}1\\0\end{pmatrix}=\begin{pmatrix}2\\1\end{pmatrix},\qquad Av=\begin{pmatrix}2&amp;4\\1&amp;2\end{pmatrix}\begin{pmatrix}-1\\1\end{pmatrix}=\begin{pmatrix}-2+4\\-1+2\end{pmatrix}=\begin{pmatrix}2\\1\end{pmatrix}.$$</div>
+<p>Both $u$ and $v$ land on the exact same output $(2,1)^T$. If someone gives us the output $(2,1)^T$, there is no unique way to go backward and tell whether it came from $(1,0)^T$, $(-1,1)^T$, or another vector on the line $x_1+2x_2=1$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>We can see $A$ is not invertible in two ways. First, its determinant is $2\cdot2 - 4\cdot1 = 0$, so the inverse formula would divide by zero. Second, the first row $(2,4)$ is just $2$ times the second row $(1,2)$. That means both rows give the exact same relationship between the variables, squashing the whole plane onto a single line so we can never uniquely reverse the transformation.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-2">Exercise 2: Formula for a 2×2 Matrix</a></li><li><a href="#exercise-11">Exercise 11: Parameter and Invertibility</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-4">
+<h2 class="exercise-title">Exercise 4. Gauss–Jordan</h2>
+<h3>The question</h3>
+<p>Find $A^{-1}$ using the Gauss–Jordan method for</p>
+<div class="math-block">$$A=\begin{pmatrix}1&amp;2\\3&amp;5\end{pmatrix}.$$</div>
+<p>Show the augmented matrix $[A\mid I]$ after successive operations and explain why obtaining $I$ on the left gives the inverse on the right.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>The <strong>Gauss–Jordan method</strong> finds $A^{-1}$ by placing $A$ and the identity matrix $I$ side by side in an augmented matrix $[A\mid I]$ and applying elementary row operations until the left side becomes $I$:</p>
+<div class="math-block">$$[A\mid I] \;\xrightarrow{\text{row operations}}\; [I\mid A^{-1}].$$</div>
+<p>Why does this work? Every elementary row operation is equivalent to multiplying on the left by an elementary matrix $E_k$. If a combined sequence of row operations $E=E_m\cdots E_2E_1$ turns $A$ into $I$, then $EA=I$, which means $E=A^{-1}$. Applying those exact same row operations to $I$ on the right computes $EI = A^{-1}I = A^{-1}$.</p>
+<h3>1. Set up the augmented matrix $[A\mid I]$</h3>
+<p>Write $A$ on the left and the $2\times2$ identity matrix $I$ on the right:</p>
+<div class="math-block">$$[A\mid I]=\left(\begin{array}{cc|cc}1&amp;2&amp;1&amp;0\\3&amp;5&amp;0&amp;1\end{array}\right).$$</div>
+<h3>2. Eliminate the entry below the first pivot</h3>
+<p>The top-left pivot is already $1$. To create a $0$ below it in the first column, replace Row 2 with $R_2 - 3R_1$:</p>
+<div class="math-block">$$R_2 \leftarrow R_2 - 3R_1:\qquad \left(\begin{array}{cc|cc}1&amp;2&amp;1&amp;0\\3-3(1)&amp;5-3(2)&amp;0-3(1)&amp;1-3(0)\end{array}\right)=\left(\begin{array}{cc|cc}1&amp;2&amp;1&amp;0\\0&amp;-1&amp;-3&amp;1\end{array}\right).$$</div>
+<h3>3. Make the second pivot equal to $1$</h3>
+<p>Multiply Row 2 by $-1$ so the second pivot becomes $+1$:</p>
+<div class="math-block">$$R_2 \leftarrow -R_2:\qquad \left(\begin{array}{cc|cc}1&amp;2&amp;1&amp;0\\0&amp;1&amp;3&amp;-1\end{array}\right).$$</div>
+<h3>4. Eliminate the entry above the second pivot</h3>
+<p>To create a $0$ above the second pivot, replace Row 1 with $R_1 - 2R_2$:</p>
+<div class="math-block">$$R_1 \leftarrow R_1 - 2R_2:\qquad \left(\begin{array}{cc|cc}1&amp;2-2(1)&amp;1-2(3)&amp;0-2(-1)\\0&amp;1&amp;3&amp;-1\end{array}\right)=\left(\begin{array}{cc|cc}1&amp;0&amp;-5&amp;2\\0&amp;1&amp;3&amp;-1\end{array}\right).$$</div>
+<p>Now the left block is $I$, so the right block is $A^{-1}$:</p>
+<div class="math-block">$$A^{-1}=\begin{pmatrix}-5&amp;2\\3&amp;-1\end{pmatrix}.$$</div>
+<h3>5. Why obtaining $I$ on the left gives $A^{-1}$ on the right</h3>
+<p>We can view $[A\mid I]$ as solving two linear systems simultaneously:</p>
+<div class="math-block">$$Ax^{(1)}=\begin{pmatrix}1\\0\end{pmatrix}\quad\text{and}\quad Ax^{(2)}=\begin{pmatrix}0\\1\end{pmatrix},$$</div>
+<p>which together form the matrix equation $AX=I$. Row operations do not change the solution set of a linear system. Once the left side reaches $I$, the equation has become $IX=B$, or $X=B$. Thus the right side $B$ satisfies $AB=I$, meaning $B=A^{-1}$.</p>
+<h3>Quick verification</h3>
+<p>Multiply $A$ by our result $A^{-1}$:</p>
+<div class="math-block">$$AA^{-1}=\begin{pmatrix}1&amp;2\\3&amp;5\end{pmatrix}\begin{pmatrix}-5&amp;2\\3&amp;-1\end{pmatrix}=\begin{pmatrix}-5+6 &amp; 2-2\\-15+15 &amp; 6-5\end{pmatrix}=\begin{pmatrix}1&amp;0\\0&amp;1\end{pmatrix}=I.$$</div>
+<p>Also, the $2\times2$ formula gives $\det A = 1(5)-2(3)=-1$, so $A^{-1}=\frac{1}{-1}\begin{pmatrix}5&amp;-2\\-3&amp;1\end{pmatrix}=\begin{pmatrix}-5&amp;2\\3&amp;-1\end{pmatrix}$. Both checks agree! ✓</p>
+<h3>A concrete example</h3>
+<p>Notice how the columns of $A^{-1}$ solve $Ax=e_1$ and $Ax=e_2$:</p>
+<ul><li>Column 1 of $A^{-1}$ is $\begin{pmatrix}-5\\3\end{pmatrix}$, and $\begin{pmatrix}1&amp;2\\3&amp;5\end{pmatrix}\begin{pmatrix}-5\\3\end{pmatrix}=\begin{pmatrix}-5+6\\-15+15\end{pmatrix}=\begin{pmatrix}1\\0\end{pmatrix}=e_1$.</li><li>Column 2 of $A^{-1}$ is $\begin{pmatrix}2\\-1\end{pmatrix}$, and $\begin{pmatrix}1&amp;2\\3&amp;5\end{pmatrix}\begin{pmatrix}2\\-1\end{pmatrix}=\begin{pmatrix}2-2\\6-5\end{pmatrix}=\begin{pmatrix}0\\1\end{pmatrix}=e_2$.</li></ul>
+<p>Gauss–Jordan simply solved both systems at once.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>In the Gauss–Jordan method, we set up $[A\mid I]$ and use row operations to turn $A$ into the identity matrix $I$. Here we do $R_2\leftarrow R_2-3R_1$, then $R_2\leftarrow -R_2$, and finally $R_1\leftarrow R_1-2R_2$. Because row operations act like multiplying on the left by a matrix $E$, turning the left side from $A$ into $I$ means $EA=I$, so $E=A^{-1}$. Since the right side started as $I$, it gets multiplied by $E$ too and becomes $EI=A^{-1}$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-2">Exercise 2: Formula for a 2×2 Matrix</a></li><li><a href="#exercise-5">Exercise 5: A 3×3 Matrix</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-5">
+<h2 class="exercise-title">Exercise 5. A 3×3 Matrix</h2>
+<h3>The question</h3>
+<p>Use Gauss–Jordan elimination to find the inverse of</p>
+<div class="math-block">$$A=\begin{pmatrix}1&amp;1&amp;0\\0&amp;1&amp;1\\1&amp;0&amp;1\end{pmatrix}.$$</div>
+<p>Check the result by multiplication.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>For a $3\times3$ matrix, there is no one-line swap-and-negate formula like in the $2\times2$ case. Instead, we use <strong>Gauss–Jordan elimination</strong>:</p>
+<div class="math-block">$$[A\mid I_3] \;\xrightarrow{\text{row operations}}\; [I_3\mid A^{-1}].$$</div>
+<p>We work column by column from left to right:</p>
+<ol><li>get a pivot of $1$ on the diagonal,</li><li>clear all entries below (and above) that pivot to $0$.</li></ol>
+<h3>1. Set up $[A\mid I_3]$ and clear Column 1</h3>
+<p>Write the $3\times3$ augmented matrix:</p>
+<div class="math-block">$$\left(\begin{array}{ccc|ccc}1&amp;1&amp;0&amp;1&amp;0&amp;0\\0&amp;1&amp;1&amp;0&amp;1&amp;0\\1&amp;0&amp;1&amp;0&amp;0&amp;1\end{array}\right).$$</div>
+<p>Eliminate the $1$ at the bottom of Column 1 using $R_3 \leftarrow R_3 - R_1$:</p>
+<div class="math-block">$$\left(\begin{array}{ccc|ccc}1&amp;1&amp;0&amp;1&amp;0&amp;0\\0&amp;1&amp;1&amp;0&amp;1&amp;0\\0&amp;-1&amp;1&amp;-1&amp;0&amp;1\end{array}\right).$$</div>
+<h3>2. Clear below the pivot in Column 2</h3>
+<p>The second pivot (Row 2, Column 2) is already $1$. Eliminate the $-1$ below it using $R_3 \leftarrow R_3 + R_2$:</p>
+<div class="math-block">$$\left(\begin{array}{ccc|ccc}1&amp;1&amp;0&amp;1&amp;0&amp;0\\0&amp;1&amp;1&amp;0&amp;1&amp;0\\0&amp;0&amp;2&amp;-1&amp;1&amp;1\end{array}\right).$$</div>
+<h3>3. Scale the pivot in Column 3 and eliminate upward</h3>
+<p>Divide Row 3 by $2$ ($R_3 \leftarrow \frac{1}{2}R_3$) so the third pivot becomes $1$:</p>
+<div class="math-block">$$\left(\begin{array}{ccc|ccc}1&amp;1&amp;0&amp;1&amp;0&amp;0\\0&amp;1&amp;1&amp;0&amp;1&amp;0\\0&amp;0&amp;1&amp;-\frac{1}{2}&amp;\frac{1}{2}&amp;\frac{1}{2}\end{array}\right).$$</div>
+<p>Now eliminate the $1$ above the third pivot using $R_2 \leftarrow R_2 - R_3$:</p>
+<div class="math-block">$$\left(\begin{array}{ccc|ccc}1&amp;1&amp;0&amp;1&amp;0&amp;0\\0&amp;1&amp;0&amp;\frac{1}{2}&amp;\frac{1}{2}&amp;-\frac{1}{2}\\0&amp;0&amp;1&amp;-\frac{1}{2}&amp;\frac{1}{2}&amp;\frac{1}{2}\end{array}\right).$$</div>
+<p>Finally, eliminate the $1$ above the second pivot using $R_1 \leftarrow R_1 - R_2$:</p>
+<div class="math-block">$$\left(\begin{array}{ccc|ccc}1&amp;0&amp;0&amp;\frac{1}{2}&amp;-\frac{1}{2}&amp;\frac{1}{2}\\0&amp;1&amp;0&amp;\frac{1}{2}&amp;\frac{1}{2}&amp;-\frac{1}{2}\\0&amp;0&amp;1&amp;-\frac{1}{2}&amp;\frac{1}{2}&amp;\frac{1}{2}\end{array}\right).$$</div>
+<h3>4. Read off the inverse</h3>
+<p>The left half is now $I_3$, so the right half is $A^{-1}$:</p>
+<div class="math-block">$$A^{-1}=\begin{pmatrix}\frac{1}{2}&amp;-\frac{1}{2}&amp;\frac{1}{2}\\\frac{1}{2}&amp;\frac{1}{2}&amp;-\frac{1}{2}\\-\frac{1}{2}&amp;\frac{1}{2}&amp;\frac{1}{2}\end{pmatrix}=\frac{1}{2}\begin{pmatrix}1&amp;-1&amp;1\\1&amp;1&amp;-1\\-1&amp;1&amp;1\end{pmatrix}.$$</div>
+<h3>Quick verification</h3>
+<p>Multiply $A$ by $A^{-1}$, keeping the factor $\frac{1}{2}$ in front for clean arithmetic:</p>
+<div class="math-block">$$AA^{-1}=\frac{1}{2}\begin{pmatrix}1&amp;1&amp;0\\0&amp;1&amp;1\\1&amp;0&amp;1\end{pmatrix}\begin{pmatrix}1&amp;-1&amp;1\\1&amp;1&amp;-1\\-1&amp;1&amp;1\end{pmatrix}=\frac{1}{2}\begin{pmatrix}1+1+0 &amp; -1+1+0 &amp; 1-1+0\\0+1-1 &amp; 0+1+1 &amp; 0-1+1\\1+0-1 &amp; -1+0+1 &amp; 1+0+1\end{pmatrix}=\frac{1}{2}\begin{pmatrix}2&amp;0&amp;0\\0&amp;2&amp;0\\0&amp;0&amp;2\end{pmatrix}=I_3.$$</div>
+<p>Every entry matches the $3\times3$ identity matrix. ✓</p>
+<h3>A concrete example</h3>
+<p>Look at what $A$ does to a vector $x=(x_1,x_2,x_3)^T$:</p>
+<div class="math-block">$$Ax=\begin{pmatrix}x_1+x_2\\x_2+x_3\\x_1+x_3\end{pmatrix}=\begin{pmatrix}s_1\\s_2\\s_3\end{pmatrix}.$$</div>
+<p>Each output component is the sum of two input components! How do we recover $x_1$ from the pairwise sums $s_1,s_2,s_3$? Add the two sums that contain $x_1$ ($s_1$ and $s_3$) and subtract the sum that doesn't ($s_2$):</p>
+<div class="math-block">$$s_1 - s_2 + s_3 = (x_1+x_2) - (x_2+x_3) + (x_1+x_3) = 2x_1 \quad\Longrightarrow\quad x_1 = \frac{1}{2}(s_1 - s_2 + s_3).$$</div>
+<p>That coefficient pattern $\frac{1}{2}(1, -1, 1)$ is the exact first row of $A^{-1}$!</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>We set up the $3\times6$ augmented matrix $[A\mid I_3]$. First we subtract Row 1 from Row 3, then add Row 2 to Row 3 to get upper-triangular form with $2$ in the bottom-right corner. After dividing Row 3 by $2$, we work back upward—subtracting Row 3 from Row 2, and Row 2 from Row 1—until $I_3$ appears on the left. Factoring out $\frac{1}{2}$ makes checking $AA^{-1}=I_3$ super fast.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-4">Exercise 4: Gauss–Jordan</a></li><li><a href="#exercise-10">Exercise 10: Inverse of a Diagonal Matrix</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-6">
+<h2 class="exercise-title">Exercise 6. Solving a System Using the Inverse</h2>
+<h3>The question</h3>
+<p>Solve</p>
+<div class="math-block">$$Ax=b,$$</div>
+<p>where</p>
+<div class="math-block">$$A=\begin{pmatrix}2&amp;1\\1&amp;3\end{pmatrix},\qquad b=\begin{pmatrix}5\\7\end{pmatrix},$$</div>
+<p>using $x=A^{-1}b$. Then substitute the resulting vector back into the equation and check the result.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>In ordinary algebra, we solve $ax=b$ (with $a\neq0$) by multiplying both sides by $a^{-1}$ to get $x=a^{-1}b$.</p>
+<p>For a matrix system $Ax=b$, when $A$ is invertible, we multiply both sides <strong>on the left</strong> by $A^{-1}$:</p>
+<div class="math-block">$$A^{-1}(Ax)=A^{-1}b \quad\Longrightarrow\quad (A^{-1}A)x=A^{-1}b \quad\Longrightarrow\quad Ix=A^{-1}b \quad\Longrightarrow\quad x=A^{-1}b.$$</div>
+<p>So finding $A^{-1}$ turns solving the system into a single matrix-vector multiplication.</p>
+<h3>1. Find the inverse $A^{-1}$</h3>
+<p>First compute the determinant of $A$:</p>
+<div class="math-block">$$\det A = 2\cdot3 - 1\cdot1 = 6 - 1 = 5\neq0.$$</div>
+<p>Using the $2\times2$ inverse formula, swap the diagonal entries ($2$ and $3$), negate the off-diagonal entries ($1$ and $1$), and divide by $5$:</p>
+<div class="math-block">$$A^{-1}=\frac{1}{5}\begin{pmatrix}3&amp;-1\\-1&amp;2\end{pmatrix}.$$</div>
+<h3>2. Compute $x=A^{-1}b$</h3>
+<p>Multiply $A^{-1}$ by the right-hand side vector $b=\begin{pmatrix}5\\7\end{pmatrix}$:</p>
+<div class="math-block">$$x=A^{-1}b=\frac{1}{5}\begin{pmatrix}3&amp;-1\\-1&amp;2\end{pmatrix}\begin{pmatrix}5\\7\end{pmatrix}.$$</div>
+<p>First perform the matrix-vector product before dividing by $5$:</p>
+<div class="math-block">$$x=\frac{1}{5}\begin{pmatrix}3\cdot5 + (-1)\cdot7\\(-1)\cdot5 + 2\cdot7\end{pmatrix}=\frac{1}{5}\begin{pmatrix}15-7\\-5+14\end{pmatrix}=\frac{1}{5}\begin{pmatrix}8\\9\end{pmatrix}=\begin{pmatrix}\frac{8}{5}\\\frac{9}{5}\end{pmatrix}.$$</div>
+<h3>3. Why keeping $\frac{1}{5}$ outside until the end helps</h3>
+<p>If we distribute $\frac{1}{5}$ into $A^{-1}$ too early, we have to multiply fractions in every entry. Keeping the scalar $\frac{1}{\det A}=\frac{1}{5}$ in front lets us do whole-number arithmetic ($15-7=8$ and $-5+14=9$) and divide only once at the very end.</p>
+<h3>Quick verification</h3>
+<p>Substitute $x=\begin{pmatrix}\frac{8}{5}\\\frac{9}{5}\end{pmatrix}$ back into the left side of $Ax=b$:</p>
+<div class="math-block">$$Ax=\begin{pmatrix}2&amp;1\\1&amp;3\end{pmatrix}\begin{pmatrix}\frac{8}{5}\\\frac{9}{5}\end{pmatrix}=\begin{pmatrix}2\cdot\frac{8}{5}+1\cdot\frac{9}{5}\\1\cdot\frac{8}{5}+3\cdot\frac{9}{5}\end{pmatrix}=\begin{pmatrix}\frac{16+9}{5}\\\frac{8+27}{5}\end{pmatrix}=\begin{pmatrix}\frac{25}{5}\\\frac{35}{5}\end{pmatrix}=\begin{pmatrix}5\\7\end{pmatrix}=b.$$</div>
+<p>The left-hand side equals $b$ exactly. ✓</p>
+<h3>A concrete example</h3>
+<p>Written out as two scalar equations, $Ax=b$ is the system of two lines in the plane:</p>
+<div class="math-block">$$\begin{cases}2x_1 + x_2 = 5,\\ x_1 + 3x_2 = 7.\end{cases}$$</div>
+<p>Our solution $x=\left(\frac{8}{5},\frac{9}{5}\right)^T=(1.6, 1.8)^T$ is the unique intersection point of these two lines:</p>
+<ul><li>Line 1: $2(1.6) + 1.8 = 3.2 + 1.8 = 5$,</li><li>Line 2: $1.6 + 3(1.8) = 1.6 + 5.4 = 7$.</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>To solve $Ax=b$ using the inverse, we first find $\det A = 6-1=5$, which gives $A^{-1}=\frac{1}{5}\begin{pmatrix}3&amp;-1\\-1&amp;2\end{pmatrix}$. Then we multiply $A^{-1}$ by $b=(5,7)^T$. Doing the integer multiplication first gives $(8,9)^T$, and dividing by $5$ gives $x=(8/5, 9/5)^T$. Plugging $(8/5, 9/5)^T$ back into $Ax$ produces $(25/5, 35/5)^T=(5,7)^T$, confirming our answer.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-2">Exercise 2: Formula for a 2×2 Matrix</a></li><li><a href="#exercise-15">Exercise 15: Two Methods for Solving the Same System</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-7">
+<h2 class="exercise-title">Exercise 7. Inverse of a Product</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$A=\begin{pmatrix}1&amp;1\\0&amp;1\end{pmatrix},\qquad B=\begin{pmatrix}2&amp;0\\0&amp;3\end{pmatrix}$$</div>
+<p>compute $(AB)^{-1}$ and $B^{-1}A^{-1}$. Check that the results are the same and explain the meaning of the reversed order.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>When two invertible matrices $A$ and $B$ are multiplied, their product $AB$ is also invertible, and its inverse reverses the order of the factors:</p>
+<div class="math-block">$$(AB)^{-1}=B^{-1}A^{-1}.$$</div>
+<p>Algebraically, this happens because $B^{-1}$ and $A^{-1}$ meet in the middle and cancel one pair at a time:</p>
+<div class="math-block">$$(AB)(B^{-1}A^{-1}) = A(BB^{-1})A^{-1} = AIA^{-1} = AA^{-1} = I.$$</div>
+<h3>1. First path: compute $AB$ and then $(AB)^{-1}$</h3>
+<p>Multiply $A$ and $B$:</p>
+<div class="math-block">$$AB=\begin{pmatrix}1&amp;1\\0&amp;1\end{pmatrix}\begin{pmatrix}2&amp;0\\0&amp;3\end{pmatrix}=\begin{pmatrix}2&amp;3\\0&amp;3\end{pmatrix}.$$</div>
+<p>Now find the inverse of $AB$ using the $2\times2$ formula. Its determinant is</p>
+<div class="math-block">$$\det(AB)=2\cdot3-3\cdot0=6.$$</div>
+<p>Therefore,</p>
+<div class="math-block">$$(AB)^{-1}=\frac{1}{6}\begin{pmatrix}3&amp;-3\\0&amp;2\end{pmatrix}=\begin{pmatrix}\frac{1}{2}&amp;-\frac{1}{2}\\0&amp;\frac{1}{3}\end{pmatrix}.$$</div>
+<h3>2. Second path: compute $A^{-1}$, $B^{-1}$, and then $B^{-1}A^{-1}$</h3>
+<p>Find each inverse separately using the $2\times2$ formula:</p>
+<ul><li>For $A=\begin{pmatrix}1&amp;1\\0&amp;1\end{pmatrix}$, $\det A=1$, so</li></ul>
+<div class="math-block">$$A^{-1}=\begin{pmatrix}1&amp;-1\\0&amp;1\end{pmatrix}.$$</div>
+<ul><li>For the diagonal matrix $B=\begin{pmatrix}2&amp;0\\0&amp;3\end{pmatrix}$, $\det B=6$, so</li></ul>
+<div class="math-block">$$B^{-1}=\begin{pmatrix}\frac{1}{2}&amp;0\\0&amp;\frac{1}{3}\end{pmatrix}.$$</div>
+<p>Now multiply $B^{-1}$ by $A^{-1}$ in that order:</p>
+<div class="math-block">$$B^{-1}A^{-1}=\begin{pmatrix}\frac{1}{2}&amp;0\\0&amp;\frac{1}{3}\end{pmatrix}\begin{pmatrix}1&amp;-1\\0&amp;1\end{pmatrix}=\begin{pmatrix}\frac{1}{2}\cdot1+0\cdot0 &amp; \frac{1}{2}\cdot(-1)+0\cdot1\\0\cdot1+\frac{1}{3}\cdot0 &amp; 0\cdot(-1)+\frac{1}{3}\cdot1\end{pmatrix}=\begin{pmatrix}\frac{1}{2}&amp;-\frac{1}{2}\\0&amp;\frac{1}{3}\end{pmatrix}.$$</div>
+<h3>3. Compare the results and explain the reversed order</h3>
+<p>Both paths produce the exact same matrix:</p>
+<div class="math-block">$$(AB)^{-1}=B^{-1}A^{-1}=\begin{pmatrix}\frac{1}{2}&amp;-\frac{1}{2}\\0&amp;\frac{1}{3}\end{pmatrix}.$$</div>
+<p>Why must the order be reversed? Think of how $(AB)$ acts on a vector $x$:</p>
+<div class="math-block">$$x \;\xrightarrow{\;\text{first } B\;}\; Bx \;\xrightarrow{\;\text{second } A\;}\; A(Bx).$$</div>
+<p>Because $A$ was applied <strong>last</strong>, to undo the combined process we must undo $A$ <strong>first</strong> (by applying $A^{-1}$) and then undo $B$ <strong>second</strong> (by applying $B^{-1}$):</p>
+<div class="math-block">$$A(Bx) \;\xrightarrow{\;\text{first } A^{-1}\;}\; Bx \;\xrightarrow{\;\text{second } B^{-1}\;}\; x.$$</div>
+<p>Since matrices act from the left, "first $A^{-1}$, then $B^{-1}$" is written as the product $B^{-1}A^{-1}$.</p>
+<h3>Quick verification</h3>
+<p>Multiply $(AB)$ directly by $B^{-1}A^{-1}$:</p>
+<div class="math-block">$$\begin{pmatrix}2&amp;3\\0&amp;3\end{pmatrix}\begin{pmatrix}\frac{1}{2}&amp;-\frac{1}{2}\\0&amp;\frac{1}{3}\end{pmatrix}=\begin{pmatrix}2\cdot\frac{1}{2}+3\cdot0 &amp; 2\cdot(-\frac{1}{2})+3\cdot\frac{1}{3}\\0\cdot\frac{1}{2}+3\cdot0 &amp; 0\cdot(-\frac{1}{2})+3\cdot\frac{1}{3}\end{pmatrix}=\begin{pmatrix}1&amp;-1+1\\0&amp;1\end{pmatrix}=\begin{pmatrix}1&amp;0\\0&amp;1\end{pmatrix}=I.$$</div>
+<p>Also note that multiplying in the wrong order gives $A^{-1}B^{-1}=\begin{pmatrix}1&amp;-1\\0&amp;1\end{pmatrix}\begin{pmatrix}\frac{1}{2}&amp;0\\0&amp;\frac{1}{3}\end{pmatrix}=\begin{pmatrix}\frac{1}{2}&amp;-\frac{1}{3}\\0&amp;\frac{1}{3}\end{pmatrix}\neq(AB)^{-1}$. ✓</p>
+<h3>A concrete example</h3>
+<p>This is often called the <strong>socks-and-shoes rule</strong>:</p>
+<ul><li>In the morning, you put on your socks ($B$) first, and then your shoes ($A$) second.</li><li>At night, to undo the process, you cannot take off your socks first! You must take off your shoes ($A^{-1}$) first, and then take off your socks ($B^{-1}$) second.</li></ul>
+<p>Let us test this on the vector $v=\begin{pmatrix}1\\1\end{pmatrix}$:</p>
+<ol><li>Apply $B$: $Bv=\begin{pmatrix}2\\3\end{pmatrix}$.</li><li>Apply $A$: $A(Bv)=\begin{pmatrix}5\\3\end{pmatrix}$.</li><li>Undo $A$ first: $A^{-1}\begin{pmatrix}5\\3\end{pmatrix}=\begin{pmatrix}5-3\\3\end{pmatrix}=\begin{pmatrix}2\\3\end{pmatrix}$.</li><li>Undo $B$ second: $B^{-1}\begin{pmatrix}2\\3\end{pmatrix}=\begin{pmatrix}1\\1\end{pmatrix}=v$.</li></ol>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Whether we multiply $AB$ first and invert it, or invert $A$ and $B$ separately and compute $B^{-1}A^{-1}$, we get the exact same matrix $\begin{pmatrix}1/2&amp;-1/2\\0&amp;1/3\end{pmatrix}$. The order flips because in the product $(AB)x$, $B$ acts on $x$ first and $A$ acts second. To reverse a two-step process, you always have to undo the last step ($A$) first and the first step ($B$) last, which means multiplying by $A^{-1}$ and then $B^{-1}$, written $B^{-1}A^{-1}$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-12">Exercise 12: Finding Inverses Without Starting from Scratch</a></li><li><a href="#exercise-13">Exercise 13: Undoing a Composite Transformation</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-8">
+<h2 class="exercise-title">Exercise 8. Inverse of a Transformation</h2>
+<h3>The question</h3>
+<p>The matrix</p>
+<div class="math-block">$$S=\begin{pmatrix}2&amp;0\\0&amp;\frac12\end{pmatrix}$$</div>
+<p>describes a scaling of the plane. Find $S^{-1}$ and explain geometrically what the inverse transformation does. Check the action of the pair $S,S^{-1}$ on one simple vector.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>A matrix is not just a table of numbers—it represents a <strong>geometric transformation</strong> of the plane.</p>
+<ul><li>For a diagonal matrix $\begin{pmatrix}d_1&amp;0\\0&amp;d_2\end{pmatrix}$, the first coordinate $x$ is multiplied by $d_1$ and the second coordinate $y$ is multiplied by $d_2$.</li><li>The <strong>inverse matrix</strong> $S^{-1}$ represents the <strong>inverse transformation</strong>: the geometric operation that reverses $S$ and brings every point back to where it started.</li></ul>
+<h3>1. How $S$ acts on the plane</h3>
+<p>Apply $S$ to a general point $\begin{pmatrix}x\\y\end{pmatrix}$:</p>
+<div class="math-block">$$S\begin{pmatrix}x\\y\end{pmatrix}=\begin{pmatrix}2&amp;0\\0&amp;\frac{1}{2}\end{pmatrix}\begin{pmatrix}x\\y\end{pmatrix}=\begin{pmatrix}2x\\\frac{1}{2}y\end{pmatrix}.$$</div>
+<p>Geometrically, $S$:</p>
+<ul><li><strong>stretches</strong> the plane horizontally (along the $x$-axis) by a factor of $2$,</li><li><strong>compresses</strong> the plane vertically (along the $y$-axis) by a factor of $\frac{1}{2}$.</li></ul>
+<h3>2. Find $S^{-1}$</h3>
+<p>For a diagonal matrix with non-zero diagonal entries, we simply take the reciprocal of each diagonal entry (or use the $2\times2$ formula with $\det S = 2\cdot\frac{1}{2} = 1$):</p>
+<div class="math-block">$$S^{-1}=\begin{pmatrix}\frac{1}{2}&amp;0\\0&amp;2\end{pmatrix}.$$</div>
+<h3>3. Geometric meaning of $S^{-1}$</h3>
+<p>Apply $S^{-1}$ to a point $\begin{pmatrix}x'\\y'\end{pmatrix}$:</p>
+<div class="math-block">$$S^{-1}\begin{pmatrix}x'\\y'\end{pmatrix}=\begin{pmatrix}\frac{1}{2}&amp;0\\0&amp;2\end{pmatrix}\begin{pmatrix}x'\\y'\end{pmatrix}=\begin{pmatrix}\frac{1}{2}x'\\2y'\end{pmatrix}.$$</div>
+<p>Geometrically, $S^{-1}$ does the exact opposite of $S$:</p>
+<ul><li>where $S$ doubled the horizontal coordinate, $S^{-1}$ <strong>halves</strong> it (scales horizontally by $\frac{1}{2}$),</li><li>where $S$ halved the vertical coordinate, $S^{-1}$ <strong>doubles</strong> it (scales vertically by $2$).</li></ul>
+<h3>4. Check the action of $S$ and $S^{-1}$ on a simple vector</h3>
+<p>Choose the vector $v=\begin{pmatrix}3\\4\end{pmatrix}$.</p>
+<p>First, apply $S$:</p>
+<div class="math-block">$$Sv=\begin{pmatrix}2&amp;0\\0&amp;\frac{1}{2}\end{pmatrix}\begin{pmatrix}3\\4\end{pmatrix}=\begin{pmatrix}6\\2\end{pmatrix}.$$</div>
+<p>(The $x$-coordinate doubled from $3$ to $6$, and the $y$-coordinate halved from $4$ to $2$.)</p>
+<p>Next, apply $S^{-1}$ to the transformed vector $\begin{pmatrix}6\\2\end{pmatrix}$:</p>
+<div class="math-block">$$S^{-1}(Sv)=\begin{pmatrix}\frac{1}{2}&amp;0\\0&amp;2\end{pmatrix}\begin{pmatrix}6\\2\end{pmatrix}=\begin{pmatrix}3\\4\end{pmatrix}=v.$$</div>
+<p>The vector returns to its original coordinates $(3,4)^T$.</p>
+<h3>Quick verification</h3>
+<p>Check that $SS^{-1}=I$:</p>
+<div class="math-block">$$SS^{-1}=\begin{pmatrix}2&amp;0\\0&amp;\frac{1}{2}\end{pmatrix}\begin{pmatrix}\frac{1}{2}&amp;0\\0&amp;2\end{pmatrix}=\begin{pmatrix}2\cdot\frac{1}{2}&amp;0\\0&amp;\frac{1}{2}\cdot2\end{pmatrix}=\begin{pmatrix}1&amp;0\\0&amp;1\end{pmatrix}=I.$$</div>
+<p>The product is the identity matrix $I$. ✓</p>
+<h3>A concrete example</h3>
+<p>Consider the unit square $[0,1]\times[0,1]$, which has width $1$, height $1$, and area $1$:</p>
+<ul><li>Under $S$, the unit square is stretched into a wide, flat rectangle $[0,2]\times[0,\frac{1}{2}]$ of width $2$ and height $\frac{1}{2}$ (notice its area is still $2\cdot\frac{1}{2}=1$ because $\det S=1$).</li><li>Under $S^{-1}$, that flat rectangle $[0,2]\times[0,\frac{1}{2}]$ is compressed horizontally by $\frac{1}{2}$ and stretched vertically by $2$, restoring the original $[0,1]\times[0,1]$ unit square.</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>The matrix $S$ stretches the $x$-direction by $2$ and squashes the $y$-direction by $\frac{1}{2}$. To undo that geometrically, we need to shrink the $x$-direction by $\frac{1}{2}$ and stretch the $y$-direction by $2$. That immediately tells us $S^{-1}=\begin{pmatrix}1/2&amp;0\\0&amp;2\end{pmatrix}$. When we test this on $v=(3,4)^T$, $S$ moves it to $(6,2)^T$, and $S^{-1}$ brings $(6,2)^T$ right back to $(3,4)^T$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-10">Exercise 10: Inverse of a Diagonal Matrix</a></li><li><a href="#exercise-13">Exercise 13: Undoing a Composite Transformation</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-9">
+<h2 class="exercise-title">Exercise 9. Matrix Equation</h2>
+<h3>The question</h3>
+<p>Given</p>
+<div class="math-block">$$A=\begin{pmatrix}1&amp;2\\0&amp;1\end{pmatrix},\qquad B=\begin{pmatrix}3&amp;1\\2&amp;4\end{pmatrix}.$$</div>
+<p>Solve the equation $AX=B$ for $X$. Before calculating, decide on which side of the equation $A^{-1}$ must be used. Then check the result by computing $AX$.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Matrix multiplication is <strong>not commutative</strong> ($AB\neq BA$ in general). Because of this, we must be careful about <strong>which side</strong> we multiply by $A^{-1}$:</p>
+<ul><li>In $AX=B$, the matrix $A$ sits on the <strong>left</strong> of $X$.</li><li>To cancel $A$ next to $X$, we must multiply both sides on the <strong>left</strong> by $A^{-1}$:</li></ul>
+<div class="math-block">$$A^{-1}(AX)=A^{-1}B \quad\Longrightarrow\quad (A^{-1}A)X=A^{-1}B \quad\Longrightarrow\quad IX=A^{-1}B \quad\Longrightarrow\quad X=A^{-1}B.$$</div>
+<p>If we mistakenly multiplied on the right ($AXA^{-1}=BA^{-1}$), $A$ and $A^{-1}$ would be separated by $X$ and would not cancel!</p>
+<h3>1. Find the inverse $A^{-1}$</h3>
+<p>Compute the determinant of $A=\begin{pmatrix}1&amp;2\\0&amp;1\end{pmatrix}$:</p>
+<div class="math-block">$$\det A = 1\cdot1 - 2\cdot0 = 1.$$</div>
+<p>Using the $2\times2$ inverse formula, swap the diagonal entries ($1$ and $1$) and negate the off-diagonal entries ($2$ and $0$):</p>
+<div class="math-block">$$A^{-1}=\begin{pmatrix}1&amp;-2\\0&amp;1\end{pmatrix}.$$</div>
+<h3>2. Multiply on the left to find $X=A^{-1}B$</h3>
+<p>Compute the product $A^{-1}B$:</p>
+<div class="math-block">$$X=A^{-1}B=\begin{pmatrix}1&amp;-2\\0&amp;1\end{pmatrix}\begin{pmatrix}3&amp;1\\2&amp;4\end{pmatrix}=\begin{pmatrix}1\cdot3+(-2)\cdot2 &amp; 1\cdot1+(-2)\cdot4\\0\cdot3+1\cdot2 &amp; 0\cdot1+1\cdot4\end{pmatrix}.$$</div>
+<p>Simplifying each entry gives</p>
+<div class="math-block">$$X=\begin{pmatrix}3-4 &amp; 1-8\\0+2 &amp; 0+4\end{pmatrix}=\begin{pmatrix}-1&amp;-7\\2&amp;4\end{pmatrix}.$$</div>
+<h3>3. Why multiplying on the right would give the wrong answer</h3>
+<p>Suppose someone wrote $BA^{-1}$ instead of $A^{-1}B$:</p>
+<div class="math-block">$$BA^{-1}=\begin{pmatrix}3&amp;1\\2&amp;4\end{pmatrix}\begin{pmatrix}1&amp;-2\\0&amp;1\end{pmatrix}=\begin{pmatrix}3&amp;-5\\2&amp;0\end{pmatrix}.$$</div>
+<p>If we test this matrix in $AX$, we get $\begin{pmatrix}1&amp;2\\0&amp;1\end{pmatrix}\begin{pmatrix}3&amp;-5\\2&amp;0\end{pmatrix}=\begin{pmatrix}7&amp;-5\\2&amp;0\end{pmatrix}\neq B$. Order matters!</p>
+<h3>Quick verification</h3>
+<p>Check our solution $X=\begin{pmatrix}-1&amp;-7\\2&amp;4\end{pmatrix}$ by computing $AX$:</p>
+<div class="math-block">$$AX=\begin{pmatrix}1&amp;2\\0&amp;1\end{pmatrix}\begin{pmatrix}-1&amp;-7\\2&amp;4\end{pmatrix}=\begin{pmatrix}-1+4 &amp; -7+8\\0+2 &amp; 0+4\end{pmatrix}=\begin{pmatrix}3&amp;1\\2&amp;4\end{pmatrix}=B.$$</div>
+<p>The product equals $B$. ✓</p>
+<h3>A concrete example</h3>
+<p>Solving $AX=B$ for a $2\times2$ matrix $X=\begin{pmatrix}x_1&amp;x_2\end{pmatrix}$ is the same as solving two vector systems at the same time:</p>
+<ul><li>$Ax_1 = \begin{pmatrix}3\\2\end{pmatrix}$ gives the first column $x_1 = A^{-1}\begin{pmatrix}3\\2\end{pmatrix} = \begin{pmatrix}-1\\2\end{pmatrix}$,</li><li>$Ax_2 = \begin{pmatrix}1\\4\end{pmatrix}$ gives the second column $x_2 = A^{-1}\begin{pmatrix}1\\4\end{pmatrix} = \begin{pmatrix}-7\\4\end{pmatrix}$.</li></ul>
+<p>Putting the two columns side by side produces $X=\begin{pmatrix}-1&amp;-7\\2&amp;4\end{pmatrix}$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Because $A$ is on the left of $X$ in $AX=B$, we must multiply both sides on the left by $A^{-1}$ so that $A^{-1}A$ cancels to $I$, leaving $X=A^{-1}B$. Since $A=\begin{pmatrix}1&amp;2\\0&amp;1\end{pmatrix}$ has determinant $1$, its inverse is simply $\begin{pmatrix}1&amp;-2\\0&amp;1\end{pmatrix}$. Multiplying $A^{-1}B$ gives $X=\begin{pmatrix}-1&amp;-7\\2&amp;4\end{pmatrix}$, and checking $AX$ recovers $B$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-6">Exercise 6: Solving a System Using the Inverse</a></li><li><a href="#exercise-7">Exercise 7: Inverse of a Product</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-10">
+<h2 class="exercise-title">Exercise 10. Inverse of a Diagonal Matrix</h2>
+<h3>The question</h3>
+<p>Given</p>
+<div class="math-block">$$D=\begin{pmatrix}2&amp;0&amp;0\\0&amp;-3&amp;0\\0&amp;0&amp;5\end{pmatrix},\qquad E=\begin{pmatrix}2&amp;0&amp;0\\0&amp;0&amp;0\\0&amp;0&amp;5\end{pmatrix}.$$</div>
+<p>Without using Gauss–Jordan elimination, decide which matrix is invertible. For the invertible matrix, give the inverse and check the result by multiplication.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>A <strong>diagonal matrix</strong> has non-zero entries only on its main diagonal:</p>
+<div class="math-block">$$\operatorname{diag}(d_1,d_2,d_3)=\begin{pmatrix}d_1&amp;0&amp;0\\0&amp;d_2&amp;0\\0&amp;0&amp;d_3\end{pmatrix}.$$</div>
+<p>When we multiply a vector $(x,y,z)^T$ by this matrix, each coordinate is scaled independently: $(d_1x, d_2y, d_3z)^T$.</p>
+<ul><li>To undo this scaling, we simply divide each coordinate by $d_i$, which requires <strong>every diagonal entry to be non-zero</strong> ($d_1\neq0$, $d_2\neq0$, $d_3\neq0$).</li><li>If even a single diagonal entry is $0$, that coordinate is wiped out ($0\cdot y=0$) and can never be recovered.</li></ul>
+<h3>1. Decide which matrix is invertible</h3>
+<ul><li>Look at $D=\operatorname{diag}(2,-3,5)$: all three diagonal entries ($2$, $-3$, and $5$) are non-zero, and $\det D = 2\cdot(-3)\cdot5 = -30\neq0$. Therefore, <strong>$D$ is invertible</strong>.</li><li>Look at $E=\operatorname{diag}(2,0,5)$: the middle diagonal entry is $0$ (in Fact, Row 2 and Column 2 are all zeros), and $\det E = 2\cdot0\cdot5 = 0$. Therefore, <strong>$E$ is not invertible</strong>.</li></ul>
+<h3>2. Write down $D^{-1}$ directly</h3>
+<p>To invert an invertible diagonal matrix, replace each diagonal entry with its reciprocal:</p>
+<div class="math-block">$$D^{-1}=\begin{pmatrix}\frac{1}{2}&amp;0&amp;0\\0&amp;-\frac{1}{3}&amp;0\\0&amp;0&amp;\frac{1}{5}\end{pmatrix}.$$</div>
+<p>No row reduction is needed because the three coordinates never mix with one another.</p>
+<h3>3. Why $E$ cannot be inverted</h3>
+<p>When $E$ acts on any vector $(x,y,z)^T$, it gives</p>
+<div class="math-block">$$E\begin{pmatrix}x\\y\\z\end{pmatrix}=\begin{pmatrix}2x\\0\\5z\end{pmatrix}.$$</div>
+<p>The second coordinate $y$ is completely erased. No matrix can multiply $(2x,0,5z)^T$ and magically reconstruct what $y$ used to be.</p>
+<h3>Quick verification</h3>
+<p>Multiply $D$ and $D^{-1}$ (for diagonal matrices, we just multiply the corresponding diagonal entries):</p>
+<div class="math-block">$$DD^{-1}=\begin{pmatrix}2&amp;0&amp;0\\0&amp;-3&amp;0\\0&amp;0&amp;5\end{pmatrix}\begin{pmatrix}\frac{1}{2}&amp;0&amp;0\\0&amp;-\frac{1}{3}&amp;0\\0&amp;0&amp;\frac{1}{5}\end{pmatrix}=\begin{pmatrix}2\cdot\frac{1}{2}&amp;0&amp;0\\0&amp;(-3)\cdot\left(-\frac{1}{3}\right)&amp;0\\0&amp;0&amp;5\cdot\frac{1}{5}\end{pmatrix}=\begin{pmatrix}1&amp;0&amp;0\\0&amp;1&amp;0\\0&amp;0&amp;1\end{pmatrix}=I_3.$$</div>
+<p>The product is the $3\times3$ identity matrix. ✓</p>
+<h3>A concrete example</h3>
+<p>Take two different vectors in $\mathbb{R}^3$ that differ only in their second coordinate:</p>
+<div class="math-block">$$u=\begin{pmatrix}1\\4\\1\end{pmatrix},\qquad v=\begin{pmatrix}1\\99\\1\end{pmatrix}.$$</div>
+<p>Under $E$, both vectors collapse to the exact same output:</p>
+<div class="math-block">$$Eu=\begin{pmatrix}2\\0\\5\end{pmatrix}=Ev.$$</div>
+<p>Under $D$, however, $Du=\begin{pmatrix}2\\-12\\5\end{pmatrix}$ and $Dv=\begin{pmatrix}2\\-297\\5\end{pmatrix}$ stay distinct, and applying $D^{-1}$ recovers $u$ and $v$ immediately.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>A diagonal matrix scales each coordinate axis separately, so it is invertible if and only if every number on its main diagonal is non-zero. That means $D$ is invertible because $2, -3, 5$ are all non-zero, while $E$ is not invertible because of the $0$ in the middle of its diagonal. To get $D^{-1}$, we just take the reciprocal of each diagonal entry: $\operatorname{diag}(1/2, -1/3, 1/5)$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-3">Exercise 3: When Does the Inverse Not Exist?</a></li><li><a href="#exercise-8">Exercise 8: Inverse of a Transformation</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-11">
+<h2 class="exercise-title">Exercise 11. Parameter and Invertibility</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$A(t)=\begin{pmatrix}1&amp;t\\t&amp;1\end{pmatrix}$$</div>
+<p>find all $t$ for which the matrix is invertible, and then give a formula for $A(t)^{-1}$. Explain what happens to this formula at the excluded values.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>When a matrix depends on a parameter $t$, its determinant also becomes a function of $t$.</p>
+<ul><li>A square matrix $A(t)$ is invertible <strong>if and only if</strong> $\det A(t)\neq0$.</li><li>Solving the equation $\det A(t)=0$ tells us the exact parameter values that must be <strong>excluded</strong>.</li><li>For all other values of $t$, the standard $2\times2$ inverse formula gives $A(t)^{-1}$ as a function of $t$.</li></ul>
+<h3>1. Compute the determinant and find the invertible values of $t$</h3>
+<p>Calculate $\det A(t)$:</p>
+<div class="math-block">$$\det A(t) = 1\cdot1 - t\cdot t = 1 - t^2 = (1-t)(1+t).$$</div>
+<p>Set the determinant non-zero to find when $A(t)$ is invertible:</p>
+<div class="math-block">$$1 - t^2 \neq 0 \quad\Longleftrightarrow\quad t^2 \neq 1 \quad\Longleftrightarrow\quad t\neq 1 \text{ and } t\neq -1.$$</div>
+<p>Thus, $A(t)$ is invertible for all real numbers $t\in\mathbb{R}\setminus\{-1,1\}$.</p>
+<h3>2. Give the formula for $A(t)^{-1}$</h3>
+<p>For $t\neq\pm1$, apply the $2\times2$ inverse formula (swap the diagonal $1$'s, negate the off-diagonal $t$'s, and divide by $\det A(t)=1-t^2$):</p>
+<div class="math-block">$$A(t)^{-1}=\frac{1}{1-t^2}\begin{pmatrix}1&amp;-t\\-t&amp;1\end{pmatrix}=\begin{pmatrix}\dfrac{1}{1-t^2}&amp;\dfrac{-t}{1-t^2}\\[8pt]\dfrac{-t}{1-t^2}&amp;\dfrac{1}{1-t^2}\end{pmatrix}.$$</div>
+<h3>3. What happens at the excluded values $t=1$ and $t=-1$?</h3>
+<p>Look at the formula and the matrix itself when $t=\pm1$:</p>
+<ul><li><strong>In the formula:</strong> The denominator $1-t^2$ becomes $1-(\pm1)^2 = 0$. Every entry of $A(t)^{-1}$ involves <strong>division by zero</strong>, so the expression is undefined (and as $t\to\pm1$, the entries blow up to $\pm\infty$).</li><li><strong>In the matrix $A(t)$:</strong></li><li>At $t=1$, $A(1)=\begin{pmatrix}1&amp;1\\1&amp;1\end{pmatrix}$, where Row 2 equals Row 1 ($R_2=R_1$).</li><li>At $t=-1$, $A(-1)=\begin{pmatrix}1&amp;-1\\-1&amp;1\end{pmatrix}$, where Row 2 is the negative of Row 1 ($R_2=-R_1$).</li></ul>
+<p>In both excluded cases, the two rows become linearly dependent, collapsing the plane onto a line.</p>
+<h3>Quick verification</h3>
+<p>Multiply $A(t)$ by $A(t)^{-1}$ for $t\neq\pm1$:</p>
+<div class="math-block">$$A(t)A(t)^{-1}=\frac{1}{1-t^2}\begin{pmatrix}1&amp;t\\t&amp;1\end{pmatrix}\begin{pmatrix}1&amp;-t\\-t&amp;1\end{pmatrix}=\frac{1}{1-t^2}\begin{pmatrix}1-t^2 &amp; -t+t\\t-t &amp; -t^2+1\end{pmatrix}=\frac{1}{1-t^2}\begin{pmatrix}1-t^2&amp;0\\0&amp;1-t^2\end{pmatrix}=\begin{pmatrix}1&amp;0\\0&amp;1\end{pmatrix}=I.$$</div>
+<p>The product simplifies cleanly to $I$ for every $t\neq\pm1$. ✓</p>
+<h3>A concrete example</h3>
+<p>Let us plug in two specific allowed values of $t$:</p>
+<ul><li><strong>$t=0$:</strong> $A(0)=\begin{pmatrix}1&amp;0\\0&amp;1\end{pmatrix}=I$, and the formula gives $A(0)^{-1}=\frac{1}{1-0}\begin{pmatrix}1&amp;0\\0&amp;1\end{pmatrix}=I$.</li><li><strong>$t=2$:</strong> $A(2)=\begin{pmatrix}1&amp;2\\2&amp;1\end{pmatrix}$, and the formula gives</li></ul>
+<div class="math-block">$$A(2)^{-1}=\frac{1}{1-4}\begin{pmatrix}1&amp;-2\\-2&amp;1\end{pmatrix}=-\frac{1}{3}\begin{pmatrix}1&amp;-2\\-2&amp;1\end{pmatrix}=\begin{pmatrix}-\frac{1}{3}&amp;\frac{2}{3}\\\frac{2}{3}&amp;-\frac{1}{3}\end{pmatrix}.$$</div>
+<p>Checking $A(2)A(2)^{-1}$ gives $-\frac{1}{3}\begin{pmatrix}-3&amp;0\\0&amp;-3\end{pmatrix}=I$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>To see when $A(t)$ is invertible, we compute its determinant: $1-t^2$. This is non-zero whenever $t\neq1$ and $t\neq-1$. For all other $t$, the $2\times2$ formula gives $A(t)^{-1}=\frac{1}{1-t^2}\begin{pmatrix}1&amp;-t\\-t&amp;1\end{pmatrix}$. At the excluded values $t=\pm1$, the denominator $1-t^2$ hits zero—so the formula divides by zero—and the two rows of $A(t)$ become identical or opposite, making the matrix singular.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-2">Exercise 2: Formula for a 2×2 Matrix</a></li><li><a href="#exercise-3">Exercise 3: When Does the Inverse Not Exist?</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-12">
+<h2 class="exercise-title">Exercise 12. Finding Inverses Without Starting from Scratch</h2>
+<h3>The question</h3>
+<p>It is known that</p>
+<div class="math-block">$$A^{-1}=\begin{pmatrix}2&amp;-1\\-3&amp;2\end{pmatrix}.$$</div>
+<p>Without finding $A$, compute $(3A)^{-1}$, $(A^T)^{-1}$, and $(A^2)^{-1}$. Justify each result using the appropriate property.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>If we already know $A^{-1}$, we never need to reconstruct $A$ first and then invert again. Instead, we use three fundamental <strong>properties of matrix inverses</strong> that express each new inverse directly in terms of $A^{-1}$:</p>
+<ol><li><strong>Scalar multiple:</strong> $(cA)^{-1}=\dfrac{1}{c}A^{-1}$ for any non-zero scalar $c\neq0$.</li><li><strong>Transpose:</strong> $(A^T)^{-1}=(A^{-1})^T$ (inverting and transposing can be done in either order).</li><li><strong>Power / Product:</strong> $(A^2)^{-1}=(AA)^{-1}=A^{-1}A^{-1}=(A^{-1})^2$.</li></ol>
+<h3>1. Compute $(3A)^{-1}$</h3>
+<p><strong>Justification:</strong> If we multiply $(3A)$ by $\frac{1}{3}A^{-1}$, the scalars $3$ and $\frac{1}{3}$ cancel to $1$ and $AA^{-1}$ cancels to $I$:</p>
+<div class="math-block">$$(3A)\left(\frac{1}{3}A^{-1}\right)=\left(3\cdot\frac{1}{3}\right)(AA^{-1})=1\cdot I=I.$$</div>
+<p>Therefore, $(3A)^{-1}=\frac{1}{3}A^{-1}$:</p>
+<div class="math-block">$$(3A)^{-1}=\frac{1}{3}\begin{pmatrix}2&amp;-1\\-3&amp;2\end{pmatrix}=\begin{pmatrix}\frac{2}{3}&amp;-\frac{1}{3}\\-1&amp;\frac{2}{3}\end{pmatrix}.$$</div>
+<h3>2. Compute $(A^T)^{-1}$</h3>
+<p><strong>Justification:</strong> Taking the transpose of $AA^{-1}=I$ and using the reversal rule $(XY)^T=Y^TX^T$ gives</p>
+<div class="math-block">$$(AA^{-1})^T = I^T \quad\Longrightarrow\quad (A^{-1})^T A^T = I.$$</div>
+<p>Similarly, $(A^{-1}A)^T=I^T$ gives $A^T(A^{-1})^T=I$. Thus the inverse of $A^T$ is simply the transpose of $A^{-1}$:</p>
+<div class="math-block">$$(A^T)^{-1}=(A^{-1})^T=\begin{pmatrix}2&amp;-1\\-3&amp;2\end{pmatrix}^T=\begin{pmatrix}2&amp;-3\\-1&amp;2\end{pmatrix}.$$</div>
+<h3>3. Compute $(A^2)^{-1}$</h3>
+<p><strong>Justification:</strong> Using the inverse-of-a-product rule $(AB)^{-1}=B^{-1}A^{-1}$ with $B=A$, we have</p>
+<div class="math-block">$$(A^2)^{-1}=(AA)^{-1}=A^{-1}A^{-1}=(A^{-1})^2.$$</div>
+<p>(Geometrically, if $A^2$ applies $A$ twice, undoing it requires applying $A^{-1}$ twice.) Multiply $A^{-1}$ by itself:</p>
+<div class="math-block">$$(A^2)^{-1}=\begin{pmatrix}2&amp;-1\\-3&amp;2\end{pmatrix}\begin{pmatrix}2&amp;-1\\-3&amp;2\end{pmatrix}=\begin{pmatrix}2\cdot2+(-1)\cdot(-3) &amp; 2\cdot(-1)+(-1)\cdot2\\(-3)\cdot2+2\cdot(-3) &amp; (-3)\cdot(-1)+2\cdot2\end{pmatrix}=\begin{pmatrix}4+3 &amp; -2-2\\-6-6 &amp; 3+4\end{pmatrix}=\begin{pmatrix}7&amp;-4\\-12&amp;7\end{pmatrix}.$$</div>
+<h3>Quick verification</h3>
+<p>To verify independently, note that $A=(A^{-1})^{-1}=\begin{pmatrix}2&amp;1\\3&amp;2\end{pmatrix}$ (since $\det(A^{-1})=4-3=1$).</p>
+<ul><li>$3A=\begin{pmatrix}6&amp;3\\9&amp;6\end{pmatrix}$, and $(3A)(3A)^{-1}=\begin{pmatrix}6&amp;3\\9&amp;6\end{pmatrix}\begin{pmatrix}\frac{2}{3}&amp;-\frac{1}{3}\\-1&amp;\frac{2}{3}\end{pmatrix}=\begin{pmatrix}4-3&amp;-2+2\\6-6&amp;-3+4\end{pmatrix}=I$. ✓</li><li>$A^T=\begin{pmatrix}2&amp;3\\1&amp;2\end{pmatrix}$, and $A^T(A^T)^{-1}=\begin{pmatrix}2&amp;3\\1&amp;2\end{pmatrix}\begin{pmatrix}2&amp;-3\\-1&amp;2\end{pmatrix}=\begin{pmatrix}4-3&amp;-6+6\\2-2&amp;-3+4\end{pmatrix}=I$. ✓</li><li>$A^2=\begin{pmatrix}2&amp;1\\3&amp;2\end{pmatrix}\begin{pmatrix}2&amp;1\\3&amp;2\end{pmatrix}=\begin{pmatrix}7&amp;4\\12&amp;7\end{pmatrix}$, and $A^2(A^2)^{-1}=\begin{pmatrix}7&amp;4\\12&amp;7\end{pmatrix}\begin{pmatrix}7&amp;-4\\-12&amp;7\end{pmatrix}=\begin{pmatrix}49-48&amp;-28+28\\84-84&amp;-48+49\end{pmatrix}=I$. ✓</li></ul>
+<h3>A concrete example</h3>
+<p>Notice a common pitfall in part 1: students sometimes write $(3A)^{-1}=3A^{-1}$ instead of $\frac{1}{3}A^{-1}$. Think about what $3A$ does to a vector: it applies $A$ and stretches the result by a factor of $3$. To undo a stretch by $3$, you must shrink by $\frac{1}{3}$, never stretch by $3$ again!</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Instead of inverting $A^{-1}$ to find $A$ and starting over three times, we use algebra rules for inverses. First, scaling a matrix by $3$ scales its inverse by $\frac{1}{3}$, so $(3A)^{-1}=\frac{1}{3}A^{-1}$. Second, transposing and inverting commute, so $(A^T)^{-1}=(A^{-1})^T$, which just swaps $-1$ and $-3$. Third, undoing $A$ applied twice means applying $A^{-1}$ twice, so $(A^2)^{-1}=(A^{-1})^2=\begin{pmatrix}7&amp;-4\\-12&amp;7\end{pmatrix}$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-7">Exercise 7: Inverse of a Product</a></li><li><a href="#exercise-13">Exercise 13: Undoing a Composite Transformation</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-13">
+<h2 class="exercise-title">Exercise 13. Undoing a Composite Transformation</h2>
+<h3>The question</h3>
+<p>The matrices</p>
+<div class="math-block">$$S=\begin{pmatrix}2&amp;0\\0&amp;1\end{pmatrix},\qquad H=\begin{pmatrix}1&amp;1\\0&amp;1\end{pmatrix}$$</div>
+<p>describe nonuniform scaling and shear. For $T=HS$, find $T^{-1}$ in two ways:</p>
+<ol><li>first compute $T$, then its inverse,</li><li>use $(HS)^{-1}=S^{-1}H^{-1}$.</li></ol>
+<p>Compare the results. Additionally compute $H^{-1}S^{-1}$ and verify that the incorrect order gives a different matrix. Explain the rule: “when undoing a composition of operations, we undo them from the end.”</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>When we apply the composite transformation $T=HS$ to a vector $v$, the matrix closest to $v$ acts <strong>first</strong>:</p>
+<div class="math-block">$$Tv=(HS)v=H(Sv).$$</div>
+<p>So $S$ (horizontal scaling by $2$) happens first, and $H$ (horizontal shear) happens second. To return from $Tv$ back to $v$, we must undo the <strong>last</strong> operation ($H$) <strong>first</strong> using $H^{-1}$, and then undo the <strong>first</strong> operation ($S$) <strong>second</strong> using $S^{-1}$:</p>
+<div class="math-block">$$T^{-1}=(HS)^{-1}=S^{-1}H^{-1}.$$</div>
+<h3>1. Method 1: First compute $T=HS$, then invert $T$</h3>
+<p>Multiply $H$ by $S$:</p>
+<div class="math-block">$$T=HS=\begin{pmatrix}1&amp;1\\0&amp;1\end{pmatrix}\begin{pmatrix}2&amp;0\\0&amp;1\end{pmatrix}=\begin{pmatrix}2&amp;1\\0&amp;1\end{pmatrix}.$$</div>
+<p>Now find $T^{-1}$ using the $2\times2$ formula. Since $\det T = 2\cdot1 - 1\cdot0 = 2$:</p>
+<div class="math-block">$$T^{-1}=\frac{1}{2}\begin{pmatrix}1&amp;-1\\0&amp;2\end{pmatrix}=\begin{pmatrix}\frac{1}{2}&amp;-\frac{1}{2}\\0&amp;1\end{pmatrix}.$$</div>
+<h3>2. Method 2: Compute $S^{-1}H^{-1}$</h3>
+<p>First find the individual inverses:</p>
+<ul><li>$S=\begin{pmatrix}2&amp;0\\0&amp;1\end{pmatrix}$ scales $x$ by $2$, so its inverse scales $x$ by $\frac{1}{2}$:</li></ul>
+<div class="math-block">$$S^{-1}=\begin{pmatrix}\frac{1}{2}&amp;0\\0&amp;1\end{pmatrix}.$$</div>
+<ul><li>$H=\begin{pmatrix}1&amp;1\\0&amp;1\end{pmatrix}$ shifts $x$ by $+y$, so its inverse shifts $x$ by $-y$:</li></ul>
+<div class="math-block">$$H^{-1}=\begin{pmatrix}1&amp;-1\\0&amp;1\end{pmatrix}.$$</div>
+<p>Now multiply $S^{-1}$ on the left of $H^{-1}$:</p>
+<div class="math-block">$$S^{-1}H^{-1}=\begin{pmatrix}\frac{1}{2}&amp;0\\0&amp;1\end{pmatrix}\begin{pmatrix}1&amp;-1\\0&amp;1\end{pmatrix}=\begin{pmatrix}\frac{1}{2}\cdot1+0\cdot0 &amp; \frac{1}{2}\cdot(-1)+0\cdot1\\0\cdot1+1\cdot0 &amp; 0\cdot(-1)+1\cdot1\end{pmatrix}=\begin{pmatrix}\frac{1}{2}&amp;-\frac{1}{2}\\0&amp;1\end{pmatrix}.$$</div>
+<p>Both methods give the exact same matrix!</p>
+<h3>3. Compute the incorrect order $H^{-1}S^{-1}$</h3>
+<p>Now multiply in the unreversed order $H^{-1}S^{-1}$:</p>
+<div class="math-block">$$H^{-1}S^{-1}=\begin{pmatrix}1&amp;-1\\0&amp;1\end{pmatrix}\begin{pmatrix}\frac{1}{2}&amp;0\\0&amp;1\end{pmatrix}=\begin{pmatrix}1\cdot\frac{1}{2}+(-1)\cdot0 &amp; 1\cdot0+(-1)\cdot1\\0\cdot\frac{1}{2}+1\cdot0 &amp; 0\cdot0+1\cdot1\end{pmatrix}=\begin{pmatrix}\frac{1}{2}&amp;-1\\0&amp;1\end{pmatrix}.$$</div>
+<p>Compare the top-right entry: $H^{-1}S^{-1}$ has $-1$, whereas the true inverse $T^{-1}$ has $-\frac{1}{2}$. Thus</p>
+<div class="math-block">$$H^{-1}S^{-1}\neq T^{-1}.$$</div>
+<h3>4. Explaining “when undoing a composition, we undo from the end”</h3>
+<p>Follow a general point $\begin{pmatrix}x\\y\end{pmatrix}$ step by step under $T=HS$:</p>
+<div class="math-block">$$\begin{pmatrix}x\\y\end{pmatrix} \;\xrightarrow{\;\text{1st: scale } S\;}\; \begin{pmatrix}2x\\y\end{pmatrix} \;\xrightarrow{\;\text{2nd: shear } H\;}\; \begin{pmatrix}2x+y\\y\end{pmatrix}=\begin{pmatrix}x'\\y'\end{pmatrix}.$$</div>
+<p>Look at the final output $x'=2x+y$ and $y'=y$:</p>
+<ul><li>Because $+y$ was added <strong>at the end</strong> (after $x$ was doubled), to solve for $x$ we must <strong>first</strong> subtract $y'$ ($2x = x'-y'$, which is $H^{-1}$) and <strong>then</strong> divide the result by $2$ ($x = \frac{1}{2}(x'-y')$, which is $S^{-1}$).</li><li>If we divided by $2$ first and subtracted $y'$ second ($H^{-1}S^{-1}$), we would get $\frac{1}{2}x'-y' = (x+\frac{1}{2}y)-y = x-\frac{1}{2}y\neq x$!</li></ul>
+<h3>Quick verification</h3>
+<p>Check that $T(S^{-1}H^{-1})=I$, whereas $T(H^{-1}S^{-1})\neq I$:</p>
+<div class="math-block">$$T(S^{-1}H^{-1})=\begin{pmatrix}2&amp;1\\0&amp;1\end{pmatrix}\begin{pmatrix}\frac{1}{2}&amp;-\frac{1}{2}\\0&amp;1\end{pmatrix}=\begin{pmatrix}1&amp;-1+1\\0&amp;1\end{pmatrix}=\begin{pmatrix}1&amp;0\\0&amp;1\end{pmatrix}=I. \quad\checkmark$$</div>
+<div class="math-block">$$T(H^{-1}S^{-1})=\begin{pmatrix}2&amp;1\\0&amp;1\end{pmatrix}\begin{pmatrix}\frac{1}{2}&amp;-1\\0&amp;1\end{pmatrix}=\begin{pmatrix}1&amp;-2+1\\0&amp;1\end{pmatrix}=\begin{pmatrix}1&amp;-1\\0&amp;1\end{pmatrix}\neq I. \quad\checkmark$$</div>
+<h3>A concrete example</h3>
+<p>Take the vector $v=\begin{pmatrix}3\\2\end{pmatrix}$:</p>
+<ol><li>$S$ scales it to $\begin{pmatrix}6\\2\end{pmatrix}$, and $H$ shears that to $Tv=\begin{pmatrix}8\\2\end{pmatrix}$.</li><li>Using the <strong>correct order</strong> $S^{-1}H^{-1}$: first $H^{-1}\begin{pmatrix}8\\2\end{pmatrix}=\begin{pmatrix}6\\2\end{pmatrix}$, then $S^{-1}\begin{pmatrix}6\\2\end{pmatrix}=\begin{pmatrix}3\\2\end{pmatrix}=v$.</li><li>Using the <strong>wrong order</strong> $H^{-1}S^{-1}$: first $S^{-1}\begin{pmatrix}8\\2\end{pmatrix}=\begin{pmatrix}4\\2\end{pmatrix}$, then $H^{-1}\begin{pmatrix}4\\2\end{pmatrix}=\begin{pmatrix}2\\2\end{pmatrix}\neq v$.</li></ol>
+<h3>How I would explain this in class</h3>
+<blockquote><p>In $T=HS$, $S$ acts first (doubling $x$ to $2x$) and $H$ acts second (adding $y$ to get $2x+y$). Just like unwrapping a gift or solving $2x+y=x'$ in algebra, you have to undo the outermost, last operation first: first subtract $y$ ($H^{-1}$), and only then divide by $2$ ($S^{-1}$). That is why $(HS)^{-1}=S^{-1}H^{-1}=\begin{pmatrix}1/2&amp;-1/2\\0&amp;1\end{pmatrix}$, while the unreversed product $H^{-1}S^{-1}=\begin{pmatrix}1/2&amp;-1\\0&amp;1\end{pmatrix}$ fails to cancel the shear properly.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-7">Exercise 7: Inverse of a Product</a></li><li><a href="#exercise-8">Exercise 8: Inverse of a Transformation</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-14">
+<h2 class="exercise-title">Exercise 14. A Matrix That Is Its Own Inverse</h2>
+<h3>The question</h3>
+<p>Assume that a square matrix $A$ satisfies</p>
+<div class="math-block">$$A^2=I.$$</div>
+<p>Show that</p>
+<div class="math-block">$$A^{-1}=A.$$</div>
+<p>Then give an example of a $2\times2$ matrix different from $I$ and $-I$ that satisfies this condition, and verify it by multiplication.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Recall the definition of the inverse from Exercise 1: a matrix $B$ is the inverse of $A$ ($B=A^{-1}$) if and only if</p>
+<div class="math-block">$$AB=I \quad\text{and}\quad BA=I.$$</div>
+<p>A matrix that satisfies $A^2=I$ (equivalently $A^{-1}=A$) is called an <strong>involution</strong>. Geometrically, an involution is a transformation that <strong>undoes itself</strong> when applied twice—such as a reflection across a line or swapping two coordinate axes.</p>
+<h3>1. Show that $A^2=I$ implies $A^{-1}=A$</h3>
+<p>Write out $A^2$ as the product of $A$ with itself:</p>
+<div class="math-block">$$A^2 = AA.$$</div>
+<p>Since we are given $A^2=I$, this equation reads:</p>
+<div class="math-block">$$AA = I.$$</div>
+<p>Compare this directly with the definition of the inverse ($AB=I$ and $BA=I$). Taking $B=A$, we have both $AB=AA=I$ and $BA=AA=I$. Therefore, $A$ satisfies the definition of the inverse of $A$, which proves that $A$ is invertible and</p>
+<div class="math-block">$$A^{-1}=A.$$</div>
+<h3>2. Construct a $2\times2$ example different from $I$ and $-I$</h3>
+<p>We want a transformation of the plane that is not the identity ($I$) and not a $180^\circ$ rotation ($-I$), yet returns every point to where it started when applied twice.</p>
+<p>Two natural geometric choices are:</p>
+<ul><li><strong>Reflection across the $x$-axis</strong> (which flips the sign of $y$):</li></ul>
+<div class="math-block">$$A=\begin{pmatrix}1&amp;0\\0&amp;-1\end{pmatrix}.$$</div>
+<ul><li><strong>Reflection across the line $y=x$</strong> (which swaps the coordinates $x$ and $y$):</li></ul>
+<div class="math-block">$$P=\begin{pmatrix}0&amp;1\\1&amp;0\end{pmatrix}.$$</div>
+<p>Let us choose $A=\begin{pmatrix}1&amp;0\\0&amp;-1\end{pmatrix}$ (clearly $A\neq I$ and $A\neq -I$).</p>
+<h3>3. Verify the example by multiplication</h3>
+<p>Multiply $A=\begin{pmatrix}1&amp;0\\0&amp;-1\end{pmatrix}$ by itself:</p>
+<div class="math-block">$$A^2=AA=\begin{pmatrix}1&amp;0\\0&amp;-1\end{pmatrix}\begin{pmatrix}1&amp;0\\0&amp;-1\end{pmatrix}=\begin{pmatrix}1\cdot1+0\cdot0 &amp; 1\cdot0+0\cdot(-1)\\0\cdot1+(-1)\cdot0 &amp; 0\cdot0+(-1)\cdot(-1)\end{pmatrix}=\begin{pmatrix}1&amp;0\\0&amp;1\end{pmatrix}=I.$$</div>
+<p>Since $AA=I$, we have $A^{-1}=A$.</p>
+<h3>Quick verification</h3>
+<p>Let us also check the coordinate-swapping matrix $P=\begin{pmatrix}0&amp;1\\1&amp;0\end{pmatrix}$:</p>
+<div class="math-block">$$P^2=\begin{pmatrix}0&amp;1\\1&amp;0\end{pmatrix}\begin{pmatrix}0&amp;1\\1&amp;0\end{pmatrix}=\begin{pmatrix}0+1 &amp; 0+0\\0+0 &amp; 1+0\end{pmatrix}=\begin{pmatrix}1&amp;0\\0&amp;1\end{pmatrix}=I.$$</div>
+<p>And using the $2\times2$ inverse formula on $A=\begin{pmatrix}1&amp;0\\0&amp;-1\end{pmatrix}$ gives $\det A=-1$, so $A^{-1}=\frac{1}{-1}\begin{pmatrix}-1&amp;0\\0&amp;1\end{pmatrix}=\begin{pmatrix}1&amp;0\\0&amp;-1\end{pmatrix}=A$. ✓</p>
+<h3>A concrete example</h3>
+<p>Watch how the reflection matrix $A=\begin{pmatrix}1&amp;0\\0&amp;-1\end{pmatrix}$ acts on the vector $v=\begin{pmatrix}3\\5\end{pmatrix}$:</p>
+<ol><li>First reflection across the $x$-axis: $Av=\begin{pmatrix}1&amp;0\\0&amp;-1\end{pmatrix}\begin{pmatrix}3\\5\end{pmatrix}=\begin{pmatrix}3\\-5\end{pmatrix}$.</li><li>Second reflection across the $x$-axis: $A(Av)=\begin{pmatrix}1&amp;0\\0&amp;-1\end{pmatrix}\begin{pmatrix}3\\-5\end{pmatrix}=\begin{pmatrix}3\\5\end{pmatrix}=v$.</li></ol>
+<p>Reflecting a point across the same mirror a second time always puts it right back where it started!</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>By definition, the inverse of $A$ is the matrix $B$ that multiplies with $A$ to give $I$. Since $A^2=I$ just means $A\cdot A=I$, the matrix that multiplies with $A$ to give $I$ is $A$ itself—so $A^{-1}=A$. Geometrically, any reflection does this because reflecting twice brings every point back to its starting spot. For example, $A=\begin{pmatrix}1&amp;0\\0&amp;-1\end{pmatrix}$ reflects across the $x$-axis, is different from $\pm I$, and satisfies $A^2=I$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: Definition of the Inverse</a></li><li><a href="#exercise-8">Exercise 8: Inverse of a Transformation</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-15">
+<h2 class="exercise-title">Exercise 15. Two Methods for Solving the Same System</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$A=\begin{pmatrix}2&amp;1\\1&amp;3\end{pmatrix},\qquad b=\begin{pmatrix}7\\8\end{pmatrix}$$</div>
+<p>solve $Ax=b$ in two ways:</p>
+<ol><li>using $A^{-1}b$,</li><li>using Gaussian elimination.</li></ol>
+<p>Compare both solutions, the number of essential steps, and state which method was simpler in this example.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>We have two standard tools for solving an invertible linear system $Ax=b$:</p>
+<ol><li><strong>The inverse method ($x=A^{-1}b$):</strong> First compute the entire inverse matrix $A^{-1}$, then multiply it by $b$.</li><li><strong>Gaussian elimination (row reduction on $[A\mid b]$):</strong> Row-reduce the augmented matrix directly to upper-triangular (echelon) form and use back-substitution.</li></ol>
+<p>Both methods must produce the exact same unique solution $x$, because $Ax=b$ has only one solution when $\det A\neq0$.</p>
+<h3>1. Method 1: Solve using $x=A^{-1}b$</h3>
+<p><strong>Step 1a (Determinant):</strong></p>
+<div class="math-block">$$\det A = 2\cdot3 - 1\cdot1 = 6 - 1 = 5.$$</div>
+<p><strong>Step 1b (Form $A^{-1}$):</strong> Swap the diagonal entries ($2$ and $3$), negate the off-diagonal entries ($1$ and $1$), and divide by $5$:</p>
+<div class="math-block">$$A^{-1}=\frac{1}{5}\begin{pmatrix}3&amp;-1\\-1&amp;2\end{pmatrix}.$$</div>
+<p><strong>Step 1c (Multiply $A^{-1}b$):</strong></p>
+<div class="math-block">$$x=A^{-1}b=\frac{1}{5}\begin{pmatrix}3&amp;-1\\-1&amp;2\end{pmatrix}\begin{pmatrix}7\\8\end{pmatrix}=\frac{1}{5}\begin{pmatrix}21-8\\-7+16\end{pmatrix}=\frac{1}{5}\begin{pmatrix}13\\9\end{pmatrix}=\begin{pmatrix}\frac{13}{5}\\\frac{9}{5}\end{pmatrix}.$$</div>
+<h3>2. Method 2: Solve using Gaussian elimination</h3>
+<p>Set up the augmented matrix $[A\mid b]$:</p>
+<div class="math-block">$$\left(\begin{array}{cc|c}2&amp;1&amp;7\\1&amp;3&amp;8\end{array}\right).$$</div>
+<p><strong>Step 2a (Swap rows to get a pivot of $1$ in the top-left):</strong> Swap $R_1\leftrightarrow R_2$ so we avoid fractions during elimination:</p>
+<div class="math-block">$$\left(\begin{array}{cc|c}1&amp;3&amp;8\\2&amp;1&amp;7\end{array}\right).$$</div>
+<p><strong>Step 2b (Eliminate $x_1$ from Row 2):</strong> Replace $R_2 \leftarrow R_2 - 2R_1$:</p>
+<div class="math-block">$$\left(\begin{array}{cc|c}1&amp;3&amp;8\\2-2(1)&amp;1-2(3)&amp;7-2(8)\end{array}\right)=\left(\begin{array}{cc|c}1&amp;3&amp;8\\0&amp;-5&amp;-9\end{array}\right).$$</div>
+<p><strong>Step 2c (Back-substitution):</strong></p>
+<ul><li>From Row 2: $-5x_2 = -9 \implies x_2 = \dfrac{9}{5}$.</li><li>From Row 1: $x_1 = 8 - 3x_2 = 8 - 3\left(\dfrac{9}{5}\right) = \dfrac{40-27}{5} = \dfrac{13}{5}$.</li></ul>
+<p>So once again,</p>
+<div class="math-block">$$x=\begin{pmatrix}\frac{13}{5}\\\frac{9}{5}\end{pmatrix}.$$</div>
+<h3>3. Comparison of the two methods</h3>
+<ul><li><strong>Agreement of solutions:</strong> Both methods give the exact same vector $x=\left(\frac{13}{5},\frac{9}{5}\right)^T$.</li><li><strong>Number of essential steps:</strong></li><li>For this <strong>single $2\times2$ system</strong>, Method 1 ($x=A^{-1}b$) requires 1 determinant calculation ($2\cdot3-1\cdot1=5$), swapping/negating entries, and 1 matrix-vector product ($4$ multiplications and $2$ additions).</li><li>Method 2 (Gaussian elimination) requires 1 row swap, 1 row elimination ($R_2-2R_1$), and back-substitution with fractions ($8 - \frac{27}{5}$).</li><li><strong>Which method was simpler here, and when does that change?</strong></li><li><strong>For a $2\times2$ system</strong>, $x=A^{-1}b$ is slightly more direct (or equally fast) because we have the instant $2\times2$ shortcut formula for $A^{-1}$ and we can keep $\frac{1}{5}$ factored out until the very last step.</li><li><strong>Also, if we have multiple right-hand sides</strong> $b^{(1)}, b^{(2)}, \dots$ with the <strong>same</strong> matrix $A$ (for instance, notice that we already inverted this exact matrix $A=\begin{pmatrix}2&amp;1\\1&amp;3\end{pmatrix}$ back in Exercise 6!), then $x=A^{-1}b$ is much faster because $A^{-1}$ is already known.</li><li><strong>For $3\times3$ and larger systems with a single vector $b$</strong>, Gaussian elimination is much simpler and faster because finding $A^{-1}$ requires reducing $[A\mid I_n]$ (which has $n$ columns on the right instead of just $1$ column $b$).</li></ul>
+<h3>Quick verification</h3>
+<p>Substitute $x=\begin{pmatrix}\frac{13}{5}\\\frac{9}{5}\end{pmatrix}$ back into the original system $Ax=b$:</p>
+<div class="math-block">$$Ax=\begin{pmatrix}2&amp;1\\1&amp;3\end{pmatrix}\begin{pmatrix}\frac{13}{5}\\\frac{9}{5}\end{pmatrix}=\begin{pmatrix}\frac{26+9}{5}\\\frac{13+27}{5}\end{pmatrix}=\begin{pmatrix}\frac{35}{5}\\\frac{40}{5}\end{pmatrix}=\begin{pmatrix}7\\8\end{pmatrix}=b.$$</div>
+<p>Both equations are satisfied! ✓</p>
+<h3>A concrete example</h3>
+<p>Compare solving $Ax=b$ here with Exercise 6, where we had the <strong>same</strong> matrix $A=\begin{pmatrix}2&amp;1\\1&amp;3\end{pmatrix}$ and $b^{(1)}=\begin{pmatrix}5\\7\end{pmatrix}$:</p>
+<ul><li>Once $A^{-1}=\frac{1}{5}\begin{pmatrix}3&amp;-1\\-1&amp;2\end{pmatrix}$ is computed once, we can solve for any new vector $b=\begin{pmatrix}b_1\\b_2\end{pmatrix}$ in one line:</li></ul>
+<div class="math-block">$$x=\frac{1}{5}\begin{pmatrix}3b_1-b_2\\-b_1+2b_2\end{pmatrix}.$$</div>
+<p>Plugging in $b_1=5,b_2=7$ immediately gave $\frac{1}{5}(8,9)^T$ in Exercise 6, and plugging in $b_1=7,b_2=8$ immediately gives $\frac{1}{5}(13,9)^T$ here.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Both $x=A^{-1}b$ and Gaussian elimination give the same solution $x=(13/5, 9/5)^T$. For this $2\times2$ example, $x=A^{-1}b$ is slightly cleaner because the $2\times2$ inverse formula is instant and lets us save the division by $5$ for the very end—especially since we already found $A^{-1}$ in Exercise 6! However, for $3\times3$ or larger matrices with only one right-hand side $b$, Gaussian elimination on $[A\mid b]$ takes far fewer steps than finding the full inverse $A^{-1}$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-5">Exercise 5: A 3×3 Matrix</a></li><li><a href="#exercise-6">Exercise 6: Solving a System Using the Inverse</a></li></ul>
+</section>
+    </main>
+  </div>
+</body>
+</html>

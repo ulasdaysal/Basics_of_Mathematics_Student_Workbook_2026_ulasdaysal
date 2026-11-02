@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>02. Derivatives — Complete Solutions</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false}
+      ],
+      throwOnError: false
+    });"></script>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --muted: #475569;
+      --accent: #2563eb;
+      --accent-soft: #eff6ff;
+      --quote-bg: #f1f5f9;
+      --quote-border: #3b82f6;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 310px 1fr;
+      min-height: 100vh;
+    }
+    aside.sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 1.5rem 1.25rem;
+    }
+    .brand {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    .brand-sub {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .toc-group-title {
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin: 1rem 0 0.35rem 0.5rem;
+    }
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .toc-list li { margin-bottom: 0.2rem; }
+    .toc-list a {
+      display: block;
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.86rem;
+      transition: background 0.15s, color 0.15s;
+    }
+    .toc-list a:hover {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+    main.content {
+      max-width: 940px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.5rem 2rem 4rem;
+    }
+    header.page-header {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    }
+    header.page-header h1 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.85rem;
+      color: var(--text);
+    }
+    header.page-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+    .section-banner {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: #ffffff;
+      border-radius: 12px;
+      padding: 1.5rem 2rem;
+      margin: 2.5rem 0 1.5rem;
+      scroll-margin-top: 1.5rem;
+    }
+    .section-banner h2 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    .section-banner p {
+      margin: 0.25rem 0 0;
+      opacity: 0.9;
+      font-size: 0.92rem;
+    }
+    section.exercise-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem 2.25rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+      scroll-margin-top: 1.5rem;
+    }
+    section.exercise-card h2.exercise-title {
+      margin-top: 0;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--accent-soft);
+      color: var(--accent);
+      font-size: 1.4rem;
+    }
+    section.exercise-card h3 {
+      margin-top: 1.5rem;
+      margin-bottom: 0.55rem;
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+    section.exercise-card h4 {
+      margin-top: 1.15rem;
+      margin-bottom: 0.45rem;
+      font-size: 1rem;
+      color: var(--muted);
+    }
+    p { margin: 0.65rem 0; }
+    ul, ol { margin: 0.65rem 0; padding-left: 1.5rem; }
+    li { margin-bottom: 0.35rem; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 0.6rem 0.85rem;
+      text-align: left;
+    }
+    th { background: var(--bg); font-weight: 600; }
+    blockquote {
+      margin: 1rem 0;
+      padding: 0.9rem 1.2rem;
+      background: var(--quote-bg);
+      border-left: 4px solid var(--quote-border);
+      border-radius: 0 8px 8px 0;
+      color: var(--text);
+    }
+    blockquote p { margin: 0; }
+    pre {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 1rem 1.25rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+    code {
+      font-family: Consolas, Monaco, "Courier New", monospace;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .katex-display {
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 0.25rem 0;
+    }
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      aside.sidebar {
+        position: static;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      main.content { padding: 1.5rem 1rem 3rem; }
+      section.exercise-card { padding: 1.5rem; }
+    }
+    @media print {
+      aside.sidebar { display: none; }
+      .layout { display: block; }
+      body { background: #fff; }
+      section.exercise-card { box-shadow: none; break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">3. Calculus</div>
+      <div class="brand-sub">02. Derivatives (Exercises 1–15)</div>
+      <ul class="toc-list">
+<li><a href="#exercise-1">1. Derivative of a Polynomial and the Slope of a Tangent Line</a></li>
+<li><a href="#exercise-2">2. Powers, Roots, and the Domain</a></li>
+<li><a href="#exercise-3">3. The Product Rule — Why Is It Needed?</a></li>
+<li><a href="#exercise-4">4. A Quotient and Domain Control</a></li>
+<li><a href="#exercise-5">5. The Chain Rule as Working Through Layers</a></li>
+<li><a href="#exercise-6">6. Product Rule and Trigonometry</a></li>
+<li><a href="#exercise-7">7. A Trigonometric Composition</a></li>
+<li><a href="#exercise-8">8. Two Exponential Functions</a></li>
+<li><a href="#exercise-9">9. A Logarithm and the Chain Rule</a></li>
+<li><a href="#exercise-10">10. The Tangent Line as an Application of the Derivative</a></li>
+<li><a href="#exercise-11">11. Derivative from the Definition</a></li>
+<li><a href="#exercise-12">12. Several Rules at Once</a></li>
+<li><a href="#exercise-13">13. A Multi-Layer Composition</a></li>
+<li><a href="#exercise-14">14. Continuity and Differentiability of a Piecewise Function</a></li>
+<li><a href="#exercise-15">15. The Difference Quotient as a Check of the Derivative</a></li>
+</ul>
+    </aside>
+    <main class="content">
+      <header class="page-header">
+        <h1>02. Derivatives — Complete Solutions</h1>
+        <p>Basics of Mathematics Student Workbook (2026) · 3. Calculus · All 15 Exercises with Detailed Explanations</p>
+      </header>
+      <section class="exercise-card" id="exercise-1">
+<h2 class="exercise-title">Exercise 1. Derivative of a Polynomial and the Slope of a Tangent Line</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$f(x)=3x^5-2x^3+7x-4$$</div>
+<p>find $f'(x)$. Then compute $f'(0)$ and $f'(1)$, determine the signs of the obtained values, and explain what they say about the slope of the tangent line to the graph at these two points.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>A polynomial is a linear combination of power functions $x^n$. To differentiate it, we combine two basic rules:</p>
+<ul><li><strong>Linearity (sum and constant multiple rule)</strong>: $(af(x)+bg(x))' = af'(x)+bg'(x)$, so we differentiate term by term.</li><li><strong>Power rule</strong>: $\dfrac{d}{dx}(x^n) = nx^{n-1}$ for any integer $n\ge1$, and the derivative of a constant is $0$.</li></ul>
+<p>Geometrically, the value $f'(a)$ is the <strong>slope of the tangent line</strong> to the graph $y=f(x)$ at $x=a$:</p>
+<ul><li>$f'(a)&gt;0$: the tangent line slopes upward from left to right, and the function is locally increasing,</li><li>$f'(a)&lt;0$: the tangent line slopes downward, and the function is locally decreasing,</li><li>$f'(a)=0$: the tangent line is horizontal.</li></ul>
+<h3>1. Differentiate term by term</h3>
+<p>Apply the power rule to each term of $f(x)=3x^5-2x^3+7x-4$:</p>
+<ul><li>$\dfrac{d}{dx}(3x^5) = 3\cdot5x^{5-1} = 15x^4$,</li><li>$\dfrac{d}{dx}(-2x^3) = -2\cdot3x^{3-1} = -6x^2$,</li><li>$\dfrac{d}{dx}(7x) = 7\cdot1x^{1-1} = 7$,</li><li>$\dfrac{d}{dx}(-4) = 0$.</li></ul>
+<p>Putting the terms together gives the derivative formula:</p>
+<div class="math-block">$$f'(x)=15x^4-6x^2+7.$$</div>
+<h3>2. Compute $f'(0)$ and $f'(1)$</h3>
+<p>Substitute $x=0$ into $f'(x)$:</p>
+<div class="math-block">$$f'(0)=15(0)^4-6(0)^2+7=0-0+7=7.$$</div>
+<p>Substitute $x=1$ into $f'(x)$:</p>
+<div class="math-block">$$f'(1)=15(1)^4-6(1)^2+7=15-6+7=16.$$</div>
+<h3>3. Signs and geometric interpretation</h3>
+<ul><li>At $x=0$, we have $f'(0)=7&gt;0$. The tangent line to the graph at $(0,-4)$ has a <strong>positive slope of $7$</strong>, meaning it rises $7$ units vertically for each $1$ unit horizontally. Near $x=0$, only the linear part $7x-4$ dominates because higher powers of $x$ vanish much faster than $x$.</li><li>At $x=1$, we have $f'(1)=16&gt;0$. The tangent line at $(1,4)$ also has a <strong>positive slope</strong>, and because $16&gt;7$, the graph is rising <strong>more than twice as steeply</strong> at $x=1$ as it is at $x=0$.</li></ul>
+<h3>4. Global behavior notice</h3>
+<p>Notice that we can complete the square in $f'(x)$:</p>
+<div class="math-block">$$f'(x)=15\left(x^2-\frac{1}{5}\right)^2+\frac{32}{5}\ge\frac{32}{5}&gt;0\quad\text{for all }x\in\mathbb{R}.$$</div>
+<p>So in fact every tangent line to this polynomial has positive slope, and $f(x)$ is strictly increasing on the entire real line.</p>
+<h3>Quick verification</h3>
+<p>Near $x=0$, a polynomial behaves like its constant and linear terms:</p>
+<div class="math-block">$$f(x)=-4+7x-2x^3+3x^5 \approx -4+7x\quad\text{for }x\text{ close to }0.$$</div>
+<p>The linear approximation at $x=0$ is $L_0(x)=-4+7x$, whose slope is $7=f'(0)$. ✓</p>
+<p>Similarly, using a small step $h=0.001$ at $x=1$:</p>
+<div class="math-block">$$\frac{f(1.001)-f(1)}{0.001}=\frac{4.016024027003-4}{0.001}\approx 16.024 \approx 16 = f'(1).\quad\checkmark$$</div>
+<h3>A concrete example</h3>
+<p>At $x=0$, the point on the curve is $(0,f(0))=(0,-4)$ and the tangent line has equation</p>
+<div class="math-block">$$y = -4 + 7x.$$</div>
+<p>At $x=1$, the point on the curve is $(1,f(1))=(1,4)$ and the tangent line has equation</p>
+<div class="math-block">$$y = 4 + 16(x-1) = 16x-12.$$</div>
+<p>If we move slightly from $x=1$ to $x=1.01$, the tangent line predicts $y\approx 4 + 16(0.01) = 4.16$, while the exact value is $f(1.01)\approx 4.1624$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>To differentiate a polynomial, we apply the power rule $\frac{d}{dx}(x^n)=nx^{n-1}$ term by term and drop the constant $-4$. That gives $f'(x)=15x^4-6x^2+7$. Plugging in $x=0$ gives $7&gt;0$ and plugging in $x=1$ gives $16&gt;0$. Both values are positive, so the graph is rising at both points, and since $16&gt;7$, the tangent line at $x=1$ is much steeper than at $x=0$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-2">Exercise 2: Powers, Roots, and the Domain</a></li><li><a href="#exercise-10">Exercise 10: The Tangent Line as an Application of the Derivative</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-2">
+<h2 class="exercise-title">Exercise 2. Powers, Roots, and the Domain</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$f(x)=2\sqrt{x}-\frac{3}{x^2}+x^{3/2}$$</div>
+<ol><li>rewrite the function using powers,</li><li>determine the domain,</li><li>compute the derivative,</li><li>compare the domain of the function with the domain of its derivative.</li></ol>
+<h3>Before calculating: what idea do we need?</h3>
+<p>The general power rule</p>
+<div class="math-block">$$\frac{d}{dx}\left(x^p\right)=px^{p-1}$$</div>
+<p>works not only for positive integers $p$, but for <strong>any real exponent</strong> $p\in\mathbb{R}$ (on the domain where $x^p$ is differentiable). Radicals and fractions with $x^n$ in the denominator look like separate rules until we rewrite them using fractional and negative exponents:</p>
+<div class="math-block">$$\sqrt{x}=x^{1/2},\qquad \frac{1}{x^n}=x^{-n},\qquad x^{m/n}=\sqrt[n]{x^m}.$$</div>
+<p>Before differentiating, we must always check the <strong>domain</strong> — a derivative can only exist at interior points of the function's domain where the resulting formula is also defined.</p>
+<h3>1. Rewrite the function using powers</h3>
+<p>Convert each radical and reciprocal into power form $x^p$:</p>
+<ul><li>$2\sqrt{x} = 2x^{1/2}$,</li><li>$-\dfrac{3}{x^2} = -3x^{-2}$,</li><li>$x^{3/2}$ is already in power form.</li></ul>
+<p>Thus,</p>
+<div class="math-block">$$f(x)=2x^{1/2}-3x^{-2}+x^{3/2}.$$</div>
+<h3>2. Determine the domain of $f$</h3>
+<p>Look at the restrictions imposed by each term:</p>
+<ul><li>$\sqrt{x}=x^{1/2}$ and $x^{3/2}=(\sqrt{x})^3$ require $x\ge0$ (for real values),</li><li>$\dfrac{3}{x^2}$ requires $x\neq0$ so that we do not divide by zero.</li></ul>
+<p>Combining $x\ge0$ and $x\neq0$ gives the domain of $f$:</p>
+<div class="math-block">$$D_f=(0,\infty).$$</div>
+<h3>3. Compute the derivative</h3>
+<p>Apply the power rule $\dfrac{d}{dx}(x^p)=px^{p-1}$ term by term for $x&gt;0$:</p>
+<ul><li>$\dfrac{d}{dx}\left(2x^{1/2}\right) = 2\cdot\frac{1}{2}x^{1/2-1} = x^{-1/2} = \frac{1}{\sqrt{x}}$,</li><li>$\dfrac{d}{dx}\left(-3x^{-2}\right) = -3\cdot(-2)x^{-2-1} = 6x^{-3} = \frac{6}{x^3}$,</li><li>$\dfrac{d}{dx}\left(x^{3/2}\right) = \frac{3}{2}x^{3/2-1} = \frac{3}{2}x^{1/2} = \frac{3}{2}\sqrt{x}$.</li></ul>
+<p>Combining the three terms:</p>
+<div class="math-block">$$f'(x)=x^{-1/2}+6x^{-3}+\frac{3}{2}x^{1/2}=\frac{1}{\sqrt{x}}+\frac{6}{x^3}+\frac{3}{2}\sqrt{x}.$$</div>
+<h3>4. Compare the domains of $f$ and $f'$</h3>
+<p>In $f'(x)=\dfrac{1}{\sqrt{x}}+\dfrac{6}{x^3}+\dfrac{3}{2}\sqrt{x}$:</p>
+<ul><li>$\sqrt{x}$ requires $x\ge0$,</li><li>$\dfrac{1}{\sqrt{x}}$ and $\dfrac{6}{x^3}$ require $x\neq0$.</li></ul>
+<p>Therefore, the domain of the derivative is also</p>
+<div class="math-block">$$D_{f'}=(0,\infty)=D_f.$$</div>
+<p>Note that if the term $-\dfrac{3}{x^2}$ had not been present, $2\sqrt{x}+x^{3/2}$ would have had domain $[0,\infty)$, while its derivative $\dfrac{1}{\sqrt{x}}+\dfrac{3}{2}\sqrt{x}$ would have lost the endpoint $x=0$ because $\sqrt{x}$ has a vertical tangent at $x=0^+$. Here, $x=0$ was already excluded from $D_f$ by the $-\dfrac{3}{x^2}$ term, so the two domains match: $D_{f'}=D_f=(0,\infty)$.</p>
+<h3>Quick verification</h3>
+<p>Let us evaluate both formulas at $x=1$ and check with a small increment:</p>
+<ul><li>Using our formula: $f'(1) = 1 + 6 + \dfrac{3}{2} = 8.5$.</li><li>At $x=1$, $f(1) = 2(1) - 3(1) + 1 = 0$.</li><li>At $x=1.0001$, $f(1.0001) = 2\sqrt{1.0001} - \dfrac{3}{(1.0001)^2} + (1.0001)^{3/2} \approx 0.000849825$.</li><li>Difference quotient: $\dfrac{f(1.0001)-f(1)}{0.0001} \approx 8.498 \approx 8.5 = f'(1)$. ✓</li></ul>
+<h3>A concrete example</h3>
+<p>At $x=4\in(0,\infty)$:</p>
+<div class="math-block">$$f(4)=2\sqrt{4}-\frac{3}{4^2}+4^{3/2}=4-\frac{3}{16}+8=11.8125,$$</div>
+<p>and the rate of change at $x=4$ is</p>
+<div class="math-block">$$f'(4)=\frac{1}{\sqrt{4}}+\frac{6}{4^3}+\frac{3}{2}\sqrt{4}=\frac{1}{2}+\frac{6}{64}+3=3.59375.$$</div>
+<p>Every term of $f'(x)$ is positive for $x&gt;0$, so $f(x)$ is strictly increasing on all of $(0,\infty)$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Instead of using the quotient rule on $\frac{3}{x^2}$ or memorizing separate root rules, rewrite everything as powers: $f(x)=2x^{1/2}-3x^{-2}+x^{3/2}$. Since square roots need $x\ge0$ and dividing by $x^2$ forbids $x=0$, the domain is $(0,\infty)$. Then the power rule gives $f'(x)=x^{-1/2}+6x^{-3}+\frac{3}{2}x^{1/2}=\frac{1}{\sqrt{x}}+\frac{6}{x^3}+\frac{3}{2}\sqrt{x}$, which has the exact same domain $(0,\infty)$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: Derivative of a Polynomial and the Slope of a Tangent Line</a></li><li><a href="#exercise-4">Exercise 4: A Quotient and Domain Control</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-3">
+<h2 class="exercise-title">Exercise 3. The Product Rule — Why Is It Needed?</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$f(x)=(x^2+1)e^x$$</div>
+<p>compute the derivative. Then compare the correct result with the incorrect idea</p>
+<div class="math-block">$$f'(x)\stackrel{?}{=}(2x)e^x$$</div>
+<p>and explain which term is missing.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>When a function is a product of two variable factors $u(x)$ and $v(x)$, <strong>the derivative of a product is not the product of the derivatives</strong>. Instead, we must use the <strong>product rule</strong>:</p>
+<div class="math-block">$$(u(x)v(x))'=u'(x)v(x)+u(x)v'(x).$$</div>
+<p>Why does it have two terms? Imagine a rectangle with side lengths $u(x)$ and $v(x)$ and area $A(x)=u(x)v(x)$. When $x$ changes by a tiny amount $\Delta x$, <strong>both sides grow simultaneously</strong>:</p>
+<ul><li>the change in width $u$ multiplied by the height $v$ gives $u'(x)v(x)\,\Delta x$,</li><li>the width $u$ multiplied by the change in height $v$ gives $u(x)v'(x)\,\Delta x$.</li></ul>
+<p>Leaving out either term ignores the growth of one of the two factors.</p>
+<h3>1. Identify the two factors and their derivatives</h3>
+<p>Write $f(x)=u(x)v(x)$ with:</p>
+<ul><li>$u(x)=x^2+1 \implies u'(x)=2x$,</li><li>$v(x)=e^x \implies v'(x)=e^x$.</li></ul>
+<h3>2. Apply the product rule</h3>
+<p>Substitute $u,u',v,v'$ into $f'(x)=u'(x)v(x)+u(x)v'(x)$:</p>
+<div class="math-block">$$f'(x)=(2x)e^x+(x^2+1)e^x.$$</div>
+<p>Factor out the common factor $e^x$ to write the derivative cleanly:</p>
+<div class="math-block">$$f'(x)=(x^2+2x+1)e^x=(x+1)^2e^x.$$</div>
+<h3>3. Compare with the incorrect formula and explain the missing term</h3>
+<p>The proposed guess was</p>
+<div class="math-block">$$f_{\text{wrong}}'(x)=(2x)e^x.$$</div>
+<p>Because $\dfrac{d}{dx}(e^x)=e^x$, this mistake is doubly deceptive:</p>
+<ol><li>A student who mistakenly thinks $(uv)'=u'v'$ computes $(x^2+1)'\cdot(e^x)'=(2x)e^x$.</li><li>A student who differentiates the first factor $(x^2+1)$ and forgets to differentiate the second factor $e^x$ also gets $(2x)e^x$.</li></ol>
+<p>In both cases, the <strong>missing term</strong> is</p>
+<div class="math-block">$$u(x)v'(x)=(x^2+1)e^x,$$</div>
+<p>which accounts for how fast $e^x$ changes while $x^2+1$ acts as the multiplier.</p>
+<h3>Quick verification</h3>
+<p>Let us test both formulas at $x=0$:</p>
+<ul><li>At $x=0$, $f(x)=(x^2+1)e^x$ has value $f(0)=1\cdot e^0=1$.</li><li>For small $x$, $x^2$ is negligible compared to $x$, so $f(x)=(1+x^2)e^x \approx 1\cdot(1+x)=1+x$, which has slope $1$ at $x=0$.</li><li>Our product-rule formula gives $f'(0)=(0+1)^2e^0=1$. ✓</li><li>The incorrect formula gives $f_{\text{wrong}}'(0)=2(0)e^0=0$, claiming a horizontal tangent at $x=0$ even though $f(0)=1$ and $f(0.1)=1.01\cdot e^{0.1}\approx 1.1162$ (slope $\approx 1.16$). ✓</li></ul>
+<h3>A concrete example</h3>
+<p>Look at $x=-1$:</p>
+<div class="math-block">$$f'(-1)=(-1+1)^2e^{-1}=0.$$</div>
+<p>Because $f'(x)=(x+1)^2e^x\ge0$ for all $x\in\mathbb{R}$, the function $f(x)=(x^2+1)e^x$ is strictly increasing everywhere on $\mathbb{R}$, pausing with a horizontal inflection tangent only at $x=-1$, not at $x=0$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Since $f(x)=(x^2+1)e^x$ is a product of two functions of $x$, we must use the product rule $(uv)'=u'v+uv'$. That gives $f'(x)=2xe^x+(x^2+1)e^x=(x+1)^2e^x$. Writing just $2xe^x$ is wrong because it misses the second term $(x^2+1)e^x$, which comes from keeping $(x^2+1)$ fixed and differentiating $e^x$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-6">Exercise 6: Product Rule and Trigonometry</a></li><li><a href="#exercise-12">Exercise 12: Several Rules at Once</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-4">
+<h2 class="exercise-title">Exercise 4. A Quotient and Domain Control</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$f(x)=\frac{x^2+1}{x-1}$$</div>
+<p>determine the domain, compute the derivative, simplify the result, and explain why the restriction $x\neq1$ remains important.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>When a function has the form $f(x)=\dfrac{u(x)}{v(x)}$, we need two things:</p>
+<ol><li><strong>Domain control</strong>: the denominator cannot be zero ($v(x)\neq0$).</li><li><strong>The quotient rule</strong>: at every point where $u$ and $v$ are differentiable and $v(x)\neq0$,</li></ol>
+<div class="math-block">$$\left(\frac{u(x)}{v(x)}\right)'=\frac{u'(x)v(x)-u(x)v'(x)}{(v(x))^2}.$$</div>
+<p>Watch the <strong>order in the numerator</strong>: because of the minus sign, $u'v$ must come first and $uv'$ second (switching them flips the sign of the entire derivative).</p>
+<h3>1. Determine the domain</h3>
+<p>The numerator $x^2+1$ and denominator $x-1$ are polynomials defined for all real $x$, so the only restriction is that the denominator cannot vanish:</p>
+<div class="math-block">$$x-1\neq0 \iff x\neq1.$$</div>
+<p>Thus the domain of $f$ is</p>
+<div class="math-block">$$D_f=\mathbb{R}\setminus\{1\}=(-\infty,1)\cup(1,\infty).$$</div>
+<h3>2. Apply the quotient rule</h3>
+<p>Identify the numerator and denominator and differentiate each:</p>
+<ul><li>$u(x)=x^2+1 \implies u'(x)=2x$,</li><li>$v(x)=x-1 \implies v'(x)=1$.</li></ul>
+<p>Substitute into the quotient rule:</p>
+<div class="math-block">$$f'(x)=\frac{(2x)(x-1)-(x^2+1)(1)}{(x-1)^2}.$$</div>
+<h3>3. Simplify the result</h3>
+<p>Expand the numerator and combine like terms:</p>
+<div class="math-block">$$f'(x)=\frac{2x^2-2x-x^2-1}{(x-1)^2}=\frac{x^2-2x-1}{(x-1)^2}.$$</div>
+<h3>4. Why the restriction $x\neq1$ remains important</h3>
+<p>The restriction $x\neq1$ is crucial for three connected reasons:</p>
+<ol><li><strong>Algebraic</strong>: setting $x=1$ in $f'(x)$ produces $(1-1)^2=0$ in the denominator, so $f'(1)$ is undefined.</li><li><strong>Geometric</strong>: the line $x=1$ is a <strong>vertical asymptote</strong> of $f(x)$ ($\lim_{x\to1^-}f(x)=-\infty$ and $\lim_{x\to1^+}f(x)=+\infty$). There is no point on the graph at $x=1$, so no tangent line can exist there.</li><li><strong>Analytical</strong>: because $x=1$ splits the domain into two separate intervals $(-\infty,1)$ and $(1,\infty)$, any theorem about the sign of $f'(x)$ (such as monotonicity or the Mean Value Theorem) applies on each interval $(-\infty,1)$ and $(1,\infty)$ <strong>separately</strong>, never across the jump at $x=1$.</li></ol>
+<h3>Quick verification</h3>
+<p>We can rewrite $f(x)$ by polynomial division for $x\neq1$:</p>
+<div class="math-block">$$f(x)=\frac{(x^2-1)+2}{x-1}=\frac{(x-1)(x+1)+2}{x-1}=x+1+\frac{2}{x-1}=x+1+2(x-1)^{-1}.$$</div>
+<p>Differentiating term by term gives:</p>
+<div class="math-block">$$f'(x)=1+0-2(x-1)^{-2}=1-\frac{2}{(x-1)^2}=\frac{(x-1)^2-2}{(x-1)^2}=\frac{x^2-2x-1}{(x-1)^2}.\quad\checkmark$$</div>
+<p>Both methods produce the exact same simplified formula.</p>
+<h3>A concrete example</h3>
+<p>At $x=2$:</p>
+<div class="math-block">$$f(2)=\frac{2^2+1}{2-1}=5,\qquad f'(2)=\frac{2^2-2(2)-1}{(2-1)^2}=\frac{4-4-1}{1}=-1.$$</div>
+<p>At $x=0$:</p>
+<div class="math-block">$$f(0)=\frac{0^2+1}{0-1}=-1,\qquad f'(0)=\frac{0-0-1}{(0-1)^2}=-1.$$</div>
+<p>Even though $f'(0)=-1&lt;0$ and $f'(2)=-1&lt;0$, notice that $f(0)=-1 &lt; f(2)=5$! Why did the function value go up from $-1$ to $5$ if the derivative was negative at those points? Because the vertical asymptote at $x=1$ separates $x=0$ and $x=2$ into two disconnected branches.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>First, the denominator $x-1$ cannot be zero, so the domain is $x\neq1$. Next, using the quotient rule $\frac{u'v-uv'}{v^2}$ with $u=x^2+1$ and $v=x-1$, we get $f'(x)=\frac{2x(x-1)-(x^2+1)\cdot1}{(x-1)^2}=\frac{x^2-2x-1}{(x-1)^2}$. We must keep the condition $x\neq1$ because the graph has a vertical asymptote there, splitting the function into two separate branches.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-2">Exercise 2: Powers, Roots, and the Domain</a></li><li><a href="#exercise-9">Exercise 9: A Logarithm and the Chain Rule</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-5">
+<h2 class="exercise-title">Exercise 5. The Chain Rule as Working Through Layers</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$f(x)=(3x^2-2x+1)^5$$</div>
+<p>identify the inner and outer functions, compute their derivatives, and combine the result according to the chain rule. Explain the origin of the additional factor.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>When we evaluate $f(x)=(3x^2-2x+1)^5$ for a number $x$, we do it in two steps (layers):</p>
+<ol><li>First compute the inside expression $u=g(x)=3x^2-2x+1$.</li><li>Then raise that result to the $5$-th power: $y=h(u)=u^5$.</li></ol>
+<p>So $f(x)=h(g(x))$ is a <strong>composite function</strong>. The <strong>chain rule</strong> states that the derivative of a composition is the product of the derivatives of its layers:</p>
+<div class="math-block">$$f'(x)=h'(g(x))\cdot g'(x) \qquad\text{or}\qquad \frac{dy}{dx}=\frac{dy}{du}\cdot\frac{du}{dx}.$$</div>
+<h3>1. Identify the inner and outer functions</h3>
+<p>Decompose $f(x)=(3x^2-2x+1)^5$ into its two layers:</p>
+<ul><li><strong>Inner function</strong>: $u=g(x)=3x^2-2x+1$,</li><li><strong>Outer function</strong>: $y=h(u)=u^5$.</li></ul>
+<h3>2. Differentiate each layer separately</h3>
+<ul><li>Derivative of the outer function with respect to $u$:</li></ul>
+<div class="math-block">$$h'(u)=\frac{dy}{du}=5u^4.$$</div>
+<ul><li>Derivative of the inner function with respect to $x$:</li></ul>
+<div class="math-block">$$g'(x)=\frac{du}{dx}=6x-2.$$</div>
+<h3>3. Combine according to the chain rule</h3>
+<p>Substitute $u=3x^2-2x+1$ back into $h'(u)$ and multiply by $g'(x)$:</p>
+<div class="math-block">$$f'(x)=5(3x^2-2x+1)^4\cdot(6x-2).$$</div>
+<p>We can also factor $2$ out of $(6x-2)=2(3x-1)$ to write:</p>
+<div class="math-block">$$f'(x)=10(3x-1)(3x^2-2x+1)^4.$$</div>
+<h3>4. Explain the origin of the additional factor $(6x-2)$</h3>
+<p>Why isn't the derivative just $5(3x^2-2x+1)^4$?</p>
+<p>Because $5u^4$ only measures how fast the output $y=u^5$ changes <strong>per unit change in $u$</strong>, not per unit change in $x$. When $x$ changes by a small amount $\Delta x$, the intermediate quantity $u=3x^2-2x+1$ does not change by $\Delta x$; it changes by approximately</p>
+<div class="math-block">$$\Delta u \approx g'(x)\,\Delta x = (6x-2)\,\Delta x.$$</div>
+<p>Then the output $y=u^5$ changes by</p>
+<div class="math-block">$$\Delta y \approx 5u^4\,\Delta u \approx 5(3x^2-2x+1)^4(6x-2)\,\Delta x.$$</div>
+<p>The factor $(6x-2)$ is the local magnification factor of the inner layer $u(x)$.</p>
+<h3>Quick verification</h3>
+<p>Check at $x=0$:</p>
+<ul><li>Using our chain rule formula:</li></ul>
+<div class="math-block">$$f'(0)=5(0-0+1)^4(0-2)=5(1)^4(-2)=-10.$$</div>
+<ul><li>Alternatively, expand only the lowest-degree terms of $(1-2x+3x^2)^5$ near $x=0$ using the binomial theorem $(1+w)^5 = 1 + 5w + 10w^2 + \dots$:</li></ul>
+<div class="math-block">$$f(x) = 1 + 5(-2x+3x^2) + \dots = 1 - 10x + O(x^2).$$</div>
+<p>The coefficient of $x$ is $-10$, which must equal $f'(0)$. ✓</p>
+<h3>A concrete example</h3>
+<p>Look at $x=\dfrac{1}{3}$:</p>
+<div class="math-block">$$g'\left(\frac{1}{3}\right)=6\left(\frac{1}{3}\right)-2=0 \implies f'\left(\frac{1}{3}\right)=5\left(3\cdot\frac{1}{9}-\frac{2}{3}+1\right)^4\cdot 0=0.$$</div>
+<p>Because the inner parabola $u=3x^2-2x+1$ has its vertex (horizontal tangent) at $x=\dfrac{1}{3}$, a tiny change in $x$ around $\dfrac{1}{3}$ produces zero first-order change in $u$, and therefore zero first-order change in $u^5$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>We view $f(x)=(3x^2-2x+1)^5$ like peeling an onion from the outside in. The outer layer is a $5$-th power $u^5$, whose derivative is $5u^4=5(3x^2-2x+1)^4$, evaluated at the unchanged inner function. Then the chain rule tells us to multiply by the derivative of the inner layer $u=3x^2-2x+1$, which is $6x-2$, because $u$ itself is changing at rate $6x-2$ with respect to $x$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-7">Exercise 7: A Trigonometric Composition</a></li><li><a href="#exercise-13">Exercise 13: A Multi-Layer Composition</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-6">
+<h2 class="exercise-title">Exercise 6. Product Rule and Trigonometry</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$f(x)=x\sin x+\cos x$$</div>
+<p>compute the derivative and simplify the result. Then compute $f'(0)$ and interpret the direction of the tangent line at that point.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>First, inspect the overall structure of $f(x)=x\sin x+\cos x$:</p>
+<ul><li>It is a <strong>sum</strong> of two terms: $x\sin x$ and $\cos x$.</li><li>The first term $x\sin x$ is a <strong>product</strong> of two functions of $x$, namely $u(x)=x$ and $v(x)=\sin x$, so it requires the <strong>product rule</strong> $(uv)'=u'v+uv'$.</li><li>We also need the basic trigonometric derivatives:</li></ul>
+<div class="math-block">$$\frac{d}{dx}(\sin x)=\cos x,\qquad \frac{d}{dx}(\cos x)=-\sin x.$$</div>
+<h3>1. Differentiate the product term $x\sin x$</h3>
+<p>Apply the product rule to $x\sin x$ with $u(x)=x$ and $v(x)=\sin x$:</p>
+<ul><li>$u'(x)=1$,</li><li>$v'(x)=\cos x$.</li></ul>
+<p>Therefore,</p>
+<div class="math-block">$$\frac{d}{dx}(x\sin x)=1\cdot\sin x+x\cdot\cos x=\sin x+x\cos x.$$</div>
+<h3>2. Differentiate the second term and simplify $f'(x)$</h3>
+<p>The derivative of $\cos x$ is $-\sin x$. Adding the two parts together:</p>
+<div class="math-block">$$f'(x)=(\sin x+x\cos x)+(-\sin x)=x\cos x.$$</div>
+<p>Notice the neat cancellation: the $+\sin x$ from the product rule and the $-\sin x$ from differentiating $\cos x$ cancel out completely, leaving the compact expression $f'(x)=x\cos x$.</p>
+<h3>3. Compute $f'(0)$ and interpret the tangent line</h3>
+<p>Substitute $x=0$ into $f'(x)=x\cos x$:</p>
+<div class="math-block">$$f'(0)=0\cdot\cos 0=0\cdot 1=0.$$</div>
+<p>What does $f'(0)=0$ mean geometrically?</p>
+<ul><li>At $x=0$, the point on the graph is $(0,f(0))=(0,0\cdot\sin 0+\cos 0)=(0,1)$.</li><li>Since the slope is $f'(0)=0$, the <strong>tangent line to the graph at $(0,1)$ is horizontal</strong> (parallel to the $x$-axis), with equation $y=1$.</li></ul>
+<h3>Quick verification</h3>
+<p>Let us check the behavior of $f(x)=x\sin x+\cos x$ near $x=0$:</p>
+<ol><li><strong>Symmetry check</strong>: $f(-x)=(-x)\sin(-x)+\cos(-x)=x\sin x+\cos x=f(x)$. Every differentiable <strong>even function</strong> is symmetric across the $y$-axis and therefore must have $f'(0)=0$. ✓</li><li><strong>Small-$x$ approximation</strong>: near $x=0$, $\sin x\approx x$ and $\cos x\approx 1-\frac{1}{2}x^2$, so</li></ol>
+<div class="math-block">$$f(x)\approx x(x)+\left(1-\frac{1}{2}x^2\right)=1+\frac{1}{2}x^2.$$</div>
+<p>The linear term in $x$ is $0\cdot x$, confirming $f'(0)=0$, and the parabola $1+\frac{1}{2}x^2$ has a horizontal tangent and local minimum at $(0,1)$. ✓</p>
+<h3>A concrete example</h3>
+<p>At $x=\dfrac{\pi}{3}$:</p>
+<div class="math-block">$$f'\left(\frac{\pi}{3}\right)=\frac{\pi}{3}\cos\frac{\pi}{3}=\frac{\pi}{6}\approx 0.5236&gt;0,$$</div>
+<p>while at $x=-\dfrac{\pi}{3}$:</p>
+<div class="math-block">$$f'\left(-\frac{\pi}{3}\right)=-\frac{\pi}{3}\cos\left(-\frac{\pi}{3}\right)=-\frac{\pi}{6}\approx -0.5236&lt;0.$$</div>
+<p>As $x$ passes through $0$ from negative to positive values, $f'(x)=x\cos x$ changes sign from negative to positive, so $(0,1)$ is a local minimum where the curve levels off horizontally.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>To differentiate $f(x)=x\sin x+\cos x$, we use the product rule on $x\sin x$ to get $\sin x+x\cos x$, and then add the derivative of $\cos x$, which is $-\sin x$. The $\sin x$ and $-\sin x$ terms cancel out, leaving $f'(x)=x\cos x$. At $x=0$, $f'(0)=0\cdot\cos 0=0$, which tells us that the tangent line at $(0,1)$ is completely horizontal.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-3">Exercise 3: The Product Rule — Why Is It Needed?</a></li><li><a href="#exercise-7">Exercise 7: A Trigonometric Composition</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-7">
+<h2 class="exercise-title">Exercise 7. A Trigonometric Composition</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$f(x)=\sin(x^2+1)$$</div>
+<p>compute the derivative. Explicitly identify the outer function, the inner function, and the derivative of the inner function. Finally, determine the sign of $f'(0)$.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Unlike $x\sin x$, the expression $\sin(x^2+1)$ is <strong>not a product</strong> ("$\sin$" by itself is not a number or factor; it is an operation applied to the angle $x^2+1$). Instead, $f(x)=\sin(x^2+1)$ is a <strong>composition</strong> $h(g(x))$:</p>
+<ul><li>first, $x$ is mapped to the angle $u=g(x)=x^2+1$,</li><li>second, the sine function is applied to $u$: $y=h(u)=\sin u$.</li></ul>
+<p>By the <strong>chain rule</strong>,</p>
+<div class="math-block">$$\frac{d}{dx}\big(\sin(g(x))\big)=\cos(g(x))\cdot g'(x).$$</div>
+<h3>1. Identify the outer function, inner function, and inner derivative</h3>
+<p>Break $f(x)=\sin(x^2+1)$ into its components:</p>
+<ul><li><strong>Inner function</strong>: $u=g(x)=x^2+1$,</li><li><strong>Outer function</strong>: $y=h(u)=\sin u$,</li><li><strong>Derivative of the outer function</strong>: $h'(u)=\cos u=\cos(x^2+1)$,</li><li><strong>Derivative of the inner function</strong>: $g'(x)=\dfrac{d}{dx}(x^2+1)=2x$.</li></ul>
+<h3>2. Compute the derivative $f'(x)$</h3>
+<p>Multiply the derivative of the outer function (evaluated at the inner function $x^2+1$) by the derivative of the inner function:</p>
+<div class="math-block">$$f'(x)=\cos(x^2+1)\cdot 2x=2x\cos(x^2+1).$$</div>
+<p><em>(Writing the algebraic factor $2x$ in front of $\cos(x^2+1)$ avoids any ambiguity about whether $2x$ is inside or outside the cosine.)</em></p>
+<h3>3. Determine the sign of $f'(0)$</h3>
+<p>Substitute $x=0$ into $f'(x)=2x\cos(x^2+1)$:</p>
+<div class="math-block">$$f'(0)=2(0)\cos(0^2+1)=0\cdot\cos(1)=0.$$</div>
+<p>Because $f'(0)=0$, the value is <strong>neither positive nor negative</strong> (its sign is zero). Even though $\cos(1)\approx 0.5403&gt;0$, the factor $2x$ from the derivative of the inner function vanishes at $x=0$, making the tangent line horizontal at $(0,\sin 1)$.</p>
+<h3>Quick verification</h3>
+<p>Let us verify using two independent observations:</p>
+<ol><li><strong>Even symmetry</strong>: $f(-x)=\sin((-x)^2+1)=\sin(x^2+1)=f(x)$. Because $f$ is an even differentiable function, its graph is symmetric across the $y$-axis, so its slope at $x=0$ must be $f'(0)=0$. ✓</li><li><strong>Numerical difference quotient at $x=1$</strong>:</li></ol>
+<ul><li>Formula value: $f'(1)=2(1)\cos(1^2+1)=2\cos(2)\approx 2(-0.416147)=-0.832294$.</li><li>Difference quotient with $h=0.0001$:</li></ul>
+<div class="math-block">$$\frac{\sin(1.0001^2+1)-\sin(2)}{0.0001}=\frac{\sin(2.00020001)-\sin(2)}{0.0001}\approx -0.83242 \approx f'(1).\quad\checkmark$$</div>
+<h3>A concrete example</h3>
+<p>Compare $x=-0.5$, $x=0$, and $x=0.5$ (note that for $x\in[-0.5,0.5]$, the angle $x^2+1\in[1,1.25]$ radians lies in the first quadrant $(0,\frac{\pi}{2})$, so $\cos(x^2+1)&gt;0$):</p>
+<ul><li>At $x=-0.5$: $f'(-0.5)=-1\cdot\cos(1.25)\approx -0.3153&lt;0$ (decreasing),</li><li>At $x=0$: $f'(0)=0$ (horizontal tangent at the local minimum $y=\sin 1\approx 0.8415$),</li><li>At $x=0.5$: $f'(0.5)=1\cdot\cos(1.25)\approx +0.3153&gt;0$ (increasing).</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>$\sin(x^2+1)$ is a composition: the outer function is $\sin u$ and the inner function is $u=x^2+1$. By the chain rule, we differentiate the outer sine to get $\cos(x^2+1)$, keeping the inside untouched, and multiply by the derivative of the inside, which is $2x$. That gives $f'(x)=2x\cos(x^2+1)$. At $x=0$, the factor $2x$ equals $0$, so $f'(0)=0$ and the tangent line is horizontal.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-5">Exercise 5: The Chain Rule as Working Through Layers</a></li><li><a href="#exercise-13">Exercise 13: A Multi-Layer Composition</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-8">
+<h2 class="exercise-title">Exercise 8. Two Exponential Functions</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$f(x)=e^{2x-3}+5^x$$</div>
+<p>compute the derivative. Explain why the factor $2$ appears in the first term and why $\ln 5$ appears in the second.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>Both terms in $f(x)=e^{2x-3}+5^x$ are exponential functions, because the variable $x$ is in the <strong>exponent</strong> rather than the base. However, they differ from the standard exponential $e^x$ in two distinct ways:</p>
+<ol><li><strong>First term ($e^{2x-3}$)</strong>: the base is the natural base $e$, where $\dfrac{d}{du}(e^u)=e^u$, but the exponent is a composite linear function $u(x)=2x-3$.</li><li><strong>Second term ($5^x$)</strong>: the exponent is simply $x$, but the base is $a=5\neq e$, for which</li></ol>
+<div class="math-block">$$\frac{d}{dx}(a^x)=a^x\ln a.$$</div>
+<p>Interestingly, both extra factors can be understood through the <strong>chain rule</strong> once we rewrite $5^x=e^{x\ln 5}$.</p>
+<h3>1. Differentiate the first term $e^{2x-3}$</h3>
+<p>View $e^{2x-3}$ as a composition $e^{u(x)}$ with inner function $u(x)=2x-3$:</p>
+<ul><li>Derivative of outer function $e^u$: $e^u=e^{2x-3}$,</li><li>Derivative of inner function $u(x)=2x-3$: $u'(x)=2$.</li></ul>
+<p>By the chain rule:</p>
+<div class="math-block">$$\frac{d}{dx}\left(e^{2x-3}\right)=e^{2x-3}\cdot 2=2e^{2x-3}.$$</div>
+<h3>2. Differentiate the second term $5^x$</h3>
+<p>Apply the general exponential derivative rule $\dfrac{d}{dx}(a^x)=a^x\ln a$ with $a=5$:</p>
+<div class="math-block">$$\frac{d}{dx}\left(5^x\right)=5^x\ln 5.$$</div>
+<h3>3. Combine to get $f'(x)$</h3>
+<p>Adding the derivatives of the two terms gives:</p>
+<div class="math-block">$$f'(x)=2e^{2x-3}+5^x\ln 5.$$</div>
+<h3>4. Why $2$ appears in the first term and $\ln 5$ in the second</h3>
+<p>Both factors measure the <strong>rate of change of the natural-base exponent</strong>:</p>
+<ul><li><strong>Why $2$ appears in $2e^{2x-3}$</strong>: The base is already $e$ (for which $\ln e=1$), so differentiating the outer exponential produces no logarithm factor. Instead, the exponent $u=2x-3$ changes twice as fast as $x$ ($\frac{du}{dx}=2$), so the chain rule multiplies by $2$.</li><li><strong>Why $\ln 5$ appears in $5^x\ln 5$</strong>: Since $5=e^{\ln 5}$, we can rewrite $5^x$ in base $e$ as</li></ul>
+<div class="math-block">$$5^x=\left(e^{\ln 5}\right)^x=e^{(\ln 5)x}.$$</div>
+<p>Now apply the exact same chain rule as in the first term! The inner linear exponent is $v(x)=(\ln 5)x$, whose derivative with respect to $x$ is $v'(x)=\ln 5$. Thus:</p>
+<div class="math-block">$$\frac{d}{dx}\left(5^x\right)=\frac{d}{dx}\left(e^{(\ln 5)x}\right)=e^{(\ln 5)x}\cdot\ln 5=5^x\ln 5.$$</div>
+<p>So $\ln 5\approx 1.6094$ is the conversion factor that rescales base-$5$ growth into natural (base-$e$) instantaneous growth.</p>
+<h3>Quick verification</h3>
+<p>We can also rewrite the first term using exponent laws before differentiating:</p>
+<div class="math-block">$$e^{2x-3}=e^{-3}\cdot e^{2x}=e^{-3}\cdot\left(e^2\right)^x.$$</div>
+<p>Viewing this as a constant $e^{-3}$ times an exponential with base $a=e^2$:</p>
+<div class="math-block">$$\frac{d}{dx}\left(e^{-3}(e^2)^x\right)=e^{-3}(e^2)^x\ln(e^2)=e^{-3}e^{2x}\cdot 2=2e^{2x-3}.\quad\checkmark$$</div>
+<p>Both perspectives — chain rule on $e^{u(x)}$ and base-change rule $a^x\ln a$ — agree completely!</p>
+<h3>A concrete example</h3>
+<p>At $x=1.5$:</p>
+<ul><li>The first term has exponent $2(1.5)-3=0$, so $e^{2(1.5)-3}=e^0=1$, and its instantaneous rate of change is $2e^0=2$.</li><li>The second term has value $5^{1.5}=5\sqrt{5}\approx 11.1803$, and its instantaneous rate of change is $5^{1.5}\ln 5\approx 11.1803\times 1.6094\approx 17.994$.</li><li>In total, $f'(1.5)=2+5\sqrt{5}\ln 5\approx 19.994$.</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>The derivative of $f(x)=e^{2x-3}+5^x$ is $f'(x)=2e^{2x-3}+5^x\ln 5$. In the first term, the base is $e$, so the exponential keeps its form and the chain rule multiplies by $(2x-3)'=2$. In the second term, the base is $5$ instead of $e$; since $5^x=e^{x\ln 5}$, differentiating brings down the constant factor $\ln 5$ from the exponent.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-5">Exercise 5: The Chain Rule as Working Through Layers</a></li><li><a href="#exercise-13">Exercise 13: A Multi-Layer Composition</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-9">
+<h2 class="exercise-title">Exercise 9. A Logarithm and the Chain Rule</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$f(x)=\ln(x^2+1)$$</div>
+<p>compute the derivative. Then determine the sign of $f'(x)$ for $x&lt;0$, $x=0$, and $x&gt;0$, and describe qualitatively how the function behaves around zero.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>First, notice that $x^2+1\ge1&gt;0$ for every real number $x$, so the domain of $f(x)=\ln(x^2+1)$ is the entire real line $\mathbb{R}$.</p>
+<p>Second, $f(x)=\ln(g(x))$ is a composition of the natural logarithm $\ln u$ (whose derivative is $\frac{1}{u}$) with the inner polynomial $u=g(x)=x^2+1$. By the <strong>chain rule</strong>:</p>
+<div class="math-block">$$\frac{d}{dx}\big(\ln(g(x))\big)=\frac{1}{g(x)}\cdot g'(x)=\frac{g'(x)}{g(x)}.$$</div>
+<p>Finally, the sign of $f'(x)$ tells us the <strong>monotonicity</strong> of $f$:</p>
+<ul><li>$f'(x)&lt;0$ on an interval $\implies f$ is strictly decreasing there,</li><li>$f'(x)=0$ $\implies$ horizontal tangent (stationary point),</li><li>$f'(x)&gt;0$ on an interval $\implies f$ is strictly increasing there.</li></ul>
+<h3>1. Compute the derivative</h3>
+<p>Identify the layers of $f(x)=\ln(x^2+1)$:</p>
+<ul><li>Outer function: $h(u)=\ln u \implies h'(u)=\dfrac{1}{u}$,</li><li>Inner function: $u=g(x)=x^2+1 \implies g'(x)=2x$.</li></ul>
+<p>Multiply by the chain rule:</p>
+<div class="math-block">$$f'(x)=\frac{1}{x^2+1}\cdot 2x=\frac{2x}{x^2+1}.$$</div>
+<h3>2. Sign analysis of $f'(x)$</h3>
+<p>In the fraction $f'(x)=\dfrac{2x}{x^2+1}$, the denominator satisfies</p>
+<div class="math-block">$$x^2+1\ge1&gt;0\quad\text{for all }x\in\mathbb{R}.$$</div>
+<p>Because the denominator is always strictly positive, the sign of $f'(x)$ is determined entirely by the numerator $2x$:</p>
+<ul><li>For $x&lt;0$: $2x&lt;0$, so $f'(x)&lt;0$ (<strong>negative</strong>).</li><li>For $x=0$: $2x=0$, so $f'(0)=0$ (<strong>zero</strong>).</li><li>For $x&gt;0$: $2x&gt;0$, so $f'(x)&gt;0$ (<strong>positive</strong>).</li></ul>
+<table><thead><tr><th>Interval / Point</th><th>$x&lt;0$</th><th>$x=0$</th><th>$x&gt;0$</th></tr></thead><tbody><tr><td>Sign of $f'(x)$</td><td>$-$</td><td>$0$</td><td>$+$</td></tr><tr><td>Behavior of $f(x)$</td><td>strictly decreasing $\searrow$</td><td>local (and global) minimum</td><td>strictly increasing $\nearrow$</td></tr></tbody></table>
+<h3>3. Qualitative behavior of $f(x)$ around zero</h3>
+<ul><li>As $x$ approaches $0$ from the left ($x&lt;0$), $f'(x)&lt;0$, so the graph slopes downward toward the origin.</li><li>At $x=0$, $f(0)=\ln(0^2+1)=\ln 1=0$ and $f'(0)=0$. The graph touches the origin $(0,0)$ with a <strong>horizontal tangent line</strong> ($y=0$, the $x$-axis).</li><li>As $x$ moves to the right of $0$ ($x&gt;0$), $f'(x)&gt;0$, so the graph turns upward and increases symmetrically ($f(-x)=f(x)$).</li><li>Therefore, $f(x)$ has a <strong>smooth U-shaped valley (global minimum)</strong> at $(0,0)$.</li></ul>
+<h3>Quick verification</h3>
+<p>Let us check near $x=0$ using the standard approximation $\ln(1+u)\approx u$ for small $u$:</p>
+<p>Setting $u=x^2$, for $x$ very close to $0$ we have:</p>
+<div class="math-block">$$f(x)=\ln(1+x^2)\approx x^2.$$</div>
+<p>Near the origin, $f(x)=\ln(x^2+1)$ looks almost indistinguishable from the standard parabola $y=x^2$, whose derivative is $2x$ — which matches $\dfrac{2x}{x^2+1}\approx \dfrac{2x}{1}=2x$ when $x$ is small! ✓</p>
+<h3>A concrete example</h3>
+<p>Evaluate $f(x)$ and $f'(x)$ at $x=-1$, $0$, and $1$:</p>
+<ul><li>At $x=-1$: $f(-1)=\ln 2\approx 0.693$, and $f'(-1)=\dfrac{2(-1)}{(-1)^2+1}=-1&lt;0$.</li><li>At $x=0$: $f(0)=\ln 1=0$, and $f'(0)=0$.</li><li>At $x=1$: $f(1)=\ln 2\approx 0.693$, and $f'(1)=\dfrac{2(1)}{1^2+1}=+1&gt;0$.</li></ul>
+<p>The function drops from $\ln 2$ at $x=-1$ down to $0$ at $x=0$, and rises symmetrically back to $\ln 2$ at $x=1$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>By the chain rule for logarithms, $(\ln g(x))'=\frac{g'(x)}{g(x)}$, so $f'(x)=\frac{2x}{x^2+1}$. Since the denominator $x^2+1$ is always positive, the sign of $f'(x)$ is the same as the sign of $2x$: negative for $x&lt;0$, zero at $x=0$, and positive for $x&gt;0$. This means the function decreases on $(-\infty,0)$, hits a minimum with a horizontal tangent at $(0,0)$, and increases on $(0,\infty)$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-4">Exercise 4: A Quotient and Domain Control</a></li><li><a href="#exercise-5">Exercise 5: The Chain Rule as Working Through Layers</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-10">
+<h2 class="exercise-title">Exercise 10. The Tangent Line as an Application of the Derivative</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$f(x)=x^2-3x+1$$</div>
+<p>find the equation of the tangent line at the point with $x=2$. Give the point of tangency, the value $f'(2)$, the equation of the line, and verify that the point lies on the obtained tangent line.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>To write the equation of a line, we need <strong>a point</strong> $(x_0,y_0)$ on the line and <strong>its slope</strong> $m$. For the tangent line to the graph $y=f(x)$ at $x_0$:</p>
+<ol><li><strong>Point of tangency</strong>: $(x_0,y_0)=(x_0,f(x_0))$ — obtained by plugging $x_0$ into the <strong>original function</strong> $f$.</li><li><strong>Slope of the tangent line</strong>: $m=f'(x_0)$ — obtained by plugging $x_0$ into the <strong>derivative</strong> $f'$.</li><li><strong>Point-slope equation of the tangent line</strong>:</li></ol>
+<div class="math-block">$$y-f(x_0)=f'(x_0)(x-x_0) \quad\Longleftrightarrow\quad y=f(x_0)+f'(x_0)(x-x_0).$$</div>
+<p><em>(A common mistake is plugging $f'(x)$ instead of the constant number $f'(x_0)$ into the line equation — the slope $m=f'(2)$ must be a constant number so that the equation represents a straight line.)</em></p>
+<h3>1. Find the point of tangency</h3>
+<p>Evaluate the function $f(x)=x^2-3x+1$ at $x_0=2$:</p>
+<div class="math-block">$$f(2)=2^2-3(2)+1=4-6+1=-1.$$</div>
+<p>So the point of tangency is</p>
+<div class="math-block">$$P=(2,-1).$$</div>
+<h3>2. Compute the derivative and the slope $f'(2)$</h3>
+<p>Differentiate $f(x)=x^2-3x+1$ using the power rule:</p>
+<div class="math-block">$$f'(x)=2x-3.$$</div>
+<p>Evaluate $f'(x)$ at $x_0=2$ to get the slope of the tangent line:</p>
+<div class="math-block">$$m=f'(2)=2(2)-3=4-3=1.$$</div>
+<h3>3. Write the equation of the tangent line</h3>
+<p>Substitute $(x_0,y_0)=(2,-1)$ and $m=1$ into the tangent line formula $y-y_0=m(x-x_0)$:</p>
+<div class="math-block">$$y-(-1)=1\cdot(x-2)$$</div>
+<div class="math-block">$$y+1=x-2$$</div>
+<div class="math-block">$$y=x-3.$$</div>
+<h3>4. Verify that the point of tangency lies on the tangent line</h3>
+<p>Substitute $x=2$ into the tangent line equation $y=x-3$:</p>
+<div class="math-block">$$y(2)=2-3=-1=f(2).\quad\checkmark$$</div>
+<p>Thus the point $P=(2,-1)$ lies on the line $y=x-3$.</p>
+<h3>Quick verification</h3>
+<p>For a parabola, a line is tangent to the graph if and only if the system of equations has a <strong>double root</strong> (zero discriminant) at the point of tangency. Let us intersect $y=x^2-3x+1$ and $y=x-3$:</p>
+<div class="math-block">$$x^2-3x+1=x-3 \iff x^2-4x+4=0 \iff (x-2)^2=0.$$</div>
+<p>Since $(x-2)^2=0$ has a double root at $x=2$, the line $y=x-3$ touches the parabola at $x=2$ without crossing it and stays strictly below the parabola ($x^2-3x+1-(x-3)=(x-2)^2\ge0$) everywhere else. ✓</p>
+<h3>A concrete example</h3>
+<p>Use the tangent line $L(x)=x-3$ to approximate $f(2.1)$:</p>
+<ul><li>Tangent line approximation: $L(2.1)=2.1-3=-0.9$.</li><li>Exact function value: $f(2.1)=(2.1)^2-3(2.1)+1=4.41-6.3+1=-0.89$.</li><li>The discrepancy is only $0.01=(2.1-2)^2$, showing that the tangent line is the best linear approximation to $f(x)$ near $x=2$.</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>To find the tangent line at $x=2$, we need two numbers: the $y$-coordinate and the slope. First, $f(2)=2^2-3(2)+1=-1$, so the point of tangency is $(2,-1)$. Second, the derivative is $f'(x)=2x-3$, so the slope at $x=2$ is $f'(2)=2(2)-3=1$. Using point-slope form $y-(-1)=1(x-2)$, we get $y=x-3$, and plugging in $x=2$ gives $y=2-3=-1$, confirming the point is on the line.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: Derivative of a Polynomial and the Slope of a Tangent Line</a></li><li><a href="#exercise-11">Exercise 11: Derivative from the Definition</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-11">
+<h2 class="exercise-title">Exercise 11. Derivative from the Definition</h2>
+<h3>The question</h3>
+<p>Using only</p>
+<div class="math-block">$$f'(x)=\lim_{h\to0}\frac{f(x+h)-f(x)}{h},$$</div>
+<p>find the derivative of $f(x)=x^2$. Compare the result with the power rule and indicate where the limit is used in the calculation.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>For a nonzero step $h\neq0$, the <strong>difference quotient</strong></p>
+<div class="math-block">$$\frac{f(x+h)-f(x)}{h}$$</div>
+<p>is the <strong>slope of the secant line</strong> passing through the two points $(x,f(x))$ and $(x+h,f(x+h))$ on the graph. We cannot simply plug $h=0$ into this fraction at the start because that gives the indeterminate form $\dfrac{0}{0}$.</p>
+<p>Instead, we must:</p>
+<ol><li>expand $f(x+h)-f(x)$ algebraically,</li><li>factor out $h$ in the numerator and cancel it with the $h$ in the denominator (valid because $h\neq0$ inside the limit),</li><li>take the limit as $h\to0$ once the division-by-zero obstacle has been removed.</li></ol>
+<h3>1. Set up and expand the difference quotient</h3>
+<p>For $f(x)=x^2$, evaluate $f(x+h)$ by replacing $x$ with $(x+h)$:</p>
+<div class="math-block">$$f(x+h)=(x+h)^2=x^2+2xh+h^2.$$</div>
+<p>Subtract $f(x)=x^2$:</p>
+<div class="math-block">$$f(x+h)-f(x)=(x^2+2xh+h^2)-x^2=2xh+h^2.$$</div>
+<p>Divide by $h$ (for $h\neq0$):</p>
+<div class="math-block">$$\frac{f(x+h)-f(x)}{h}=\frac{2xh+h^2}{h}.$$</div>
+<h3>2. Factor and cancel $h$</h3>
+<p>Factor $h$ out of the numerator:</p>
+<div class="math-block">$$\frac{2xh+h^2}{h}=\frac{h(2x+h)}{h}=2x+h \qquad (h\neq0).$$</div>
+<p>Geometrically, $2x+h$ is the exact slope of the secant line between $x$ and $x+h$.</p>
+<h3>3. Take the limit as $h\to0$ (and indicate where it is used)</h3>
+<p>Now apply the limit as $h\to0$:</p>
+<div class="math-block">$$f'(x)=\lim_{h\to0}\frac{f(x+h)-f(x)}{h}=\lim_{h\to0}(2x+h)=2x+0=2x.$$</div>
+<p><strong>Where is the limit used?</strong></p>
+<ul><li>In steps 1 and 2, we used the fact that the limit as $h\to0$ examines $h\neq0$, which <strong>allowed us to cancel $\frac{h}{h}=1$</strong>.</li><li>In the final step $\lim_{h\to0}(2x+h)=2x$, the limit is used to <strong>make the remaining increment $h$ vanish</strong> (by continuity of the linear function $h\mapsto 2x+h$ at $h=0$).</li></ul>
+<h3>4. Compare with the power rule</h3>
+<p>The power rule $\dfrac{d}{dx}(x^n)=nx^{n-1}$ for $n=2$ gives</p>
+<div class="math-block">$$\frac{d}{dx}(x^2)=2x^{2-1}=2x.$$</div>
+<p>The results are identical! In fact, the power rule is not an arbitrary axiom — it is a shortcut obtained by performing this exact binomial expansion and limit once and for all for general $n$:</p>
+<div class="math-block">$$(x+h)^n-x^n=nx^{n-1}h+\binom{n}{2}x^{n-2}h^2+\dots+h^n \implies \lim_{h\to0}\frac{(x+h)^n-x^n}{h}=nx^{n-1}.$$</div>
+<h3>Quick verification</h3>
+<p>Think of $f(x)=x^2$ as the area of a square of side length $x$. If we increase the side length from $x$ to $x+h$:</p>
+<ul><li>The square gains <strong>two rectangular strips</strong> of dimensions $x\times h$ (total area $2xh$) and <strong>one tiny corner square</strong> of dimensions $h\times h$ (area $h^2$).</li><li>Total area change: $\Delta A = 2xh+h^2$.</li><li>Rate of change per unit of $h$: $\dfrac{\Delta A}{h}=2x+h$.</li><li>As the strip thickness $h\to0$, the tiny corner contributes $h\to0$, leaving the two side edges of total length $2x$. ✓</li></ul>
+<h3>A concrete example</h3>
+<p>At $x=3$, our derivative is $f'(3)=2(3)=6$, and the secant slope formula is $2(3)+h=6+h$:</p>
+<ul><li>For $h=0.1$: secant slope between $3$ and $3.1$ is $\dfrac{3.1^2-3^2}{0.1}=\dfrac{9.61-9}{0.1}=6.1=6+0.1$.</li><li>For $h=0.01$: secant slope is $6.01$.</li><li>For $h=0.001$: secant slope is $6.001$.</li><li>In the limit as $h\to0$, the extra $+h$ disappears and we get the exact tangent slope $6$.</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>To find the derivative of $x^2$ from the definition, we write the difference quotient $\frac{(x+h)^2-x^2}{h}$. Expanding $(x+h)^2=x^2+2xh+h^2$ cancels the $x^2$ terms and leaves $\frac{2xh+h^2}{h}$. Since $h\neq0$ before taking the limit, we cancel $h$ to get $2x+h$. Finally, taking the limit as $h\to0$ makes the $+h$ term disappear, giving $2x$, which matches the power rule $2x^{2-1}=2x$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-1">Exercise 1: Derivative of a Polynomial and the Slope of a Tangent Line</a></li><li><a href="#exercise-15">Exercise 15: The Difference Quotient as a Check of the Derivative</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-12">
+<h2 class="exercise-title">Exercise 12. Several Rules at Once</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$f(x)=(x^2+1)^3e^x$$</div>
+<p>compute the derivative. Before calculating, write down a plan: which rule applies to the whole expression and which rule applies to one of its factors. Finally, organize the result by factoring out common factors.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>When an expression combines several operations, we always <strong>differentiate from the outermost operation inward</strong>:</p>
+<ol><li><strong>Top-level structure (the whole expression)</strong>: $f(x)=\underbrace{(x^2+1)^3}_{u(x)}\cdot\underbrace{e^x}_{v(x)}$ is a <strong>product</strong> of two factors. Therefore, the <strong>product rule</strong> $(uv)'=u'v+uv'$ governs the overall derivative.</li><li><strong>Sub-problem (the first factor)</strong>: to find $u'(x)$ for $u(x)=(x^2+1)^3$, notice that $u(x)$ is a <strong>composition</strong> (an inner polynomial $x^2+1$ raised to the $3$-rd power). Therefore, we must apply the <strong>chain rule</strong> inside the first step of the product rule.</li></ol>
+<h3>1. Write the differentiation plan</h3>
+<ul><li><strong>Step A (Outer rule — Product Rule)</strong>: Write $f(x)=u(x)v(x)$ with $u(x)=(x^2+1)^3$ and $v(x)=e^x$, so</li></ul>
+<div class="math-block">$$f'(x)=u'(x)v(x)+u(x)v'(x).$$</div>
+<ul><li><strong>Step B (Inner rule — Chain Rule on $u(x)$)</strong>: Differentiate $u(x)=(x^2+1)^3$ by differentiating the outer cube $w^3\mapsto 3w^2$ and multiplying by the derivative of the inner polynomial $w=x^2+1\mapsto 2x$.</li><li><strong>Step C (Algebraic cleanup)</strong>: Factor out the greatest common factors $(x^2+1)^2$ and $e^x$.</li></ul>
+<h3>2. Differentiate each factor</h3>
+<p>For the first factor $u(x)=(x^2+1)^3$, apply the chain rule:</p>
+<div class="math-block">$$u'(x)=3(x^2+1)^2\cdot\frac{d}{dx}(x^2+1)=3(x^2+1)^2\cdot(2x)=6x(x^2+1)^2.$$</div>
+<p>For the second factor $v(x)=e^x$:</p>
+<div class="math-block">$$v'(x)=e^x.$$</div>
+<h3>3. Combine with the product rule</h3>
+<p>Substitute $u,u',v,v'$ into $f'(x)=u'(x)v(x)+u(x)v'(x)$:</p>
+<div class="math-block">$$f'(x)=6x(x^2+1)^2e^x+(x^2+1)^3e^x.$$</div>
+<h3>4. Factor out common factors</h3>
+<p>Both terms contain $(x^2+1)^2$ and $e^x$. Factor out $(x^2+1)^2e^x$:</p>
+<div class="math-block">$$f'(x)=(x^2+1)^2e^x\big[6x+(x^2+1)\big]=(x^2+1)^2(x^2+6x+1)e^x.$$</div>
+<p>Why is this factored form much better than the unfactored sum?</p>
+<ul><li>We can immediately see the sign of $f'(x)$: since $(x^2+1)^2&gt;0$ and $e^x&gt;0$ for all $x\in\mathbb{R}$, the zeros and sign changes of $f'(x)$ come solely from the quadratic factor $x^2+6x+1$.</li></ul>
+<h3>Quick verification</h3>
+<p>Let us check at $x=0$ and $x=1$:</p>
+<ul><li><strong>At $x=0$</strong>:</li><li>Factored formula: $f'(0)=(0+1)^2(0+0+1)e^0=1\cdot1\cdot1=1$.</li><li>Small-$x$ expansion of $f(x)=(1+x^2)^3e^x$: since $(1+x^2)^3=1+3x^2+\dots$ has no linear $x$ term, near $x=0$ we have $f(x)\approx 1\cdot(1+x)=1+x$, so $f'(0)=1$. ✓</li><li><strong>At $x=1$</strong>:</li><li>Unfactored sum: $6(1)(2)^2e^1+(2)^3e^1=24e+8e=32e$.</li><li>Factored formula: $(1+1)^2(1+6+1)e^1=4\cdot8\cdot e=32e$. ✓</li></ul>
+<h3>A concrete example</h3>
+<p>To find the critical points of $f(x)=(x^2+1)^3e^x$ (where the tangent line is horizontal, $f'(x)=0$), our factored form makes the task effortless:</p>
+<div class="math-block">$$(x^2+1)^2(x^2+6x+1)e^x=0 \iff x^2+6x+1=0 \iff x=-3\pm\sqrt{9-1}=-3\pm2\sqrt{2}.$$</div>
+<p>Without factoring out $(x^2+1)^2e^x$, solving $6x(x^2+1)^2e^x+(x^2+1)^3e^x=0$ would look like a degree-$6$ equation!</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Before differentiating $f(x)=(x^2+1)^3e^x$, we look at its overall structure: it is a product of $(x^2+1)^3$ and $e^x$, so we start with the product rule. When we need the derivative of the first factor $(x^2+1)^3$, we use the chain rule to get $3(x^2+1)^2\cdot 2x=6x(x^2+1)^2$. Putting the product rule together gives $6x(x^2+1)^2e^x+(x^2+1)^3e^x$, and factoring out $(x^2+1)^2e^x$ simplifies the answer to $(x^2+1)^2(x^2+6x+1)e^x$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-3">Exercise 3: The Product Rule — Why Is It Needed?</a></li><li><a href="#exercise-5">Exercise 5: The Chain Rule as Working Through Layers</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-13">
+<h2 class="exercise-title">Exercise 13. A Multi-Layer Composition</h2>
+<h3>The question</h3>
+<p>For</p>
+<div class="math-block">$$f(x)=e^{\sin(x^2)}$$</div>
+<p>compute the derivative. First write the layers</p>
+<div class="math-block">$$x\longrightarrow x^2\longrightarrow \sin(x^2)\longrightarrow e^{\sin(x^2)}$$</div>
+<p>and explain why differentiation moves through them in the reverse order.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>A three-layer composition $f(x)=F(G(H(x)))$ works like a three-stage pipeline:</p>
+<ul><li><strong>Evaluation</strong> starts at the innermost input $x$ and applies $H$, then $G$, then $F$ moving <strong>inside-out</strong>.</li><li><strong>Differentiation</strong> by the chain rule unwraps the layers moving <strong>outside-in</strong> (in the reverse order of evaluation), multiplying the derivative of each layer evaluated at everything inside it:</li></ul>
+<div class="math-block">$$f'(x)=F'\big(G(H(x))\big)\cdot G'\big(H(x)\big)\cdot H'(x).$$</div>
+<p>In Leibniz notation, if $u=x^2$, $v=\sin u$, and $y=e^v$, then</p>
+<div class="math-block">$$\frac{dy}{dx}=\frac{dy}{dv}\cdot\frac{dv}{du}\cdot\frac{du}{dx}.$$</div>
+<h3>1. Write the layers of evaluation</h3>
+<p>When we plug a number $x$ into $f(x)=e^{\sin(x^2)}$, we compute three intermediate steps in order from inside to outside:</p>
+<div class="math-block">$$x \xrightarrow{\text{square}} u=x^2 \xrightarrow{\text{sine}} v=\sin(x^2) \xrightarrow{\text{exponential}} y=e^{\sin(x^2)}.$$</div>
+<ul><li><strong>Layer 1 (innermost)</strong>: $u=H(x)=x^2$,</li><li><strong>Layer 2 (middle)</strong>: $v=G(u)=\sin u=\sin(x^2)$,</li><li><strong>Layer 3 (outermost)</strong>: $y=F(v)=e^v=e^{\sin(x^2)}$.</li></ul>
+<h3>2. Differentiate layer by layer in reverse order</h3>
+<p>Unwrap the composition from the <strong>outermost</strong> layer to the <strong>innermost</strong> layer:</p>
+<ol><li><strong>Outermost layer ($e^v$)</strong>: differentiate $e^v$ with respect to its argument $v=\sin(x^2)$:</li></ol>
+<div class="math-block">$$\frac{dy}{dv}=e^v=e^{\sin(x^2)}.$$</div>
+<ol><li><strong>Middle layer ($\sin u$)</strong>: differentiate $\sin u$ with respect to its argument $u=x^2$:</li></ol>
+<div class="math-block">$$\frac{dv}{du}=\cos u=\cos(x^2).$$</div>
+<ol><li><strong>Innermost layer ($x^2$)</strong>: differentiate $x^2$ with respect to $x$:</li></ol>
+<div class="math-block">$$\frac{du}{dx}=2x.$$</div>
+<h3>3. Multiply the factors to obtain $f'(x)$</h3>
+<p>Multiply the three derivatives together:</p>
+<div class="math-block">$$f'(x)=e^{\sin(x^2)}\cdot\cos(x^2)\cdot 2x=2x\cos(x^2)e^{\sin(x^2)}.$$</div>
+<h3>4. Why differentiation moves in the reverse order of evaluation</h3>
+<p>Think of wrapping and unwrapping a gift box:</p>
+<ul><li>When <strong>evaluating</strong> $f(x)$, $x$ is placed inside the squaring box $x^2$, which is placed inside the $\sin(\cdot)$ box, which is finally placed inside the $e^{(\cdot)}$ box.</li><li>When <strong>differentiating</strong> $f(x)$, we ask how the final output $y=e^{\sin(x^2)}$ responds to a change in $x$. At the top level, $f(x)$ is an exponential function $e^{(\text{something})}$, so we must first open the outermost $e^{(\cdot)}$ box while keeping its contents $\sin(x^2)$ intact; only then does the chain rule ask us to differentiate what was inside ($\sin(x^2)$), which in turn requires opening the middle $\sin(\cdot)$ box before finally reaching the innermost $x^2$ box.</li></ul>
+<p><em>(Note: because multiplication of real numbers is commutative, the final product $e^{\sin(x^2)}\cdot\cos(x^2)\cdot 2x=2x\cos(x^2)e^{\sin(x^2)}$ can be written in any order, even though the logical process of peeling off layers proceeds from outside to inside.)</em></p>
+<h3>Quick verification</h3>
+<p>Let us approximate $f(x)=e^{\sin(x^2)}$ near $x=0$ using $\sin u\approx u$ and $e^v\approx 1+v$:</p>
+<div class="math-block">$$f(x)=e^{\sin(x^2)}\approx e^{x^2}\approx 1+x^2\quad\text{for }x\text{ near }0.$$</div>
+<p>Differentiating $1+x^2$ gives $2x$. Now check our exact formula as $x\to0$:</p>
+<div class="math-block">$$f'(x)=2x\cos(x^2)e^{\sin(x^2)}\approx 2x\cdot\cos(0)\cdot e^0=2x\cdot1\cdot1=2x.\quad\checkmark$$</div>
+<p>Both the small-$x$ behavior and the exact derivative formula match.</p>
+<h3>A concrete example</h3>
+<p>Evaluate $f(x)$ and $f'(x)$ at $x=\sqrt{\pi}\approx 1.7725$:</p>
+<ul><li>Innermost layer: $u=(\sqrt{\pi})^2=\pi$,</li><li>Middle layer: $v=\sin(\pi)=0$,</li><li>Outermost layer: $f(\sqrt{\pi})=e^0=1$.</li><li>Derivative at $x=\sqrt{\pi}$:</li></ul>
+<div class="math-block">$$f'(\sqrt{\pi})=2\sqrt{\pi}\cos(\pi)e^{\sin(\pi)}=2\sqrt{\pi}(-1)(1)=-2\sqrt{\pi}\approx -3.5449.$$</div>
+<p>Because $\cos(\pi)=-1&lt;0$, the function is decreasing steeply as $x$ passes through $\sqrt{\pi}$.</p>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Evaluating $f(x)=e^{\sin(x^2)}$ goes from inside to outside: $x\to x^2\to\sin(x^2)\to e^{\sin(x^2)}$. Differentiating works in reverse, like peeling layers off from the outside in: first differentiate the outer exponential to get $e^{\sin(x^2)}$, then multiply by the derivative of the middle sine layer, $\cos(x^2)$, and finally multiply by the derivative of the inner square, $2x$, giving $f'(x)=2x\cos(x^2)e^{\sin(x^2)}$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-5">Exercise 5: The Chain Rule as Working Through Layers</a></li><li><a href="#exercise-7">Exercise 7: A Trigonometric Composition</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-14">
+<h2 class="exercise-title">Exercise 14. Continuity and Differentiability of a Piecewise Function</h2>
+<h3>The question</h3>
+<p>Investigate the behavior at $x=0$ of</p>
+<div class="math-block">$$f(x)=\begin{cases}x^2,&amp;x\ge0,\\ax,&amp;x&lt;0.\end{cases}$$</div>
+<p>For which values of $a$ is the function continuous? For which values do the one-sided derivatives exist and agree? For which value of $a$ is the function differentiable? Explain why continuity alone is not sufficient.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>When a function is glued together from two formulas at a boundary point $x=0$, we must check two separate conditions in order:</p>
+<ol><li><strong>Continuity at $x=0$</strong> (do the two pieces meet without a jump?):</li></ol>
+<div class="math-block">$$\lim_{x\to0^-}f(x)=\lim_{x\to0^+}f(x)=f(0).$$</div>
+<ol><li><strong>Differentiability at $x=0$</strong> (do the two pieces meet smoothly with the <strong>same slope</strong>, without a sharp corner?): the left-hand derivative $f'_-(0)$ and the right-hand derivative $f'_+(0)$ must both exist and be equal:</li></ol>
+<div class="math-block">$$f'_-(0)=\lim_{h\to0^-}\frac{f(0+h)-f(0)}{h}=\lim_{h\to0^+}\frac{f(0+h)-f(0)}{h}=f'_+(0).$$</div>
+<h3>1. Continuity at $x=0$</h3>
+<p>Compute the value at $x=0$ and the two one-sided limits:</p>
+<ul><li>Value at $x=0$ (using the $x\ge0$ branch): $f(0)=0^2=0$.</li><li>Right-hand limit:</li></ul>
+<div class="math-block">$$\lim_{x\to0^+}f(x)=\lim_{x\to0^+}x^2=0.$$</div>
+<ul><li>Left-hand limit:</li></ul>
+<div class="math-block">$$\lim_{x\to0^-}f(x)=\lim_{x\to0^-}(ax)=a\cdot0=0\quad\text{for every }a\in\mathbb{R}.$$</div>
+<p>Since $\lim_{x\to0^-}f(x)=\lim_{x\to0^+}f(x)=f(0)=0$ regardless of $a$, the function $f$ is <strong>continuous at $x=0$ for all real values $a\in\mathbb{R}$</strong>.</p>
+<h3>2. One-sided derivatives at $x=0$</h3>
+<p>Now compute the right-hand and left-hand derivatives at $x=0$ using $f(0)=0$:</p>
+<ul><li><strong>Right-hand derivative ($h\to0^+$, so $h&gt;0$ and $f(h)=h^2$)</strong>:</li></ul>
+<div class="math-block">$$f'_+(0)=\lim_{h\to0^+}\frac{f(h)-f(0)}{h}=\lim_{h\to0^+}\frac{h^2-0}{h}=\lim_{h\to0^+}h=0.$$</div>
+<ul><li><strong>Left-hand derivative ($h\to0^-$, so $h&lt;0$ and $f(h)=ah$)</strong>:</li></ul>
+<div class="math-block">$$f'_-(0)=\lim_{h\to0^-}\frac{f(h)-f(0)}{h}=\lim_{h\to0^-}\frac{ah-0}{h}=\lim_{h\to0^-}a=a.$$</div>
+<p>Thus:</p>
+<ul><li>Both one-sided derivatives $f'_-(0)=a$ and $f'_+(0)=0$ <strong>exist for every $a\in\mathbb{R}$</strong>.</li><li>They <strong>agree</strong> ($f'_-(0)=f'_+(0)$) if and only if</li></ul>
+<div class="math-block">$$a=0.$$</div>
+<h3>3. Differentiability at $x=0$</h3>
+<p>A function is differentiable at $x=0$ if and only if its left-hand and right-hand derivatives exist and are equal. Therefore, $f$ is <strong>differentiable at $x=0$ if and only if $a=0$</strong> (in which case $f'(0)=0$).</p>
+<h3>4. Why continuity alone is not sufficient</h3>
+<ul><li><strong>Continuity</strong> only requires the graphs of the two pieces $y=ax$ (for $x&lt;0$) and $y=x^2$ (for $x\ge0$) to <strong>connect at the same point</strong> $(0,0)$. Since both $ax$ and $x^2$ equal $0$ at $x=0$, the pieces always touch at the origin.</li><li><strong>Differentiability</strong> requires a <strong>unique tangent line</strong> at $(0,0)$. The parabola $y=x^2$ arrives at the origin horizontally with slope $f'_+(0)=0$, whereas the line $y=ax$ arrives at the origin with slope $f'_-(0)=a$. If $a\neq0$, the graph has a <strong>sharp corner (kink)</strong> at $(0,0)$ where the slope abruptly jumps from $a$ to $0$, so no single tangent line exists.</li></ul>
+<h3>Quick verification</h3>
+<p>Check the formula for $f'(x)$ away from $x=0$:</p>
+<div class="math-block">$$f'(x)=\begin{cases}2x,&amp;x&gt;0,\\a,&amp;x&lt;0.\end{cases}$$</div>
+<p>As $x\to0^+$, the slope $2x\to0$. As $x\to0^-$, the slope is constantly $a$. The slope transitions without a jump across $x=0$ if and only if $a=0$. ✓</p>
+<h3>A concrete example</h3>
+<p>Compare $a=1$ and $a=0$:</p>
+<ul><li><strong>If $a=1$</strong>: $f(x)=\begin{cases}x^2,&amp;x\ge0,\\x,&amp;x&lt;0.\end{cases}$ The graph is continuous at $(0,0)$, but coming from the left along the $45^\circ$ line $y=x$ the slope is $1$, and at $(0,0)$ it suddenly bends into the flat bottom of $y=x^2$ with slope $0$. This sharp corner at $(0,0)$ is not differentiable.</li><li><strong>If $a=0$</strong>: $f(x)=\begin{cases}x^2,&amp;x\ge0,\\0,&amp;x&lt;0.\end{cases}$ Coming from the left along the horizontal line $y=0$ (slope $0$), the graph merges smoothly into the parabola $y=x^2$ (whose tangent at $x=0$ also has slope $0$), so $f'(0)=0$ exists.</li></ul>
+<h3>How I would explain this in class</h3>
+<blockquote><p>For any real number $a$, both $ax$ and $x^2$ approach $0$ as $x\to0$, so $f$ is continuous at $x=0$ for all $a\in\mathbb{R}$. However, from the right the parabola $x^2$ has slope $f'_+(0)=0$, while from the left the line $ax$ has slope $f'_-(0)=a$. The two one-sided derivatives agree only when $a=0$. Continuity only prevents a jump at $(0,0)$, whereas differentiability also prevents a sharp corner, which is why we need $a=0$.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-11">Exercise 11: Derivative from the Definition</a></li><li><a href="#exercise-15">Exercise 15: The Difference Quotient as a Check of the Derivative</a></li></ul>
+</section>
+
+<section class="exercise-card" id="exercise-15">
+<h2 class="exercise-title">Exercise 15. The Difference Quotient as a Check of the Derivative</h2>
+<h3>The question</h3>
+<p>Choose one function from the problem set and a point $x_0$ at which the derivative exists. Compute $f'(x_0)$ exactly, and then calculate</p>
+<div class="math-block">$$\frac{f(x_0+h)-f(x_0)}{h}$$</div>
+<p>for $h=1$, $0.1$, and $0.01$. Compare the values with $f'(x_0)$ and explain why the difference quotient approaching a single number is consistent with the definition of the derivative, while a few computations do not replace a limit argument.</p>
+<h3>Before calculating: what idea do we need?</h3>
+<p>By definition, the derivative at $x_0$ is the limit of the difference quotient:</p>
+<div class="math-block">$$f'(x_0)=\lim_{h\to0}\frac{f(x_0+h)-f(x_0)}{h}.$$</div>
+<p>For any specific nonzero number $h$, the difference quotient $\dfrac{f(x_0+h)-f(x_0)}{h}$ is the <strong>secant slope</strong> between $x_0$ and $x_0+h$. Evaluating this ratio for smaller and smaller steps ($h=1, 0.1, 0.01$) lets us <strong>numerically observe</strong> the secant slopes converging toward the tangent slope $f'(x_0)$ — a powerful sanity check on our derivative formula, though not a mathematical proof.</p>
+<h3>1. Choose a function and a point, and compute $f'(x_0)$ exactly</h3>
+<p>Let us choose the polynomial from Exercise 10 (and Exercise 11):</p>
+<div class="math-block">$$f(x)=x^2-3x+1 \qquad\text{at}\qquad x_0=2.$$</div>
+<p>First compute the exact value and exact derivative at $x_0=2$:</p>
+<ul><li>Function value: $f(2)=2^2-3(2)+1=4-6+1=-1$.</li><li>Derivative formula: $f'(x)=2x-3$.</li><li>Exact derivative at $x_0=2$:</li></ul>
+<div class="math-block">$$f'(2)=2(2)-3=1.$$</div>
+<h3>2. Compute the difference quotient for $h=1$, $0.1$, and $0.01$</h3>
+<p>First let us simplify $f(2+h)$ for a general step $h$:</p>
+<div class="math-block">$$f(2+h)=(2+h)^2-3(2+h)+1=(4+4h+h^2)-(6+3h)+1=-1+h+h^2.$$</div>
+<p>Therefore, for any $h\neq0$:</p>
+<div class="math-block">$$\frac{f(2+h)-f(2)}{h}=\frac{(-1+h+h^2)-(-1)}{h}=\frac{h+h^2}{h}=1+h.$$</div>
+<p>Now evaluate for the three requested values of $h$:</p>
+<ol><li><strong>For $h=1$</strong> ($x_0+h=3$, where $f(3)=3^2-3(3)+1=1$):</li></ol>
+<div class="math-block">$$\frac{f(3)-f(2)}{1}=\frac{1-(-1)}{1}=2=1+1.$$</div>
+<ol><li><strong>For $h=0.1$</strong> ($x_0+h=2.1$, where $f(2.1)=2.1^2-3(2.1)+1=-0.89$):</li></ol>
+<div class="math-block">$$\frac{f(2.1)-f(2)}{0.1}=\frac{-0.89-(-1)}{0.1}=\frac{0.11}{0.1}=1.1=1+0.1.$$</div>
+<ol><li><strong>For $h=0.01$</strong> ($x_0+h=2.01$, where $f(2.01)=2.01^2-3(2.01)+1=-0.9899$):</li></ol>
+<div class="math-block">$$\frac{f(2.01)-f(2)}{0.01}=\frac{-0.9899-(-1)}{0.01}=\frac{0.0101}{0.01}=1.01=1+0.01.$$</div>
+<h3>3. Compare the values with $f'(2)=1$</h3>
+<table><thead><tr><th>Step size $h$</th><th>Point $x_0+h$</th><th>Difference quotient $\dfrac{f(2+h)-f(2)}{h}$</th><th>Exact derivative $f'(2)$</th><th>Error $\vert\text{DQ}-f'(2)\vert$</th></tr></thead><tbody><tr><td>$1$</td><td>$3$</td><td>$2.00$</td><td>$1$</td><td>$1.00$</td></tr><tr><td>$0.1$</td><td>$2.1$</td><td>$1.10$</td><td>$1$</td><td>$0.10$</td></tr><tr><td>$0.01$</td><td>$2.01$</td><td>$1.01$</td><td>$1$</td><td>$0.01$</td></tr></tbody></table>
+<p>As $h$ shrinks by a factor of $10$ each time ($1\to 0.1\to 0.01$), the difference quotient $2.00\to 1.10\to 1.01$ gets steadily closer to $f'(2)=1$, and the discrepancy equals $h$.</p>
+<h3>4. Consistency vs. proof: why a few values do not replace a limit argument</h3>
+<ul><li><strong>Why it is consistent with the definition</strong>: If $f'(x_0)=\lim_{h\to0}\frac{f(x_0+h)-f(x_0)}{h}$ exists, then for small values of $h$ the difference quotient must lie close to $f'(x_0)$. Seeing $2\to 1.1\to 1.01$ approach $1$ confirms that we did not make a sign or arithmetic error when computing $f'(2)=1$.</li><li><strong>Why three values do not prove the limit exists</strong>:</li></ul>
+<ol><li>Checking only $h=1, 0.1, 0.01$ tests only <strong>three positive numbers</strong> ($h&gt;0$). It never checks negative steps $h&lt;0$ (such as $h=-0.01$, which could approach a completely different left-hand slope if the function had a corner like in Exercise 14).</li><li>Even for $h&gt;0$, a function could behave nicely at $h=1, 0.1, 0.01$ and then oscillate wildly or jump at $h=0.0001$.</li><li>Only the <strong>algebraic limit argument</strong> $\lim_{h\to0}(1+h)=1$ proves that the difference quotient converges to $1$ for <strong>every</strong> way $h$ can approach $0$ ($h\to0^+$ and $h\to0^-$).</li></ol>
+<h3>Quick verification</h3>
+<p>Let us also check negative steps $h=-0.1$ and $h=-0.01$ at $x_0=2$:</p>
+<ul><li>For $h=-0.1$: $\dfrac{f(1.9)-f(2)}{-0.1}=\dfrac{-1.09-(-1)}{-0.1}=\dfrac{-0.09}{-0.1}=0.90=1-0.1$.</li><li>For $h=-0.01$: $\dfrac{f(1.99)-f(2)}{-0.01}=\dfrac{-1.0099-(-1)}{-0.01}=\dfrac{-0.0099}{-0.01}=0.99=1-0.01$.</li></ul>
+<p>From the left ($0.90\to 0.99$) and from the right ($1.10\to 1.01$), the secant slopes sandwich the exact derivative $f'(2)=1$. ✓</p>
+<h3>A concrete example</h3>
+<p>Why can testing only $h=1, 0.1, 0.01$ be fooled? Consider two examples:</p>
+<ol><li><strong>One-sided trap</strong>: For $g(x)=|x-2|+(x-2)$ at $x_0=2$, testing $h=1, 0.1, 0.01$ gives difference quotients $2, 2, 2$, suggesting $g'(2)=2$. Yet for $h=-0.01$, the difference quotient is $0$, so $g'(2)$ does not exist at all!</li><li><strong>Tiny-scale trap</strong>: For $k(x)=x^2-3x+1+\sin(100\pi x)$ at $x_0=2$, plugging in $h=1, 0.1, 0.01$ makes $\sin(100\pi(2+h))=\sin(200\pi+100\pi h)=0$ at all three points, giving the exact same table $2.00, 1.10, 1.01$, even though the actual derivative at $x=2$ is $1+100\pi\approx 315.16$!</li></ol>
+<h3>How I would explain this in class</h3>
+<blockquote><p>Choosing $f(x)=x^2-3x+1$ at $x_0=2$, the power rule gives the exact derivative $f'(2)=2(2)-3=1$. Computing the difference quotient $\frac{f(2+h)-f(2)}{h}=1+h$ for $h=1, 0.1, 0.01$ gives $2, 1.1, 1.01$, which clearly approaches $f'(2)=1$. This is a great numerical check that our derivative formula is right, but three sample points cannot replace a limit proof because they only test three positive values of $h$ and cannot rule out corners for $h&lt;0$ or hidden oscillations at smaller scales.</p></blockquote>
+<h3>Related workbook topics</h3>
+<ul><li><a href="#exercise-10">Exercise 10: The Tangent Line as an Application of the Derivative</a></li><li><a href="#exercise-11">Exercise 11: Derivative from the Definition</a></li></ul>
+</section>
+    </main>
+  </div>
+</body>
+</html>
