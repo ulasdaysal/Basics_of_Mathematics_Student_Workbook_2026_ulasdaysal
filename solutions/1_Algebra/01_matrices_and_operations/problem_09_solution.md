@@ -55,7 +55,7 @@ Different parts of the vector get stretched, so the results differ. If the scali
 
 ## 6. A concrete example
 
-Take the unit square. Under $RS$ it is first stretched into a $2\times1$ rectangle lying flat, then rotated so it stands upright ($1$ wide, $2$ tall). Under $SR$ it is first rotated (still a unit square), then stretched into a flat $2\times1$ rectangle. Same area $2$ in both cases ($|\det|=2$), but different shapes and orientations.
+Take the unit square. Under $RS$ it is first stretched into a $2\times1$ rectangle lying flat, then rotated so it stands upright ($1$ wide, $2$ tall). Under $SR$ it is first rotated (still a unit square), then stretched into a flat $2\times1$ rectangle. Both have the same area $2$ ($|\det|=2$) and the $1\times2$ and $2\times1$ rectangles are congruent, but their orientation relative to the coordinate axes differs.
 
 ## How I would explain this in class
 

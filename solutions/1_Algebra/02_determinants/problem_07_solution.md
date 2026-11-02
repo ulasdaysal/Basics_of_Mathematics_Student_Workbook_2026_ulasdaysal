@@ -53,7 +53,7 @@ $$\det(-A)=(-1)^3\det A=-1\cdot(-4)=4.$$
 | $\det(A^2)$ | product rule | $16$ |
 | $\det(-A)$ | $(-1)^n\det A$ | $4$ |
 
-Geometric reading: $A$ scales volume by $4$ and flips orientation. $2A$ also doubles every length, which multiplies volume by $2^3=8$. $A^2$ flips orientation twice, so the sign becomes positive. $-A$ is a point reflection, which in 3D flips orientation, so the sign changes again.
+Geometric reading: $A$ scales volume by $4$ and flips orientation. $2A$ also doubles every length, which multiplies volume by $2^3=8$. $A^2$ flips orientation twice, so the sign becomes positive. $-A=(-I)A$ applies $A$ and then a point reflection $-I$; the reflection $-I$ has determinant $(-1)^3=-1$ in dimension 3, so composing it with $A$ changes the determinant from $-4$ to $+4$.
 
 ## 6. Quick verification with a concrete matrix
 

@@ -344,7 +344,7 @@
 <div class="math-block">$$=0-3\cdot(1-0)+1\cdot(1-4)=-3-3=-6.\ ✓$$</div>
 <p>The prediction is confirmed.</p>
 <h3>4. Why a swap changes the sign</h3>
-<p>In every term of the determinant, each row contributes exactly one factor. Swapping two rows reorders the factors in every term in a way that reverses each term's sign. Geometrically, the volume spanned by the rows stays the same, but the orientation flips.</p>
+<p>In every term of the determinant expansion, each row contributes one entry according to a permutation of the columns. Swapping two rows composes every permutation with a transposition, which changes the parity of the corresponding permutation in the determinant expansion and reverses its coefficient sign. Geometrically, the volume spanned by the rows stays the same, but the orientation flips.</p>
 <p>Consequence: if two rows are <strong>equal</strong>, swapping them changes nothing, but must change the sign. So $\det=-\det$, which forces $\det=0$.</p>
 <h3>5. Quick verification</h3>
 <p>Check $\det A$ with Sarrus' rule:</p>
@@ -487,7 +487,7 @@
 <div class="math-block">$$\det(-A)=(-1)^3\det A=-1\cdot(-4)=4.$$</div>
 <h3>5. Summary and meaning</h3>
 <table><thead><tr><th>Expression</th><th>Property</th><th>Value</th></tr></thead><tbody><tr><td>$\det(2A)$</td><td>$c^n\det A$</td><td>$-32$</td></tr><tr><td>$\det(A^T)$</td><td>transpose invariance</td><td>$-4$</td></tr><tr><td>$\det(A^2)$</td><td>product rule</td><td>$16$</td></tr><tr><td>$\det(-A)$</td><td>$(-1)^n\det A$</td><td>$4$</td></tr></tbody></table>
-<p>Geometric reading: $A$ scales volume by $4$ and flips orientation. $2A$ also doubles every length, which multiplies volume by $2^3=8$. $A^2$ flips orientation twice, so the sign becomes positive. $-A$ is a point reflection, which in 3D flips orientation, so the sign changes again.</p>
+<p>Geometric reading: $A$ scales volume by $4$ and flips orientation. $2A$ also doubles every length, which multiplies volume by $2^3=8$. $A^2$ flips orientation twice, so the sign becomes positive. $-A=(-I)A$ applies $A$ and then a point reflection $-I$; the reflection $-I$ has determinant $(-1)^3=-1$ in dimension 3, so composing it with $A$ changes the determinant from $-4$ to $+4$.</p>
 <h3>6. Quick verification with a concrete matrix</h3>
 <p>Take $A=\operatorname{diag}(-4,1,1)$, so $\det A=-4$. Then</p>
 <ul><li>$2A=\operatorname{diag}(-8,2,2)$, $\det=-32$. ✓</li><li>$A^T=A$, $\det=-4$. ✓</li><li>$A^2=\operatorname{diag}(16,1,1)$, $\det=16$. ✓</li><li>$-A=\operatorname{diag}(4,-1,-1)$, $\det=4$. ✓</li></ul>

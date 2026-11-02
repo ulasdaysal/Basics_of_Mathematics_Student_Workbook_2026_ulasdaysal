@@ -39,7 +39,7 @@ The prediction is confirmed.
 
 ## 4. Why a swap changes the sign
 
-In every term of the determinant, each row contributes exactly one factor. Swapping two rows reorders the factors in every term in a way that reverses each term's sign. Geometrically, the volume spanned by the rows stays the same, but the orientation flips.
+In every term of the determinant expansion, each row contributes one entry according to a permutation of the columns. Swapping two rows composes every permutation with a transposition, which changes the parity of the corresponding permutation in the determinant expansion and reverses its coefficient sign. Geometrically, the volume spanned by the rows stays the same, but the orientation flips.
 
 Consequence: if two rows are **equal**, swapping them changes nothing, but must change the sign. So $\det=-\det$, which forces $\det=0$.
 
