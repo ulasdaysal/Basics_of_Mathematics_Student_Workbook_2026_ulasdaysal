@@ -19,6 +19,28 @@ On a **symmetric interval $[-a,a]$** centered at the origin, the symmetry of the
 
 ## 1. Predicting the results from symmetry and a sketch
 
+**Sketch of $y = x$ on $[-2,2]$** (`+` = region above the axis, `-` = region below the axis):
+
+```
+            y
+ 2          |       /
+ 1          |   /+++|      triangle on [0, 2] above the axis: signed area +2
+ 0  +-------+-------+---> x
+-1  |---/   |              triangle on [-2, 0] below the axis: signed area -2
+-2  /       |
+   -2       0       2
+```
+
+**Sketch of $y = |x|$ on $[-2,2]$:**
+
+```
+            y
+ 2  \       |       /
+ 1  |+++\   |   /+++|      both triangles above the axis: areas +2 and +2
+ 0  +-------+-------+---> x
+   -2       0       2
+```
+
 1. **For $f(x)=x$ on $[-2,2]$:**
    The graph of $y=x$ is a straight line through the origin. On $[-2,0]$ it forms a right triangle of base $2$ and height $2$ **below** the $x$-axis (signed area $-2$), and on $[0,2]$ it forms an identical right triangle **above** the $x$-axis (signed area $+2$). Since $f(-x)=-x=-f(x)$ is **odd**, the two triangles cancel and we predict:
    $$\int_{-2}^{2}x\,dx = 0.$$

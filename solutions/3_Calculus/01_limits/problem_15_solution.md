@@ -57,12 +57,15 @@ Sketch of the continuous curve $y=f(x)$ with a puncture (hole) at $(4, 0.25)$:
 
 ```
   y ^
-0.5 + *
-    |   \
-0.25+ - - \ - - o - - - - - - - (limit L = 0.25 at hole x = 4)
-    |             \       *
-    +-----------+---+-----------+---> x
-                0   4
+0.5 *                       <- endpoint (0, 1/2) lies on the y-axis
+    |`-.
+    |   `--.__
+    |         ``--._
+0.25+ - - - - - - - o - - - - - - - - -   limit L = 0.25, hole at (4, 0.25)
+    |                `--.___
+    |                       `````-----......
+    +---+---+---+---+---+---+---+---+---> x
+    0   1   2   3   4   5   6   7   8
 ```
 
 ## 3. Comparing observations with the analytical results
@@ -74,7 +77,7 @@ Sketch of the continuous curve $y=f(x)$ with a puncture (hole) at $(4, 0.25)$:
 
 1. **Delayed behavior beyond the table:** A sequence can match $2$ for the first $1000$ terms and still diverge—for instance, $b_n = 2 + 10^{-100}n$ is indistinguishable from $2$ at $n=1000$, yet $\lim_{n\to\infty}b_n=+\infty$.
 2. **Hidden behavior closer to the limit point:** A function like $g(x)=\cos\left(\dfrac{2\pi}{x-4}\right)$ equals $1$ at every sample point $x = 4 \pm 10^{-k}$ ($k=1,2,3,\dots$), so a standard table of decimal steps would show $1.00000$ everywhere, even though $\lim_{x\to4}g(x)$ does not exist!
-3. **Catastrophic cancellation and finite precision:** On a calculator or computer, evaluating $\dfrac{\sqrt{x}-2}{x-4}$ at $x=4+10^{-16}$ actually outputs $0$ instead of $0.25$ because floating-point arithmetic rounds $\sqrt{4+10^{-16}}$ to $2$.
+3. **Finite precision and catastrophic cancellation:** On a computer using ordinary IEEE 754 double precision (binary64), the number $4+10^{-16}$ cannot be represented: the spacing between neighbouring doubles near $4$ is $2^{-50}\approx 8.9\cdot10^{-16}$, so `4 + 1e-16` **rounds to exactly `4.0`**. Then both $\sqrt{x}-2$ and $x-4$ evaluate to `0.0`, and the quotient becomes `0.0/0.0` — **undefined** (`NaN` in IEEE arithmetic, or a division-by-zero error in many languages), not $0.25$ and not $0$. Even for slightly larger steps such as $x=4+10^{-12}$, the subtraction $\sqrt{4+h}-2$ cancels almost all significant digits (catastrophic cancellation), so the computed quotient is visibly inaccurate. The numerical "evidence" therefore breaks down exactly where the limit is decided.
 4. **Finite resolution of a sketch:** A drawn line has positive thickness and is plotted through finitely many sample points, so it cannot reveal tiny jumps, rapid oscillations (like $\sin(1/x)$ near $0$), or distinguish $0.25$ from $0.2500001$.
 
 ## Quick verification

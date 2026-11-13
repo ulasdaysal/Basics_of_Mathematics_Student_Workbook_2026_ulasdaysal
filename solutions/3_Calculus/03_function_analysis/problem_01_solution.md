@@ -61,6 +61,18 @@ To anchor the sketch, note the limits at infinity and the zeros:
 
 **Graph description:** Starting from $-\infty$ in the third quadrant, the curve rises through $(-0.73, 0)$ to a rounded peak at the critical point $(0, 2)$ on the $y$-axis. It then falls through $(1, 0)$ (which is also its inflection point) down to a trough at the critical point $(2, -2)$, before turning upward through $(2.73, 0)$ and climbing toward $+\infty$.
 
+```
+            y
+  2       .-*-.         /      * (0, 2)   local maximum
+  1      /  |  \       /
+---------o--+---o------o---> x   o zeros: 1 - sqrt(3) ~ -0.73,  1 (also inflection),  1 + sqrt(3) ~ 2.73
+  -1    /   |     \   /
+  -2   /    |     `-*-'        * (2, -2)  local minimum
+       -1   0   1   2   3
+```
+
+Key points marked: local maximum $(0,2)$, local minimum $(2,-2)$, zeros $(1-\sqrt3,0)\approx(-0.73,0)$, $(1,0)$, $(1+\sqrt3,0)\approx(2.73,0)$; the point $(1,0)$ is also the inflection point.
+
 ## Quick verification
 
 Using the second derivative test with $f''(x) = 6x - 6$:

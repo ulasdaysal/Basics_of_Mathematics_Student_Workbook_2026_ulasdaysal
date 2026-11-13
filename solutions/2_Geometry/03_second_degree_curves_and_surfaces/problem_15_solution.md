@@ -88,18 +88,25 @@ Let us analyze the slices of $4x^2+y^2=z^2$ **before** naming the surface:
 Putting the cross-sections together—a single vertex at $(0,0,0)$, straight-line generators in vertical planes through $Oz$ with steeper slope along $Ox$ than $Oy$, and horizontal cross-sections that are ellipses expanding linearly with $|z|$—we identify the surface as an **elliptic cone** (double cone with elliptical horizontal slices stretched along $Oy$).
 
 ```text
-             z
-       \  \  |  /  /      z = c: ellipse x^2/(c/2)^2 + y^2/c^2 = 1
-        \ .--+--. /       (semiaxis |c|/2 along Ox, |c| along Oy)
-         \ \ | / /
-          \ \|/ /         x = 0: wider lines z = +-y
-           \ * /          y = 0: steeper lines z = +-2x
-  -----------+----------- x, y
-           / * \ (0,0,0)
-          / /|\ \
-         / .-+-. \
-        / /  |  \ \
+              z
+       \      |      /
+        \.----+----./      z = c > 0: ellipse x^2/(c/2)^2 + y^2/c^2 = 1
+         \'---+---'/       (semiaxis |c|/2 along Ox, |c| along Oy)
+          \   |   /        upper nappe (z > 0)
+           \  |  /
+            \ | /          x = 0: wider lines z = +-y
+             \|/           y = 0: steeper lines z = +-2x
+--------------*-------------- x, y
+             /|\           * = the single common apex (0,0,0)
+            / | \
+           /  |  \
+          /   |   \        lower nappe (z < 0)
+         /.---+---.\
+        /'----+----'\      z = -c: the same ellipse (semiaxes |c|/2, |c|)
+       /      |      \
 ```
+
+Both nappes are joined at **one** point, the apex $(0,0,0)$ (the only point of the cross-section $z=0$); every generator line passes through it, continuing from the upper nappe straight into the lower nappe.
 
 ## Quick verification
 

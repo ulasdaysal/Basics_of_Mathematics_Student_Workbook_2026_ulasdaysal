@@ -58,6 +58,30 @@ Draw dashed guide lines for the vertical asymptote $x = 2$ and the horizontal as
 - **Left branch ($x < 2$):** Starts just below the horizontal line $y = 1$ as $x \to -\infty$, decreases smoothly through $(-1, 0)$ and $(0, -\frac{1}{2})$, and plunges toward $-\infty$ alongside the left side of $x = 2$.
 - **Right branch ($x > 2$):** Drops down from $+\infty$ alongside the right side of $x = 2$, passes through $(3, 4)$ and $(5, 2)$, and flattens out from above toward the horizontal line $y = 1$ as $x \to +\infty$.
 
+```
+            y          :
+            |          :|          x -> 2+ : y -> +infinity
+            |          :|
+            |          : \
+            |          :  \
+            |          :   `-*         * (3, 4)
+            |          :      `--.__
+            |          :            ``---*-----.....____      * (5, 2)
+y = 1 - - - + - - - - -:- - - - - - - - - - - - - - - - - -   horizontal asymptote y = 1
+``--.._     |          :
+------*-----+----------:-----------------------------------> x
+        `--.*          :           * (-1, 0)   zero
+            |`-.       :           * (0, -1/2) y-intercept
+            |   `.     :
+            |      \   :
+            |        \ :
+            |         |:
+            |         |:           x -> 2- : y -> -infinity
+                       x = 2  (vertical asymptote)
+```
+
+Both branches are decreasing; the left branch stays below $y=1$, the right branch stays above $y=1$.
+
 ## Quick verification
 
 Check points on both sides of $x = 2$ using both forms $f(x) = \frac{x+1}{x-2}$ and $1 + \frac{3}{x-2}$:

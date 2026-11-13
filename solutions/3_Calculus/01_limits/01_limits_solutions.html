@@ -561,15 +561,25 @@
 <p>Therefore, the two-sided limit $\lim_{x\to2}\dfrac{1}{x-2}$ <strong>does not exist</strong> (not even as an improper limit $\pm\infty$).</p>
 <h3>4. Geometric interpretation and vertical asymptote</h3>
 <p>The graph of $f(x)=\dfrac{1}{x-2}$ is the standard hyperbola $y=\dfrac{1}{x}$ shifted $2$ units to the right:</p>
-<pre><code>        y
-        |      :  |
-        |      :  |  (right branch -&gt; +infinity)
-        |      :   \
---------+------2----+--------&gt; x
-        |    / :
-        |   |  :
-        |   |  :  (left branch -&gt; -infinity)
-            x = 2</code></pre>
+<pre><code>          y               :
+          |               : |      x -&gt; 2+ : y -&gt; +infinity
+          |               : |
+          |               :  \
+          |               :   \
+          |               :    `.
+        1 +               :      `-*                (3, 1)
+      1/2 +               :         `------*-------......______   (4, 1/2)
+----------+---------------2-----------------------------------------&gt; x
+......----*-._            :          * on the y-axis: (0, -1/2)
+       -1 +   `---*       :          * at x = 1:      (1, -1)
+          |         \     :
+          |           \   :
+          |             \ :
+          |              |:
+          |              |:        x -&gt; 2- : y -&gt; -infinity
+                          x = 2 (vertical asymptote)</code></pre>
+<p>Far left the left branch lies just below the axis ($y\to0^-$ as $x\to-\infty$); far right the right branch lies just above it ($y\to0^+$ as $x\to+\infty$).</p>
+<p>Reading the sketch: the <strong>left branch</strong> starts just below the $x$-axis far to the left, passes through $(0,-\tfrac12)$ and $(1,-1)$, and then hugs the dashed line $x=2$ ever more closely while descending to $-\infty$. The <strong>right branch</strong> comes down from $+\infty$ right next to $x=2$, passes through $(3,1)$, and flattens toward $y=0$. Both branches approach $y=0$ only as $x\to\pm\infty$ (horizontal asymptote $y=0$).</p>
 <ul><li>As $x$ nears $2$ from the left, the curve plunges straight down toward $-\infty$.</li><li>As $x$ nears $2$ from the right, the curve shoots straight up toward $+\infty$.</li><li>The vertical line <strong>$x=2$ is a vertical asymptote</strong> of the graph of $f$.</li></ul>
 <h3>Quick verification</h3>
 <p>Let us write $x=2+h$:</p>
@@ -813,16 +823,19 @@
 <table><thead><tr><th>Left approach ($x\to4^-$)</th><th>$f(x)$ (rounded)</th><th>Right approach ($x\to4^+$)</th><th>$f(x)$ (rounded)</th></tr></thead><tbody><tr><td>$x=3.5$</td><td>$0.25834$</td><td>$x=4.5$</td><td>$0.24264$</td></tr><tr><td>$x=3.9$</td><td>$0.25158$</td><td>$x=4.1$</td><td>$0.24846$</td></tr><tr><td>$x=3.99$</td><td>$0.25016$</td><td>$x=4.01$</td><td>$0.24984$</td></tr><tr><td>$x=3.999$</td><td>$0.25002$</td><td>$x=4.001$</td><td>$0.24998$</td></tr></tbody></table>
 <p>Sketch of the continuous curve $y=f(x)$ with a puncture (hole) at $(4, 0.25)$:</p>
 <pre><code>  y ^
-0.5 + *
-    |   \
-0.25+ - - \ - - o - - - - - - - (limit L = 0.25 at hole x = 4)
-    |             \       *
-    +-----------+---+-----------+---&gt; x
-                0   4</code></pre>
+0.5 *                       &lt;- endpoint (0, 1/2) lies on the y-axis
+    |`-.
+    |   `--.__
+    |         ``--._
+0.25+ - - - - - - - o - - - - - - - - -   limit L = 0.25, hole at (4, 0.25)
+    |                `--.___
+    |                       `````-----......
+    +---+---+---+---+---+---+---+---+---&gt; x
+    0   1   2   3   4   5   6   7   8</code></pre>
 <h3>3. Comparing observations with the analytical results</h3>
 <ul><li>For the sequence $a_n$, the table shows $a_n$ increasing toward $2$, with the gap $2-a_n\approx \dfrac{6.5}{n}$ shrinking by a factor of $10$ each time $n$ is multiplied by $10$. This matches our analytical result $\lim_{n\to\infty}a_n=2$ from factoring out $n^2$.</li><li>For the function $f(x)$, the left-hand values decrease toward $0.25$ and the right-hand values increase toward $0.25$, pinching together at height $0.25$. This matches our analytical result $\lim_{x\to4}\dfrac{1}{\sqrt{x}+2}=\dfrac{1}{4}$.</li></ul>
 <h3>4. Why finite calculations or a sketch never constitute a proof</h3>
-<ol><li><strong>Delayed behavior beyond the table:</strong> A sequence can match $2$ for the first $1000$ terms and still diverge—for instance, $b_n = 2 + 10^{-100}n$ is indistinguishable from $2$ at $n=1000$, yet $\lim_{n\to\infty}b_n=+\infty$.</li><li><strong>Hidden behavior closer to the limit point:</strong> A function like $g(x)=\cos\left(\dfrac{2\pi}{x-4}\right)$ equals $1$ at every sample point $x = 4 \pm 10^{-k}$ ($k=1,2,3,\dots$), so a standard table of decimal steps would show $1.00000$ everywhere, even though $\lim_{x\to4}g(x)$ does not exist!</li><li><strong>Catastrophic cancellation and finite precision:</strong> On a calculator or computer, evaluating $\dfrac{\sqrt{x}-2}{x-4}$ at $x=4+10^{-16}$ actually outputs $0$ instead of $0.25$ because floating-point arithmetic rounds $\sqrt{4+10^{-16}}$ to $2$.</li><li><strong>Finite resolution of a sketch:</strong> A drawn line has positive thickness and is plotted through finitely many sample points, so it cannot reveal tiny jumps, rapid oscillations (like $\sin(1/x)$ near $0$), or distinguish $0.25$ from $0.2500001$.</li></ol>
+<ol><li><strong>Delayed behavior beyond the table:</strong> A sequence can match $2$ for the first $1000$ terms and still diverge—for instance, $b_n = 2 + 10^{-100}n$ is indistinguishable from $2$ at $n=1000$, yet $\lim_{n\to\infty}b_n=+\infty$.</li><li><strong>Hidden behavior closer to the limit point:</strong> A function like $g(x)=\cos\left(\dfrac{2\pi}{x-4}\right)$ equals $1$ at every sample point $x = 4 \pm 10^{-k}$ ($k=1,2,3,\dots$), so a standard table of decimal steps would show $1.00000$ everywhere, even though $\lim_{x\to4}g(x)$ does not exist!</li><li><strong>Finite precision and catastrophic cancellation:</strong> On a computer using ordinary IEEE 754 double precision (binary64), the number $4+10^{-16}$ cannot be represented: the spacing between neighbouring doubles near $4$ is $2^{-50}\approx 8.9\cdot10^{-16}$, so <code>4 + 1e-16</code> <strong>rounds to exactly <code>4.0</code></strong>. Then both $\sqrt{x}-2$ and $x-4$ evaluate to <code>0.0</code>, and the quotient becomes <code>0.0/0.0</code> — <strong>undefined</strong> (<code>NaN</code> in IEEE arithmetic, or a division-by-zero error in many languages), not $0.25$ and not $0$. Even for slightly larger steps such as $x=4+10^{-12}$, the subtraction $\sqrt{4+h}-2$ cancels almost all significant digits (catastrophic cancellation), so the computed quotient is visibly inaccurate. The numerical "evidence" therefore breaks down exactly where the limit is decided.</li><li><strong>Finite resolution of a sketch:</strong> A drawn line has positive thickness and is plotted through finitely many sample points, so it cannot reveal tiny jumps, rapid oscillations (like $\sin(1/x)$ near $0$), or distinguish $0.25$ from $0.2500001$.</li></ol>
 <h3>Quick verification</h3>
 <p>Let us verify the exact error formulas analytically:</p>
 <ul><li>For $a_n$: $2 - a_n = \dfrac{13n-15}{2n^2+5n-7}$. At $n=1000$, this is $\dfrac{12\,985}{2\,004\,993}\approx 0.006476$, matching the table's $2-1.99352=0.00648$. ✓</li><li>For $f(x)$: $f(x)-\dfrac{1}{4} = \dfrac{1}{\sqrt{x}+2}-\dfrac{1}{4} = \dfrac{2-\sqrt{x}}{4(\sqrt{x}+2)}$. At $x=3.99$, this is $\approx \dfrac{0.0025016}{15.99}\approx 0.000156$, matching $0.25016-0.25=0.00016$. ✓</li></ul>

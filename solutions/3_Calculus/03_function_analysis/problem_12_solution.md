@@ -21,6 +21,28 @@ For any function $g(x)$, taking the absolute value $f(x) = |g(x)|$ leaves the gr
   $$f(x) = \begin{cases} x^2 - 4, & \text{if } x \in (-\infty, -2] \cup [2, \infty), \\ 4 - x^2, & \text{if } x \in (-2, 2). \end{cases}$$
   Geometrically, the outer arms for $|x| \ge 2$ stay untouched, while the U-shaped dip between $x = -2$ and $x = 2$ (with vertex $(0, -4)$) is flipped upside down across the $x$-axis into a dome with peak $(0, 4)$.
 
+**Base parabola $y = x^2 - 4$** (the part below the $x$-axis is drawn dotted, because it will be reflected):
+
+```
+                    y
+ 4       \          |          /
+ 2        \         |         /
+ 0  --------*-------+-------*-----> x       zeros (-2, 0) and (2, 0)
+-2            :     |     :
+-4             `.  .*.  .'                  vertex (0, -4)
+           -2       0       2
+```
+
+**Reflected graph $y = |x^2 - 4|$** (the dotted dip is folded up into a dome):
+
+```
+                    y
+ 4       \       .--*--.       /            peak (0, 4)
+ 2        \   /     |     \   /
+ 0  --------V-------+-------V-----> x       sharp corners at (-2, 0) and (2, 0)
+           -2       0       2
+```
+
 ## 2. Points where the derivative does not exist
 
 On the open intervals away from $x = \pm 2$, we can differentiate each formula directly:

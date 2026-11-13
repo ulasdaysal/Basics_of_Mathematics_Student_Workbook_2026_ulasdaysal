@@ -50,10 +50,17 @@ $$\int_0^2 (x^2+1)\,dx = \left[\frac{x^3}{3}+x\right]_0^2 = \left(\frac{2^3}{3}+
 
 Since $2 \le \dfrac{14}{3}\approx 4.67 \le 10$, our exact result sits comfortably inside the predicted range $[2,10]$.
 
-**What types of computational errors this check detects:**
-- **Sign errors** (e.g., subtracting limits in the wrong order $F(0)-F(2)=-\frac{14}{3}<2$, or writing $\frac{x^3}{3}-x$ which gives $\frac{2}{3}<2$).
-- **Differentiating instead of integrating** (e.g., writing $[2x]_0^2=4$ or forgetting to integrate the constant $1$, which gives $\frac{8}{3}$—and on tighter bounds, gross power mistakes like $\left[3x^3+x\right]_0^2=26>10$).
-- **Arithmetic or exponent mistakes** (such as evaluating $2^3=6$ or multiplying by $3$ instead of dividing by $3$, which gives $3(8)+2=26>10$).
+**Errors this check can detect** (results that fall *outside* $[2,10]$):
+- **Reversed limits / sign error:** $F(0)-F(2)=-\frac{14}{3}<2$.
+- **Subtracting instead of adding:** $\left[\frac{x^3}{3}-x\right]_0^2=\frac{8}{3}-2=\frac{2}{3}<2$.
+- **Multiplying by $3$ instead of dividing:** $\left[3x^3+x\right]_0^2=24+2=26>10$.
+
+**Errors this check cannot detect** (wrong results that still lie *inside* $[2,10]$):
+- **Differentiating instead of integrating:** $[2x]_0^2=4\in[2,10]$.
+- **Forgetting to integrate the constant $1$:** $\left[\frac{x^3}{3}\right]_0^2=\frac{8}{3}\approx 2.67\in[2,10]$.
+- **Arithmetic slip $2^3=6$:** $\frac{6}{3}+2=4\in[2,10]$.
+
+So passing the bound check is only a **necessary condition**: a result outside $[2,10]$ is certainly wrong, but a result inside $[2,10]$ is not thereby verified as correct. The exact value $\frac{14}{3}$ is confirmed by the antiderivative calculation (and can be checked further, e.g. by differentiating $F$), not by the bound.
 
 ## Quick verification
 
@@ -65,11 +72,11 @@ Indeed, $2 < \dfrac{14}{3}\approx 4.67 < 6 \le 10$. ✓
 
 ## A concrete example
 
-Suppose a student accidentally forgot the $+1$ term when integrating (treating $\int 1\,dx$ as $0$ like a derivative!) or subtracted instead of adding, getting $\frac{8}{3}-2=\frac{2}{3}\approx 0.67$. Because $0.67<2$, the lower rectangle bound $m(b-a)=1\cdot 2=2$ immediately flags that $\frac{2}{3}$ is impossible: a function that is always at least $1$ on an interval of width $2$ must accumulate an area of at least $2$.
+Suppose a student subtracted instead of adding, getting $\frac{8}{3}-2=\frac{2}{3}\approx 0.67$. Because $0.67<2$, the lower rectangle bound $m(b-a)=1\cdot 2=2$ immediately flags that $\frac{2}{3}$ is impossible: a function that is always at least $1$ on an interval of width $2$ must accumulate an area of at least $2$. By contrast, a student who forgot to integrate the $+1$ term would get $\frac{8}{3}\approx 2.67$, which lies inside $[2,10]$ — the bound check would **not** catch that mistake.
 
 ## How I would explain this in class
 
-> Before integrating $\int_0^2(x^2+1)\,dx$, I note that on $[0,2]$ the function stays between $1$ and $5$ over an interval of width $2$. So the area under the curve must be trapped between a rectangle of area $1\times 2=2$ and a rectangle of area $5\times 2=10$. Then I compute the exact integral $\left[\frac{x^3}{3}+x\right]_0^2 = \frac{8}{3}+2=\frac{14}{3}\approx 4.67$, which falls right inside $[2,10]$. This five-second rectangle check catches flipped signs, missing constants, or exponent blunders right away.
+> Before integrating $\int_0^2(x^2+1)\,dx$, I note that on $[0,2]$ the function stays between $1$ and $5$ over an interval of width $2$. So the area under the curve must be trapped between a rectangle of area $1\times 2=2$ and a rectangle of area $5\times 2=10$. Then I compute the exact integral $\left[\frac{x^3}{3}+x\right]_0^2 = \frac{8}{3}+2=\frac{14}{3}\approx 4.67$, which falls right inside $[2,10]$. This five-second rectangle check catches gross errors such as flipped signs or a factor of $3$ in the wrong place, but it is only a necessary test: wrong answers like $4$ or $\frac{8}{3}$ would also pass it.
 
 ## Related workbook topics
 

@@ -409,12 +409,13 @@
 <p>The geometric formula for the dot product of two nonzero vectors $u$ and $v$ is</p>
 <div class="math-block">$$u\cdot v = \|u\|\,\|v\|\cos\theta, \qquad \theta \in [0,\pi].$$</div>
 <p>Because the norms $\|u\|$ and $\|v\|$ are strictly positive, <strong>the sign of $\cos\theta$ is the same as the sign of $u\cdot v$</strong>:</p>
-<ul><li>$u\cdot v &gt; 0 \iff \cos\theta &gt; 0 \iff \theta \in \left[0,\frac{\pi}{2}\right)$ (<strong>acute angle</strong>),</li><li>$u\cdot v = 0 \iff \cos\theta = 0 \iff \theta = \frac{\pi}{2}$ (<strong>right angle</strong>),</li><li>$u\cdot v &lt; 0 \iff \cos\theta &lt; 0 \iff \theta \in \left(\frac{\pi}{2},\pi\right]$ (<strong>obtuse angle</strong>).</li></ul>
+<ul><li>$u\cdot v &gt; 0 \iff \cos\theta &gt; 0 \iff \theta \in \left[0,\frac{\pi}{2}\right)$: either a <strong>zero angle</strong> ($\theta = 0^\circ$, vectors parallel with the same orientation) or an <strong>acute angle</strong> ($0^\circ &lt; \theta &lt; 90^\circ$),</li><li>$u\cdot v = 0 \iff \cos\theta = 0 \iff \theta = \frac{\pi}{2}$ (<strong>right angle</strong>, $\theta = 90^\circ$),</li><li>$u\cdot v &lt; 0 \iff \cos\theta &lt; 0 \iff \theta \in \left(\frac{\pi}{2},\pi\right]$: either an <strong>obtuse angle</strong> ($90^\circ &lt; \theta &lt; 180^\circ$) or a <strong>straight angle</strong> ($\theta = 180^\circ$, vectors parallel with opposite orientation).</li></ul>
+<p>So the sign alone separates "$\theta &lt; 90^\circ$", "$\theta = 90^\circ$" and "$\theta &gt; 90^\circ$"; to call the angle strictly acute or strictly obtuse we must also exclude the parallel cases $0^\circ$ and $180^\circ$.</p>
 <p>This allows us to classify the angle qualitatively before computing any square roots or inverse trig functions.</p>
 <h3>1. Predicting the type of angle from the sign of $u\cdot v$</h3>
 <p>We compute the dot product of $u=(1,1,0)$ and $v=(1,0,1)$:</p>
 <div class="math-block">$$u\cdot v = 1\cdot 1 + 1\cdot 0 + 0\cdot 1 = 1 + 0 + 0 = 1.$$</div>
-<p>Since $u\cdot v = 1 &gt; 0$, we have $\cos\theta &gt; 0$, so the angle $\theta$ between $u$ and $v$ must be <strong>acute</strong> ($\theta &lt; 90^\circ$).</p>
+<p>Since $u\cdot v = 1 &gt; 0$, we have $\cos\theta &gt; 0$, so $0^\circ \le \theta &lt; 90^\circ$. Moreover, $u$ and $v$ are not scalar multiples of each other ($u$ has $z$-coordinate $0$ but $v$ does not), so they are not parallel and $\theta \neq 0^\circ$. Hence the angle is <strong>strictly acute</strong>: $0^\circ &lt; \theta &lt; 90^\circ$.</p>
 <h3>2. Computing the exact angle</h3>
 <p>First, we compute the lengths of both vectors:</p>
 <div class="math-block">$$\|u\| = \sqrt{1^2+1^2+0^2} = \sqrt{2},\qquad \|v\| = \sqrt{1^2+0^2+1^2} = \sqrt{2}.$$</div>

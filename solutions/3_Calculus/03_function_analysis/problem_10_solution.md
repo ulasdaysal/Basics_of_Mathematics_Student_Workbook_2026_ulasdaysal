@@ -68,6 +68,22 @@ Factoring the numerator gives $2x(x - \sqrt{3})(x + \sqrt{3}) = 0$, so $f''(x) =
 3. Passing through the inflection point $(0, 0)$, it becomes concave ($\cap$), climbs to its global maximum at $(1, \frac{1}{2})$, and begins descending.
 4. At the right inflection point $(\sqrt{3}, \frac{\sqrt{3}}{4})$, it switches back to convex ($\cup$) so it can flatten out smoothly and approach $y = 0$ from above as $x \to +\infty$.
 
+```
+                        y
+                        |   *                * max (1, 1/2)
+                        | /   `o             o inflection (sqrt(3), sqrt(3)/4) ~ (1.73, 0.43)
+                        |/       `--.__
+                        /              ````-----......____        (tail -> 0+ as x -> +infinity)
+------------------------o-----------------------------------> x   o inflection (0, 0)
+``---....___            /                                         (tail -> 0- as x -> -infinity)
+          ``--._       /|
+                 o.   / |                    o inflection (-sqrt(3), -sqrt(3)/4) ~ (-1.73, -0.43)
+                    *   |                    * min (-1, -1/2)
+               -2  -1   0   1   2
+```
+
+The graph is point-symmetric about the origin; $y=0$ is the horizontal asymptote on both sides.
+
 ## Quick verification
 
 - Algebraic bound: since $(x \mp 1)^2 \ge 0 \implies x^2 + 1 \ge \pm 2x$, dividing by $2(x^2 + 1) > 0$ directly proves $-\frac{1}{2} \le \frac{x}{x^2+1} \le \frac{1}{2}$, with equality only at $x = \pm 1$. ✓

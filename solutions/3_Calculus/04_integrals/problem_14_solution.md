@@ -30,13 +30,13 @@ The definition of $f(x)$ changes at **$x=1$**, so we must split $[-1,3]$ at $x=1
 Notice that the two pieces meet continuously at $(1,2)$, forming a rising ramp followed by a flat plateau, all lying on or above the $x$-axis.
 
 ```
-y
-2 |         *---------*  y = 2
-  |       / |         |
-1 |     *   |         |
-  |   /     |         |
-0 +-*-------+---------+---> x
-   -1       0    1    3
+        y
+ 2      |   *-------*      plateau y = 2 from (1, 2) to (3, 2)
+        | / :       :
+ 1      *   :       :      (0, 1) lies on the y-axis
+      / |   :       :
+ 0  *---+---+-------+---> x
+   -1   0   1       3
 ```
 
 ## 2. Computing the integral analytically by splitting at $x=1$

@@ -69,6 +69,18 @@ The graph has a classic symmetric **"W" shape**:
 2. Rising from $(-\sqrt{2}, -4)$, it passes through the left inflection point $(-\sqrt{\frac{2}{3}}, -\frac{20}{9}) \approx (-0.82, -2.22)$, where it switches to concave ($\cap$) and arches up to touch the origin $(0, 0)$ as a local maximum.
 3. By even symmetry, it arches back down through the right inflection point $(\sqrt{\frac{2}{3}}, -\frac{20}{9})$ (switching back to convex $\cup$), hits the right valley bottom at $(\sqrt{2}, -4)$, crosses $(2, 0)$, and climbs to $+\infty$.
 
+```
+                  y
+    \             |             /
+     \            |            /
+------*-----------*-----------*------> x    zeros (-2, 0), (0, 0), (2, 0); (0, 0) is the local maximum
+       \       /  |  \       /
+        \    *    |    *    /               * inflection points (-sqrt(2/3), -20/9), (sqrt(2/3), -20/9) ~ (+-0.82, -2.22)
+         \ /      |      \ /
+          *       |       *                 * minima (-sqrt(2), -4), (sqrt(2), -4) ~ (+-1.41, -4)
+     -2           0           2
+```
+
 ## Quick verification
 
 - Second derivative test at the three critical points:

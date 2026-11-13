@@ -16,9 +16,11 @@ $$u\cdot v = \|u\|\,\|v\|\cos\theta, \qquad \theta \in [0,\pi].$$
 
 Because the norms $\|u\|$ and $\|v\|$ are strictly positive, **the sign of $\cos\theta$ is the same as the sign of $u\cdot v$**:
 
-- $u\cdot v > 0 \iff \cos\theta > 0 \iff \theta \in \left[0,\frac{\pi}{2}\right)$ (**acute angle**),
-- $u\cdot v = 0 \iff \cos\theta = 0 \iff \theta = \frac{\pi}{2}$ (**right angle**),
-- $u\cdot v < 0 \iff \cos\theta < 0 \iff \theta \in \left(\frac{\pi}{2},\pi\right]$ (**obtuse angle**).
+- $u\cdot v > 0 \iff \cos\theta > 0 \iff \theta \in \left[0,\frac{\pi}{2}\right)$: either a **zero angle** ($\theta = 0^\circ$, vectors parallel with the same orientation) or an **acute angle** ($0^\circ < \theta < 90^\circ$),
+- $u\cdot v = 0 \iff \cos\theta = 0 \iff \theta = \frac{\pi}{2}$ (**right angle**, $\theta = 90^\circ$),
+- $u\cdot v < 0 \iff \cos\theta < 0 \iff \theta \in \left(\frac{\pi}{2},\pi\right]$: either an **obtuse angle** ($90^\circ < \theta < 180^\circ$) or a **straight angle** ($\theta = 180^\circ$, vectors parallel with opposite orientation).
+
+So the sign alone separates "$\theta < 90^\circ$", "$\theta = 90^\circ$" and "$\theta > 90^\circ$"; to call the angle strictly acute or strictly obtuse we must also exclude the parallel cases $0^\circ$ and $180^\circ$.
 
 This allows us to classify the angle qualitatively before computing any square roots or inverse trig functions.
 
@@ -28,7 +30,7 @@ We compute the dot product of $u=(1,1,0)$ and $v=(1,0,1)$:
 
 $$u\cdot v = 1\cdot 1 + 1\cdot 0 + 0\cdot 1 = 1 + 0 + 0 = 1.$$
 
-Since $u\cdot v = 1 > 0$, we have $\cos\theta > 0$, so the angle $\theta$ between $u$ and $v$ must be **acute** ($\theta < 90^\circ$).
+Since $u\cdot v = 1 > 0$, we have $\cos\theta > 0$, so $0^\circ \le \theta < 90^\circ$. Moreover, $u$ and $v$ are not scalar multiples of each other ($u$ has $z$-coordinate $0$ but $v$ does not), so they are not parallel and $\theta \neq 0^\circ$. Hence the angle is **strictly acute**: $0^\circ < \theta < 90^\circ$.
 
 ## 2. Computing the exact angle
 

@@ -47,7 +47,7 @@ Substituting $u=x^2+5$ back in:
 
 $$\int\frac{2x}{x^2+5}\,dx=\ln|x^2+5|+C=\ln(x^2+5)+C.$$
 
-- **Why the logarithm appears:** Because the denominator $u=x^2+5$ is to the first power in the denominator ($u^{-1}$), and $\ln|u|$ is the unique elementary function whose derivative is $u^{-1}$.
+- **Why the logarithm appears:** Because the denominator $u=x^2+5$ appears to the first power ($u^{-1}$), and $\ln|u|$ is **an** antiderivative of $u^{-1}$ (the one case $n=-1$ not covered by the power rule). On any interval avoiding $u=0$, all antiderivatives of $u^{-1}$ differ from $\ln|u|$ only by an additive constant $C$; here $u=x^2+5\ge 5>0$ on all of $\mathbb{R}$, so every antiderivative has the form $\ln(x^2+5)+C$.
 - **Why we can drop the absolute value bars here:** For every real number $x$, $x^2\ge 0$, so $x^2+5\ge 5>0$. Since the argument is strictly positive everywhere, $|x^2+5|=x^2+5$.
 
 ## Quick verification

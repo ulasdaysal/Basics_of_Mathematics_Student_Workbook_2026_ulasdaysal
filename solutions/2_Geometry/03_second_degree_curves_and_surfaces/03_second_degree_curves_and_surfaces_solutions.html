@@ -952,17 +952,23 @@
 <ol><li><strong>Cross-section by the plane $y=0$ (in the $xz$-plane):</strong> $$4x^2 = z^2 \iff z = \pm 2x.$$ This is a <strong>pair of intersecting straight lines</strong> through the origin with steeper slopes $\pm 2$ (narrower opening: $|x|=\frac{1}{2}|z|$).</li></ol>
 <h3>4. Identifying and sketching the second surface</h3>
 <p>Putting the cross-sections together—a single vertex at $(0,0,0)$, straight-line generators in vertical planes through $Oz$ with steeper slope along $Ox$ than $Oy$, and horizontal cross-sections that are ellipses expanding linearly with $|z|$—we identify the surface as an <strong>elliptic cone</strong> (double cone with elliptical horizontal slices stretched along $Oy$).</p>
-<pre><code>             z
-       \  \  |  /  /      z = c: ellipse x^2/(c/2)^2 + y^2/c^2 = 1
-        \ .--+--. /       (semiaxis |c|/2 along Ox, |c| along Oy)
-         \ \ | / /
-          \ \|/ /         x = 0: wider lines z = +-y
-           \ * /          y = 0: steeper lines z = +-2x
-  -----------+----------- x, y
-           / * \ (0,0,0)
-          / /|\ \
-         / .-+-. \
-        / /  |  \ \</code></pre>
+<pre><code>              z
+       \      |      /
+        \.----+----./      z = c &gt; 0: ellipse x^2/(c/2)^2 + y^2/c^2 = 1
+         \&#x27;---+---&#x27;/       (semiaxis |c|/2 along Ox, |c| along Oy)
+          \   |   /        upper nappe (z &gt; 0)
+           \  |  /
+            \ | /          x = 0: wider lines z = +-y
+             \|/           y = 0: steeper lines z = +-2x
+--------------*-------------- x, y
+             /|\           * = the single common apex (0,0,0)
+            / | \
+           /  |  \
+          /   |   \        lower nappe (z &lt; 0)
+         /.---+---.\
+        /&#x27;----+----&#x27;\      z = -c: the same ellipse (semiaxes |c|/2, |c|)
+       /      |      \</code></pre>
+<p>Both nappes are joined at <strong>one</strong> point, the apex $(0,0,0)$ (the only point of the cross-section $z=0$); every generator line passes through it, continuing from the upper nappe straight into the lower nappe.</p>
 <h3>Quick verification</h3>
 <ul><li><strong>First equation:</strong> Substitute the top vertex $(1,0)$ and right vertex $(4,-2)$ into $4x^2+9y^2-8x+36y+4$:</li><li>At $(1,0)$: $4(1) + 0 - 8(1) + 0 + 4 = 0$. ✓</li><li>At $(4,-2)$: $4(16) + 9(4) - 8(4) + 36(-2) + 4 = 64 + 36 - 32 - 72 + 4 = 0$. ✓</li><li><strong>Second equation:</strong> At height $z=2$, the ellipse vertices are $(1,0,2)$ along $Ox$ and $(0,2,2)$ along $Oy$:</li><li>At $(1,0,2)$: $4(1)^2 + 0^2 = 4 = 2^2$. ✓</li><li>At $(0,2,2)$: $4(0)^2 + 2^2 = 4 = 2^2$. ✓</li></ul>
 <h3>A concrete example</h3>

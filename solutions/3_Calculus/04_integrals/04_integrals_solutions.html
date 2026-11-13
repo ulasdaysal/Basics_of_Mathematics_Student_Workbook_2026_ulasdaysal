@@ -468,7 +468,7 @@
 <div class="math-block">$$\int\frac{1}{u}\,du=\ln|u|+C.$$</div>
 <p>Substituting $u=x^2+5$ back in:</p>
 <div class="math-block">$$\int\frac{2x}{x^2+5}\,dx=\ln|x^2+5|+C=\ln(x^2+5)+C.$$</div>
-<ul><li><strong>Why the logarithm appears:</strong> Because the denominator $u=x^2+5$ is to the first power in the denominator ($u^{-1}$), and $\ln|u|$ is the unique elementary function whose derivative is $u^{-1}$.</li><li><strong>Why we can drop the absolute value bars here:</strong> For every real number $x$, $x^2\ge 0$, so $x^2+5\ge 5&gt;0$. Since the argument is strictly positive everywhere, $|x^2+5|=x^2+5$.</li></ul>
+<ul><li><strong>Why the logarithm appears:</strong> Because the denominator $u=x^2+5$ appears to the first power ($u^{-1}$), and $\ln|u|$ is <strong>an</strong> antiderivative of $u^{-1}$ (the one case $n=-1$ not covered by the power rule). On any interval avoiding $u=0$, all antiderivatives of $u^{-1}$ differ from $\ln|u|$ only by an additive constant $C$; here $u=x^2+5\ge 5&gt;0$ on all of $\mathbb{R}$, so every antiderivative has the form $\ln(x^2+5)+C$.</li><li><strong>Why we can drop the absolute value bars here:</strong> For every real number $x$, $x^2\ge 0$, so $x^2+5\ge 5&gt;0$. Since the argument is strictly positive everywhere, $|x^2+5|=x^2+5$.</li></ul>
 <h3>Quick verification</h3>
 <p>We differentiate $F(x)=\ln(x^2+5)+C$ using the chain rule:</p>
 <div class="math-block">$$F'(x)=\frac{1}{x^2+5}\cdot\frac{d}{dx}(x^2+5)+0=\frac{1}{x^2+5}\cdot 2x=\frac{2x}{x^2+5}.$$</div>
@@ -619,16 +619,19 @@ dv &amp;= e^x\,dx &amp; \implies \quad v &amp;= e^x.
 <div class="math-block">$$\int_0^2 (x^2+1)\,dx = \left[\frac{x^3}{3}+x\right]_0^2 = \left(\frac{2^3}{3}+2\right)-\left(0+0\right) = \frac{8}{3}+2 = \frac{14}{3}\approx 4.67.$$</div>
 <h3>3. Comparing with the estimate and explaining what errors it detects</h3>
 <p>Since $2 \le \dfrac{14}{3}\approx 4.67 \le 10$, our exact result sits comfortably inside the predicted range $[2,10]$.</p>
-<p><strong>What types of computational errors this check detects:</strong></p>
-<ul><li><strong>Sign errors</strong> (e.g., subtracting limits in the wrong order $F(0)-F(2)=-\frac{14}{3}&lt;2$, or writing $\frac{x^3}{3}-x$ which gives $\frac{2}{3}&lt;2$).</li><li><strong>Differentiating instead of integrating</strong> (e.g., writing $[2x]_0^2=4$ or forgetting to integrate the constant $1$, which gives $\frac{8}{3}$—and on tighter bounds, gross power mistakes like $\left[3x^3+x\right]_0^2=26&gt;10$).</li><li><strong>Arithmetic or exponent mistakes</strong> (such as evaluating $2^3=6$ or multiplying by $3$ instead of dividing by $3$, which gives $3(8)+2=26&gt;10$).</li></ul>
+<p><strong>Errors this check can detect</strong> (results that fall <em>outside</em> $[2,10]$):</p>
+<ul><li><strong>Reversed limits / sign error:</strong> $F(0)-F(2)=-\frac{14}{3}&lt;2$.</li><li><strong>Subtracting instead of adding:</strong> $\left[\frac{x^3}{3}-x\right]_0^2=\frac{8}{3}-2=\frac{2}{3}&lt;2$.</li><li><strong>Multiplying by $3$ instead of dividing:</strong> $\left[3x^3+x\right]_0^2=24+2=26&gt;10$.</li></ul>
+<p><strong>Errors this check cannot detect</strong> (wrong results that still lie <em>inside</em> $[2,10]$):</p>
+<ul><li><strong>Differentiating instead of integrating:</strong> $[2x]_0^2=4\in[2,10]$.</li><li><strong>Forgetting to integrate the constant $1$:</strong> $\left[\frac{x^3}{3}\right]_0^2=\frac{8}{3}\approx 2.67\in[2,10]$.</li><li><strong>Arithmetic slip $2^3=6$:</strong> $\frac{6}{3}+2=4\in[2,10]$.</li></ul>
+<p>So passing the bound check is only a <strong>necessary condition</strong>: a result outside $[2,10]$ is certainly wrong, but a result inside $[2,10]$ is not thereby verified as correct. The exact value $\frac{14}{3}$ is confirmed by the antiderivative calculation (and can be checked further, e.g. by differentiating $F$), not by the bound.</p>
 <h3>Quick verification</h3>
 <p>We can obtain an even tighter geometric estimate by bounding the curve $y=x^2+1$ from above with the secant line connecting $(0,1)$ and $(2,5)$. Since $f(x)=x^2+1$ is convex ($f''(x)=2&gt;0$), the area under the parabola is slightly less than the area of that trapezoid:</p>
 <div class="math-block">$$A_{\text{trapezoid}}=\frac{f(0)+f(2)}{2}\cdot(2-0)=\frac{1+5}{2}\cdot 2=6.$$</div>
 <p>Indeed, $2 &lt; \dfrac{14}{3}\approx 4.67 &lt; 6 \le 10$. ✓</p>
 <h3>A concrete example</h3>
-<p>Suppose a student accidentally forgot the $+1$ term when integrating (treating $\int 1\,dx$ as $0$ like a derivative!) or subtracted instead of adding, getting $\frac{8}{3}-2=\frac{2}{3}\approx 0.67$. Because $0.67&lt;2$, the lower rectangle bound $m(b-a)=1\cdot 2=2$ immediately flags that $\frac{2}{3}$ is impossible: a function that is always at least $1$ on an interval of width $2$ must accumulate an area of at least $2$.</p>
+<p>Suppose a student subtracted instead of adding, getting $\frac{8}{3}-2=\frac{2}{3}\approx 0.67$. Because $0.67&lt;2$, the lower rectangle bound $m(b-a)=1\cdot 2=2$ immediately flags that $\frac{2}{3}$ is impossible: a function that is always at least $1$ on an interval of width $2$ must accumulate an area of at least $2$. By contrast, a student who forgot to integrate the $+1$ term would get $\frac{8}{3}\approx 2.67$, which lies inside $[2,10]$ — the bound check would <strong>not</strong> catch that mistake.</p>
 <h3>How I would explain this in class</h3>
-<blockquote><p>Before integrating $\int_0^2(x^2+1)\,dx$, I note that on $[0,2]$ the function stays between $1$ and $5$ over an interval of width $2$. So the area under the curve must be trapped between a rectangle of area $1\times 2=2$ and a rectangle of area $5\times 2=10$. Then I compute the exact integral $\left[\frac{x^3}{3}+x\right]_0^2 = \frac{8}{3}+2=\frac{14}{3}\approx 4.67$, which falls right inside $[2,10]$. This five-second rectangle check catches flipped signs, missing constants, or exponent blunders right away.</p></blockquote>
+<blockquote><p>Before integrating $\int_0^2(x^2+1)\,dx$, I note that on $[0,2]$ the function stays between $1$ and $5$ over an interval of width $2$. So the area under the curve must be trapped between a rectangle of area $1\times 2=2$ and a rectangle of area $5\times 2=10$. Then I compute the exact integral $\left[\frac{x^3}{3}+x\right]_0^2 = \frac{8}{3}+2=\frac{14}{3}\approx 4.67$, which falls right inside $[2,10]$. This five-second rectangle check catches gross errors such as flipped signs or a factor of $3$ in the wrong place, but it is only a necessary test: wrong answers like $4$ or $\frac{8}{3}$ would also pass it.</p></blockquote>
 <h3>Related workbook topics</h3>
 <ul><li><a href="#exercise-9">Exercise 9: Definite Integral and Geometric Area</a></li><li><a href="#exercise-13">Exercise 13: An Integral Depending on the Upper Limit</a></li></ul>
 </section>
@@ -669,6 +672,20 @@ dv &amp;= e^x\,dx &amp; \implies \quad v &amp;= e^x.
 <p>On a <strong>symmetric interval $[-a,a]$</strong> centered at the origin, the symmetry of the integrand drastically simplifies integration:</p>
 <ul><li><strong>Odd function</strong> ($f(-x)=-f(x)$, symmetric about the origin): Every positive height at $+x$ is matched by an equal and opposite negative height at $-x$. The signed areas on $[-a,0]$ and $[0,a]$ cancel out completely: $$\int_{-a}^{a} f(x)\,dx = 0.$$</li><li><strong>Even function</strong> ($f(-x)=f(x)$, symmetric across the $y$-axis): The graph on $[-a,0]$ is a mirror image of the graph on $[0,a]$, so both halves contribute the exact same signed area: $$\int_{-a}^{a} f(x)\,dx = 2\int_{0}^{a} f(x)\,dx.$$</li></ul>
 <h3>1. Predicting the results from symmetry and a sketch</h3>
+<p><strong>Sketch of $y = x$ on $[-2,2]$</strong> (<code>+</code> = region above the axis, <code>-</code> = region below the axis):</p>
+<pre><code>            y
+ 2          |       /
+ 1          |   /+++|      triangle on [0, 2] above the axis: signed area +2
+ 0  +-------+-------+---&gt; x
+-1  |---/   |              triangle on [-2, 0] below the axis: signed area -2
+-2  /       |
+   -2       0       2</code></pre>
+<p><strong>Sketch of $y = |x|$ on $[-2,2]$:</strong></p>
+<pre><code>            y
+ 2  \       |       /
+ 1  |+++\   |   /+++|      both triangles above the axis: areas +2 and +2
+ 0  +-------+-------+---&gt; x
+   -2       0       2</code></pre>
 <ol><li><strong>For $f(x)=x$ on $[-2,2]$:</strong> The graph of $y=x$ is a straight line through the origin. On $[-2,0]$ it forms a right triangle of base $2$ and height $2$ <strong>below</strong> the $x$-axis (signed area $-2$), and on $[0,2]$ it forms an identical right triangle <strong>above</strong> the $x$-axis (signed area $+2$). Since $f(-x)=-x=-f(x)$ is <strong>odd</strong>, the two triangles cancel and we predict: $$\int_{-2}^{2}x\,dx = 0.$$</li></ol>
 <ol><li><strong>For $g(x)=|x|$ on $[-2,2]$:</strong> The absolute value reflects the negative left branch upward across the $x$-axis, creating a V-shaped graph that lies entirely above the $x$-axis. Both $[-2,0]$ and $[0,2]$ form right triangles of base $2$ and height $2$ <strong>above</strong> the $x$-axis, each of area $\frac{1}{2}(2)(2)=2$. Since $g(-x)=|-x|=|x|$ is <strong>even</strong>, the two areas add up and we predict: $$\int_{-2}^{2}|x|\,dx = 2+2 = 4.$$</li></ol>
 <h3>2. Carrying out the analytical calculations</h3>
@@ -743,13 +760,13 @@ dv &amp;= e^x\,dx &amp; \implies \quad v &amp;= e^x.
 <p>The definition of $f(x)$ changes at <strong>$x=1$</strong>, so we must split $[-1,3]$ at $x=1$ into $[-1,1]$ and $[1,3]$:</p>
 <ul><li><strong>On $[-1,1]$:</strong> $f(x)=x+1$ is a straight line with slope $1$, rising from the point $(-1,0)$ on the $x$-axis up to $(1,2)$.</li><li><strong>On $[1,3]$:</strong> $f(x)=2$ is a horizontal line segment at height $y=2$ from $(1,2)$ to $(3,2)$.</li></ul>
 <p>Notice that the two pieces meet continuously at $(1,2)$, forming a rising ramp followed by a flat plateau, all lying on or above the $x$-axis.</p>
-<pre><code>y
-2 |         *---------*  y = 2
-  |       / |         |
-1 |     *   |         |
-  |   /     |         |
-0 +-*-------+---------+---&gt; x
-   -1       0    1    3</code></pre>
+<pre><code>        y
+ 2      |   *-------*      plateau y = 2 from (1, 2) to (3, 2)
+        | / :       :
+ 1      *   :       :      (0, 1) lies on the y-axis
+      / |   :       :
+ 0  *---+---+-------+---&gt; x
+   -1   0   1       3</code></pre>
 <h3>2. Computing the integral analytically by splitting at $x=1$</h3>
 <p>Using additivity at $x=1$:</p>
 <div class="math-block">$$\int_{-1}^{3}f(x)\,dx = \int_{-1}^{1}(x+1)\,dx + \int_{1}^{3}2\,dx.$$</div>

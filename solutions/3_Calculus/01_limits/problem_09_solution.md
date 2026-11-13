@@ -39,16 +39,28 @@ Therefore, the two-sided limit $\lim_{x\to2}\dfrac{1}{x-2}$ **does not exist** (
 The graph of $f(x)=\dfrac{1}{x-2}$ is the standard hyperbola $y=\dfrac{1}{x}$ shifted $2$ units to the right:
 
 ```
-        y
-        |      :  |
-        |      :  |  (right branch -> +infinity)
-        |      :   \
---------+------2----+--------> x
-        |    / :
-        |   |  :
-        |   |  :  (left branch -> -infinity)
-            x = 2
+          y               :
+          |               : |      x -> 2+ : y -> +infinity
+          |               : |
+          |               :  \
+          |               :   \
+          |               :    `.
+        1 +               :      `-*                (3, 1)
+      1/2 +               :         `------*-------......______   (4, 1/2)
+----------+---------------2-----------------------------------------> x
+......----*-._            :          * on the y-axis: (0, -1/2)
+       -1 +   `---*       :          * at x = 1:      (1, -1)
+          |         \     :
+          |           \   :
+          |             \ :
+          |              |:
+          |              |:        x -> 2- : y -> -infinity
+                          x = 2 (vertical asymptote)
 ```
+
+Far left the left branch lies just below the axis ($y\to0^-$ as $x\to-\infty$); far right the right branch lies just above it ($y\to0^+$ as $x\to+\infty$).
+
+Reading the sketch: the **left branch** starts just below the $x$-axis far to the left, passes through $(0,-\tfrac12)$ and $(1,-1)$, and then hugs the dashed line $x=2$ ever more closely while descending to $-\infty$. The **right branch** comes down from $+\infty$ right next to $x=2$, passes through $(3,1)$, and flattens toward $y=0$. Both branches approach $y=0$ only as $x\to\pm\infty$ (horizontal asymptote $y=0$).
 
 - As $x$ nears $2$ from the left, the curve plunges straight down toward $-\infty$.
 - As $x$ nears $2$ from the right, the curve shoots straight up toward $+\infty$.

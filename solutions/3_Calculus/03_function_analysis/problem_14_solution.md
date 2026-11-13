@@ -41,6 +41,23 @@ Without knowing the constant of integration $C$, any valid sketch of $f(x)$ is a
 2. Falls across the interval $[-2, 1]$, passing through an inflection point at $x = -\frac{1}{2}$,
 3. Bottoms out at a rounded valley on the vertical line $x = 1$, and then rises to $+\infty$ on the right.
 
+One possible graph (this one is exactly $g$, i.e. the choice $C = 0$; see Section 3):
+
+```
+  y                         y = g(x)
+  3          .--*--.        |              /     * local max at x = -2:  (-2, 10/3)
+  2        /          \     |             /
+  1      /               o  |            /       o inflection at x = -1/2:  (-1/2, 13/12)
+  0 ----*-------------------*----------*---> x   * passes through the origin (0, 0)
+ -1    /                    |  `--*--'           * local min at x = 1:  (1, -7/6)
+ -2   /                     |
+               -2     -1/2  0     1
+```
+
+How $g$ fixes the vertical position: every function with $f'(x)=(x-1)(x+2)$ has the form $f = g + C$. Changing $C$ slides this **whole** curve straight up ($C>0$) or down ($C<0$) without changing its shape — the extrema stay on the vertical lines $x=-2$ and $x=1$. The particular choice $g$ (i.e. $C=0$, $g(0)=0$) is the one whose graph passes through the origin.
+
+Here the local maximum is $(-2, \tfrac{10}{3})$, the inflection point $(-\tfrac12, \tfrac{13}{12})$, the curve passes through the origin, and the local minimum is $(1, -\tfrac76)$. The derivative alone fixes only the **horizontal** positions $x=-2$, $x=-\tfrac12$, $x=1$; the condition $g(0)=0$ is what fixes the **vertical** position of the curve.
+
 ## 3. Verifying $g'(x)$ and comparing with the specific graph of $g(x)$
 
 Differentiate $g(x) = \frac{x^3}{3} + \frac{x^2}{2} - 2x$ term by term and factor:

@@ -3002,12 +3002,13 @@ x + y = 2,\\
 <p>The geometric formula for the dot product of two nonzero vectors $u$ and $v$ is</p>
 <div class="math-block">$$u\cdot v = \|u\|\,\|v\|\cos\theta, \qquad \theta \in [0,\pi].$$</div>
 <p>Because the norms $\|u\|$ and $\|v\|$ are strictly positive, <strong>the sign of $\cos\theta$ is the same as the sign of $u\cdot v$</strong>:</p>
-<ul><li>$u\cdot v &gt; 0 \iff \cos\theta &gt; 0 \iff \theta \in \left[0,\frac{\pi}{2}\right)$ (<strong>acute angle</strong>),</li><li>$u\cdot v = 0 \iff \cos\theta = 0 \iff \theta = \frac{\pi}{2}$ (<strong>right angle</strong>),</li><li>$u\cdot v &lt; 0 \iff \cos\theta &lt; 0 \iff \theta \in \left(\frac{\pi}{2},\pi\right]$ (<strong>obtuse angle</strong>).</li></ul>
+<ul><li>$u\cdot v &gt; 0 \iff \cos\theta &gt; 0 \iff \theta \in \left[0,\frac{\pi}{2}\right)$: either a <strong>zero angle</strong> ($\theta = 0^\circ$, vectors parallel with the same orientation) or an <strong>acute angle</strong> ($0^\circ &lt; \theta &lt; 90^\circ$),</li><li>$u\cdot v = 0 \iff \cos\theta = 0 \iff \theta = \frac{\pi}{2}$ (<strong>right angle</strong>, $\theta = 90^\circ$),</li><li>$u\cdot v &lt; 0 \iff \cos\theta &lt; 0 \iff \theta \in \left(\frac{\pi}{2},\pi\right]$: either an <strong>obtuse angle</strong> ($90^\circ &lt; \theta &lt; 180^\circ$) or a <strong>straight angle</strong> ($\theta = 180^\circ$, vectors parallel with opposite orientation).</li></ul>
+<p>So the sign alone separates "$\theta &lt; 90^\circ$", "$\theta = 90^\circ$" and "$\theta &gt; 90^\circ$"; to call the angle strictly acute or strictly obtuse we must also exclude the parallel cases $0^\circ$ and $180^\circ$.</p>
 <p>This allows us to classify the angle qualitatively before computing any square roots or inverse trig functions.</p>
 <h3>1. Predicting the type of angle from the sign of $u\cdot v$</h3>
 <p>We compute the dot product of $u=(1,1,0)$ and $v=(1,0,1)$:</p>
 <div class="math-block">$$u\cdot v = 1\cdot 1 + 1\cdot 0 + 0\cdot 1 = 1 + 0 + 0 = 1.$$</div>
-<p>Since $u\cdot v = 1 &gt; 0$, we have $\cos\theta &gt; 0$, so the angle $\theta$ between $u$ and $v$ must be <strong>acute</strong> ($\theta &lt; 90^\circ$).</p>
+<p>Since $u\cdot v = 1 &gt; 0$, we have $\cos\theta &gt; 0$, so $0^\circ \le \theta &lt; 90^\circ$. Moreover, $u$ and $v$ are not scalar multiples of each other ($u$ has $z$-coordinate $0$ but $v$ does not), so they are not parallel and $\theta \neq 0^\circ$. Hence the angle is <strong>strictly acute</strong>: $0^\circ &lt; \theta &lt; 90^\circ$.</p>
 <h3>2. Computing the exact angle</h3>
 <p>First, we compute the lengths of both vectors:</p>
 <div class="math-block">$$\|u\| = \sqrt{1^2+1^2+0^2} = \sqrt{2},\qquad \|v\| = \sqrt{1^2+0^2+1^2} = \sqrt{2}.$$</div>
@@ -4743,17 +4744,23 @@ a - b = 1.
 <ol><li><strong>Cross-section by the plane $y=0$ (in the $xz$-plane):</strong> $$4x^2 = z^2 \iff z = \pm 2x.$$ This is a <strong>pair of intersecting straight lines</strong> through the origin with steeper slopes $\pm 2$ (narrower opening: $|x|=\frac{1}{2}|z|$).</li></ol>
 <h3>4. Identifying and sketching the second surface</h3>
 <p>Putting the cross-sections together—a single vertex at $(0,0,0)$, straight-line generators in vertical planes through $Oz$ with steeper slope along $Ox$ than $Oy$, and horizontal cross-sections that are ellipses expanding linearly with $|z|$—we identify the surface as an <strong>elliptic cone</strong> (double cone with elliptical horizontal slices stretched along $Oy$).</p>
-<pre><code>             z
-       \  \  |  /  /      z = c: ellipse x^2/(c/2)^2 + y^2/c^2 = 1
-        \ .--+--. /       (semiaxis |c|/2 along Ox, |c| along Oy)
-         \ \ | / /
-          \ \|/ /         x = 0: wider lines z = +-y
-           \ * /          y = 0: steeper lines z = +-2x
-  -----------+----------- x, y
-           / * \ (0,0,0)
-          / /|\ \
-         / .-+-. \
-        / /  |  \ \</code></pre>
+<pre><code>              z
+       \      |      /
+        \.----+----./      z = c &gt; 0: ellipse x^2/(c/2)^2 + y^2/c^2 = 1
+         \&#x27;---+---&#x27;/       (semiaxis |c|/2 along Ox, |c| along Oy)
+          \   |   /        upper nappe (z &gt; 0)
+           \  |  /
+            \ | /          x = 0: wider lines z = +-y
+             \|/           y = 0: steeper lines z = +-2x
+--------------*-------------- x, y
+             /|\           * = the single common apex (0,0,0)
+            / | \
+           /  |  \
+          /   |   \        lower nappe (z &lt; 0)
+         /.---+---.\
+        /&#x27;----+----&#x27;\      z = -c: the same ellipse (semiaxes |c|/2, |c|)
+       /      |      \</code></pre>
+<p>Both nappes are joined at <strong>one</strong> point, the apex $(0,0,0)$ (the only point of the cross-section $z=0$); every generator line passes through it, continuing from the upper nappe straight into the lower nappe.</p>
 <h3>Quick verification</h3>
 <ul><li><strong>First equation:</strong> Substitute the top vertex $(1,0)$ and right vertex $(4,-2)$ into $4x^2+9y^2-8x+36y+4$:</li><li>At $(1,0)$: $4(1) + 0 - 8(1) + 0 + 4 = 0$. ✓</li><li>At $(4,-2)$: $4(16) + 9(4) - 8(4) + 36(-2) + 4 = 64 + 36 - 32 - 72 + 4 = 0$. ✓</li><li><strong>Second equation:</strong> At height $z=2$, the ellipse vertices are $(1,0,2)$ along $Ox$ and $(0,2,2)$ along $Oy$:</li><li>At $(1,0,2)$: $4(1)^2 + 0^2 = 4 = 2^2$. ✓</li><li>At $(0,2,2)$: $4(0)^2 + 2^2 = 4 = 2^2$. ✓</li></ul>
 <h3>A concrete example</h3>
@@ -5080,15 +5087,25 @@ a - b = 1.
 <p>Therefore, the two-sided limit $\lim_{x\to2}\dfrac{1}{x-2}$ <strong>does not exist</strong> (not even as an improper limit $\pm\infty$).</p>
 <h3>4. Geometric interpretation and vertical asymptote</h3>
 <p>The graph of $f(x)=\dfrac{1}{x-2}$ is the standard hyperbola $y=\dfrac{1}{x}$ shifted $2$ units to the right:</p>
-<pre><code>        y
-        |      :  |
-        |      :  |  (right branch -&gt; +infinity)
-        |      :   \
---------+------2----+--------&gt; x
-        |    / :
-        |   |  :
-        |   |  :  (left branch -&gt; -infinity)
-            x = 2</code></pre>
+<pre><code>          y               :
+          |               : |      x -&gt; 2+ : y -&gt; +infinity
+          |               : |
+          |               :  \
+          |               :   \
+          |               :    `.
+        1 +               :      `-*                (3, 1)
+      1/2 +               :         `------*-------......______   (4, 1/2)
+----------+---------------2-----------------------------------------&gt; x
+......----*-._            :          * on the y-axis: (0, -1/2)
+       -1 +   `---*       :          * at x = 1:      (1, -1)
+          |         \     :
+          |           \   :
+          |             \ :
+          |              |:
+          |              |:        x -&gt; 2- : y -&gt; -infinity
+                          x = 2 (vertical asymptote)</code></pre>
+<p>Far left the left branch lies just below the axis ($y\to0^-$ as $x\to-\infty$); far right the right branch lies just above it ($y\to0^+$ as $x\to+\infty$).</p>
+<p>Reading the sketch: the <strong>left branch</strong> starts just below the $x$-axis far to the left, passes through $(0,-\tfrac12)$ and $(1,-1)$, and then hugs the dashed line $x=2$ ever more closely while descending to $-\infty$. The <strong>right branch</strong> comes down from $+\infty$ right next to $x=2$, passes through $(3,1)$, and flattens toward $y=0$. Both branches approach $y=0$ only as $x\to\pm\infty$ (horizontal asymptote $y=0$).</p>
 <ul><li>As $x$ nears $2$ from the left, the curve plunges straight down toward $-\infty$.</li><li>As $x$ nears $2$ from the right, the curve shoots straight up toward $+\infty$.</li><li>The vertical line <strong>$x=2$ is a vertical asymptote</strong> of the graph of $f$.</li></ul>
 <h3>Quick verification</h3>
 <p>Let us write $x=2+h$:</p>
@@ -5332,16 +5349,19 @@ a - b = 1.
 <table><thead><tr><th>Left approach ($x\to4^-$)</th><th>$f(x)$ (rounded)</th><th>Right approach ($x\to4^+$)</th><th>$f(x)$ (rounded)</th></tr></thead><tbody><tr><td>$x=3.5$</td><td>$0.25834$</td><td>$x=4.5$</td><td>$0.24264$</td></tr><tr><td>$x=3.9$</td><td>$0.25158$</td><td>$x=4.1$</td><td>$0.24846$</td></tr><tr><td>$x=3.99$</td><td>$0.25016$</td><td>$x=4.01$</td><td>$0.24984$</td></tr><tr><td>$x=3.999$</td><td>$0.25002$</td><td>$x=4.001$</td><td>$0.24998$</td></tr></tbody></table>
 <p>Sketch of the continuous curve $y=f(x)$ with a puncture (hole) at $(4, 0.25)$:</p>
 <pre><code>  y ^
-0.5 + *
-    |   \
-0.25+ - - \ - - o - - - - - - - (limit L = 0.25 at hole x = 4)
-    |             \       *
-    +-----------+---+-----------+---&gt; x
-                0   4</code></pre>
+0.5 *                       &lt;- endpoint (0, 1/2) lies on the y-axis
+    |`-.
+    |   `--.__
+    |         ``--._
+0.25+ - - - - - - - o - - - - - - - - -   limit L = 0.25, hole at (4, 0.25)
+    |                `--.___
+    |                       `````-----......
+    +---+---+---+---+---+---+---+---+---&gt; x
+    0   1   2   3   4   5   6   7   8</code></pre>
 <h3>3. Comparing observations with the analytical results</h3>
 <ul><li>For the sequence $a_n$, the table shows $a_n$ increasing toward $2$, with the gap $2-a_n\approx \dfrac{6.5}{n}$ shrinking by a factor of $10$ each time $n$ is multiplied by $10$. This matches our analytical result $\lim_{n\to\infty}a_n=2$ from factoring out $n^2$.</li><li>For the function $f(x)$, the left-hand values decrease toward $0.25$ and the right-hand values increase toward $0.25$, pinching together at height $0.25$. This matches our analytical result $\lim_{x\to4}\dfrac{1}{\sqrt{x}+2}=\dfrac{1}{4}$.</li></ul>
 <h3>4. Why finite calculations or a sketch never constitute a proof</h3>
-<ol><li><strong>Delayed behavior beyond the table:</strong> A sequence can match $2$ for the first $1000$ terms and still diverge—for instance, $b_n = 2 + 10^{-100}n$ is indistinguishable from $2$ at $n=1000$, yet $\lim_{n\to\infty}b_n=+\infty$.</li><li><strong>Hidden behavior closer to the limit point:</strong> A function like $g(x)=\cos\left(\dfrac{2\pi}{x-4}\right)$ equals $1$ at every sample point $x = 4 \pm 10^{-k}$ ($k=1,2,3,\dots$), so a standard table of decimal steps would show $1.00000$ everywhere, even though $\lim_{x\to4}g(x)$ does not exist!</li><li><strong>Catastrophic cancellation and finite precision:</strong> On a calculator or computer, evaluating $\dfrac{\sqrt{x}-2}{x-4}$ at $x=4+10^{-16}$ actually outputs $0$ instead of $0.25$ because floating-point arithmetic rounds $\sqrt{4+10^{-16}}$ to $2$.</li><li><strong>Finite resolution of a sketch:</strong> A drawn line has positive thickness and is plotted through finitely many sample points, so it cannot reveal tiny jumps, rapid oscillations (like $\sin(1/x)$ near $0$), or distinguish $0.25$ from $0.2500001$.</li></ol>
+<ol><li><strong>Delayed behavior beyond the table:</strong> A sequence can match $2$ for the first $1000$ terms and still diverge—for instance, $b_n = 2 + 10^{-100}n$ is indistinguishable from $2$ at $n=1000$, yet $\lim_{n\to\infty}b_n=+\infty$.</li><li><strong>Hidden behavior closer to the limit point:</strong> A function like $g(x)=\cos\left(\dfrac{2\pi}{x-4}\right)$ equals $1$ at every sample point $x = 4 \pm 10^{-k}$ ($k=1,2,3,\dots$), so a standard table of decimal steps would show $1.00000$ everywhere, even though $\lim_{x\to4}g(x)$ does not exist!</li><li><strong>Finite precision and catastrophic cancellation:</strong> On a computer using ordinary IEEE 754 double precision (binary64), the number $4+10^{-16}$ cannot be represented: the spacing between neighbouring doubles near $4$ is $2^{-50}\approx 8.9\cdot10^{-16}$, so <code>4 + 1e-16</code> <strong>rounds to exactly <code>4.0</code></strong>. Then both $\sqrt{x}-2$ and $x-4$ evaluate to <code>0.0</code>, and the quotient becomes <code>0.0/0.0</code> — <strong>undefined</strong> (<code>NaN</code> in IEEE arithmetic, or a division-by-zero error in many languages), not $0.25$ and not $0$. Even for slightly larger steps such as $x=4+10^{-12}$, the subtraction $\sqrt{4+h}-2$ cancels almost all significant digits (catastrophic cancellation), so the computed quotient is visibly inaccurate. The numerical "evidence" therefore breaks down exactly where the limit is decided.</li><li><strong>Finite resolution of a sketch:</strong> A drawn line has positive thickness and is plotted through finitely many sample points, so it cannot reveal tiny jumps, rapid oscillations (like $\sin(1/x)$ near $0$), or distinguish $0.25$ from $0.2500001$.</li></ol>
 <h3>Quick verification</h3>
 <p>Let us verify the exact error formulas analytically:</p>
 <ul><li>For $a_n$: $2 - a_n = \dfrac{13n-15}{2n^2+5n-7}$. At $n=1000$, this is $\dfrac{12\,985}{2\,004\,993}\approx 0.006476$, matching the table's $2-1.99352=0.00648$. ✓</li><li>For $f(x)$: $f(x)-\dfrac{1}{4} = \dfrac{1}{\sqrt{x}+2}-\dfrac{1}{4} = \dfrac{2-\sqrt{x}}{4(\sqrt{x}+2)}$. At $x=3.99$, this is $\approx \dfrac{0.0025016}{15.99}\approx 0.000156$, matching $0.25016-0.25=0.00016$. ✓</li></ul>
@@ -6044,6 +6064,14 @@ a - b = 1.
 <p>To anchor the sketch, note the limits at infinity and the zeros:</p>
 <ul><li>$\lim_{x\to-\infty} f(x) = -\infty$ and $\lim_{x\to\infty} f(x) = +\infty$.</li><li>By inspection, $f(1) = 1 - 3 + 2 = 0$, and factoring gives $x^3 - 3x^2 + 2 = (x-1)(x^2 - 2x - 2) = 0$, so the $x$-intercepts are $x = 1$ and $x = 1 \pm \sqrt{3} \approx -0.73, \, 2.73$.</li></ul>
 <p><strong>Graph description:</strong> Starting from $-\infty$ in the third quadrant, the curve rises through $(-0.73, 0)$ to a rounded peak at the critical point $(0, 2)$ on the $y$-axis. It then falls through $(1, 0)$ (which is also its inflection point) down to a trough at the critical point $(2, -2)$, before turning upward through $(2.73, 0)$ and climbing toward $+\infty$.</p>
+<pre><code>            y
+  2       .-*-.         /      * (0, 2)   local maximum
+  1      /  |  \       /
+---------o--+---o------o---&gt; x   o zeros: 1 - sqrt(3) ~ -0.73,  1 (also inflection),  1 + sqrt(3) ~ 2.73
+  -1    /   |     \   /
+  -2   /    |     `-*-&#x27;        * (2, -2)  local minimum
+       -1   0   1   2   3</code></pre>
+<p>Key points marked: local maximum $(0,2)$, local minimum $(2,-2)$, zeros $(1-\sqrt3,0)\approx(-0.73,0)$, $(1,0)$, $(1+\sqrt3,0)\approx(2.73,0)$; the point $(1,0)$ is also the inflection point.</p>
 <h3>Quick verification</h3>
 <p>Using the second derivative test with $f''(x) = 6x - 6$:</p>
 <ul><li>At $x = 0$: $f''(0) = -6 &lt; 0 \implies$ local maximum. ✓</li><li>At $x = 2$: $f''(2) = 6 &gt; 0 \implies$ local minimum. ✓</li><li>Midpoint check: at $x = 1 \in (0, 2)$, $f(1) = 0$, which lies strictly between $f(0) = 2$ and $f(2) = -2$, confirming the downward transition. ✓</li></ul>
@@ -6120,6 +6148,26 @@ a - b = 1.
 <h3>4. Sketching the graph</h3>
 <p>Draw dashed guide lines for the vertical asymptote $x = 2$ and the horizontal asymptote $y = 1$:</p>
 <ul><li><strong>Left branch ($x &lt; 2$):</strong> Starts just below the horizontal line $y = 1$ as $x \to -\infty$, decreases smoothly through $(-1, 0)$ and $(0, -\frac{1}{2})$, and plunges toward $-\infty$ alongside the left side of $x = 2$.</li><li><strong>Right branch ($x &gt; 2$):</strong> Drops down from $+\infty$ alongside the right side of $x = 2$, passes through $(3, 4)$ and $(5, 2)$, and flattens out from above toward the horizontal line $y = 1$ as $x \to +\infty$.</li></ul>
+<pre><code>            y          :
+            |          :|          x -&gt; 2+ : y -&gt; +infinity
+            |          :|
+            |          : \
+            |          :  \
+            |          :   `-*         * (3, 4)
+            |          :      `--.__
+            |          :            ``---*-----.....____      * (5, 2)
+y = 1 - - - + - - - - -:- - - - - - - - - - - - - - - - - -   horizontal asymptote y = 1
+``--.._     |          :
+------*-----+----------:-----------------------------------&gt; x
+        `--.*          :           * (-1, 0)   zero
+            |`-.       :           * (0, -1/2) y-intercept
+            |   `.     :
+            |      \   :
+            |        \ :
+            |         |:
+            |         |:           x -&gt; 2- : y -&gt; -infinity
+                       x = 2  (vertical asymptote)</code></pre>
+<p>Both branches are decreasing; the left branch stays below $y=1$, the right branch stays above $y=1$.</p>
 <h3>Quick verification</h3>
 <p>Check points on both sides of $x = 2$ using both forms $f(x) = \frac{x+1}{x-2}$ and $1 + \frac{3}{x-2}$:</p>
 <ul><li>At $x = -1$: $\frac{-1+1}{-1-2} = 0$ and $1 + \frac{3}{-3} = 0$. ✓</li><li>At $x = 1$: $f(1) = -2 &lt; f(0) = -0.5 &lt; f(-1) = 0$ (decreasing on the left branch). ✓</li><li>At $x = 3, 5$: $f(3) = 4 &gt; f(5) = 2 &gt; 1$ (decreasing on the right branch and staying above $y = 1$). ✓</li></ul>
@@ -6305,6 +6353,15 @@ a - b = 1.
 <h3>4. Sketching the graph</h3>
 <p>The graph has a classic symmetric <strong>"W" shape</strong>:</p>
 <ol><li>It descends from $+\infty$ in the second quadrant, crosses the $x$-axis at $(-2, 0)$, and reaches the left valley bottom at $(-\sqrt{2}, -4) \approx (-1.41, -4)$ while remaining convex ($\cup$).</li><li>Rising from $(-\sqrt{2}, -4)$, it passes through the left inflection point $(-\sqrt{\frac{2}{3}}, -\frac{20}{9}) \approx (-0.82, -2.22)$, where it switches to concave ($\cap$) and arches up to touch the origin $(0, 0)$ as a local maximum.</li><li>By even symmetry, it arches back down through the right inflection point $(\sqrt{\frac{2}{3}}, -\frac{20}{9})$ (switching back to convex $\cup$), hits the right valley bottom at $(\sqrt{2}, -4)$, crosses $(2, 0)$, and climbs to $+\infty$.</li></ol>
+<pre><code>                  y
+    \             |             /
+     \            |            /
+------*-----------*-----------*------&gt; x    zeros (-2, 0), (0, 0), (2, 0); (0, 0) is the local maximum
+       \       /  |  \       /
+        \    *    |    *    /               * inflection points (-sqrt(2/3), -20/9), (sqrt(2/3), -20/9) ~ (+-0.82, -2.22)
+         \ /      |      \ /
+          *       |       *                 * minima (-sqrt(2), -4), (sqrt(2), -4) ~ (+-1.41, -4)
+     -2           0           2</code></pre>
 <h3>Quick verification</h3>
 <ul><li>Second derivative test at the three critical points:</li><li>$f''(0) = -8 &lt; 0 \implies$ local maximum lies inside the concave region. ✓</li><li>$f''(\pm\sqrt{2}) = 12(2) - 8 = 16 &gt; 0 \implies$ both local minima lie inside the convex regions. ✓</li><li>Complete the square in $u = x^2$: $f(x) = (x^2 - 2)^2 - 4 \ge -4$, with equality at $x^2 = 2 \iff x = \pm\sqrt{2}$. ✓</li></ul>
 <h3>A concrete example</h3>
@@ -6383,6 +6440,18 @@ a - b = 1.
 <ul><li><strong>Convex ($\cup$)</strong> on $[-\sqrt{3}, 0]$ and $[\sqrt{3}, \infty)$.</li><li><strong>Concave ($\cap$)</strong> on $(-\infty, -\sqrt{3}]$ and $[0, \sqrt{3}]$.</li><li><strong>Three inflection points:</strong> $\left(-\sqrt{3}, -\frac{\sqrt{3}}{4}\right) \approx (-1.73, -0.43)$, $(0, 0)$, and $\left(\sqrt{3}, \frac{\sqrt{3}}{4}\right) \approx (1.73, 0.43)$.</li></ul>
 <h3>4. Sketching the graph</h3>
 <ol><li>Moving from $-\infty$, the graph starts just below the $x$-axis ($y = 0$), decreasing and concave ($\cap$) until the left inflection point $(-\sqrt{3}, -\frac{\sqrt{3}}{4})$.</li><li>It switches to convex ($\cup$), reaches its global minimum at $(-1, -\frac{1}{2})$, and turns upward toward the origin $(0, 0)$ (where it crosses with slope $f'(0) = 1$).</li><li>Passing through the inflection point $(0, 0)$, it becomes concave ($\cap$), climbs to its global maximum at $(1, \frac{1}{2})$, and begins descending.</li><li>At the right inflection point $(\sqrt{3}, \frac{\sqrt{3}}{4})$, it switches back to convex ($\cup$) so it can flatten out smoothly and approach $y = 0$ from above as $x \to +\infty$.</li></ol>
+<pre><code>                        y
+                        |   *                * max (1, 1/2)
+                        | /   `o             o inflection (sqrt(3), sqrt(3)/4) ~ (1.73, 0.43)
+                        |/       `--.__
+                        /              ````-----......____        (tail -&gt; 0+ as x -&gt; +infinity)
+------------------------o-----------------------------------&gt; x   o inflection (0, 0)
+``---....___            /                                         (tail -&gt; 0- as x -&gt; -infinity)
+          ``--._       /|
+                 o.   / |                    o inflection (-sqrt(3), -sqrt(3)/4) ~ (-1.73, -0.43)
+                    *   |                    * min (-1, -1/2)
+               -2  -1   0   1   2</code></pre>
+<p>The graph is point-symmetric about the origin; $y=0$ is the horizontal asymptote on both sides.</p>
 <h3>Quick verification</h3>
 <ul><li>Algebraic bound: since $(x \mp 1)^2 \ge 0 \implies x^2 + 1 \ge \pm 2x$, dividing by $2(x^2 + 1) &gt; 0$ directly proves $-\frac{1}{2} \le \frac{x}{x^2+1} \le \frac{1}{2}$, with equality only at $x = \pm 1$. ✓</li><li>Odd symmetry check: if $f(x)$ is odd, $f'(x)$ must be even ($f'(-x) = f'(x)$) and $f''(x)$ must be odd ($f''(-x) = -f''(x)$), which matches $f'(x) = \frac{1-x^2}{(x^2+1)^2}$ and $f''(x) = \frac{2x(x^2-3)}{(x^2+1)^3}$. ✓</li></ul>
 <h3>A concrete example</h3>
@@ -6447,6 +6516,20 @@ a - b = 1.
 <p>For any function $g(x)$, taking the absolute value $f(x) = |g(x)|$ leaves the graph unchanged wherever $g(x) \ge 0$, and <strong>reflects the negative parts across the $x$-axis</strong> wherever $g(x) &lt; 0$. Whenever the original graph $g(x)$ crosses the $x$-axis at a non-zero angle ($g(x_0) = 0$ with $g'(x_0) \neq 0$), reflecting that crossing creates a sharp corner (a V-shaped kink) where the left-hand and right-hand slopes are opposites, so the derivative fails to exist there.</p>
 <h3>1. Sketching $g(x) = x^2 - 4$ and applying the absolute value</h3>
 <ul><li><strong>The base parabola $g(x) = x^2 - 4$:</strong> Its domain is $\mathbb{R}$, it is even, has vertex $(0, -4)$, and crosses the $x$-axis at $x = -2$ and $x = 2$.</li><li>$x^2 - 4 \ge 0$ on $(-\infty, -2] \cup [2, \infty)$,</li><li>$x^2 - 4 &lt; 0$ on $(-2, 2)$.</li><li><strong>Effect of the absolute value:</strong> We write $f(x) = |x^2 - 4|$ piecewise: $$f(x) = \begin{cases} x^2 - 4, &amp; \text{if } x \in (-\infty, -2] \cup [2, \infty), \\ 4 - x^2, &amp; \text{if } x \in (-2, 2). \end{cases}$$ Geometrically, the outer arms for $|x| \ge 2$ stay untouched, while the U-shaped dip between $x = -2$ and $x = 2$ (with vertex $(0, -4)$) is flipped upside down across the $x$-axis into a dome with peak $(0, 4)$.</li></ul>
+<p><strong>Base parabola $y = x^2 - 4$</strong> (the part below the $x$-axis is drawn dotted, because it will be reflected):</p>
+<pre><code>                    y
+ 4       \          |          /
+ 2        \         |         /
+ 0  --------*-------+-------*-----&gt; x       zeros (-2, 0) and (2, 0)
+-2            :     |     :
+-4             `.  .*.  .&#x27;                  vertex (0, -4)
+           -2       0       2</code></pre>
+<p><strong>Reflected graph $y = |x^2 - 4|$</strong> (the dotted dip is folded up into a dome):</p>
+<pre><code>                    y
+ 4       \       .--*--.       /            peak (0, 4)
+ 2        \   /     |     \   /
+ 0  --------V-------+-------V-----&gt; x       sharp corners at (-2, 0) and (2, 0)
+           -2       0       2</code></pre>
 <h3>2. Points where the derivative does not exist</h3>
 <p>On the open intervals away from $x = \pm 2$, we can differentiate each formula directly:</p>
 <div class="math-block">$$f'(x) = \begin{cases} 2x, &amp; \text{if } x \in (-\infty, -2) \cup (2, \infty), \\ -2x, &amp; \text{if } x \in (-2, 2). \end{cases}$$</div>
@@ -6525,6 +6608,17 @@ a - b = 1.
 <h3>2. Qualitative sketch of $f(x)$</h3>
 <p>Without knowing the constant of integration $C$, any valid sketch of $f(x)$ is an S-shaped cubic curve that:</p>
 <ol><li>Rises from $-\infty$ on the left to a rounded peak on the vertical line $x = -2$,</li><li>Falls across the interval $[-2, 1]$, passing through an inflection point at $x = -\frac{1}{2}$,</li><li>Bottoms out at a rounded valley on the vertical line $x = 1$, and then rises to $+\infty$ on the right.</li></ol>
+<p>One possible graph (this one is exactly $g$, i.e. the choice $C = 0$; see Section 3):</p>
+<pre><code>  y                         y = g(x)
+  3          .--*--.        |              /     * local max at x = -2:  (-2, 10/3)
+  2        /          \     |             /
+  1      /               o  |            /       o inflection at x = -1/2:  (-1/2, 13/12)
+  0 ----*-------------------*----------*---&gt; x   * passes through the origin (0, 0)
+ -1    /                    |  `--*--&#x27;           * local min at x = 1:  (1, -7/6)
+ -2   /                     |
+               -2     -1/2  0     1</code></pre>
+<p>How $g$ fixes the vertical position: every function with $f'(x)=(x-1)(x+2)$ has the form $f = g + C$. Changing $C$ slides this <strong>whole</strong> curve straight up ($C&gt;0$) or down ($C&lt;0$) without changing its shape — the extrema stay on the vertical lines $x=-2$ and $x=1$. The particular choice $g$ (i.e. $C=0$, $g(0)=0$) is the one whose graph passes through the origin.</p>
+<p>Here the local maximum is $(-2, \tfrac{10}{3})$, the inflection point $(-\tfrac12, \tfrac{13}{12})$, the curve passes through the origin, and the local minimum is $(1, -\tfrac76)$. The derivative alone fixes only the <strong>horizontal</strong> positions $x=-2$, $x=-\tfrac12$, $x=1$; the condition $g(0)=0$ is what fixes the <strong>vertical</strong> position of the curve.</p>
 <h3>3. Verifying $g'(x)$ and comparing with the specific graph of $g(x)$</h3>
 <p>Differentiate $g(x) = \frac{x^3}{3} + \frac{x^2}{2} - 2x$ term by term and factor:</p>
 <div class="math-block">$$g'(x) = \frac{3x^2}{3} + \frac{2x}{2} - 2 = x^2 + x - 2 = (x - 1)(x + 2).$$</div>
@@ -6799,7 +6893,7 @@ a - b = 1.
 <div class="math-block">$$\int\frac{1}{u}\,du=\ln|u|+C.$$</div>
 <p>Substituting $u=x^2+5$ back in:</p>
 <div class="math-block">$$\int\frac{2x}{x^2+5}\,dx=\ln|x^2+5|+C=\ln(x^2+5)+C.$$</div>
-<ul><li><strong>Why the logarithm appears:</strong> Because the denominator $u=x^2+5$ is to the first power in the denominator ($u^{-1}$), and $\ln|u|$ is the unique elementary function whose derivative is $u^{-1}$.</li><li><strong>Why we can drop the absolute value bars here:</strong> For every real number $x$, $x^2\ge 0$, so $x^2+5\ge 5&gt;0$. Since the argument is strictly positive everywhere, $|x^2+5|=x^2+5$.</li></ul>
+<ul><li><strong>Why the logarithm appears:</strong> Because the denominator $u=x^2+5$ appears to the first power ($u^{-1}$), and $\ln|u|$ is <strong>an</strong> antiderivative of $u^{-1}$ (the one case $n=-1$ not covered by the power rule). On any interval avoiding $u=0$, all antiderivatives of $u^{-1}$ differ from $\ln|u|$ only by an additive constant $C$; here $u=x^2+5\ge 5&gt;0$ on all of $\mathbb{R}$, so every antiderivative has the form $\ln(x^2+5)+C$.</li><li><strong>Why we can drop the absolute value bars here:</strong> For every real number $x$, $x^2\ge 0$, so $x^2+5\ge 5&gt;0$. Since the argument is strictly positive everywhere, $|x^2+5|=x^2+5$.</li></ul>
 <h3>Quick verification</h3>
 <p>We differentiate $F(x)=\ln(x^2+5)+C$ using the chain rule:</p>
 <div class="math-block">$$F'(x)=\frac{1}{x^2+5}\cdot\frac{d}{dx}(x^2+5)+0=\frac{1}{x^2+5}\cdot 2x=\frac{2x}{x^2+5}.$$</div>
@@ -6950,16 +7044,19 @@ dv &amp;= e^x\,dx &amp; \implies \quad v &amp;= e^x.
 <div class="math-block">$$\int_0^2 (x^2+1)\,dx = \left[\frac{x^3}{3}+x\right]_0^2 = \left(\frac{2^3}{3}+2\right)-\left(0+0\right) = \frac{8}{3}+2 = \frac{14}{3}\approx 4.67.$$</div>
 <h3>3. Comparing with the estimate and explaining what errors it detects</h3>
 <p>Since $2 \le \dfrac{14}{3}\approx 4.67 \le 10$, our exact result sits comfortably inside the predicted range $[2,10]$.</p>
-<p><strong>What types of computational errors this check detects:</strong></p>
-<ul><li><strong>Sign errors</strong> (e.g., subtracting limits in the wrong order $F(0)-F(2)=-\frac{14}{3}&lt;2$, or writing $\frac{x^3}{3}-x$ which gives $\frac{2}{3}&lt;2$).</li><li><strong>Differentiating instead of integrating</strong> (e.g., writing $[2x]_0^2=4$ or forgetting to integrate the constant $1$, which gives $\frac{8}{3}$—and on tighter bounds, gross power mistakes like $\left[3x^3+x\right]_0^2=26&gt;10$).</li><li><strong>Arithmetic or exponent mistakes</strong> (such as evaluating $2^3=6$ or multiplying by $3$ instead of dividing by $3$, which gives $3(8)+2=26&gt;10$).</li></ul>
+<p><strong>Errors this check can detect</strong> (results that fall <em>outside</em> $[2,10]$):</p>
+<ul><li><strong>Reversed limits / sign error:</strong> $F(0)-F(2)=-\frac{14}{3}&lt;2$.</li><li><strong>Subtracting instead of adding:</strong> $\left[\frac{x^3}{3}-x\right]_0^2=\frac{8}{3}-2=\frac{2}{3}&lt;2$.</li><li><strong>Multiplying by $3$ instead of dividing:</strong> $\left[3x^3+x\right]_0^2=24+2=26&gt;10$.</li></ul>
+<p><strong>Errors this check cannot detect</strong> (wrong results that still lie <em>inside</em> $[2,10]$):</p>
+<ul><li><strong>Differentiating instead of integrating:</strong> $[2x]_0^2=4\in[2,10]$.</li><li><strong>Forgetting to integrate the constant $1$:</strong> $\left[\frac{x^3}{3}\right]_0^2=\frac{8}{3}\approx 2.67\in[2,10]$.</li><li><strong>Arithmetic slip $2^3=6$:</strong> $\frac{6}{3}+2=4\in[2,10]$.</li></ul>
+<p>So passing the bound check is only a <strong>necessary condition</strong>: a result outside $[2,10]$ is certainly wrong, but a result inside $[2,10]$ is not thereby verified as correct. The exact value $\frac{14}{3}$ is confirmed by the antiderivative calculation (and can be checked further, e.g. by differentiating $F$), not by the bound.</p>
 <h3>Quick verification</h3>
 <p>We can obtain an even tighter geometric estimate by bounding the curve $y=x^2+1$ from above with the secant line connecting $(0,1)$ and $(2,5)$. Since $f(x)=x^2+1$ is convex ($f''(x)=2&gt;0$), the area under the parabola is slightly less than the area of that trapezoid:</p>
 <div class="math-block">$$A_{\text{trapezoid}}=\frac{f(0)+f(2)}{2}\cdot(2-0)=\frac{1+5}{2}\cdot 2=6.$$</div>
 <p>Indeed, $2 &lt; \dfrac{14}{3}\approx 4.67 &lt; 6 \le 10$. ✓</p>
 <h3>A concrete example</h3>
-<p>Suppose a student accidentally forgot the $+1$ term when integrating (treating $\int 1\,dx$ as $0$ like a derivative!) or subtracted instead of adding, getting $\frac{8}{3}-2=\frac{2}{3}\approx 0.67$. Because $0.67&lt;2$, the lower rectangle bound $m(b-a)=1\cdot 2=2$ immediately flags that $\frac{2}{3}$ is impossible: a function that is always at least $1$ on an interval of width $2$ must accumulate an area of at least $2$.</p>
+<p>Suppose a student subtracted instead of adding, getting $\frac{8}{3}-2=\frac{2}{3}\approx 0.67$. Because $0.67&lt;2$, the lower rectangle bound $m(b-a)=1\cdot 2=2$ immediately flags that $\frac{2}{3}$ is impossible: a function that is always at least $1$ on an interval of width $2$ must accumulate an area of at least $2$. By contrast, a student who forgot to integrate the $+1$ term would get $\frac{8}{3}\approx 2.67$, which lies inside $[2,10]$ — the bound check would <strong>not</strong> catch that mistake.</p>
 <h3>How I would explain this in class</h3>
-<blockquote><p>Before integrating $\int_0^2(x^2+1)\,dx$, I note that on $[0,2]$ the function stays between $1$ and $5$ over an interval of width $2$. So the area under the curve must be trapped between a rectangle of area $1\times 2=2$ and a rectangle of area $5\times 2=10$. Then I compute the exact integral $\left[\frac{x^3}{3}+x\right]_0^2 = \frac{8}{3}+2=\frac{14}{3}\approx 4.67$, which falls right inside $[2,10]$. This five-second rectangle check catches flipped signs, missing constants, or exponent blunders right away.</p></blockquote>
+<blockquote><p>Before integrating $\int_0^2(x^2+1)\,dx$, I note that on $[0,2]$ the function stays between $1$ and $5$ over an interval of width $2$. So the area under the curve must be trapped between a rectangle of area $1\times 2=2$ and a rectangle of area $5\times 2=10$. Then I compute the exact integral $\left[\frac{x^3}{3}+x\right]_0^2 = \frac{8}{3}+2=\frac{14}{3}\approx 4.67$, which falls right inside $[2,10]$. This five-second rectangle check catches gross errors such as flipped signs or a factor of $3$ in the wrong place, but it is only a necessary test: wrong answers like $4$ or $\frac{8}{3}$ would also pass it.</p></blockquote>
 <h3>Related workbook topics</h3>
 <ul><li><a href="#3_04_integrals_exercise-9">Exercise 9: Definite Integral and Geometric Area</a></li><li><a href="#3_04_integrals_exercise-13">Exercise 13: An Integral Depending on the Upper Limit</a></li></ul>
 </section>
@@ -7000,6 +7097,20 @@ dv &amp;= e^x\,dx &amp; \implies \quad v &amp;= e^x.
 <p>On a <strong>symmetric interval $[-a,a]$</strong> centered at the origin, the symmetry of the integrand drastically simplifies integration:</p>
 <ul><li><strong>Odd function</strong> ($f(-x)=-f(x)$, symmetric about the origin): Every positive height at $+x$ is matched by an equal and opposite negative height at $-x$. The signed areas on $[-a,0]$ and $[0,a]$ cancel out completely: $$\int_{-a}^{a} f(x)\,dx = 0.$$</li><li><strong>Even function</strong> ($f(-x)=f(x)$, symmetric across the $y$-axis): The graph on $[-a,0]$ is a mirror image of the graph on $[0,a]$, so both halves contribute the exact same signed area: $$\int_{-a}^{a} f(x)\,dx = 2\int_{0}^{a} f(x)\,dx.$$</li></ul>
 <h3>1. Predicting the results from symmetry and a sketch</h3>
+<p><strong>Sketch of $y = x$ on $[-2,2]$</strong> (<code>+</code> = region above the axis, <code>-</code> = region below the axis):</p>
+<pre><code>            y
+ 2          |       /
+ 1          |   /+++|      triangle on [0, 2] above the axis: signed area +2
+ 0  +-------+-------+---&gt; x
+-1  |---/   |              triangle on [-2, 0] below the axis: signed area -2
+-2  /       |
+   -2       0       2</code></pre>
+<p><strong>Sketch of $y = |x|$ on $[-2,2]$:</strong></p>
+<pre><code>            y
+ 2  \       |       /
+ 1  |+++\   |   /+++|      both triangles above the axis: areas +2 and +2
+ 0  +-------+-------+---&gt; x
+   -2       0       2</code></pre>
 <ol><li><strong>For $f(x)=x$ on $[-2,2]$:</strong> The graph of $y=x$ is a straight line through the origin. On $[-2,0]$ it forms a right triangle of base $2$ and height $2$ <strong>below</strong> the $x$-axis (signed area $-2$), and on $[0,2]$ it forms an identical right triangle <strong>above</strong> the $x$-axis (signed area $+2$). Since $f(-x)=-x=-f(x)$ is <strong>odd</strong>, the two triangles cancel and we predict: $$\int_{-2}^{2}x\,dx = 0.$$</li></ol>
 <ol><li><strong>For $g(x)=|x|$ on $[-2,2]$:</strong> The absolute value reflects the negative left branch upward across the $x$-axis, creating a V-shaped graph that lies entirely above the $x$-axis. Both $[-2,0]$ and $[0,2]$ form right triangles of base $2$ and height $2$ <strong>above</strong> the $x$-axis, each of area $\frac{1}{2}(2)(2)=2$. Since $g(-x)=|-x|=|x|$ is <strong>even</strong>, the two areas add up and we predict: $$\int_{-2}^{2}|x|\,dx = 2+2 = 4.$$</li></ol>
 <h3>2. Carrying out the analytical calculations</h3>
@@ -7074,13 +7185,13 @@ dv &amp;= e^x\,dx &amp; \implies \quad v &amp;= e^x.
 <p>The definition of $f(x)$ changes at <strong>$x=1$</strong>, so we must split $[-1,3]$ at $x=1$ into $[-1,1]$ and $[1,3]$:</p>
 <ul><li><strong>On $[-1,1]$:</strong> $f(x)=x+1$ is a straight line with slope $1$, rising from the point $(-1,0)$ on the $x$-axis up to $(1,2)$.</li><li><strong>On $[1,3]$:</strong> $f(x)=2$ is a horizontal line segment at height $y=2$ from $(1,2)$ to $(3,2)$.</li></ul>
 <p>Notice that the two pieces meet continuously at $(1,2)$, forming a rising ramp followed by a flat plateau, all lying on or above the $x$-axis.</p>
-<pre><code>y
-2 |         *---------*  y = 2
-  |       / |         |
-1 |     *   |         |
-  |   /     |         |
-0 +-*-------+---------+---&gt; x
-   -1       0    1    3</code></pre>
+<pre><code>        y
+ 2      |   *-------*      plateau y = 2 from (1, 2) to (3, 2)
+        | / :       :
+ 1      *   :       :      (0, 1) lies on the y-axis
+      / |   :       :
+ 0  *---+---+-------+---&gt; x
+   -1   0   1       3</code></pre>
 <h3>2. Computing the integral analytically by splitting at $x=1$</h3>
 <p>Using additivity at $x=1$:</p>
 <div class="math-block">$$\int_{-1}^{3}f(x)\,dx = \int_{-1}^{1}(x+1)\,dx + \int_{1}^{3}2\,dx.$$</div>
