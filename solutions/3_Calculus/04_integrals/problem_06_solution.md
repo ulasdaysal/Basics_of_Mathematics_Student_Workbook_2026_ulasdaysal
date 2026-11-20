@@ -47,7 +47,7 @@ Substituting $u=x^2+5$ back in:
 
 $$\int\frac{2x}{x^2+5}\,dx=\ln|x^2+5|+C=\ln(x^2+5)+C.$$
 
-- **Why the logarithm appears:** Because the denominator $u=x^2+5$ appears to the first power ($u^{-1}$), and $\ln|u|$ is **an** antiderivative of $u^{-1}$ (the one case $n=-1$ not covered by the power rule). On any interval avoiding $u=0$, all antiderivatives of $u^{-1}$ differ from $\ln|u|$ only by an additive constant $C$; here $u=x^2+5\ge 5>0$ on all of $\mathbb{R}$, so every antiderivative has the form $\ln(x^2+5)+C$.
+- **Why the logarithm appears:** In this example, the logarithm arises because the numerator $2x\,dx = du$ is the exact differential of the denominator $u = x^2+5$, so the substitution $u = x^2+5$ transforms the integral directly into $\int \frac{1}{u}\,du$ (the $n=-1$ case not covered by the power rule $\int u^n\,du = \frac{u^{n+1}}{n+1}+C$). Since $\ln|u|$ is an antiderivative of $\frac{1}{u}$ and on any interval avoiding $u=0$ all antiderivatives differ by an additive constant $C$ (here $u=x^2+5\ge 5>0$ on all of $\mathbb{R}$), $\int \frac{1}{u}\,du = \ln|u|+C = \ln(x^2+5)+C$.
 - **Why we can drop the absolute value bars here:** For every real number $x$, $x^2\ge 0$, so $x^2+5\ge 5>0$. Since the argument is strictly positive everywhere, $|x^2+5|=x^2+5$.
 
 ## Quick verification
@@ -66,7 +66,7 @@ Compare two slightly different denominators with the same numerator $2x$:
 2. **Square Root or Higher Power in denominator (like Problem 11.3):**
    $$\int\frac{2x}{(x^2+5)^2}\,dx=\int u^{-2}\,du=-u^{-1}+C=-\frac{1}{x^2+5}+C\quad\text{(power rule, no logarithm!)}.$$
 
-A logarithm appears **only** when the whole denominator has exponent $1$ (so $u^{-1}$).
+In this substitution pattern (where the numerator is $du = 2x\,dx$), a logarithm arises because the first power in the denominator turns the substituted integral into $\int \frac{1}{u}\,du$, whereas a higher power turns it into $\int u^n\,du$ ($n \neq -1$).
 
 ## How I would explain this in class
 

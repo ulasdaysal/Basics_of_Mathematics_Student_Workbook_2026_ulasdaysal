@@ -468,7 +468,7 @@
 <div class="math-block">$$\int\frac{1}{u}\,du=\ln|u|+C.$$</div>
 <p>Substituting $u=x^2+5$ back in:</p>
 <div class="math-block">$$\int\frac{2x}{x^2+5}\,dx=\ln|x^2+5|+C=\ln(x^2+5)+C.$$</div>
-<ul><li><strong>Why the logarithm appears:</strong> Because the denominator $u=x^2+5$ appears to the first power ($u^{-1}$), and $\ln|u|$ is <strong>an</strong> antiderivative of $u^{-1}$ (the one case $n=-1$ not covered by the power rule). On any interval avoiding $u=0$, all antiderivatives of $u^{-1}$ differ from $\ln|u|$ only by an additive constant $C$; here $u=x^2+5\ge 5&gt;0$ on all of $\mathbb{R}$, so every antiderivative has the form $\ln(x^2+5)+C$.</li><li><strong>Why we can drop the absolute value bars here:</strong> For every real number $x$, $x^2\ge 0$, so $x^2+5\ge 5&gt;0$. Since the argument is strictly positive everywhere, $|x^2+5|=x^2+5$.</li></ul>
+<ul><li><strong>Why the logarithm appears:</strong> In this example, the logarithm arises because the numerator $2x\,dx = du$ is the exact differential of the denominator $u = x^2+5$, so the substitution $u = x^2+5$ transforms the integral directly into $\int \frac{1}{u}\,du$ (the $n=-1$ case not covered by the power rule $\int u^n\,du = \frac{u^{n+1}}{n+1}+C$). Since $\ln|u|$ is an antiderivative of $\frac{1}{u}$ and on any interval avoiding $u=0$ all antiderivatives differ by an additive constant $C$ (here $u=x^2+5\ge 5&gt;0$ on all of $\mathbb{R}$), $\int \frac{1}{u}\,du = \ln|u|+C = \ln(x^2+5)+C$.</li><li><strong>Why we can drop the absolute value bars here:</strong> For every real number $x$, $x^2\ge 0$, so $x^2+5\ge 5&gt;0$. Since the argument is strictly positive everywhere, $|x^2+5|=x^2+5$.</li></ul>
 <h3>Quick verification</h3>
 <p>We differentiate $F(x)=\ln(x^2+5)+C$ using the chain rule:</p>
 <div class="math-block">$$F'(x)=\frac{1}{x^2+5}\cdot\frac{d}{dx}(x^2+5)+0=\frac{1}{x^2+5}\cdot 2x=\frac{2x}{x^2+5}.$$</div>
@@ -476,7 +476,7 @@
 <h3>A concrete example</h3>
 <p>Compare two slightly different denominators with the same numerator $2x$:</p>
 <ol><li><strong>First power in denominator (Problem 6):</strong> $$\int\frac{2x}{x^2+5}\,dx=\int u^{-1}\,du=\ln(x^2+5)+C\quad\text{(logarithm)}.$$</li><li><strong>Square Root or Higher Power in denominator (like Problem 11.3):</strong> $$\int\frac{2x}{(x^2+5)^2}\,dx=\int u^{-2}\,du=-u^{-1}+C=-\frac{1}{x^2+5}+C\quad\text{(power rule, no logarithm!)}.$$</li></ol>
-<p>A logarithm appears <strong>only</strong> when the whole denominator has exponent $1$ (so $u^{-1}$).</p>
+<p>In this substitution pattern (where the numerator is $du = 2x\,dx$), a logarithm arises because the first power in the denominator turns the substituted integral into $\int \frac{1}{u}\,du$, whereas a higher power turns it into $\int u^n\,du$ ($n \neq -1$).</p>
 <h3>How I would explain this in class</h3>
 <blockquote><p>Whenever I see a fraction in an integral, the first question I ask is: <em>"Is the numerator the derivative of the denominator?"</em> Here the denominator is $u=x^2+5$ and its derivative is $2x$, which is the exact numerator. Setting $u=x^2+5$ turns the integral into $\int\frac{1}{u}\,du = \ln|u|+C$. That's why a logarithm appears: $\frac{1}{u}$ is the $n=-1$ gap in the power rule. Since $x^2+5$ is always positive, we can write the final answer cleanly as $\ln(x^2+5)+C$.</p></blockquote>
 <h3>Related workbook topics</h3>
